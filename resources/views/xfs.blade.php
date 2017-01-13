@@ -25,7 +25,7 @@
 			    <span class="icon-bar"></span>
 			    <span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Laravel</a>
+			<a class="navbar-brand" href="#">Laravel Probando</a>
 		    </div>
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		        <ul class="nav navbar-nav">
@@ -46,18 +46,7 @@
 			</div>
 		</div>
 	</nav>
-    <div class="container">
-               @if (Session::has('errors'))
-		    <div class="alert alert-warning" role="alert">
-			<ul>
-	            <strong>Oops! Something went wrong : </strong>
-			    @foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-		            @endforeach
-		        </ul>
-		    </div>
-		@endif
-    </div>
+
     @yield('content')
     <!-- Scripts -->
     {!! Html::script('assets/js/bootstrap.min.js') !!}
