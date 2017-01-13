@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace XFS;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

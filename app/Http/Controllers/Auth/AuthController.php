@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace XFS\Http\Controllers\Auth;
 
-use App\User;
+use XFS\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -23,6 +23,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+
+    //entre comillas la ruta a la que deseas redireccionar
+    protected $redirectTo = '/';
     /**
      * Create a new authentication controller instance.
      *
