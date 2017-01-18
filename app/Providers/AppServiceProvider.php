@@ -14,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        parent::boot();
+
+        \Blade::setRawTags('[[', ']]');
     }
 
     /**

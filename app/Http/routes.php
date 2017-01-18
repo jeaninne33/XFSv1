@@ -32,5 +32,5 @@ Route::get('register',  [
    'as' => 'register'
 ]);
 
-
+ Route::resource('companys', 'CompanyController');
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
