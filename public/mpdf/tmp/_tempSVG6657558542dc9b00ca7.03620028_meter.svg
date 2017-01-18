@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+	<svg width="160px" height="10px" viewBox="0 0 160 10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ><g>
+
+
+	<defs>
+	<linearGradient id="GrGRAY" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(222, 222, 222)" />
+	<stop offset="20%" stop-color="rgb(232, 232, 232)" />
+	<stop offset="25%" stop-color="rgb(232, 232, 232)" />
+	<stop offset="100%" stop-color="rgb(182, 182, 182)" />
+	</linearGradient>
+
+	</defs>
+<rect x="0" y="0" width="160" height="10" fill="#f4f4f4" stroke="none" /><rect x="17.621145374449" y="0" width="126.87224669604" height="10" fill="url(#GrGRAY)" stroke="#888888" stroke-width="0.5px" /><rect x="93.039647577092" y="0" rx="1.43px" ry="1.43px" width="5" height="10" fill="#888888" stroke="none" /><ellipse fill="#008800" stroke="#000000" stroke-width="0.5px" cx="131.80616740088" cy="5" rx="2.8571428571429" ry="4.5454545454545"/><rect x="0" y="0" width="160" height="10" fill="none" stroke="#888888" stroke-width="0.5px" /></g></svg>
