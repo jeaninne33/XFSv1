@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+	<svg width="50px" height="10px" viewBox="0 0 50 10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ><g>
+
+	<defs>
+	<linearGradient id="GrGRAY" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(222, 222, 222)" />
+	<stop offset="20%" stop-color="rgb(232, 232, 232)" />
+	<stop offset="25%" stop-color="rgb(232, 232, 232)" />
+	<stop offset="100%" stop-color="rgb(182, 182, 182)" />
+	</linearGradient>
+
+	<linearGradient id="GrRED" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(255, 162, 162)" />
+	<stop offset="20%" stop-color="rgb(255, 218, 218)" />
+	<stop offset="25%" stop-color="rgb(255, 218, 218)" />
+	<stop offset="100%" stop-color="rgb(255, 0, 0)" />
+	</linearGradient>
+
+	<linearGradient id="GrGREEN" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(102, 230, 102)" />
+	<stop offset="20%" stop-color="rgb(218, 255, 218)" />
+	<stop offset="25%" stop-color="rgb(218, 255, 218)" />
+	<stop offset="100%" stop-color="rgb(0, 148, 0)" />
+	</linearGradient>
+
+	<linearGradient id="GrBLUE" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(102, 102, 230)" />
+	<stop offset="20%" stop-color="rgb(238, 238, 238)" />
+	<stop offset="25%" stop-color="rgb(238, 238, 238)" />
+	<stop offset="100%" stop-color="rgb(0, 0, 128)" />
+	</linearGradient>
+
+	<linearGradient id="GrORANGE" x1="0" y1="0" x2="0" y2="1" gradientUnits="boundingBox">
+	<stop offset="0%" stop-color="rgb(255, 186, 0)" />
+	<stop offset="20%" stop-color="rgb(255, 238, 168)" />
+	<stop offset="25%" stop-color="rgb(255, 238, 168)" />
+	<stop offset="100%" stop-color="rgb(255, 155, 0)" />
+	</linearGradient>
+	</defs>
+
+	<rect x="0" y="0" rx="1.43px" ry="1.43px" width="50" height="10" fill="url(#GrGRAY)" stroke="none" />
+<rect x="0" y="0" rx="1.43px" ry="1.43px" width="50" height="10" fill="url(#GrGREEN)" stroke="none" /></g></svg>

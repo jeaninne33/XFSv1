@@ -1,0 +1,7 @@
+User-agent: * 
+Crawl-delay: 3600 
+Disallow: /pruebas/wp-admin
+Disallow: /pruebas/wp-includes
+Disallow: /pruebas/wp-content/plugins
+Disallow: /pruebas/wp-content/cache
+Disallow: /pruebas/wp-content/themes
