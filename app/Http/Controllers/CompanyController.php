@@ -9,6 +9,7 @@ use XFS\Company;
 
 use Illuminate\Support\Facades\Validator;
 
+
 class CompanyController extends Controller
 {
     /**
@@ -16,14 +17,16 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         // get all the nerds
-        $companys = Company::all();
+        $companys = Company::orderBy('id','DESC')->paginate(1);
 
         // load the view and pass the nerds
-         return view('companys.index')->with('companys', $companys);
+         return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 1);
+
+
     }
 
     /**
@@ -43,10 +46,7 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+
     /**
     * Store a newly created resource in storage.
     *
@@ -61,10 +61,11 @@ class CompanyController extends Controller
          'correo' => 'required|email|unique:companys,correo',
          'direccion'      => 'required',
          'representante'=> 'required',
-         'telefono'=> 'required|numeric|max:12',
+         'telefono'=> 'required|numeric',
          ]);
-        $company=Company::create($request->all());
+        Company::create($request->all());
          //
+        // Session::flash('message', 'Successfully created nerd!');
          return redirect()->route('companys.index');
         //dd(Input::all());
    }
@@ -79,6 +80,10 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
+        $companys = Company::find($id);
+        // load the view and pass the nerds
+        // show the view and pass the nerd to it
+         return view('companys.show')->with('companys', $companys);
     }
 
     /**
@@ -89,7 +94,12 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        //  //
+        // get the nerd
+        $companys = Company::find($id);
+
+       // show the edit form and pass the nerd
+      return view('companys.edit')->with('companys',   $companys);
     }
 
     /**
@@ -101,7 +111,18 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+        'nombre'       => 'required',
+        'correo' => 'required',
+        'direccion'      => 'required',
+        'representante'=> 'required',
+        'telefono'=> 'required|numeric',
+        ]);
+
+       Company::find($id)->update($request->all());
+      // Session::flash('message', 'Successfully update nerd!');
+       return redirect()->route('companys.index')
+                       ->with('success','Item updated successfully');
     }
 
     /**
@@ -113,5 +134,9 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+        Company::find($id)->delete();
+        //Session::flash('message', 'Successfully delete nerd!');
+        return redirect()->route('companys.index')
+                      ->with('success','Item deleted successfully');
     }
 }

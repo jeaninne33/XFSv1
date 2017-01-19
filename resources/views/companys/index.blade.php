@@ -19,11 +19,11 @@
 
 <h1>Listado de Comnpañias</h1>
 
-<!-- will be used to show any messages -->
-@if (Session::has('message'))
-    <div class="alert alert-info">{{ Session::get('message') }}</div>
+   @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
 @endif
-
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -53,13 +53,15 @@
 
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
                 <a class="btn btn-small btn-info" href="{{ URL::to('companys/' . $value->id . '/edit') }}">Editar</a>
-
+              [[Form::open(['method' => 'DELETE','route' => ['companys.destroy', $value->id],'style'=>'display:inline']) ]]
+                         [[Form::submit('Delete', ['class' => 'btn btn-danger'])]]
+                        [[Form::close() ]]
             </td>
         </tr>
     @endforeach
     </tbody>
 </table>
-
+   [[ $companys->render() ]]
 </div>
 </body>
 </html>
