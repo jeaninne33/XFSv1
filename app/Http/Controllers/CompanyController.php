@@ -8,6 +8,7 @@ use XFS\Http\Controllers\Controller;
 use XFS\Company;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 
 class CompanyController extends Controller
@@ -19,15 +20,16 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        //
+      // dd($request->get('busqueda'));
         // get all the nerds
-        $companys = Company::orderBy('id','DESC')->paginate(1);
+        $companys = Company::busqueda($request->get('busqueda'))->orderBy('id','DESC')->paginate(5);
 
         // load the view and pass the nerds
-         return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 1);
+         return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
 
 
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -66,9 +68,21 @@ class CompanyController extends Controller
         Company::create($request->all());
          //
         // Session::flash('message', 'Successfully created nerd!');
-         return redirect()->route('companys.index');
+         return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
         //dd(Input::all());
    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -122,7 +136,7 @@ class CompanyController extends Controller
        Company::find($id)->update($request->all());
       // Session::flash('message', 'Successfully update nerd!');
        return redirect()->route('companys.index')
-                       ->with('success','Item updated successfully');
+                       ->with('success','Compañia Actualizada Exitosamente');
     }
 
     /**
@@ -137,6 +151,6 @@ class CompanyController extends Controller
         Company::find($id)->delete();
         //Session::flash('message', 'Successfully delete nerd!');
         return redirect()->route('companys.index')
-                      ->with('success','Item deleted successfully');
+                      ->with('success','Compañia eliminada Exitosamente');
     }
 }

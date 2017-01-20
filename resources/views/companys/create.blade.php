@@ -20,6 +20,10 @@
 </nav>
 
 <h1>Agregar Compañia</h1>
+<div class="pull-right">
+         <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
+     </div>
+     <br/>
 
 <!-- if there are creation errors, they will show here -->
 @if (count($errors) > 0)

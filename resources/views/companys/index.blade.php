@@ -18,12 +18,20 @@
 </nav>
 
 <h1>Listado de Comnpañias</h1>
+@if ($message = Session::get('success'))
+      <div class="alert alert-success">
+          <p>{{ $message }}</p>
+      </div>
+  @endif
 
-   @if (session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
+
+  [[Form::open (['route' => 'companys.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
+    <div class="form-group">
+      [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]]
+
     </div>
-@endif
+    <button type="submit" class="btn btn-default">Submit</button>
+  [[ Form::close()]]
 <table class="table table-striped table-bordered">
     <thead>
         <tr>

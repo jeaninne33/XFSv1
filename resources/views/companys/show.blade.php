@@ -20,6 +20,10 @@
 </nav>
 
 <h1>Showing {{ $companys->nombre }}</h1>
+<div class="pull-right">
+         <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
+     </div>
+     <br/>
 
     <div class="jumbotron text-center">
         <h2>{{ $companys->nombre  }}</h2>
