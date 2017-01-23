@@ -21,9 +21,18 @@ class Company extends Eloquent
       //dd("scope: ". $busqueda);//muestra los datos
 
         if(trim($busqueda)!=""){
-            $query->where(\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"));
-            // \DB::raw("UPPER(nombre)"),"LIKE", "UPPER(%$busqueda%)
-            //where('nombre',"LIKE", "%$busqueda%");
+          $query->where(\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"))->orWhere(\DB::raw("UPPER(direccion)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"));
+            // $query->where([
+            //   [\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')")],
+            //   [\DB::raw("UPPER(direccion)"),"LIKE", \DB::raw("UPPER('%$busqueda%')")],
+            // ]);
+            //->orWhere('name', 'John')
+
+
+
+            //$query->where(  [[\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')")],[\DB::raw("UPPER(direccion)"),"LIKE", \DB::raw("UPPER('%$busqueda%')")]]);
+
+            //  $query->where(\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"));
          }
      }
 

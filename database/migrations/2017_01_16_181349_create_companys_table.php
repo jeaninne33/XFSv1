@@ -26,6 +26,7 @@ class CreateCompanysTable extends Migration
           $table->timestamps();
             //
         });
+    // 
     }
 
     /**

@@ -25,7 +25,7 @@
   @endif
 
 
-  [[Form::open (['route' => 'companys.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
+  [[Form::model (Request::all(), ['route' => 'companys.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
     <div class="form-group">
       [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]]
 
@@ -69,7 +69,7 @@
     @endforeach
     </tbody>
 </table>
-   [[ $companys->render() ]]
+   [[ $companys->appends(Request::all())->render() ]]
 </div>
 </body>
 </html>
