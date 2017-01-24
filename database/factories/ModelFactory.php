@@ -22,32 +22,51 @@ $factory->define(XFS\User::class, function (Faker\Generator $faker) {
 
 $factory->defineAs(XFS\Company::class, 'proveedor', function ($faker) {
     return [
-      $table->increments('id');
-      $table->string('nombre',100)->unique();
-      $table->string('correo',100)->unique();
-      $table->string('direccion', 500);
-      $table->string('website', 50);
-      $table->string('representante', 100);
-      $table->string('ciudad', 50);
-      $table->string('pais', 50);
-      $table->string('codigop', 50);
-      $table->string('telefono', 50);
-      $table->timestamps();
-        'nombre'  => $faker->sentence(),
+        'nombre'  => $faker->name,
         'correo'   => $faker->email,
-        'direccion'  =>$faker->text,
-        'website'  => $faker->sentence(),
+        'direccion'  =>$faker->sentence(),
+        'website'  => $faker->name,
         'representante'  => $faker->sentence(),
-        'ciudad'  => $faker->sentence(),
-        'pais'  => $faker->sentence(),
-        'codigop'  => $faker->sentence(),
-        'telefono'  => $faker->sentence(),
+        'ciudad'  => $faker->name,
+        'pais'  => $faker->name,
+        'codigop'  => $faker->name,
+        'telefono'  => $faker->name,
+        'estado'  => $faker->name,
+        'relacion'   => 'Proveedor',
+        'tipo_prove'  =>'FBO/Handler',
+        'certificacion'  => $faker->sentence(),
+        'contacto_admin'  => $faker->sentence(),
+        'celular'  => $faker->name,
+        'correo_admin'  => $faker->email,
+        'telefono_admin'  => $faker->name,
+        'banco'  => $faker->name,
+        'cuenta'  => $faker->name,
+        'direccion_cuenta'  => $faker->name,
+        'aba'  => $faker->name,
     ];
 });
 $factory->defineAs(XFS\Company::class, 'cliente', function ($faker) {
     return [
-        'title'  => $faker->sentence(),
-        'body'   => $faker->text,
-        'active' => false,
+        'nombre'  => $faker->name,
+        'correo'   => $faker->email,
+        'direccion'  =>$faker->sentence(),
+        'website'  => $faker->name,
+        'representante'  => $faker->sentence(),
+        'ciudad'  => $faker->name,
+        'pais'  => $faker->name,
+        'codigop'  => $faker->name,
+        'telefono'  => $faker->name,
+        'estado'  => $faker->name,
+        'relacion'   => 'Cliente',
+        'tipo_prove'  =>null,
+        'certificacion'  => $faker->sentence(),
+        'contacto_admin'  => $faker->sentence(),
+        'celular'  => $faker->name,
+        'correo_admin'  => $faker->email,
+        'telefono_admin'  => $faker->name,
+        'banco'  => $faker->name,
+        'cuenta'  => $faker->name,
+        'direccion_cuenta'  => $faker->name,
+        'aba'  => $faker->name,
     ];
 });

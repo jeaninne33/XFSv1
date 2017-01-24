@@ -22,7 +22,7 @@ class CompanyController extends Controller
     {
       // dd($request->get('busqueda'));
         // get all the nerds
-        $companys = Company::busqueda($request->get('busqueda'))->orderBy('id','DESC')->paginate(5);
+        $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
 
         // load the view and pass the nerds
          return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
@@ -74,17 +74,6 @@ class CompanyController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -110,7 +99,7 @@ class CompanyController extends Controller
     {
         //  //
         // get the nerd
-        $companys = Company::find($id);
+        $companys = Company::findOrFail($id);
 
        // show the edit form and pass the nerd
       return view('companys.edit')->with('companys',   $companys);

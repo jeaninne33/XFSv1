@@ -7,19 +7,12 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default">
 
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{{ URL::to('companys') }}">Compañias</a>
-  </div>
-  <ul class="nav navbar-nav">
-      <li><a href="{{ URL::to('companys') }}">Ver Todas Compañias</a></li>
-      <li><a href="{{ URL::to('companys/create') }}">Crear Compañia</a>
-    </ul>
-</nav>
+      <div class="panel-heading">Editar Compañia {{ $companys->nombre }}</div>
 
-<h1>Edit {{ $companys->nombre }}</h1>
 
 <!-- if there are creation errors, they will show here -->
 @if (count($errors) > 0)
@@ -33,50 +26,13 @@
   </div>
 @endif
 
- [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT'))]]
-
- <div class="form-group">
-   [[ Form::label('nombre', 'Nombre')]]
-   [[Form::text('nombre', null, ['class' => 'form-control' , 'required' => 'required'])]]
- </div>
-
- <div class="form-group">
-     [[Form::label('correo', 'Correo') ]]
-     [[ Form::email('correo', null, ['class' => 'form-control' , 'required' => 'required']) ]]
- </div>
- <div class="form-group">
-     [[Form::label('direccion', 'Dirección') ]]
-     [[ Form::text('direccion', null, ['class' => 'form-control' , 'required' => 'required']) ]]
- </div>
- <div class="form-group">
-     [[Form::label('website', 'Sitio Web') ]]
-     [[ Form::text('website', null, ['class' => 'form-control' ]) ]]
- </div>
- <div class="form-group">
-     [[Form::label('representante', 'Representante Legal') ]]
-     [[ Form::text('representante', null, ['class' => 'form-control' , 'required' => 'required']) ]]
- </div>
- <div class="form-group">
-   [[ Form::label('ciudad', 'Ciudad')]]
-  [[ Form::text('ciudad', null, ['class' => 'form-control' , 'required' => 'required']) ]]
-     <!--[[ Form::select('nerd_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), Input::old('nerd_level'), array('class' => 'form-control')) ]]
--->
- </div>
- <div class="form-group">
-     [[Form::label('pais', 'Pais') ]]
-     [[ Form::text('pais', null, ['class' => 'form-control' , 'required' => 'required']) ]]
- </div>
- <div class="form-group">
-     [[Form::label('codigop', 'Codigo Postal') ]]
-     [[ Form::text('codigop', null, ['class' => 'form-control']) ]]
- </div>
- <div class="form-group">
-     [[Form::label('telefono', 'Teléfono') ]]
-     [[ Form::text('telefono', null, ['class' => 'form-control' , 'required' => 'required']) ]]
- </div>
-[[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
-[[ Form::close() ]]
-
+   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT'))]]
+    @include('companys.partials.fields')
+  [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
+  [[ Form::close() ]]
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
