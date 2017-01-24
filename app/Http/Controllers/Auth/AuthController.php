@@ -3,10 +3,13 @@
 namespace XFS\Http\Controllers\Auth;
 
 use XFS\User;
+use Auth;
+use Redirect;
 use Validator;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Input;
 
 class AuthController extends Controller
 {
@@ -25,7 +28,24 @@ class AuthController extends Controller
 
 
     //entre comillas la ruta a la que deseas redireccionar
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
+    public function postLogin()
+    {
+      $data = [
+            'email' => Input::get('email'),
+            'password' => Input::get('password')
+        ];
+
+        // Verificamos los datos
+        if (Auth::attempt($data, Input::get('remember'))) // Como segundo parámetro pasámos el checkbox para sabes si queremos recordar la contraseña
+        {
+            // Si nuestros datos son correctos mostramos la página de inicio
+            return Redirect::intended('/principal');
+        }
+        // Si los datos no son los correctos volvemos al login y mostramos un error
+        return Redirect::back()->with('error_message', 'Correo Electronico o Contraseña')->withInput();
+
+    }
     /**
      * Create a new authentication controller instance.
      *

@@ -11,7 +11,9 @@
 |
 */
 Route::get('/','IndexController@index');
-
+// Route::get('login',function(){
+//   return view('auth/login');
+// });
 Route::get('servicios',function(){
   return view('servicios');
 });
@@ -24,11 +26,15 @@ Route::get('welcome', [
 ]);
 Route::get('pdf', 'HomeController@invoice');
 
-// Authentication routes...
+//Authentication routes...
 Route::get('login', [
   'uses'=> 'Auth\AuthController@getLogin',
    'as' => 'login'
 ]);
+Route::get('login2',function(){
+  return view('auth/login2');
+});
+//Route::resource('loginPost','LoginController');
 Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
 
@@ -38,9 +44,5 @@ Route::get('register',  [
    'as' => 'register'
 ]);
 
-//Route::group(array("before"=>"auth"), function())
-//{
-  Route::resource('companys', 'CompanyController');
-//}
-
+ Route::resource('companys', 'CompanyController');
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);

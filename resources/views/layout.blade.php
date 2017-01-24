@@ -83,8 +83,21 @@
                     </ul>
 
                     <ul class="quick-menu pull-right">
+                      <li class="ribbon">
+                        @if (Auth::guest())
+                            <li><a href="{{route('auth/login')}}">INICIO DE SESIÓN</a></li>
+                        @else
+                                <a href="#">{{ Auth::user()->name }}</a>
+                                <ul class="menu mini uppercase">
 
-                        <li><a href="#" class="soap-popupbox" onclick="mjslogin()">INICIO SESIÓN</a></li>
+                                    <li><a href="#">Perfil</a></li>
+                                    <li><a href="#">Configuración</a></li>
+                                    <li><a href="{{route('auth/logout')}}">SignOut</a></li>
+                                </ul>
+                          @endif
+
+                      </li>
+        
                         <!--<li><a href="#" class="soap-popupbox">SIGNUP</a></li>-->
                         <!--<li class="ribbon currency">
                         <a href="#" title="">USD</a>
