@@ -10,7 +10,7 @@ use XFS\Http\Controllers\Controller;
 class IndexController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display pagina. a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,6 +18,8 @@ class IndexController extends Controller
     {
       return view('index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.
