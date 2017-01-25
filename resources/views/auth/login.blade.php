@@ -95,7 +95,7 @@
                                     <input name="remember" type="checkbox">Recordar Datos
                                 </label>
                             </div>
-                            <button type="submit" class="btn-large full-width yellow">INICIAR</button>
+                            <button type="submit" class="btn-large full-width blue-bg">INICIAR</button>
                         </form>
                     </div>
                 </div>

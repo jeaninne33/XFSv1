@@ -17,6 +17,9 @@ Route::get('/','IndexController@index');
 Route::get('servicios',function(){
   return view('servicios');
 });
+Route::get('catering',function(){
+  return view('catering');
+});
 Route::get('principal',function(){
   return view('principal');
 });
@@ -44,5 +47,5 @@ Route::get('register',  [
    'as' => 'register'
 ]);
 
- Route::resource('companys', 'CompanyController');
+Route::resource('companys', 'CompanyController');
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
