@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table id="example" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
             <td>ID</td>
@@ -23,12 +23,18 @@
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('companys/' . $value->id) }}">Mostrar</a>
+              <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
+
+
 
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('companys/' . $value->id . '/edit') }}">Editar</a>
+              <a class="glyphicon glyphicon-pencil" title="Editar" href="{{ URL::to('companys/' . $value->id . '/edit') }}"></a>
+
               [[Form::open(['method' => 'DELETE','route' => ['companys.destroy', $value->id],'style'=>'display:inline']) ]]
-                         [[Form::submit('Delete', ['class' => 'btn btn-danger'])]]
+
+              <button type="submit" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
                         [[Form::close() ]]
             </td>
         </tr>
