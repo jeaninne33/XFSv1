@@ -1,5 +1,68 @@
-@extends('layout')
-@section('content')
+<!DOCTYPE html>
+<!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+<head>
+    <!-- Page Title -->
+    <title>XFlightSupport</title>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+
+	<link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
+
+    <!-- Theme Styles -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+
+
+    <!-- Main Style -->
+    <link id="main-style" rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Updated Styles -->
+    <link rel="stylesheet" href="assets/css/updates.css">
+    <!-- Datatable Styles -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+
+
+    <!-- Responsive Styles -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!--SWEETALERT-->
+    <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
+    <link href="dist/sweetalert.css" rel="stylesheet" />
+    <!--footer header-->
+    <script src="js/header-footer.js"></script>
+    <!-- CSS for IE -->
+
+</head>
+<body>
+  <div id="page-wrapper">
+  <header id="header" class="navbar-static-top">
+    <div style="background-image:url(images/header.png)" class="topnav hidden-xs">
+        <div class="container">
+
+            <ul class="quick-menu pull-right">
+              <li class="ribbon">
+                @if (Auth::guest())
+                    <li><a href="{{route('auth/login')}}">INICIO DE SESIÓN</a></li>
+                @else
+                        <a href="#">{{ Auth::user()->name }}</a>
+                        <ul class="menu mini uppercase">
+
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Configuración</a></li>
+                            <li><a href="{{route('auth/logout')}}">SignOut</a></li>
+                        </ul>
+                  @endif
+
+              </li>
+            </ul>
+        </div>
+    </div>
+  </header>
+    @yield('content')
   <section id="content" class="gray-area">
       <div class="container">
           <div id="main">
@@ -516,144 +579,36 @@
                           </div>
                       </div>
                       <div id="booking" class="tab-pane fade">
-                          <h2>Trips You have Booked!</h2>
-                          <div class="filter-section gray-area clearfix">
-                              <form>
-                                  <label class="radio radio-inline">
-                                      <input type="radio" name="filter" checked="checked" />
-                                      All Types
-                                  </label>
-                                  <label class="radio radio-inline">
-                                      <input type="radio" name="filter" />
-                                      Hotels
-                                  </label>
-                                  <label class="radio radio-inline">
-                                      <input type="radio" name="filter" />
-                                      Flights
-                                  </label>
-                                  <label class="radio radio-inline">
-                                      <input type="radio" name="filter" />
-                                      Cars
-                                  </label>
-                                  <label class="radio radio-inline">
-                                      <input type="radio" name="filter" />
-                                      Cruises
-                                  </label>
-                                  <div class="pull-right col-md-6 action">
-                                      <h5 class="pull-left no-margin col-md-4">Sort results by:</h5>
-                                      <button class="btn-small white gray-color">UPCOMING</button>
-                                      <button class="btn-small white gray-color">CANCELLED</button>
-                                  </div>
-                              </form>
-                          </div>
-                          <div class="booking-history">
-                              <div class="booking-info clearfix">
-                                  <div class="date">
-                                      <label class="month">NOV</label>
-                                      <label class="date">23</label>
-                                      <label class="day">SAT</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-plane-right takeoff-effect yellow-color circle"></i>Indianapolis to Paris<small>you are flying</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>saturday, nov 23, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">UPCOMMING</button>
-                              </div>
-                              <div class="booking-info clearfix">
-                                  <div class="date">
-                                      <label class="month">NOV</label>
-                                      <label class="date">30</label>
-                                      <label class="day">SAT</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-plane-right takeoff-effect yellow-color circle"></i>England to Rome<small>you are flying</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>saturday, nov 30, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">UPCOMMING</button>
-                              </div>
-                              <div class="booking-info clearfix">
-                                  <div class="date">
-                                      <label class="month">DEC</label>
-                                      <label class="date">11</label>
-                                      <label class="day">MON</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-hotel blue-color circle"></i>Hilton Hotel &amp; Resorts<small>2 adults staying</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>monday, dec 11, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">UPCOMMING</button>
-                              </div>
-                              <div class="booking-info clearfix">
-                                  <div class="date">
-                                      <label class="month">DEC</label>
-                                      <label class="date">18</label>
-                                      <label class="day">THU</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-car red-color circle"></i>Economy Car<small>you are driving</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>thursday, dec 18, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">UPCOMMING</button>
-                              </div>
-                              <div class="booking-info clearfix">
-                                  <div class="date">
-                                      <label class="month">DEC</label>
-                                      <label class="date">22</label>
-                                      <label class="day">SUN</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-cruise green-color circle"></i>Baja Mexico<small>3 adults going on cruise</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>sunday, dec 22, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">UPCOMMING</button>
-                              </div>
-                              <div class="booking-info clearfix cancelled">
-                                  <div class="date">
-                                      <label class="month">NOV</label>
-                                      <label class="date">30</label>
-                                      <label class="day">SAT</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-plane-right takeoff-effect circle"></i>England to Rome<small>you are flying</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>saturday, nov 30, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">CANCELLED</button>
-                              </div>
-                              <div class="booking-info clearfix cancelled">
-                                  <div class="date">
-                                      <label class="month">DEC</label>
-                                      <label class="date">18</label>
-                                      <label class="day">THU</label>
-                                  </div>
-                                  <h4 class="box-title"><i class="icon soap-icon-car circle"></i>Economy Car<small>you are driving</small></h4>
-                                  <dl class="info">
-                                      <dt>TRIP ID</dt>
-                                      <dd>5754-8dk8-8ee</dd>
-                                      <dt>booked on</dt>
-                                      <dd>thursday, dec 18, 2013</dd>
-                                  </dl>
-                                  <button class="btn-mini status">CANCELLED</button>
-                              </div>
-                          </div>
+                        <div class="row">
+                          <div class="col-md-11 col-md-offset-1">
+                            <div class="panel panel-default">
 
+                            <div class="panel-heading">Listado de Comnpañias</div>
+                            @if ($message = Session::get('success'))
+                                  <div class="alert alert-success">
+                                      <p>{{ $message }}</p>
+                                  </div>
+                              @endif
+                            <div class="panel-body">
+                              [[Form::model (Request::all(), ['route' => 'principal','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
+                                <div class="form-group">
+                                    [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]]
+                                    [[Form::select( 'relacion', config('options.relacion'), null, ['class'=>'form-control'] )]]
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                              [[ Form::close()]]
+                              <p>
+                                <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
+                                  Nueva Compañia
+                                </a>
+                              </p>
+                              <p>{{$companys->total()}} compañias</p>
+                              @include('companys.partials.table')
+                               [[ $companys->appends(Request::all())->render() ]]
+                             </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div id="wishlist" class="tab-pane fade">
                           <h2>Your Wish List</h2>
@@ -958,6 +913,23 @@
           </div>
       </div>
   </section>
+</div>
+<!-- Javascript -->
+<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.noconflict.js"></script>
+<script type="text/javascript" src="assets/js/modernizr.2.7.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
+
+<!-- Twitter Bootstrap -->
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<!-- datatable jquery -->
+<script type="text/javascript" href="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
+
+
+<!--SWEETALERT-->
   <script type="text/javascript">
       tjq(document).ready(function() {
           tjq("#profile .edit-profile-btn").click(function(e) {
@@ -969,10 +941,16 @@
           setTimeout(function() {
               tjq(".notification-area").append('<div class="info-box block"><span class="close"></span><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ab quis a dolorem, placeat eos doloribus esse repellendus quasi libero illum dolore. Esse minima voluptas magni impedit, iusto, obcaecati dignissimos.</p></div>');
           }, 10000);
+
+          tjq('#example').dataTable();
+
       });
       tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
           tjq(".view-profile").show();
           tjq(".edit-profile").hide();
       });
+      alert("ajaa");
   </script>
-@endsection
+
+</body>
+</html>

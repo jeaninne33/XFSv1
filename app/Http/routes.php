@@ -17,9 +17,11 @@ Route::get('/','IndexController@index');
 Route::get('servicios',function(){
   return view('servicios');
 });
-Route::get('principal',function(){
-  return view('principal');
-});
+
+Route::get('principal', [
+    'as' => 'principal',
+    'uses' => 'AdminController@index'
+]);
 Route::get('welcome', [
     'as' => 'welcome',
     'uses' => 'HomeController@index'

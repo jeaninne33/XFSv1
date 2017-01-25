@@ -25,8 +25,8 @@ class CompanyController extends Controller
         $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
 
         // load the view and pass the nerds
-         return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
-
+        return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
+        //return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
 
     }
 
