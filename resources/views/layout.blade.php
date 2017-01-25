@@ -76,7 +76,7 @@
                         <li class="ribbon">
                             <a href="#">Español</a>
                             <ul class="menu mini">
-                                <li><a href="{{route(login)}}" title="Inglés">Inglés</a></li>
+                                <li><a href="en/index.html" title="Inglés">Inglés</a></li>
 
                             </ul>
                         </li>
@@ -96,20 +96,18 @@
                                 </ul>
                           @endif
 
-
                       </li>
-
-
-                        <li><a href="#" class="soap-popupbox" onclick="mjslogin()">INICIO SESIÓN</a></li>
                     </ul>
                 </div>
             </div>
-        @include('menu')
+
+            @include('menu')
         </header>
 
         @yield('content')
 
-        @include('footer')
+          @include('footer')
+
             </div>
 
 
