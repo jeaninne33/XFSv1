@@ -21,13 +21,12 @@ Route::get('servicios',function(){
 Route::get('principal',function(){
   return view('principal');
 });
-=======
 
 Route::get('principal', [
     'as' => 'principal',
     'uses' => 'AdminController@index'
 ]);
->>>>>>> 941e6d943e523516d75b980e48757fb2c5d8f29d
+
 Route::get('welcome', [
     'as' => 'welcome',
     'uses' => 'HomeController@index'
@@ -51,6 +50,7 @@ Route::get('register',  [
   'uses'=> 'Auth\AuthController@getRegister',
    'as' => 'register'
 ]);
-
-Route::resource('companys', 'CompanyController');
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
+Route::resource('companys', 'CompanyController');
+Route::resource('servicios', 'ServicioController');
+Route::resource ('categoria', 'CategoriaController');

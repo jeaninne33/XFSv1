@@ -80,6 +80,7 @@
             <div class="container">
                 <div id="main">
                     <div class="welcome-text box" style="">INICIO DE SESIÓN</div>
+
                     {{-- <p class="white-color block" style="font-size: 1.5em;">Please login to your account.</p> --}}
                     <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block">
                         <form class="login-form" method="POST" action="{{route('login')}}">
