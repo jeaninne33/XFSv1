@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use XFS\Company;
+use Illuminate\Support\Facades\Session;
+
 class AdminController extends Controller
 {
     /**
@@ -16,8 +18,10 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-          $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
-          return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
+          $companys = Company::all();//orderBy('id','DESC');
+        //  return view('principal',compact('companys'));
+          return  view('principal')
+        ->with('companys', $companys);
     }
 
     /**

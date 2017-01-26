@@ -583,28 +583,22 @@
                           <div class="col-md-11 col-md-offset-1">
                             <div class="panel panel-default">
 
-                            <div class="panel-heading">Listado de Comnpañias</div>
+                            <div class="panel-heading">Listado de Compañias</div>
                             @if ($message = Session::get('success'))
                                   <div class="alert alert-success">
                                       <p>{{ $message }}</p>
                                   </div>
                               @endif
                             <div class="panel-body">
-                              [[Form::model (Request::all(), ['route' => 'principal','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
-                                <div class="form-group">
-                                    [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]]
-                                    [[Form::select( 'relacion', config('options.relacion'), null, ['class'=>'form-control'] )]]
-                                </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
-                              [[ Form::close()]]
+
                               <p>
                                 <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
                                   Nueva Compañia
                                 </a>
                               </p>
-                              <p>{{$companys->total()}} compañias</p>
+
                               @include('companys.partials.table')
-                               [[ $companys->appends(Request::all())->render() ]]
+
                              </div>
                             </div>
                           </div>
@@ -922,12 +916,12 @@
 <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
 <script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
 
+
+<!-- datatable jquery -->
+<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
 <!-- Twitter Bootstrap -->
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-<!-- datatable jquery -->
-<script type="text/javascript" href="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-
-
 
 <!--SWEETALERT-->
   <script type="text/javascript">
@@ -945,11 +939,27 @@
           tjq('#example').dataTable();
 
       });
+
+      function deleteUser(id) {
+          if (confirm('Esta Seguro de Eliminar esta Compañia?')) {
+            a='companys/' + id;
+        alert(a);
+              tjq.ajax({
+                  type: "DELETE",
+                  url: 'companys/' + id, //resource
+                  success: function(affectedRows) {
+                      //if something was deleted, we redirect the user to the users page, and automatically the user that he deleted will disappear
+                      if (affectedRows > 0) window.location = 'companys';
+                  }
+              });
+          }
+      }//fin funcion
+
       tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
           tjq(".view-profile").show();
           tjq(".edit-profile").hide();
       });
-      alert("ajaa");
+    //  alert("ajaa");
   </script>
 
 </body>

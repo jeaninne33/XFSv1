@@ -137,9 +137,17 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
-        Company::find($id)->delete();
-        //Session::flash('message', 'Successfully delete nerd!');
-        return redirect()->route('companys.index')
-                      ->with('success','Compañia eliminada Exitosamente');
+     //  dd($id);
+        $comp=Company::findOrFail($id);
+        if (!is_null($comp)) {
+            $comp->delete();
+           // Session::flash('message', 'Successfully delete nerd!');
+           return redirect()->route('principal')
+                 ->with('success','La compañia '.$comp->nombre.' fue eliminada Exitosamente');
+       }
+         return redirect()->route('principal')
+                 ->with('success','Compañia eliminada Exitosamente');
+
+      //return $affectedRows;
     }
 }
