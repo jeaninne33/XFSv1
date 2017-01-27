@@ -938,9 +938,14 @@
 
           tjq('#example').dataTable();
 
+          tjq('.btn-delete').click(function(){
+              alert("ajaa");
+
+          });
+
       });
 
-      function deleteUser(id) {
+      /*function deleteUser(id) {
           if (confirm('Esta Seguro de Eliminar esta Compañia?')) {
             a='companys/' + id;
         alert(a);
@@ -953,7 +958,7 @@
                   }
               });
           }
-      }//fin funcion
+      }//fin funcion*/
 
       tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
           tjq(".view-profile").show();
