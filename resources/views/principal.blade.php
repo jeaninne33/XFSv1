@@ -32,15 +32,13 @@
     <!--SWEETALERT-->
     <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
     <link href="dist/sweetalert.css" rel="stylesheet" />
-    <!--footer header-->
-    <script src="js/header-footer.js"></script>
-    <!-- CSS for IE -->
+   
 
 </head>
 <body>
   <div id="page-wrapper">
   <header id="header" class="navbar-static-top">
-    <div style="background-image:url(images/header.png)" class="topnav hidden-xs">
+    <div style="background-image:url(images/header.png); position: fixed;" class="topnav hidden-xs">
         <div class="container">
 
             <ul class="quick-menu pull-right">
@@ -62,7 +60,6 @@
         </div>
     </div>
   </header>
-    @yield('content')
   <section id="content" class="gray-area">
       <div class="container">
           <div id="main">
@@ -579,30 +576,7 @@
                           </div>
                       </div>
                       <div id="booking" class="tab-pane fade">
-                        <div class="row">
-                          <div class="col-md-11 col-md-offset-1">
-                            <div class="panel panel-default">
-
-                            <div class="panel-heading">Listado de Compañias</div>
-                            @if ($message = Session::get('success'))
-                                  <div class="alert alert-success">
-                                      <p>{{ $message }}</p>
-                                  </div>
-                              @endif
-                            <div class="panel-body">
-
-                              <p>
-                                <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
-                                  Nueva Compañia
-                                </a>
-                              </p>
-
-                              @include('companys.partials.table')
-
-                             </div>
-                            </div>
-                          </div>
-                        </div>
+                       @yield('companys')
                       </div>
                       <div id="wishlist" class="tab-pane fade">
                           <h2>Your Wish List</h2>
@@ -919,6 +893,9 @@
 
 <!-- datatable jquery -->
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<!-- datatable jquery 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>-->
+
 
 <!-- Twitter Bootstrap -->
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -938,28 +915,32 @@
 
           tjq('#example').dataTable();
 
-          tjq('.btn-delete').click(function(){
-              alert("ajaa");
+          tjq('.btn-delete').click(function(e){
+             e.preventDefault();//evita que se envie el formulario
+             // alert("ajaa");
+              var row=tjq(this).parents('tr');
+              var id=row.data('id');
+              var form =tjq('#form-delete');
+              var url=form.attr('action').replace(':COM_ID',id);
+              var data=form.serialize();
+              tjq("#mensaje").css("display", "block");
+              tjq.post(url,data, function(result){
+                 tjq('#mensaje').toggleClass('alert alert alert-success');//cambiar la clase
+                tjq('#mensaje').html(result);
+               // alert(result);
+                row.fadeOut();
 
+              }).fail(function(){
+                  tjq('#mensaje').toggleClass('alert alert alert-danger');
+
+                   tjq('#mensaje').html('La compañia no fue eliminada');
+                //alert('La compañia no fue eliminada');
+                row.show();
+              });
           });
-
       });
 
-      /*function deleteUser(id) {
-          if (confirm('Esta Seguro de Eliminar esta Compañia?')) {
-            a='companys/' + id;
-        alert(a);
-              tjq.ajax({
-                  type: "DELETE",
-                  url: 'companys/' + id, //resource
-                  success: function(affectedRows) {
-                      //if something was deleted, we redirect the user to the users page, and automatically the user that he deleted will disappear
-                      if (affectedRows > 0) window.location = 'companys';
-                  }
-              });
-          }
-      }//fin funcion*/
-
+    
       tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
           tjq(".view-profile").show();
           tjq(".edit-profile").hide();

@@ -9,6 +9,8 @@ use XFS\Company;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Routing\Redirector;
+use Illuminate\Routing\Route;
 
 
 class CompanyController extends Controller
@@ -18,15 +20,30 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+  /*  public function _construc(){
+
+        $this->beforeFilter('@finCompanys',['only'=>['show','edit','update','destroy']]);
+    }
+
+    public function finCompanys(Route $route){
+        $this->companys =Company::findOrFail($route->getParameter('companys'));
+        dd($this->companys);
+
+    }*/
+
     public function index(Request $request)
     {
       // dd($request->get('busqueda'));
         // get all the nerds
-        $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
+       /* $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
 
         // load the view and pass the nerds
         return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
-        //return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
+        //return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);*/
+          $companys = Company::all();//orderBy('id','DESC');
+          return  view('companys.index')
+        ->with('companys', $companys);
 
     }
 
@@ -83,7 +100,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
-        $companys = Company::find($id);
+        $companys = Company::findOrFail($id);
         // load the view and pass the nerds
         // show the view and pass the nerd to it
          return view('companys.show')->with('companys', $companys);
@@ -99,10 +116,10 @@ class CompanyController extends Controller
     {
         //  //
         // get the nerd
-        $companys = Company::findOrFail($id);
+      $companys = Company::findOrFail($id);
 
        // show the edit form and pass the nerd
-      return view('companys.edit')->with('companys',   $companys);
+      return view('companys.edit')->with('companys',$companys);
     }
 
     /**
@@ -122,7 +139,7 @@ class CompanyController extends Controller
         'telefono'=> 'required|numeric',
         ]);
 
-       Company::find($id)->update($request->all());
+      $this->companys->update($request->all());
       // Session::flash('message', 'Successfully update nerd!');
        return redirect()->route('companys.index')
                        ->with('success','Compañia Actualizada Exitosamente');
@@ -134,19 +151,26 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         //
      //  dd($id);
+       // abort(500);
         $comp=Company::findOrFail($id);
+
+        $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
         if (!is_null($comp)) {
             $comp->delete();
            // Session::flash('message', 'Successfully delete nerd!');
-           return redirect()->route('principal')
-                 ->with('success','La compañia '.$comp->nombre.' fue eliminada Exitosamente');
+
+            if($request->ajax()){
+                return $mensaje;
+
+            }
+           return redirect()->route('companys.index')
+                 ->with('success', $mensaje);
        }
-         return redirect()->route('principal')
-                 ->with('success','Compañia eliminada Exitosamente');
+        
 
       //return $affectedRows;
     }

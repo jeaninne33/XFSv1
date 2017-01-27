@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     @foreach($companys as $key => $value)
-        <tr>
+        <tr data-id="{{$value->id}}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
             <td>{{ $value->direccion }}</td>
@@ -29,7 +29,7 @@
               <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>  
     
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-              <a class="btn-delete" title="Eliminar" aria-hidden="true" href=""><span class="glyphicon glyphicon-trash"></span></a> 
+              <a class="btn-delete" title="Eliminar" aria-hidden="true" href="#!"><span class="glyphicon glyphicon-trash"></span></a> 
            
             </td>
         </tr>
