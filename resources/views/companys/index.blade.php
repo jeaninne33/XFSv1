@@ -6,13 +6,9 @@
   <div class="panel panel-default">
 
   <div class="panel-heading">Listado de Compañias</div>
-  @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-    <div class="alert" id="mensaje" style="display: none;">
-    </div>
+
+  <div class="alert" id="mensaje" style="display: none;">
+  </div>
   <div class="panel-body">
 
     <p>

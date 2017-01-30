@@ -1,3 +1,4 @@
+
 <div class="form-group">
   [[ Form::label('nombre', 'Nombre')]]
   [[Form::text('nombre', null, ['class' => 'form-control' , 'required' => 'required'])]]
@@ -35,10 +36,18 @@
 </div>
 <div class="form-group">
     [[Form::label('telefono', 'Teléfono') ]]
-    [[ Form::text('telefono', null, ['class' => 'form-control' , 'required' => 'required']) ]]
+    [[ Form::text('telefono', null, ['placeholder' => '0416 999 999','class' => 'form-control' , 'required' => 'required']) ]]
 </div>
 <div class="form-group">
-  [[ Form::label('ciudad', 'Ciudad')]]
+  [[ Form::label('relacion', 'Tipo de Relacion')]]
   [[ Form::select('relacion', config('options.relacion'), null, array('class' => 'form-control')) ]]
 
+</div>
+<div class="form-group">
+  [[ Form::label('pais', 'Pais')]]
+  [[ Form::select('pais', $paises, null, array('class' => 'form-control')) ]]
+</div>
+<div class="form-group">
+  [[ Form::label('estado', 'Estado')]]
+  [[ Form::select('estado', ['L' => 'Large', 'S' => 'Small'], null, ['placeholder' => 'Seleccione el Estado']) ]]
 </div>

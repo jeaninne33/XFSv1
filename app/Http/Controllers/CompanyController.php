@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //use Illuminate\Http\Requests\CrearCompanysRequest;
 use XFS\Http\Controllers\Controller;
 use XFS\Company;
+use XFS\Pais;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -56,7 +57,9 @@ class CompanyController extends Controller
     public function create()
     {
         //  // load the create form (app/views/nerds/create.blade.php)
-        return view('companys.create');
+
+        $paises = Pais::lists('nombre','id');
+        return view('companys.create', compact('paises'));
     }
 
     /**
@@ -170,7 +173,7 @@ class CompanyController extends Controller
            return redirect()->route('companys.index')
                  ->with('success', $mensaje);
        }
-        
+
 
       //return $affectedRows;
     }

@@ -9,36 +9,35 @@
     <!-- Meta Tags -->
     <meta charset="utf-8">
 
-	<link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="{{ asset("assets/icoXFS.ico") }}" type="image/x-icon">
 
     <!-- Theme Styles -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset("assets/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("assets/css/font-awesome.min.css") }}">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="{{ asset("assets/css/animate.min.css") }}">
 
 
     <!-- Main Style -->
-    <link id="main-style" rel="stylesheet" href="assets/css/style.css">
+    <link id="main-style" rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
 
     <!-- Updated Styles -->
-    <link rel="stylesheet" href="assets/css/updates.css">
+    <link rel="stylesheet" href="{{ asset("assets/css/updates.css") }}">
     <!-- Datatable Styles -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
 
     <!-- Responsive Styles -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset("assets/css/responsive.css") }}">
     <!--SWEETALERT-->
     <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
-    <link href="dist/sweetalert.css" rel="stylesheet" />
-   
+    <link href="{{ asset("assets/dist/sweetalert.css") }}" rel="stylesheet" />
 
 </head>
 <body>
   <div id="page-wrapper">
   <header id="header" class="navbar-static-top">
-    <div style="background-image:url(images/header.png); position: fixed;" class="topnav hidden-xs">
+    <div style="background-image:url({{ asset("assets/images/header.png") }}); position: fixed;" class="topnav hidden-xs">
         <div class="container">
 
             <ul class="quick-menu pull-right">
@@ -579,163 +578,7 @@
                        @yield('companys')
                       </div>
                       <div id="wishlist" class="tab-pane fade">
-                          <h2>Your Wish List</h2>
-                          <div class="row image-box listing-style2 add-clearfix">
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Savona to Italy</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$170</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Hotel Hilton</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$620</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Forte Do Vale</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$120</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Roosevelt Hotel</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$170</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Miami to Florida</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$620</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Forte Do Vale</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$120</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">New York to Paris</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$170</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Hotel Hilton</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$620</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Forte Do Vale</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$120</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">Roosevelt Hotel</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$170</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                              <div class="col-sm-6 col-md-4">
-                                  <article class="box">
-                                      <figure>
-                                          <a class="hover-effect" title="" href="#"><img width="300" height="160" alt="" src="http://placehold.it/300x160"></a>
-                                      </figure>
-                                      <div class="details">
-                                          <a class="pull-right button uppercase" href="" title="View all">select</a>
-                                          <h4 class="box-title">England to Asia</h4>
-                                          <label class="price-wrapper">
-                                              <span class="price-per-unit">$620</span>avg/night
-                                          </label>
-                                      </div>
-                                  </article>
-                              </div>
-                          </div>
+                        @yield('create')
                       </div>
                       <div id="travel-stories" class="tab-pane fade">
                           <h2>Share Your Story</h2>
@@ -882,23 +725,24 @@
       </div>
   </section>
 </div>
+
 <!-- Javascript -->
-<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.noconflict.js"></script>
-<script type="text/javascript" src="assets/js/modernizr.2.7.1.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-<script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
+<script type="text/javascript" src="{{ asset("assets/js/jquery-1.11.1.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("assets/js/jquery.noconflict.js") }}"></script>
+<script type="text/javascript" src="{{ asset("assets/js/modernizr.2.7.1.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("assets/js/jquery-migrate-1.2.1.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("assets/js/jquery.placeholder.js") }}"></script>
+<script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
 
 
 <!-- datatable jquery -->
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<!-- datatable jquery 
+<!-- datatable jquery
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>-->
 
 
 <!-- Twitter Bootstrap -->
-<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
 
 <!--SWEETALERT-->
   <script type="text/javascript">
@@ -940,13 +784,14 @@
           });
       });
 
-    
+
       tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
           tjq(".view-profile").show();
           tjq(".edit-profile").hide();
       });
     //  alert("ajaa");
-  </script>
 
+  </script>
+@yield('scripts')
 </body>
 </html>
