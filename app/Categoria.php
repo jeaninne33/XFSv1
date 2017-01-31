@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     protected $table='categorias';
-    protected $filltable=['nombre','id'];
+    protected $fillable=['nombre','id'];
 
-    public function categorias()
+   public function servicios()
     {
-      return $this->hasMany('servicios');
+      return $this->hasMany('XFS\Servicio','categoria_id');
     }
 
 }

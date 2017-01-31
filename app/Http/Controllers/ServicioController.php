@@ -5,10 +5,12 @@ namespace XFS\Http\Controllers;
 use Illuminate\Http\Request;
 use XFS\Servicio;
 use XFS\Categoria;
+use DB;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 class ServicioController extends Controller
 {
     /**
@@ -18,10 +20,17 @@ class ServicioController extends Controller
      */
     public function index(Request $request)
     {
-      $servicios = Servicio::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
-
+      /*$servicios = Servicio::busqueda(
+        $request->get(''))
+      ->tipo($request->get('relacion'))
+      ->orderBy('id','DESC')->paginate(5);*/
+    $servicio = Servicio::all();
+     /*$servicios = DB::table('servicios')
+  	->join('categorias', 'categorias.id', '=', 'servicios.categoria_id', 'inner', true)
+  	->select('servicios.id', 'servicios.nombre', 'servicios.descripcion', 'categorias.nombre as nbCategoria')
+  	->get();*/
       // load the view and pass the nerds
-      return view('servicios.index',compact('servicios'))->with('i', ($request->input('page', 1) - 1) * 5);
+      return view('servicios.index')->with('servicio',$servicio);
       //return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -33,6 +42,7 @@ class ServicioController extends Controller
     public function create()
     {
       $categorias=Categoria::Lists('nombre','id');
+      $categorias->prepend(' --- Seleccione un Servicio --- ');
       return view('servicios.create',compact('categorias'));
     }
 
@@ -44,16 +54,21 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'nombre'       => 'required,nombre',
-        'descripcion' => 'required',
-        'categoria_id'  => 'required',
-        ]);
-       Company::create($request->all());
-        //
-       // Session::flash('message', 'Successfully created nerd!');
-        return redirect()->route('servicios.index')->with('success','Servicio Agregada Exitosamente');
-       //dd(Input::all());
+      /*$this->validate($request, [
+      'nombre'       => 'required|unique:servicios,nombre',
+      'descripcion' => 'required',
+      'categoria_id'  => 'required',
+      ]);
+     Servicio::create($request->all());*/
+     $servicio = new Servicio;
+     $servicio->nombre=$request->input('nombre');
+     $servicio->descripcion=$request->input('descripcion');
+     $servicio->categoria_id=$request->input('categoria_id');
+     $servicio->save();
+      //
+     // Session::flash('message', 'Successfully created nerd!');
+      return redirect()->route('servicios.index')->with('success','Servicio Agregada Exitosamente');
+     //dd(Input::all());*/
     }
 
     /**
@@ -76,8 +91,10 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
-        $servicios=Servicio::findOrFail($id);
-        return view('servicios.edit')->with('servicios', $servicios);
+      $servicios=Servicio::findOrFail($id);
+      $categorias=Categoria::Lists('nombre','id');
+    //  $categorias->prepend($id);
+      return view('servicios.edit',compact('categorias'))->with('servicios', $servicios);
     }
 
     /**
@@ -95,8 +112,12 @@ class ServicioController extends Controller
         'categoria_id'      => 'required',
 
         ]);
-
-       Servicio::find($id)->update($request->all());
+        $servicio = Servicio::find($id);
+            $servicio->nombre       = Input::get('nombre');
+            $servicio->descripcion      = Input::get('descripcion');
+            $servicio->categoria_id = Input::get('categoria_id');
+            $servicio->save();
+       //Servicio::find($id)->update($request->all());
       // Session::flash('message', 'Successfully update nerd!');
        return redirect()->route('servicios.index')
                        ->with('success','Servicio Actualizado Exitosamente');

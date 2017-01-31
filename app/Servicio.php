@@ -1,17 +1,16 @@
 <?php
 
 namespace XFS;
-
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\Model;
 
 class Servicio extends Model
 {
     protected $table = 'servicios';
 
-    protected $filltable=['nombre, descripcion','categoria_id'];
+    protected $fillable=['nombre, descripcion','categoria_id'];
 
-    public function categorias()
+    public function categoria()
     {
-      return $this->hasOne('categorias');
+      return $this->hasOne('XFS\Categoria','id','categoria_id');
     }
 }

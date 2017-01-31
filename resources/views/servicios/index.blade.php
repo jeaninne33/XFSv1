@@ -30,21 +30,21 @@
       @endif
 
     <div class="panel-body">
-      [[Form::model (Request::all(), ['route' => 'companys.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
+      [[Form::model (Request::all(), ['route' => 'servicios.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
         <div class="form-group">
-            [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]]
-            [[Form::select( 'relacion', config('options.relacion'), null, ['class'=>'form-control'] )]]
+            {{-- [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]] --}}
+            {{-- [[Form::select( 'relacion', config('options.relacion'), null, ['class'=>'form-control'] )]] --}}
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       [[ Form::close()]]
       <p>
-        <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
+        <a class="btn btn-info" href="{{URL::to('servicios/create')}}" role="button">
           Nueva Compañia
         </a>
       </p>
-      <p>{{$companys->total()}} compañias</p>
-      @include('companys.partials.table')
-       [[ $companys->appends(Request::all())->render() ]]
+
+      @include('servicios.partials.table')
+
      </div>
     </div>
   </div>

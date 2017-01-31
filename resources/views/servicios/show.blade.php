@@ -11,25 +11,25 @@
 
 <nav class="navbar navbar-inverse">
   <div class="navbar-header">
-      <a class="navbar-brand" href="{{ URL::to('companys') }}">Compañias</a>
+      <a class="navbar-brand" href="{{ URL::to('servicios') }}">Compañias</a>
   </div>
   <ul class="nav navbar-nav">
-      <li><a href="{{ URL::to('companys') }}">Ver Todas Compañias</a></li>
-      <li><a href="{{ URL::to('companys/create') }}">Crear Compañia</a>
+      <li><a href="{{ URL::to('servicios') }}">Ver Todas Compañias</a></li>
+      <li><a href="{{ URL::to('servicios/create') }}">Crear Compañia</a>
     </ul>
 </nav>
 
-<h1>Showing {{ $companys->nombre }}</h1>
+<h1>Showing {{ $servicios->nombre }}</h1>
 <div class="pull-right">
-         <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
+         <a class="btn btn-primary" href="{{ route('servicios.index') }}"> Atrás</a>
      </div>
      <br/>
 
     <div class="jumbotron text-center">
-        <h2>{{ $companys->nombre  }}</h2>
+        <h2>{{ $servicios->nombre  }}</h2>
         <p>
-            <strong>Correo:</strong> {{ $companys->correo }}<br>
-            <strong>Dirección:</strong> {{ $companys->direccion }}
+            <strong>Correo:</strong> {{ $servicios->correo }}<br>
+            <strong>Dirección:</strong> {{ $servicios->direccion }}
         </p>
     </div>
 

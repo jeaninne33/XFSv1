@@ -11,7 +11,7 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default">
 
-      <div class="panel-heading">Editar Compañia {{ $companys->nombre }}</div>
+      <div class="panel-heading">Editar Compañia {{ $servicios->nombre }}</div>
 
 
 <!-- if there are creation errors, they will show here -->
@@ -26,8 +26,8 @@
   </div>
 @endif
 
-   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT'))]]
-    @include('companys.partials.fields')
+   [[Form::model($servicios, array('route' => array('servicios.update', $servicios->id), 'method' => 'PUT'))]]
+    @include('servicios.partials.fields')
   [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
       </div>
