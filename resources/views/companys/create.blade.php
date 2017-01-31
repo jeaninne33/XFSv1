@@ -1,12 +1,14 @@
-@extends('principal')
+@extends('layouts.app')
 
-@section('creates')
-    @parent
-<h1>Agregar Compañia</h1>
+@section('contenido')
+
+<h2>Agregar Compañia</h2>
+<p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
+
 <div class="pull-right">
          <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
-     </div>
-     <br/>
+</div>
+
 
 <!-- if there are creation errors, they will show here -->
 @if (count($errors) > 0)
@@ -19,7 +21,7 @@
     </ul>
   </div>
 @endif
-
+<div class="col-sm-9 no-float no-padding">
 [[ Form::open(['route'=>'companys.store', 'method'=> 'POST']) ]]
 @include('companys.partials.fields')
 [[ Form::submit('Agregar Compañia', array('class' => 'btn btn-primary')) ]]
@@ -30,10 +32,11 @@
 @section('scripts')
 <!--scripts necesarios en esta vista -->
   <script>
-    tjq('#pais').on('change',function(e){
+    $('#pais').on('change',function(e){
+      //alert('holaa');
         console.log(e);
         var id=e.target.value;
-        tjq.get('/ajax_estado='+id, function(data){
+      $.get('/ajax_estado='+id, function(data){
           console.log(data);
         });
 

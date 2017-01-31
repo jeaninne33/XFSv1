@@ -59,6 +59,7 @@ class CompanyController extends Controller
         //  // load the create form (app/views/nerds/create.blade.php)
 
         $paises = Pais::lists('nombre','id');
+        $paises->prepend(' Seleccione el País');
         return view('companys.create', compact('paises'));
     }
 
