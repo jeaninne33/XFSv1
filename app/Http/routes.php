@@ -61,3 +61,4 @@ Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController
 Route::resource('companys', 'CompanyController');
 Route::resource('servicios', 'ServicioController');
 Route::resource ('categoria', 'CategoriaController');
+Route::resource ('contratos','ContratoController');

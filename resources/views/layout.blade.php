@@ -41,12 +41,13 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/custom.css">
-
+    <!-- Datatable Styles -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <!-- Responsive Styles -->
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!--SWEETALERT-->
     <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
-    <link href="dist/sweetalert.css" rel="stylesheet" />
+    <link href="assets/dist/sweetalert.css" rel="stylesheet" />
     <!--footer header-->
     <script src="js/header-footer.js"></script>
     <!-- CSS for IE -->
@@ -394,7 +395,8 @@
 
             <!-- parallax -->
             <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
-
+            <!-- datatable jquery -->
+            <script type="text/javascript" href="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
             <!-- waypoint -->
             <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
 
