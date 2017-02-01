@@ -16,14 +16,8 @@
       <link rel="stylesheet" href="{{ asset("assets/css/font-awesome.min.css") }}">
       <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
-
-
       <!-- Main Style -->
       <link id="main-style" rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
-
-
-      <!-- Datatable Styles -->
-      <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
       <!-- Responsive Styles -->
       <link rel="stylesheet" href="{{ asset("assets/css/responsive.css") }}">
@@ -31,7 +25,7 @@
       <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
       <link href="{{ asset("assets/dist/sweetalert.css") }}" rel="stylesheet" />
 
-
+    @yield('css')
 
 </head>
 <body>
@@ -85,6 +79,8 @@
               </div>
           </div>
       </section>
+      <div id="dialog-confirm" title="Mensaje de Confirmación?">
+      </div
       <!-- Javascript -->
       <script type="text/javascript" src="{{ asset("assets/js/jquery-1.11.1.min.js") }}"></script>
 

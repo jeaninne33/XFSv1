@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
 
-       //factory('XFS\Company','proveedor', 30)->create();
+      factory('XFS\Company','proveedor', 30)->create();
       factory('XFS\Company','cliente',20)->create();
        // $this->call('UserTableSeeder');
 
