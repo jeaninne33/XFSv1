@@ -18,6 +18,7 @@
      <div class="tab-content">
        <div id="home" class="tab-pane fade in active">
          <h3>Datos Generales</h3>
+         <br/>
          <h5>
            <table border="0" style="with:600px;" class="table table-condensed">
              <tr>
@@ -28,14 +29,43 @@
                <td><strong>Dirección:</strong> {{ $companys->direccion }}</td>
                <td><strong>Direccion de factura:</strong> {{ $companys->direccion_cuenta }}</td>
              </tr>
-
-
-          <table>
-
-
+              <tr>
+               <td><strong>Representante:</strong> {{ $companys->representante }}<br></td>
+               <td><strong>Certificación:</strong> {{ $companys->certificacion }}<br></td>
+             </tr>
+             <tr>
+               <td><strong>Pais:</strong> {{ $companys->pais }}</td>
+               <td><strong>Estado:</strong> {{ $companys->estado }}</td>
+             </tr>
+               <tr>
+               <td><strong>Codigo:</strong> {{ $companys->codigop }}</td>
+               <td><strong>Ciudad:</strong> {{ $companys->ciudad }}</td>
+             </tr>
+                  <tr>
+               <td><strong>Tipo de Relación:</strong> {{ $companys->relacion }}</td>
+               <td><strong></strong> </td>
+             </tr>
+          </table>
        </h5>
       </div>
         <div id="menu1" class="tab-pane fade">
+          <h3>Datos de Operaciones</h3>
+         <br/>
+         <h5>
+           <table border="0" style="with:600px;" class="table table-condensed">
+             <tr>
+               <td><strong>Correo:</strong> {{ $companys->correo }}<br></td>
+             
+             </tr>
+             <tr>
+               <td><strong>Teléfono:</strong> {{ $companys->telefono }}<br></td>
+             </tr>
+              <tr>
+               <td><strong>Celular:</strong> {{ $companys->celular }}<br></td>
+             
+             </tr>
+          </table>
+          </h5>
         </div>
         <div id="menu2" class="tab-pane fade">
         </div>
