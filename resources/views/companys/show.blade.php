@@ -1,38 +1,48 @@
-<!-- app/views/nerds/show.blade.php -->
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@section('contenido')
 
-<nav class="navbar navbar-inverse">
-  <div class="navbar-header">
-      <a class="navbar-brand" href="{{ URL::to('companys') }}">Compañias</a>
-  </div>
-  <ul class="nav navbar-nav">
-      <li><a href="{{ URL::to('companys') }}">Ver Todas Compañias</a></li>
-      <li><a href="{{ URL::to('companys/create') }}">Crear Compañia</a>
-    </ul>
-</nav>
-
-<h1>Showing {{ $companys->nombre }}</h1>
+<h1>Mostrando la Compañia <strong> {{ $companys->nombre }}</strong></h1>
 <div class="pull-right">
          <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
      </div>
      <br/>
+     <ul class="nav nav-tabs">
+       <li class="active"><a data-toggle="tab" href="#home">Datos de la Compañia</a></li>
+       <li><a data-toggle="tab" href="#menu1">Datos de Operaciones</a></li>
+       <li><a data-toggle="tab" href="#menu2">Datos Administrativos</a></li>
+       <li><a data-toggle="tab" href="#menu3">Aviones</a></li>
+       <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li>
+     </ul>
 
-    <div class="jumbotron text-center">
-        <h2>{{ $companys->nombre  }}</h2>
-        <p>
-            <strong>Correo:</strong> {{ $companys->correo }}<br>
-            <strong>Dirección:</strong> {{ $companys->direccion }}
-        </p>
-    </div>
+     <div class="tab-content">
+       <div id="home" class="tab-pane fade in active">
+         <h3>Datos Generales</h3>
+         <h5>
+           <table border="0" style="with:600px;" class="table table-condensed">
+             <tr>
+               <td><strong>Nombre de la Compañia:</strong> {{ $companys->nombre }}<br></td>
+               <td><strong>Website:</strong> {{ $companys->website }}<br></td>
+             </tr>
+             <tr>
+               <td><strong>Dirección:</strong> {{ $companys->direccion }}</td>
+               <td><strong>Direccion de factura:</strong> {{ $companys->direccion_cuenta }}</td>
+             </tr>
 
-</div>
-</body>
-</html>
+
+          <table>
+
+
+       </h5>
+      </div>
+        <div id="menu1" class="tab-pane fade">
+        </div>
+        <div id="menu2" class="tab-pane fade">
+        </div>
+        <div id="menu3" class="tab-pane fade">
+        </div>
+        <div id="menu4" class="tab-pane fade">
+        </div>
+ </div>
+
+@endsection

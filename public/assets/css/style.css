@@ -2047,7 +2047,7 @@ button.btn-extra.yellow > span em, input[type="button"].button.btn-extra.yellow 
   padding-right: 48px !important;
 }
 
-/* 2.2.2. Alert message */
+/* 2.2.2. Alert message
 .alert {
   -webkit-border-radius: 0 0 0 0;
   -moz-border-radius: 0 0 0 0;
@@ -2135,6 +2135,7 @@ button.btn-extra.yellow > span em, input[type="button"].button.btn-extra.yellow 
   content: "\f00d";
   font-family: FontAwesome;
 }
+*/
 
 .error-field {
   border: 1px solid #f00;

@@ -121,9 +121,11 @@ class CompanyController extends Controller
         //  //
         // get the nerd
       $companys = Company::findOrFail($id);
+      $paises = Pais::lists('nombre','id');
+      $paises->prepend(' Seleccione el País');
 
        // show the edit form and pass the nerd
-      return view('companys.edit')->with('companys',$companys);
+      return view('companys.edit', compact('paises'))->with('companys',$companys);
     }
 
     /**
