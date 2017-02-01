@@ -3,7 +3,9 @@
 namespace XFS\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use XFS\Company;
+use XFS\Contrato;
+use DB;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 
@@ -16,7 +18,8 @@ class ContratoController extends Controller
      */
     public function index(Request $request)
     {
-        return view('contratos.index');
+        $contrato=Company::all();
+        return view('contratos.index')->with('contrato',$contrato);
     }
 
     /**

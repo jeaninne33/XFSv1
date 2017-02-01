@@ -29,6 +29,8 @@ class AlterCompanysTable extends Migration
             $table->string('cuenta', 50)->nullable();
             $table->string('direccion_cuenta', 50)->nullable();
             $table->string('aba', 50)->nullable();
+            $table->string('direccionBanco',50);
+            $table->string('titulo',15);
         });
 
     }
@@ -57,6 +59,8 @@ class AlterCompanysTable extends Migration
             $table->dropColumn('cuenta', 50)->nullable();
             $table->dropColumn('direccion_cuenta', 50)->nullable();
             $table->dropColumn('aba', 50)->nullable();
+            $table->dropColumn('direccionBanco',50);
+            $table->dropColumn('titulo',15);
         });
     }
 }
