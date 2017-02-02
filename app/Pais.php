@@ -10,6 +10,6 @@ class Pais extends Model
      protected $fillable = ['nombre'];
 
      public function estado() {
-		    return $this->hasMany('Estado');
+		    return $this->hasMany('XFS\Estado','id','pais_id');
 	  }
 }

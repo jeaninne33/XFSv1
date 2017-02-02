@@ -11,6 +11,6 @@ class Estado extends Model
      protected $fillable = ['nombre', 'pais_id'];
 
      public function pais() {
-		      return $this->belongsTo('Pais', 'pais_id');
+		      return $this->belongsTo('XFS\Pais', 'pais_id');
 	  }
 }

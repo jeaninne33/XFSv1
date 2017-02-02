@@ -12,7 +12,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
            [[ Form::label('nombre', 'Nombre de la Compañia *')]]
-           [[Form::text('nombre', null, ['class' => 'input-text full-width' ])]]
+           [[Form::text('nombre', null, ['class' => 'input-text full-width',  'required' => 'required' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-6">
@@ -23,19 +23,25 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('direccion', 'Dirección Fisica *') ]]
-          [[ Form::text('direccion', null, ['class' => 'input-text full-width' ]) ]]
+          [[ Form::text('direccion', null, ['class' => 'input-text full-width',  'required' => 'required' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('direccion_cuenta', 'Direccion de factura *') ]]
-          [[ Form::text('direccion_cuenta', null, ['class' => 'input-text full-width' ]) ]]
+          [[ Form::text('direccion_cuenta', null, ['class' => 'input-text full-width',  'required' => 'required'  ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('representante', 'Representante *') ]]
-          [[ Form::text('representante', null, ['class' => 'input-text full-width' ]) ]]
+          [[ Form::text('representante', null, ['class' => 'input-text full-width' , 'required' => 'required' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
+          [[Form::label('cargo', 'Cargo que ocupa *') ]]
+          [[ Form::text('cargo', null, ['class' => 'input-text full-width' ]) ]]
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sms-12 col-sm-12">
           [[Form::label('certificacion', 'Especifique si tiene Certificación y Cuales') ]]
           [[ Form::text('certificacion', null, ['class' => 'input-text full-width' ]) ]]
         </div>
@@ -43,11 +49,11 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('pais', 'Pais *') ]]
-          [[ Form::select('pais', $paises, null,['class' => 'selector full-width' ]) ]]
+          [[ Form::select('pais', $paises, null,['class' => 'selector full-width',  'required' => 'required' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado *') ]]
-          [[ Form::select('estado', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'selector full-width','placeholder' => 'Seleccione el Estado']) ]]
+          [[ Form::select('estado_id', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'selector full-width','placeholder' => 'Seleccione el Estado',  'required' => 'required']) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -57,18 +63,22 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('ciudad', 'Ciudad *') ]]
-          [[ Form::text('codigop', null, ['class' => 'input-text full-width']) ]]
+          [[ Form::text('ciudad', null, ['class' => 'input-text full-width',  'required' => 'required']) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
-          [[ Form::label('relacion', 'Tipo de Relacion *')]]
-          [[ Form::select('relacion', config('options.relacion'), null, array('class' => 'selector full-width')) ]]
+          [[ Form::label('tipo', 'Tipo de Relacion *')]]
+          [[ Form::select('tipo', config('options.tipo'), null,['class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
-          <div class="cliente" style="display:none;">
-          [[Form::label('ciudad', 'Ciudad *') ]]
-          [[ Form::text('codigop', null, ['class' => 'input-text full-width']) ]]
+          <div class="cliente" >
+          [[Form::label('categoria', 'Categoria del Cliente *') ]]
+          [[ Form::select('categoria', config('options.tipo'), null, ['class' => 'input-text full-width']) ]]
+          </div>
+          <div class="proveedor" >
+          [[Form::label('tipo_prove', 'Tipo de Proveedor *') ]]
+          [[ Form::select('tipo_prove', config('options.tipo'), null, ['class' => 'input-text full-width']) ]]
           </div>
         </div>
     </div>
@@ -124,7 +134,7 @@
          <div class="col-sms-6 col-sm-6">
 
            [[Form::label('cuenta', 'Cuenta #') ]]
-           [[ Form::text('codigop', null, ['class' => 'input-text full-width']) ]]
+           [[ Form::text('cuenta', null, ['class' => 'input-text full-width']) ]]
 
          </div>
      </div>

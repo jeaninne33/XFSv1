@@ -13,7 +13,7 @@
 <!-- if there are creation errors, they will show here -->
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-[[ Form::open(['route'=>'companys.store', 'method'=> 'POST']) ]]
+[[ Form::open(['route'=>'companys.store', 'method'=> 'POST', 'novalidate']) ]]
   @include('companys.partials.fields')
 [[ Form::submit('Agregar Compañia', array('class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]

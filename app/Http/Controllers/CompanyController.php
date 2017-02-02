@@ -2,12 +2,14 @@
 
 namespace XFS\Http\Controllers;
 
-use Illuminate\Http\Request;
-//use Illuminate\Http\Requests\CrearCompanysRequest;
+use Illuminate\Http\Requests;
 use XFS\Http\Controllers\Controller;
+use XFS\Http\Requests\CrearCompanysRequest;
+use XFS\Http\Requests\editarCompanysRequest;
 use XFS\Company;
 use XFS\Pais;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Redirector;
@@ -76,16 +78,17 @@ class CompanyController extends Controller
     * @return Response
     */
     //CrearCompanys
-   public function store(Request $request)
+    //Request $request
+   public function store(CrearCompanysRequest $request)
    {
        // validate
-       $this->validate($request, [
+       /*$this->validate($request, [
          'nombre'       => 'required|unique:companys,nombre',
          'correo' => 'required|email|unique:companys,correo',
          'direccion'      => 'required',
          'representante'=> 'required',
          'telefono'=> 'required|numeric',
-         ]);
+       ]);*/
         Company::create($request->all());
          //
         // Session::flash('message', 'Successfully created nerd!');
@@ -135,17 +138,20 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CrearCompanysRequest $request, $id)
     {
-      $this->validate($request, [
+    /*  $this->validate($request, [
         'nombre'       => 'required',
         'correo' => 'required',
         'direccion'      => 'required',
         'representante'=> 'required',
         'telefono'=> 'required|numeric',
         ]);
+      */
+      $company= Company::findOrFail($id);
 
-      $this->companys->update($request->all());
+      $company->fill($request->all());
+      $company->save();
       // Session::flash('message', 'Successfully update nerd!');
        return redirect()->route('companys.index')
                        ->with('success','Compañia Actualizada Exitosamente');

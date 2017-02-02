@@ -52,9 +52,9 @@ Route::get('register',  [
 ]);
 
 Route::get('/ajax_estado',function(){
-$p_id=Input::get('id');
-$estados=Estado::lists('nombre','id')->where('pais_id',$p_id);
-return response::json($estados);
+  $p_id=Input::get('id');
+  $estados=Estado::lists('nombre','id')->where('pais_id',$p_id);
+  return response::json($estados);
 
 });
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
