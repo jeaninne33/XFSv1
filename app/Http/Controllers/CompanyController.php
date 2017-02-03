@@ -8,7 +8,7 @@ use XFS\Http\Requests\CrearCompanysRequest;
 use XFS\Http\Requests\editarCompanysRequest;
 use XFS\Company;
 use XFS\Pais;
-
+use XFS\Estado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;

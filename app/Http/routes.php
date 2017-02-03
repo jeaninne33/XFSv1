@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,9 +10,7 @@
 |
 */
 Route::get('/','IndexController@index');
-// Route::get('login',function(){
-//   return view('auth/login');
-// });
+
 Route::get('servicios',function(){
   return view('servicios');
 });
@@ -52,12 +49,9 @@ Route::get('register',  [
 ]);
 
 Route::get('/state/{id}',function($id){
-
-$estados=Estado::lists('nombre','id')->where('pais_id',$id);
-return response::json($estados);
-
+  $estados=Estado::lists('nombre','id')->where('pais_id',$id);
+  return response::json($estados);
 });
-
 
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 Route::resource('companys', 'CompanyController');

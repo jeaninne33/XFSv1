@@ -2,7 +2,9 @@
 
 namespace XFS;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-
+use XFS/Avion;
+use XFS/Pais;
+use XFS/Estado;
 class Company extends Eloquent
    {
      protected $table = 'companys';
@@ -18,6 +20,14 @@ class Company extends Eloquent
      public function aviones() {
 		     return $this->hasMany('Avion');
 	  }
+
+    public function pais() {
+        return $this->hasOne('Pais','id','pais_id');
+    }
+    public function estado() {
+        return $this->hasOne('Estado','id','estado_id');
+    }
+
      public function scopeBusqueda($query, $busqueda)
      {
       //dd("scope: ". $busqueda);//muestra los datos

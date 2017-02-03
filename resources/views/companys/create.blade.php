@@ -27,10 +27,9 @@
       //alert('holaa');
         console.log(e);
         var id=e.target.value;
-      $.get('/ajax_estado='+id, function(data){
-          console.log(data);
-        });
-
+        $.get('/state/'+id, function(data){
+             console.log(data);
+           });
     });
   </script>
 @endsection
