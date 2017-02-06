@@ -1,4 +1,6 @@
 <?php
+use XFS\Estado;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -49,8 +51,8 @@ Route::get('register',  [
 ]);
 
 Route::get('/state/{id}',function($id){
-  $estados=Estado::lists('nombre','id')->where('pais_id',$id);
-  return response::json($estados);
+  $estados=Estado::where('pais_id',$id)->get();
+  return Response::json($estados);
 });
 
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);

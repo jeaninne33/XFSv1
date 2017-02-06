@@ -49,11 +49,12 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('pais', 'Pais *') ]]
-          [[ Form::select('pais', $paises, null,['class' => 'selector full-width',  'required' => 'required' ]) ]]
+          [[ Form::select('pais_id', $paises, null,['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado *') ]]
-          [[ Form::select('estado_id', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'selector full-width','placeholder' => 'Seleccione el Estado',  'required' => 'required']) ]]
+          [[ Form::select('estado_id', array('' => 'Seleccione el Estado'), null, ['id' => 'estado_id','class' => 'selector full-width',  'required' => 'required']) ]]
+
         </div>
     </div>
     <div class="row form-group">
@@ -69,16 +70,16 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Relacion *')]]
-          [[ Form::select('tipo', config('options.tipo'), null,['class' => 'selector full-width',  'required' => 'required']) ]]
+          [[ Form::select('tipo', config('options.tipo'), null,['id' => 'tipo','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
-          <div class="cliente" >
+          <div class="cliente" style="display:none;" >
           [[Form::label('categoria', 'Categoria del Cliente *') ]]
-          [[ Form::select('categoria', config('options.tipo'), null, ['class' => 'input-text full-width']) ]]
+          [[ Form::select('categoria', array('' => 'Seleccione',   0=>'Postpago',   1=>'Prepago',   2=>'De 1 a 15 días de crédito', 3=>'De 16 a 30 días de crédito'), null, ['id' => 'categoria','class' => 'input-text full-width']) ]]
           </div>
-          <div class="proveedor" >
+          <div class="proveedor" style="display:none;" >
           [[Form::label('tipo_prove', 'Tipo de Proveedor *') ]]
-          [[ Form::select('tipo_prove', config('options.tipo'), null, ['class' => 'input-text full-width']) ]]
+          [[ Form::select('tipo_prove', array('' => 'Seleccione', 'Fuel/Handling',  'FBO/Handler',  'Broker','Supplier'), null, ['id' => 'tipo_prove','class' => 'input-text full-width']) ]]
           </div>
         </div>
     </div>
@@ -95,13 +96,23 @@
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
-        [[Form::label('telefono', 'Teléfono *') ]]
-        [[ Form::text('telefono', null, ['class' => 'input-text full-width' ]) ]]
+        [[Form::label('telefono_admin', 'Teléfono *') ]]
+        [[ Form::text('telefono_admin', null, ['class' => 'input-text full-width' ]) ]]
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('celular', 'Celular')]]
         [[ Form::text('celular', null, ['class' => 'input-text full-width']) ]]
         </div>
+
+
+    </div>
+    <div class="row form-group">
+      <div class="proveedor" style="display:none;" >
+        <div class="col-sms-12 col-sm-12">
+           [[ Form::label('servicio_disp', 'Tipo de Servicio Disponible *')]]
+            [[ Form::select('servicio_disp', array('' => 'Seleccione','Av. General','Commercial','Fuel Release'), null, ['id' => 'servicio_disp','class' => 'selector full-width', 'required' => 'required']) ]]
+        </div>
+      </div>
 
     </div>
   </div>
@@ -120,8 +131,8 @@
         </div>
         <div class="col-sms-6 col-sm-6">
 
-          [[Form::label('telefono_admin', 'Teléfono') ]]
-          [[ Form::text('telefono_admin', null, ['class' => 'input-text full-width']) ]]
+          [[Form::label('telefono', 'Teléfono') ]]
+          [[ Form::text('telefono', null, ['class' => 'input-text full-width']) ]]
 
         </div>
     </div>

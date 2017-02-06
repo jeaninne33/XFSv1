@@ -11,25 +11,19 @@
 <br/>
 
 <!-- if there are creation errors, they will show here -->
+<div class="errorMessages"></div>
+
+<div class="successMessages"></div>
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-[[ Form::open(['route'=>'companys.store', 'method'=> 'POST', 'novalidate']) ]]
+[[ Form::open(['route'=>'companys.store', 'id'=>'form1','method'=> 'POST', 'novalidate']) ]]
   @include('companys.partials.fields')
-[[ Form::submit('Agregar Compañia', array('class' => 'btn btn-primary')) ]]
+[[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]
 
 </div>
 @endsection
 @section('scripts')
-<!--scripts necesarios en esta vista -->
-  <script>
-    $('#pais').on('change',function(e){
-      //alert('holaa');
-        console.log(e);
-        var id=e.target.value;
-        $.get('/state/'+id, function(data){
-             console.log(data);
-           });
-    });
-  </script>
+  
+[[ Html::script('assets/js/scripts_funcionales.js') ]]
 @endsection

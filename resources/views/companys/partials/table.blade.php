@@ -14,7 +14,7 @@
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
             <td>{{ $value->direccion }}</td>
-            <td>{{ $value->relacion }}</td>
+            <td>{{ $value->tipo }}</td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>

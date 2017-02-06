@@ -22,6 +22,11 @@
          <h5>
            <table border="0" style="with:600px;" class="table table-condensed">
              <tr>
+               <td><strong>id:</strong> {{ $companys->id }}<br></td>
+               <td><strong</strong> {{ $companys->website }}<br></td>
+             </tr>
+             <tr>
+             <tr>
                <td><strong>Nombre de la Compañia:</strong> {{ $companys->nombre }}<br></td>
                <td><strong>Website:</strong> {{ $companys->website }}<br></td>
              </tr>
@@ -34,11 +39,11 @@
                <td><strong>Certificación:</strong> {{ $companys->certificacion }}<br></td>
              </tr>
              <tr>
-               <td><strong>Pais:</strong> {{ $companys->pais }}</td>
-               <td><strong>Estado:</strong> {{ $companys->estado }}</td>
+               <td><strong>Pais:</strong> {{ $companys->pais->nombre }}</td>
+               <td><strong>Estado:</strong> {{ $companys->estado->nombre }}</td>
              </tr>
                <tr>
-               <td><strong>Codigo:</strong> {{ $companys->codigop }}</td>
+               <td><strong>Codigo Postal:</strong> {{ $companys->codigop }}</td>
                <td><strong>Ciudad:</strong> {{ $companys->ciudad }}</td>
              </tr>
                   <tr>
@@ -58,7 +63,7 @@
 
              </tr>
              <tr>
-               <td><strong>Teléfono:</strong> {{ $companys->telefono }}<br></td>
+               <td><strong>Teléfono:</strong> {{ $companys->telefono_admin }}<br></td>
              </tr>
               <tr>
                <td><strong>Celular:</strong> {{ $companys->celular }}<br></td>
@@ -77,7 +82,7 @@
 
              </tr>
              <tr>
-               <td><strong>Correo:</strong> {{ $companys->correo }}<br></td>
+               <td><strong>Correo:</strong> {{ $companys->correo_admin }}<br></td>
              </tr>
               <tr>
                <td><strong>Teléfono:</strong> {{ $companys->telefono }}<br></td>

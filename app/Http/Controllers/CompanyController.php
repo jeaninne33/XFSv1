@@ -8,7 +8,6 @@ use XFS\Http\Requests\CrearCompanysRequest;
 use XFS\Http\Requests\editarCompanysRequest;
 use XFS\Company;
 use XFS\Pais;
-use XFS\Estado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -61,7 +60,7 @@ class CompanyController extends Controller
         //  // load the create form (app/views/nerds/create.blade.php)
 
         $paises = Pais::lists('nombre','id');
-        $paises->prepend(' Seleccione el País');
+        $paises->prepend('Seleccione el País');
         return view('companys.create', compact('paises'));
     }
 
@@ -81,20 +80,18 @@ class CompanyController extends Controller
     //Request $request
    public function store(CrearCompanysRequest $request)
    {
-       // validate
-       /*$this->validate($request, [
-         'nombre'       => 'required|unique:companys,nombre',
-         'correo' => 'required|email|unique:companys,correo',
-         'direccion'      => 'required',
-         'representante'=> 'required',
-         'telefono'=> 'required|numeric',
-       ]);*/
-        Company::create($request->all());
-         //
-        // Session::flash('message', 'Successfully created nerd!');
-         return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
+
+      if($request->ajax()){
+         $data  = $request->all();
+         print_r($data);
+          Company::create($data);
+           //
+           return response()->json(['message' => 'Compañia Agregada Exitosamente']);
+           //return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
+	    }
+
         //dd(Input::all());
-   }
+   }//fin store
 
 
 

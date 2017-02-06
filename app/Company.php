@@ -2,9 +2,6 @@
 
 namespace XFS;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use XFS/Avion;
-use XFS/Pais;
-use XFS/Estado;
 class Company extends Eloquent
    {
      protected $table = 'companys';
@@ -15,17 +12,17 @@ class Company extends Eloquent
       *
       * @var array
       */
-     protected $fillable = ['nombre', 'correo', 'direccion','website','representante','ciudad','pais','codigop','telefono'];
+     protected $fillable = ['nombre', 'correo', 'direccion','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
 
      public function aviones() {
-		     return $this->hasMany('Avion');
+		     return $this->hasMany('XFS\Avion');
 	  }
-
+//'return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
     public function pais() {
-        return $this->hasOne('Pais','id','pais_id');
+        return $this->hasOne('XFS\Pais','id','pais_id');
     }
     public function estado() {
-        return $this->hasOne('Estado','id','estado_id');
+        return $this->hasOne('XFS\Estado','id','estado_id');
     }
 
      public function scopeBusqueda($query, $busqueda)
