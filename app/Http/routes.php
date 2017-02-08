@@ -60,3 +60,4 @@ Route::resource('companys', 'CompanyController');
 Route::resource('servicios', 'ServicioController');
 Route::resource ('categoria', 'CategoriaController');
 Route::resource ('contratos','ContratoController');
+Route::resource ('estimates','EstimatesController');

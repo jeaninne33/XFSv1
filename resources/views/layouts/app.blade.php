@@ -59,7 +59,7 @@
               <div class="tab-container full-width-style arrow-left dashboard">
                   <ul class="tabs">
                       <li class="active"><a data-toggle="tab" href="#dashboard"><i class="soap-icon-anchor circle"></i>Inicio</a></li>
-                      <li class=""><a data-toggle="tab" href="#booking"><i class="soap-icon-businessbag circle"></i>Compañias</a></li>
+                      <li class=""><a data-toggle="tab" href="#"><i class="soap-icon-businessbag circle"></i>Compañias</a></li>
                       <li class=""><a data-toggle="tab" href="#wishlist"><i class="soap-icon-wishlist circle"></i>Servicios</a></li>
                       <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Estimados</a></li>
                       <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Facturas</a></li>
@@ -69,7 +69,6 @@
                   </ul>
                   <div class="tab-content">
                     <div id="contenido" class="tab-pane fade in active">
-
 
                         	@yield('contenido')
 
