@@ -74,10 +74,10 @@ class CompanyController extends Controller
     //Request $request
    public function store(CrearCompanysRequest $request)
    {
-
+     $data  = $request->all();
+     print_r($data);
       if($request->ajax()){
-         $data  = $request->all();
-        // print_r($data);
+
           Company::create($data);
            //
            return response()->json(['message' => 'Compañia Agregada Exitosamente']);

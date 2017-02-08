@@ -163,8 +163,20 @@
      </div>
   </div>
   <div id="menu3" class="tab-pane fade">
+    <h3>
+    Aviones <p><small>
+             Se agregan los datos de los Aviones. <b>   Los campos con (*) son obligatorios</b>
+        </small></p>
+    </h3>
+    <div id="aviones">
+      @include('companys.partials.fields_avion')
+    <div class="pull-right">
+      <button id="del" type="button" class="btn btn-info"> <span class="glyphicon glyphicon-plus-sign"></span>Agregar Avion</button>
+      <button  id="add" type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>Eliminar Avion</button>
 
-  @include('companys.partials.fields_avion')
+    </div>
+    </div>
+
   </div>
   <div id="menu4" class="tab-pane fade" style="display:none">
     <h3>Menu 2</h3>

@@ -10,7 +10,7 @@ class Avion extends Model
      protected $table = 'aviones';
      protected $fillable = ['tipo', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
 
-     public function companys() {
-		      return $this->belongsTo('Company', 'company_id');
+     public function company() {
+		      return $this->belongsTo('XF\Company', 'company_id');
 	  }
 }

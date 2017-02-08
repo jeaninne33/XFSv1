@@ -32,15 +32,67 @@ $('#tipo').on('change',function(e){
 
     });
 
+
+function createObjectCompany (data) {
+  //fields struc Company
+  var fields =  ["nombre", 'correo', 'direccion','cargo','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
+  var company = {}; //inicializate object
+  company = loadObjectData(company, fields, data);
+  company["aviones"] = []; // create list airplane
+  return company;
+}
+
+function createObjectAirplane (data) {
+    var fields = ['tipo1', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
+    var airplane =  {};
+    airplane = loadObjectData(airplane, fields, data);
+    airplane=changeProperty(airplane,'tipo1', 'tipo');
+    return airplane;
+}
+
+function changeProperty(obj, old_name, new_name){
+    for (var i = 0; i < obj.length; i++) {
+      obj[i].new_name = obj[i].old_name;
+      delete obj[i].old_name;
+    }
+    return obj;
+}
+function loadObjectData (obj, fields, data)
+{
+  for (var key in data) { //  loop find field company
+    if (fields.indexOf(key)>=0) {
+      obj[key] = data[key]; // asing value company
+    }
+  }
+  return obj;
+}
+
+function loadCompanyAirplane(company, airplane){
+  company.aviones.push(airplane);
+  return company;
+}
+
+function  prepareCompany(data) {
+   var company  =  createObjectCompany(data);
+   var airplane  =  createObjectAirplane(data);
+   company = loadCompanyAirplane(company, airplane);
+   return company;
+}
+
 //enviando el formulario con ajax
 $("#form1").on("submit", function(e){
   e.preventDefault();
   e.stopPropagation();
   clearMessages();
+
+  var data  =  {};
+  var bruteData  =  $(this).serializeArray().map(function(e){data[e.name] =  e.value;});
+  var company  =  prepareCompany(data);
+  company["_token"] =  data["_token"];
   $.ajax({
       url: $(this).attr('action'),
       method: $(this).attr("method"),
-      data: $(this).serialize(),
+      data: company,
       dataType: 'json',
     /*  beforeSend: function () {
         //  alert('ajaa');
