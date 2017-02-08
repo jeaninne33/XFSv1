@@ -15,7 +15,7 @@ class Company extends Eloquent
      protected $fillable = ['nombre', 'correo', 'direccion','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
 
      public function aviones() {
-		     return $this->hasMany('XFS\Avion');
+		     return $this->hasMany('XFS\Avion', 'company_id');
 	  }
 //'return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
     public function pais() {

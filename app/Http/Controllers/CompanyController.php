@@ -36,13 +36,7 @@ class CompanyController extends Controller
 
     public function index(Request $request)
     {
-      // dd($request->get('busqueda'));
-        // get all the nerds
-       /* $companys = Company::busqueda($request->get('busqueda'))->tipo($request->get('relacion'))->orderBy('id','DESC')->paginate(5);
 
-        // load the view and pass the nerds
-        return view('companys.index',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);
-        //return view('principal',compact('companys'))->with('i', ($request->input('page', 1) - 1) * 5);*/
           $companys = Company::all();//orderBy('id','DESC');
           return  view('companys.index')
         ->with('companys', $companys);
@@ -83,13 +77,12 @@ class CompanyController extends Controller
 
       if($request->ajax()){
          $data  = $request->all();
-         print_r($data);
+        // print_r($data);
           Company::create($data);
            //
            return response()->json(['message' => 'Compañia Agregada Exitosamente']);
            //return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
 	    }
-
         //dd(Input::all());
    }//fin store
 

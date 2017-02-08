@@ -3,7 +3,8 @@
         <tr>
             <td>ID</td>
             <td>Nombre</td>
-            <td>Direccion</td>
+            <td>Correo</td>
+            <td>Pais</td>
             <td>Tipo</td>
             <td>Aciones</td>
         </tr>
@@ -13,7 +14,8 @@
         <tr data-id="{{$value->id}}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
-            <td>{{ $value->direccion }}</td>
+            <td>{{ $value->correo }}</td>
+            <td>{{ $value->pais->nombre }}</td>
             <td>{{ $value->tipo }}</td>
 
             <!-- we will also add show, edit, and delete buttons -->

@@ -32,6 +32,7 @@ class CrearCompanysRequest extends Request
             'direccion'      => 'required|max:500',
             'website'=> 'max:50',
             'representante'=> 'required|max:100',
+            'pais_id'=> 'required',
             'ciudad'=> 'required|max:50',
             'codigop'=> 'max:7',
             'telefono'=> 'numeric|min:6',

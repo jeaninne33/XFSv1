@@ -14,7 +14,6 @@
 <div class="errorMessages"></div>
 
 <div class="successMessages"></div>
-  @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
 [[ Form::open(['route'=>'companys.store', 'id'=>'form1','method'=> 'POST', 'novalidate']) ]]
   @include('companys.partials.fields')
@@ -24,6 +23,6 @@
 </div>
 @endsection
 @section('scripts')
-  
+
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
 @endsection

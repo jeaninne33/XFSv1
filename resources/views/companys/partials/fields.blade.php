@@ -79,7 +79,7 @@
           </div>
           <div class="proveedor" style="display:none;" >
           [[Form::label('tipo_prove', 'Tipo de Proveedor *') ]]
-          [[ Form::select('tipo_prove', array('' => 'Seleccione', 'Fuel/Handling',  'FBO/Handler',  'Broker','Supplier'), null, ['id' => 'tipo_prove','class' => 'input-text full-width']) ]]
+          [[ Form::select('tipo_prove', array('' => 'Seleccione', 'Fuel/Handling'=>'Fuel/Handling',  'FBO/Handler'=>'FBO/Handler',  'Broker' =>'Broker','Supplier'=>'Supplier'), null, ['id' => 'tipo_prove','class' => 'input-text full-width']) ]]
           </div>
         </div>
     </div>
@@ -164,7 +164,7 @@
   </div>
   <div id="menu3" class="tab-pane fade">
 
-    <p>Some content in menu 2.</p>
+  @include('companys.partials.fields_avion')
   </div>
   <div id="menu4" class="tab-pane fade" style="display:none">
     <h3>Menu 2</h3>
