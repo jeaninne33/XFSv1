@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+<!--[if gt IE 9]><!-->  <html ng-app="XHR"> <!--<![endif]-->
 <head>
     <!-- Page Title -->
     <title>XFlightSupport</title>
@@ -58,14 +58,12 @@
           <div id="main">
               <div class="tab-container full-width-style arrow-left dashboard">
                   <ul class="tabs">
-                      <li class="active"><a data-toggle="tab" href="#dashboard"><i class="soap-icon-anchor circle"></i>Inicio</a></li>
-                      <li class=""><a data-toggle="tab" href="#"><i class="soap-icon-businessbag circle"></i>Compañias</a></li>
-                      <li class=""><a data-toggle="tab" href="#wishlist"><i class="soap-icon-wishlist circle"></i>Servicios</a></li>
-                      <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Estimados</a></li>
-                      <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Facturas</a></li>
-                      <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Reportes</a></li>
-                      <li class=""><a data-toggle="tab" href="#profile"><i class="soap-icon-user circle"></i>Perfil</a></li>
-                      <li class=""><a data-toggle="tab" href="#settings"><i class="soap-icon-settings circle"></i>Configuración</a></li>
+                      <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="#dashboard"><i class="soap-icon-anchor circle"></i>Inicio</a></li>
+                      <li id="m2" class=""><a class="menu" id="2" data-toggle="tab" href="#"><i class="soap-icon-businessbag circle"></i>Compañias</a></li>
+                      <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="#wishlist"><i class="soap-icon-wishlist circle"></i>Servicios</a></li>
+                      <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Estimados</a></li>
+                      <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Facturas</a></li>
+                      <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Reportes</a></li>
                   </ul>
                   <div class="tab-content">
                     <div id="contenido" class="tab-pane fade in active">
@@ -86,6 +84,28 @@
       <script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
       <!-- Twitter Bootstrap -->
       <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+      <script>
+      $('.menu').on('click',function(e){
+            console.log(e);
+
+            var id=$(this).attr("id");
+           if (id==1){  // alert('10');
+           }else if (id==2){
+             window.location.href ="{{ route('companys.index') }}";
+           }else if (id==3) {
+              window.location.href ="{{ route('servicios.index') }}";
+           }else if (id==4) {
+            //  alert('31');
+            window.location.href ="{{ route('estimates.index') }}";
+           }else if (id==5) {
+           }else  {
+         //  alert('>41');
+           }//fin si
+      });
+      </script>
       @yield('scripts')
+
 </body>
 </html>

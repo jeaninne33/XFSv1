@@ -1,16 +1,18 @@
+$('#m2').removeClass('');
+$('#m2').addClass('active');
 
 $('#pais_id').on('change',function(e){
     //alert($('#pais_id').val());
-        console.log(e);
-        var id=e.target.value;
-        $.get('/state/'+id, function(data){
-             //console.log(data);
-            $('#estado_id').empty();
-            $('#estado_id').append('<option value="">Seleccione el Estado</option>');
-             $.each(data,function(index,estado){
-               $('#estado_id').append('<option value="'+estado.id+'">'+estado.nombre+'</option>');
-             });
-           });
+    console.log(e);
+    var id=e.target.value;
+    $.get('/state/'+id, function(data){
+         //console.log(data);
+        $('#estado_id').empty();
+        $('#estado_id').append('<option value="">Seleccione el Estado</option>');
+         $.each(data,function(index,estado){
+           $('#estado_id').append('<option value="'+estado.id+'">'+estado.nombre+'</option>');
+         });
+       });
 });
 
 $('#tipo').on('change',function(e){
@@ -20,43 +22,85 @@ $('#tipo').on('change',function(e){
         if(  tipo=="prove"){
            $(".cliente").css("display", "none");
            $(".proveedor").css("display", "block");
-        }else{
-          if(tipo=="client"){
+           $(".avion").css("display", "none");
+        }else if (tipo=="client") {
             $(".cliente").css("display", "block");
             $(".proveedor").css("display", "none");
-          }else{
+            $(".avion").css("display", "block");
+       }else{
             $(".cliente").css("display", "block");
             $(".proveedor").css("display", "block");
-          }//fin si
+            $(".avion").css("display", "block");
         }//fin si
-
     });
 
+  var num_input = 1; //Número Maximo de aviones
+
+  $("#add").on('click', function(){
+      if(num_input <= 7) { //max input airplane
+          //agregar campo
+          var ac=num_input;
+          num_input++;
+          $("#avion"+ac).append('  <br/>  <p><b>Datos del Avión #'+num_input+'<b><p/><div class="col-md-2"><label for="tipo">Tipo de Avion *</label><input type="text" class="input-text full-width" name="tipo" id="tipo"/></div><div class="col-md-2"><label for="modelo">Modelo</label><input type="text" class="input-text full-width" name="modelo" id="modelo"/></div><div class="col-md-2"><label for="fabricante">Fabricante</label><input type="text" class="input-text full-width" name="fabricante" id="fabricante"/></div><div class="col-md-2"><label for="matricula">Matricula *</label><input type="text" class="input-text full-width" name="matricula" id="matricula"/></div><div class="col-md-2"><label for="licencia1">Licencia 1 *</label><input type="text" class="input-text full-width" name="licencia1" id="licencia1"/></div><div class="col-md-2"><label for="licencia2">Licencia 2 </label><input type="text" class="input-text full-width" name="licencia2" id="licencia2"/></div><div class="col-md-2"><label for="registro">Registro</label><input type="text" class="input-text full-width" name="registro" id="registro"/></div><div class="col-md-2"><label for="piloto1">Piloto 1 *</label><input type="text" class="input-text full-width" name="piloto1" id="piloto1"/></div><div class="col-md-2"><label for="piloto2">Piloto 2</label><input type="text" class="input-text full-width" name="piloto2" id="piloto2"/></div><div class="col-md-2"><label for="certificado">Certificado</label><input type="text" class="input-text full-width" name="certificado" id="certificado"/></div><div class="col-md-2"><label for="seguro">Seguro</label><input type="text" class="input-text full-width" name="seguro" id="seguro"/></div>');
+          $("#campos").append('<div id="avion'+num_input+'" class="row"></div>');
+          $('#del').removeAttr('disabled');
+      }else{
+        $('#add').attr('disabled','disabled');
+      }
+  });
+
+  $('#del').on('click', function(){// Elimina un elemento por click
+  //  var act=num_input-1;
+    if (num_input != 1) {
+      $('#avion' + num_input ).remove();
+         num_input--;
+         $('#add').removeAttr('disabled');
+     }else if (num_input == 1) {
+      $("#avion1").empty();
+      $('#del').attr('disabled','disabled');
+      }
+});
 
 function createObjectCompany (data) {
   //fields struc Company
-  var fields =  ["nombre", 'correo', 'direccion','cargo','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
+  var fields =  ["nombre", 'correo', 'direccion','cargo','website','tipo1','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
   var company = {}; //inicializate object
   company = loadObjectData(company, fields, data);
+  airplane=changeProperty(company,'tipo1', 'tipo');
   company["aviones"] = []; // create list airplane
   return company;
 }
 
 function createObjectAirplane (data) {
-    var fields = ['tipo1', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
+    var fields = ['tipo', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
     var airplane =  {};
     airplane = loadObjectData(airplane, fields, data);
-    airplane=changeProperty(airplane,'tipo1', 'tipo');
     return airplane;
 }
 
 function changeProperty(obj, old_name, new_name){
-    for (var i = 0; i < obj.length; i++) {
-      obj[i].new_name = obj[i].old_name;
-      delete obj[i].old_name;
-    }
-    return obj;
+      obj[new_name] =obj[old_name];
+      delete obj[old_name];
+      return obj;
 }
+
+function validatedataAirplane(obj){
+ var   errors=[];
+    for (var key in obj) { //  loop find field company
+      if (obj.indexOf('tipo')==="") {
+          errors[0] = "El campo Tipo de Avion es obligatorio.";
+      }else if(obj.indexOf('Matricula')===null){
+        errors[1] = "El campo Matricula es obligatorio.";
+      }else if(obj.indexOf('licencia1')===null){
+        errors[2] = "El campo Licencia es obligatorio.";
+      }else if(obj.indexOf('piloto1')===null){
+        errors[3] = "El campo Piloto 1 es obligatorio.";
+      }//fin  si
+  }//fin para
+  return errors;
+}
+
+
 function loadObjectData (obj, fields, data)
 {
   for (var key in data) { //  loop find field company
@@ -84,7 +128,6 @@ $("#form1").on("submit", function(e){
   e.preventDefault();
   e.stopPropagation();
   clearMessages();
-
   var data  =  {};
   var bruteData  =  $(this).serializeArray().map(function(e){data[e.name] =  e.value;});
   var company  =  prepareCompany(data);
@@ -94,13 +137,8 @@ $("#form1").on("submit", function(e){
       method: $(this).attr("method"),
       data: company,
       dataType: 'json',
-    /*  beforeSend: function () {
-        //  alert('ajaa');
-      },*/
-      success: function(data)
-      {
-          if(data.message)
-          {
+      success: function(data)  {
+          if(data.message)  {
               var html = "<div class='alert alert-success alert-dismissable'>";
               html+='<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
               html+="<p>" + data.message + "</p>";
@@ -110,17 +148,14 @@ $("#form1").on("submit", function(e){
               $("#estado_id").empty();
           }
       },
-      error: function(jqXHR, textStatus, errorThrown)
-      {
-          if(jqXHR)
-          {
+      error: function(jqXHR, textStatus, errorThrown){
+          if(jqXHR){
               var errors = jqXHR.responseJSON;
               var html = "<div class='alert alert-danger alert-dismissable'>";
               html+='<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
               html+='  <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>';
               html+='<ul>';
-              for(error in errors)
-              {
+              for(error in errors)  {
                   html+="<li> - " + errors[error] + "</li>";
               }
                 html+='</ul>';
@@ -131,8 +166,7 @@ $("#form1").on("submit", function(e){
   });
 });
 
-function clearMessages()
-{
+function clearMessages(){
     $(".errorMessages").html('');
     $(".successMessages").html('');
 }
@@ -141,8 +175,6 @@ $('.btn-delete').click(function(e){
    e.preventDefault();//evita que se envie el formulario
    var row=$(this).parents('tr');
    var id=row.data('id');
-//   alert(row);
-   //alert(id);
    if (confirm("¿Esta Seguro que desea Eliminar el Registro?") == true) {
        var form =$('#form-delete');
        var url=form.attr('action').replace(':COM_ID',id);
@@ -159,7 +191,5 @@ $('.btn-delete').click(function(e){
          //alert('La compañia no fue eliminada');
            row.show();
        });
-
    }
-
 });

@@ -14,10 +14,10 @@
 <div class="errorMessages"></div>
 
 <div class="successMessages"></div>
-<div class="col-sm-12 no-float no-padding">
+<div ng-controller="CompanyCtrl" class="col-sm-12 no-float no-padding">
 [[ Form::open(['route'=>'companys.store', 'id'=>'form1','method'=> 'POST', 'novalidate']) ]]
   @include('companys.partials.fields')
-[[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary')) ]]
+[[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary','ng-click'=>'save()')) ]]
 [[ Form::close() ]]
 
 </div>
@@ -25,4 +25,5 @@
 @section('scripts')
 
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
+[[ Html::script('assets/js/app.js') ]]
 @endsection
