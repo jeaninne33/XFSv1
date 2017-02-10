@@ -36,20 +36,20 @@ $('#tipo').on('change',function(e){
 
   var num_input = 1; //Número Maximo de aviones
 
-  $("#add").on('click', function(){
+/*  $("#add").on('click', function(){
       if(num_input <= 7) { //max input airplane
           //agregar campo
           var ac=num_input;
           num_input++;
-          $("#avion"+ac).append('  <br/>  <p><b>Datos del Avión #'+num_input+'<b><p/><div class="col-md-2"><label for="tipo">Tipo de Avion *</label><input type="text" class="input-text full-width" name="tipo" id="tipo"/></div><div class="col-md-2"><label for="modelo">Modelo</label><input type="text" class="input-text full-width" name="modelo" id="modelo"/></div><div class="col-md-2"><label for="fabricante">Fabricante</label><input type="text" class="input-text full-width" name="fabricante" id="fabricante"/></div><div class="col-md-2"><label for="matricula">Matricula *</label><input type="text" class="input-text full-width" name="matricula" id="matricula"/></div><div class="col-md-2"><label for="licencia1">Licencia 1 *</label><input type="text" class="input-text full-width" name="licencia1" id="licencia1"/></div><div class="col-md-2"><label for="licencia2">Licencia 2 </label><input type="text" class="input-text full-width" name="licencia2" id="licencia2"/></div><div class="col-md-2"><label for="registro">Registro</label><input type="text" class="input-text full-width" name="registro" id="registro"/></div><div class="col-md-2"><label for="piloto1">Piloto 1 *</label><input type="text" class="input-text full-width" name="piloto1" id="piloto1"/></div><div class="col-md-2"><label for="piloto2">Piloto 2</label><input type="text" class="input-text full-width" name="piloto2" id="piloto2"/></div><div class="col-md-2"><label for="certificado">Certificado</label><input type="text" class="input-text full-width" name="certificado" id="certificado"/></div><div class="col-md-2"><label for="seguro">Seguro</label><input type="text" class="input-text full-width" name="seguro" id="seguro"/></div>');
+          $("#avion"+ac).append('  <br/>  <p><b>Datos del Avión #'+num_input+'<b><p/><div class="col-md-2"><label for="tipo">Tipo de Avion *</label><input type="text" class="input-text full-width" ng-model="airplanes.tipo" name="tipo" id="tipo"/></div><div class="col-md-2"><label for="modelo">Modelo</label><input type="text" class="input-text full-width" ng-model="airplanes.modelo" name="modelo" id="modelo"/></div><div class="col-md-2"><label for="fabricante">Fabricante</label><input type="text" class="input-text full-width" name="fabricante" id="fabricante" ng-model="airplanes.fabricante"/></div><div class="col-md-2"><label for="matricula">Matricula *</label><input type="text" class="input-text full-width" ng-model="airplanes.matricula" name="matricula" id="matricula"/></div><div class="col-md-2"><label for="licencia1">Licencia 1 *</label><input type="text" class="input-text full-width" ng-model="airplanes.licencia1" name="licencia1" id="licencia1"/></div><div class="col-md-2"><label for="licencia2">Licencia 2 </label><input type="text" class="input-text full-width" ng-model="airplanes.licencia2" name="licencia2" id="licencia2"/></div><div class="col-md-2"><label for="registro">Registro</label><input type="text" class="input-text full-width" ng-model="airplanes.registro" name="registro" id="registro"/></div><div class="col-md-2"><label for="piloto1">Piloto 1 *</label><input type="text" class="input-text full-width" ng-model="airplanes.piloto1" name="piloto1" id="piloto1"/></div><div class="col-md-2"><label for="piloto2">Piloto 2</label><input type="text" class="input-text full-width" ng-model="airplanes.piloto2" name="piloto2" id="piloto2"/></div><div class="col-md-2"><label for="certificado">Certificado</label><input type="text" class="input-text full-width" ng-model="airplanes.certificado" name="certificado" id="certificado"/></div><div class="col-md-2"><label for="seguro">Seguro</label><input type="text" class="input-text full-width"  ng-model="airplanes.seguro" name="seguro" id="seguro"/></div>');
           $("#campos").append('<div id="avion'+num_input+'" class="row"></div>');
           $('#del').removeAttr('disabled');
       }else{
         $('#add').attr('disabled','disabled');
       }
-  });
+  });*/
 
-  $('#del').on('click', function(){// Elimina un elemento por click
+/*  $('#del').on('click', function(){// Elimina un elemento por click
   //  var act=num_input-1;
     if (num_input != 1) {
       $('#avion' + num_input ).remove();
@@ -59,8 +59,8 @@ $('#tipo').on('change',function(e){
       $("#avion1").empty();
       $('#del').attr('disabled','disabled');
       }
-});
-
+});*/
+/*
 function createObjectCompany (data) {
   //fields struc Company
   var fields =  ["nombre", 'correo', 'direccion','cargo','website','tipo1','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp'];
@@ -75,6 +75,15 @@ function createObjectAirplane (data) {
     var fields = ['tipo', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
     var airplane =  {};
     airplane = loadObjectData(airplane, fields, data);
+    return airplane;
+}
+function cantAirplane (data) {
+  var cant=0;
+  for (var key in data) { //  loop find field company
+    if (data.indexOf("cant_air")>=0) {
+
+    }
+  }
     return airplane;
 }
 
@@ -165,7 +174,7 @@ $("#form1").on("submit", function(e){
       }
   });
 });
-
+*/
 function clearMessages(){
     $(".errorMessages").html('');
     $(".successMessages").html('');

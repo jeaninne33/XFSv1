@@ -69,8 +69,8 @@
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
-          [[ Form::label('tipo1', 'Tipo de Relacion *')]]
-          [[ Form::select('tipo1', config('options.tipo'), null,['id' => 'tipo','class' => 'selector full-width',  'required' => 'required' ,'ng-model'=>'company.tipo1']) ]]
+          [[ Form::label('tipo', 'Tipo de Relacion *')]]
+          [[ Form::select('tipo', config('options.tipo'), null,['id' => 'tipo','class' => 'selector full-width',  'required' => 'required' ,'ng-model'=>'company.tipo']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           <div class="cliente" style="display:none;" >
@@ -168,12 +168,12 @@
              Se agregan los datos de los Aviones. <b>   Los campos con (*) son obligatorios</b>
         </small></p>
     </h3>
-    <div id="aviones">
+    <div id="aviones" >
       @include('companys.partials.fields_avion')
       <br/>
         <div class="pull-right">
-          <button id="add" type="button" class="btn btn-info"> <span class="glyphicon glyphicon-plus-sign"></span>Agregar Avion</button>
-          <button  id="del" type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>Eliminar Avion</button>
+          <button   ng-click="airplanes.push({})" type="button" class="btn btn-info"> <span class="glyphicon glyphicon-plus-sign"></span>Agregar Avion</button>
+          <button  ng-click="airplanes.pop()"  type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>Eliminar Avion</button>
         </div>
     </div>
   </div>
