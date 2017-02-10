@@ -76,13 +76,15 @@ class CompanyController extends Controller
    {
      $data  = $request->all();
      print_r($data);
-      if($request->ajax()){
+     dd("aloo");
+      //if($request->ajax()){
 
           Company::create($data);
            //
+
            return response()->json(['message' => 'Compañia Agregada Exitosamente']);
            //return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
-	    }
+	    //}
         //dd(Input::all());
    }//fin store
 
