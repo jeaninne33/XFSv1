@@ -38,6 +38,7 @@
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
 <script>
   $('#example').dataTable();
 

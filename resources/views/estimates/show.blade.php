@@ -114,3 +114,7 @@
  </div>
 
 @endsection
+@section('scripts')
+  <script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
+
+@endsection

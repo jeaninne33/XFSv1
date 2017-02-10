@@ -1,38 +1,25 @@
 <!-- app/views/nerds/edit.blade.php -->
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
+@section('contenido')
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="panel panel-default">
-
-      <div class="panel-heading">Editar Compañia {{ $servicios->nombre }}</div>
 
 
-<!-- if there are creation errors, they will show here -->
-@if (count($errors) > 0)
-  <div class="alert alert-danger">
-    <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+      <h1> Editar Servicios {{ $servicios->nombre }}</h1>
+      <div class="pull-right">
+               <a class="btn btn-primary" href="{{ route('servicios.index') }}"> Atrás</a>
+      </div>
+      <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
+      <br/>
+  @include('errors.errors')
+  <div class="col-md-12 no-float no-padding">
    [[Form::model($servicios, array('route' => array('servicios.update', $servicios->id), 'method' => 'PUT'))]]
     @include('servicios.partials.fields')
   [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
-      </div>
+
     </div>
   </div>
-</div>
-</body>
-</html>
+
+@endsection

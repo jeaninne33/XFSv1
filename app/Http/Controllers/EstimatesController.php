@@ -17,7 +17,7 @@ class EstimatesController extends Controller
      */
     public function index()
     {
-      $estimates=Estimates::all();
+      $estimates=Estimate::all();
 
       return view ('estimates.index')->with('estimates',$estimates);
     }
@@ -30,12 +30,20 @@ class EstimatesController extends Controller
     public function create()
     {
       $estimates=Estimate::all();
-      $companys=Company::all();
-      return view('estimates.create')
-      ->with('estimates',$estimates)
-      ->with('companys',$companys);
-    }
+    //  $companys=Company::all();
+    //  $indicador=1;
+      return view('estimates.create',compact('estimates'));
 
+    }
+    // public function cliente($id)
+    // {
+    //   //$companys=Company::all();
+    //    $view = View::make('estimates.create')->with('companys',$companys);
+    //    if($request->ajax()){
+    //        $sections = $view->renderSections();
+    //        return Response::json($sections['tbCliente']);
+    //    }else return $view;
+    // }
     /**
      * Store a newly created resource in storage.
      *

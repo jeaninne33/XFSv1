@@ -18,9 +18,7 @@
           <h4 class="modal-title">Listado de Clientes</h4>
         </div>
         <div class="modal-body">
-
-            @include('estimates.partials.tbClientes')
-
+          @include('estimates.partials.tbClientes')
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -41,26 +39,22 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Cliente', 'Cliente') ]]
-          [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width' ]) ]]
+          [[Form::text('nombreC', null, ['class' => 'input-text full-width' ]) ]]
 
         </div>
         <div class="col-sms-6 col-sm-2">
           <br/>
-          <button type="button"  value="1" onclick="ajaxRenderSection(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+          <a name="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="modal" data-target="#clientes"></a>
         </div>
     </div>
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-5">
+        <div class="col-sms-6 col-sm-6">
           [[Form::label('Proveedor', 'Proveedor *') ]]
-          [[ Form::text('nombreP', null, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
+          [[ Form::text('nombreP', null, ['class' => 'input-text full-width',  'required' => 'required' ]) ]]
         </div>
-        <div class="col-sms-6 col-sm-1">
-          <br/>
-          <button type="button"  value="0" onclick="ajaxRenderSection(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
-        </div>
-        <div class="col-sms-6 col-sm-5">
+        <div class="col-sms-6 col-sm-6">
           [[Form::label('Estado', 'Estado *') ]]
-          [[ Form::select('estado',array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'),['class' => 'selector full-width',  'required' => 'required' ]) ]]
+          {{-- [[ Form::select('estado','estado', null,['class' => 'selector full-width',  'required' => 'required' ]) ]] --}}
         </div>
     </div>
     <div class="row form-group">
@@ -84,21 +78,9 @@
           [[Form::label('resumen', 'Resumen') ]]
           [[ Form::text('resumen', null, ['class' => 'input-text full-width' ]) ]]
         </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sms-6 col-sm-4">
-          [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
-          [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
-        </div>
         <div class="col-sms-6 col-sm-6">
-          <div class="telefono" style="display:block;" >
-          [[Form::label('telefono', 'Telefono') ]]
-          [[ Form::text('telefono', null, ['class' => 'input-text full-width' ]) ]]
-          </div>
-          <div class="celular" style="display:none;" >
-          [[Form::label('celular', 'Celular') ]]
-          [[ Form::text('celular', null, ['class' => 'input-text full-width' ]) ]]
-          </div>
+          [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
+          [[ Form::text('metodo_segui', null, ['class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -225,47 +207,3 @@
     <p>Some content in menu 2.</p>
   </div> --}}
 </div>
-{{-- @section('scripts') --}}
-  <script>
-//   $('button').on('click','#btnCliente',function(event){
-//     $.get("", function(data, status){
-//         alert("Data: " + data + "\nStatus: " + status);
-//     })
-//
-// });
-// $('#btnCliente').on('click',function(e){
-//     alert($('#btnCliente').val());
-//     e.preventDefault();
-//         console.log(e);
-//         var id=e.target.value;
-//         $.get('/cliente/'+id, function(data){
-//              console.log(data);
-//             // $('#estado_id').empty();
-//             // $('#estado_id').append('<option value="">Seleccione el Estado</option>');
-//             //  $.each(data,function(index,estado){
-//             //    $('#estado_id').append('<option value="'+estado.id+'">'+estado.nombre+'</option>');
-//             //  });
-//            });
-// });
-// function ajaxRenderSection(id) {
-//    var id=e.target.value;
-//         $.ajax({
-//             type: 'GET',
-//             url:'/cliente'/+id ,
-//             dataType: 'json',
-//             success: function (data) {
-//                 //$('#principalPanel').empty().append($(data));
-//                 alert('hola mundo');
-//             },
-//             error: function (data) {
-//                 var errors = data.responseJSON;
-//                 if (errors) {
-//                     $.each(errors, function (i) {
-//                         console.log(errors[i]);
-//                     });
-//                 }
-//             }
-//         });
-//      };
-</script>
-{{-- @endsection --}}

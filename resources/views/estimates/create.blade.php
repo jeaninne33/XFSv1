@@ -2,8 +2,8 @@
 @section('css')
   <!-- Datatable Styles -->
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+{{-- <link rel="stylesheet" href="{{asset("assets/css/bootstrap-table.css")}}"> --}}
 @endsection
 @section('contenido')
 
@@ -22,15 +22,18 @@
   @include('estimates.partials.fields')
 [[ Form::submit('Agregar Estimado', array('class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]
-
 </div>
 @endsection
 @section('scripts')
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
+{{-- <script type="text/javascript" src="{{asset("assets/js/bootstrap-table.js")}}"></script> --}}
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
+
+
 <script>
-  $('#example').dataTable();
+   $('#example').dataTable();
 
   $('.btn-delete').click(function(e){
      e.preventDefault();//evita que se envie el formulario

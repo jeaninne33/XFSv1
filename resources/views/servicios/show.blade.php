@@ -1,38 +1,40 @@
-<!-- app/views/nerds/show.blade.php -->
+@extends('layouts.app')
+@section('contenido')
+<h1>Servicio <strong> {{ $servicios->nombre }}</strong></h1>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
 
-<nav class="navbar navbar-inverse">
-  <div class="navbar-header">
-      <a class="navbar-brand" href="{{ URL::to('servicios') }}">Compañias</a>
-  </div>
-  <ul class="nav navbar-nav">
-      <li><a href="{{ URL::to('servicios') }}">Ver Todas Compañias</a></li>
-      <li><a href="{{ URL::to('servicios/create') }}">Crear Compañia</a>
-    </ul>
-</nav>
-
-<h1>Showing {{ $servicios->nombre }}</h1>
-<div class="pull-right">
-         <a class="btn btn-primary" href="{{ route('servicios.index') }}"> Atrás</a>
-     </div>
+<div class="row form-group pull-right">
+<a class="btn btn-primary" href="{{ route('servicios.index') }}"> Atrás</a>
+</div>
+<br/>
      <br/>
+<div class="col-sm-12 no-float no-padding">
+     <div class="row form-group">
+       <div class="col-sms-6 col-sm-6">
+         [[ Form::label('nombre', 'Nombre')]]
+         [[Form::text('nombre', $servicios->nombre, ['class' => 'input-text full-width' , 'required' => 'required','readonly'=>'readonly'])]]
+       </div>
 
-    <div class="jumbotron text-center">
+       <div class="col-sms-6 col-sm-6">
+           [[Form::label('descripcion', 'Descripción') ]]
+           [[ Form::text('descripcion', $servicios->descripcion, ['class' => 'input-text full-width' , 'required' => 'required','readonly']) ]]
+       </div>
+     </div>
+     <div class="row form-group">
+       <div class="col-sms-6 col-sm-6">
+         [[ Form::label('categoria_id', 'Categoria')]]
+         [[ Form::select('categoria_id', $categorias, null, array('class' => 'input-text full-width','readonly')) ]]
+
+       </div>
+     </div>
+</div>
+    {{-- <div class="jumbotron text-center">
         <h2>{{ $servicios->nombre  }}</h2>
         <p>
-            <strong>Correo:</strong> {{ $servicios->correo }}<br>
-            <strong>Dirección:</strong> {{ $servicios->direccion }}
+            <strong>Descripcion:</strong> {{ $servicios->descripcion }}<br>
+            <strong>Categoria:</strong> {{ $servicios->categoria->nombre }}
         </p>
-    </div>
+    </div> --}}
 
-</div>
-</body>
-</html>
+
+@endsection
