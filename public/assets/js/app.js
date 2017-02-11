@@ -5,13 +5,14 @@ angular.module("XHR",[])
   };
   $scope.airplanes = [];
 
-  $scope.save =  function(){
-
-
+ $scope.save =  function($event){
+    $event.preventDefault();
+    //return false;
     var company =  $scope.company;
+    company["_token"] =  $("#_token").val();
     company.aviones  =  $scope.airplanes;
     var data=$.param(company);
-    $http.post('/companys.store', data)
+    $http.post('companys.store', data)
     .then(
     function(response){// success callback
       console.log(data);
@@ -20,8 +21,8 @@ angular.module("XHR",[])
     //  console.log(data);
       console.log(data);
     }
- );
 
+ );
 
   };//fin save
 

@@ -75,8 +75,8 @@ class CompanyController extends Controller
    public function store(CrearCompanysRequest $request)
    {
      $data  = $request->all();
-     print_r($data);
-     dd("aloo");
+    // print_r($data);
+   //  dd("aloo");
       //if($request->ajax()){
 
           Company::create($data);

@@ -22,14 +22,14 @@
 
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#home">Clientes</a></li>
-      <li><a data-toggle="tab" href="#menu1" id="<? $data = $companys_c ?>">Proveedores</a></li>
+      <li><a data-toggle="tab" href="#menu1">Proveedores</a></li>
       <li><a data-toggle="tab" href="#menu2">Cliente/Proveedor</a></li>
     </ul>
     <div class="tab-content">
       <div id="home" class="tab-pane fade in active">
         <h3>Listado de Clientes</h3>
         <br/>
-        <?php //$data = $companys_c; ?>
+       
 
         <div class="col-sms-12 col-sm-12">
             @include('companys.partials.table')

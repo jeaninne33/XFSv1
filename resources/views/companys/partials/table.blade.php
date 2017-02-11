@@ -10,8 +10,9 @@
         </tr>
     </thead>
     <tbody>
-    @foreach($companys as $key => $value)
-        <tr data-id="{{$value->id}}">
+    @if(!$companys->isEmpty())
+       @foreach($companys as $key => $value)
+         <tr data-id="{{$value->id}}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
             <td>{{ $value->correo }}</td>
@@ -31,6 +32,7 @@
 
             </td>
         </tr>
-    @endforeach
+      @endforeach
+    @endif
     </tbody>
 </table>
