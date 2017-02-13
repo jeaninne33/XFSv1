@@ -15,23 +15,8 @@
     <link rel="stylesheet" href="{{ asset("assets/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/css/font-awesome.min.css") }}">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ asset("assets/css/animate.min.css") }}">
-
-
     <!-- Main Style -->
     <link id="main-style" rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
-
-    <!-- Updated Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/css/updates.css") }}">
-    <!-- Datatable Styles -->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-
-
-    <!-- Responsive Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/css/responsive.css") }}">
-    <!--SWEETALERT-->
-    <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
-    <link href="{{ asset("assets/dist/sweetalert.css") }}" rel="stylesheet" />
 
 </head>
 <body>
@@ -70,8 +55,6 @@
                       <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Estimados</a></li>
                       <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Facturas</a></li>
                       <li class=""><a data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Reportes</a></li>
-                      <li class=""><a data-toggle="tab" href="#profile"><i class="soap-icon-user circle"></i>Perfil</a></li>
-                      <li class=""><a data-toggle="tab" href="#settings"><i class="soap-icon-settings circle"></i>Configuración</a></li>
                   </ul>
                   <div class="tab-content">
                       <div id="dashboard" class="tab-pane fade in active">
@@ -574,151 +557,6 @@
                               </form>
                           </div>
                       </div>
-                      <div id="booking" class="tab-pane fade">
-                       @yield('companys')
-                      </div>
-                      <div id="wishlist" class="tab-pane fade">
-                        @yield('create')
-                      </div>
-                      <div id="travel-stories" class="tab-pane fade">
-                          <h2>Share Your Story</h2>
-                          <div class="col-sm-9 no-float no-padding">
-                              <form>
-                                  <div class="row form-group">
-                                      <div class="col-sms-6 col-sm-6">
-                                          <label>Story Title</label>
-                                          <input type="text" class="input-text full-width">
-                                      </div>
-                                      <div class="col-sms-6 col-sm-6">
-                                          <label>Name</label>
-                                          <input type="text" class="input-text full-width">
-                                      </div>
-                                  </div>
-                                  <div class="row form-group">
-                                      <div class="col-sms-6 col-sm-6">
-                                          <label>Select Miles</label>
-                                          <div class="selector full-width">
-                                              <select>
-                                                  <option>4,528 Miles</option>
-                                                  <option>5,218 Miles</option>
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <div class="col-sms-6 col-sm-6">
-                                          <label>Email Address</label>
-                                          <input type="text" class="input-text full-width">
-                                      </div>
-                                  </div>
-                                  <div class="row form-group">
-                                      <div class="col-sms-6 col-sm-6">
-                                          <label>Select Category</label>
-                                          <div class="selector full-width">
-                                              <select>
-                                                  <option value="">Adventure, Romance, Beach</option>
-                                              </select>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label>Type Your Story</label>
-                                      <textarea rows="6" class="input-text full-width" placeholder="please tell us about you"></textarea>
-                                  </div>
-                                  <hr>
-                                  <div class="form-group">
-                                      <h4>Do you have photos to share? <small>(Optional)</small> </h4>
-                                      <div class="fileinput col-sm-6 no-float no-padding">
-                                          <input type="file" class="input-text" data-placeholder="select image/s" />
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <h4>Share with friends <small>(Optional)</small></h4>
-                                      <p>Share your review with your friends on different social media networks.</p>
-                                      <ul class="social-icons icon-circle clearfix">
-                                          <li class="twitter"><a title="Twitter" href="#" data-toggle="tooltip"><i class="soap-icon-twitter"></i></a></li>
-                                          <li class="facebook"><a title="Facebook" href="#" data-toggle="tooltip"><i class="soap-icon-facebook"></i></a></li>
-                                          <li class="googleplus"><a title="GooglePlus" href="#" data-toggle="tooltip"><i class="soap-icon-googleplus"></i></a></li>
-                                          <li class="pinterest"><a title="Pinterest" href="#" data-toggle="tooltip"><i class="soap-icon-pinterest"></i></a></li>
-                                      </ul>
-                                  </div>
-                                  <br>
-                                  <div class="form-group col-sm-5 col-md-4 no-float no-padding no-margin">
-                                      <button type="submit" class="btn-medium full-width">SUBMIT REVIEW</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                      <div id="settings" class="tab-pane fade">
-                          <h2>Account Settings</h2>
-                          <h5 class="skin-color">Change Your Password</h5>
-                          <form>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Old Password</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Enter New Password</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Confirm New password</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                  <button class="btn-medium">UPDATE PASSWORD</button>
-                              </div>
-                          </form>
-                          <hr>
-                          <h5 class="skin-color">Change Your Email</h5>
-                          <form>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Old email</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Enter New Email</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="row form-group">
-                                  <div class="col-xs-12 col-sm-6 col-md-4">
-                                      <label>Confirm New Email</label>
-                                      <input type="text" class="input-text full-width">
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                  <button class="btn-medium">UPDATE EMAIL ADDRESS</button>
-                              </div>
-                          </form>
-                          <hr>
-                          <h5 class="skin-color">Send Me Emails When</h5>
-                          <form>
-                              <div class="checkbox">
-                                  <label>
-                                      <input type="checkbox"> Travelo has periodic offers and deals on really cool destinations.
-                                  </label>
-                              </div>
-                              <div class="checkbox">
-                                  <label>
-                                      <input type="checkbox"> Travelo has fun company news, as well as periodic emails.
-                                  </label>
-                              </div>
-                              <div class="checkbox">
-                                  <label>
-                                      <input type="checkbox"> I have an upcoming reservation.
-                                  </label>
-                              </div>
-                              <button class="btn-medium uppercase">Update All Settings</button>
-                          </form>
-                      </div>
                   </div>
               </div>
           </div>
@@ -728,70 +566,12 @@
 
 <!-- Javascript -->
 <script type="text/javascript" src="{{ asset("assets/js/jquery-1.11.1.min.js") }}"></script>
-<script type="text/javascript" src="{{ asset("assets/js/jquery.noconflict.js") }}"></script>
-<script type="text/javascript" src="{{ asset("assets/js/modernizr.2.7.1.min.js") }}"></script>
-<script type="text/javascript" src="{{ asset("assets/js/jquery-migrate-1.2.1.min.js") }}"></script>
-<script type="text/javascript" src="{{ asset("assets/js/jquery.placeholder.js") }}"></script>
 <script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
-
-
-<!-- datatable jquery -->
-<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<!-- datatable jquery
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>-->
-
-
 <!-- Twitter Bootstrap -->
 <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
 
 <!--SWEETALERT-->
-  <script type="text/javascript">
-      tjq(document).ready(function() {
-          tjq("#profile .edit-profile-btn").click(function(e) {
-              e.preventDefault();
-              tjq(".view-profile").fadeOut();
-              tjq(".edit-profile").fadeIn();
-          });
 
-          setTimeout(function() {
-              tjq(".notification-area").append('<div class="info-box block"><span class="close"></span><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ab quis a dolorem, placeat eos doloribus esse repellendus quasi libero illum dolore. Esse minima voluptas magni impedit, iusto, obcaecati dignissimos.</p></div>');
-          }, 10000);
-
-          tjq('#example').dataTable();
-
-          tjq('.btn-delete').click(function(e){
-             e.preventDefault();//evita que se envie el formulario
-             // alert("ajaa");
-              var row=tjq(this).parents('tr');
-              var id=row.data('id');
-              var form =tjq('#form-delete');
-              var url=form.attr('action').replace(':COM_ID',id);
-              var data=form.serialize();
-              tjq("#mensaje").css("display", "block");
-              tjq.post(url,data, function(result){
-                 tjq('#mensaje').toggleClass('alert alert alert-success');//cambiar la clase
-                tjq('#mensaje').html(result);
-               // alert(result);
-                row.fadeOut();
-
-              }).fail(function(){
-                  tjq('#mensaje').toggleClass('alert alert alert-danger');
-
-                   tjq('#mensaje').html('La compañia no fue eliminada');
-                //alert('La compañia no fue eliminada');
-                row.show();
-              });
-          });
-      });
-
-
-      tjq('a[href="#profile"]').on('shown.bs.tab', function (e) {
-          tjq(".view-profile").show();
-          tjq(".edit-profile").hide();
-      });
-    //  alert("ajaa");
-
-  </script>
 @yield('scripts')
 </body>
 </html>

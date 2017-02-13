@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
-
+use XFS\Company;
 class IndexController extends Controller
 {
     /**
@@ -15,7 +15,9 @@ class IndexController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+      $companys = Company::all();
       return view('index');
     }
 
