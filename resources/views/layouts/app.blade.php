@@ -84,7 +84,8 @@
       <script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
       <!-- Twitter Bootstrap -->
       <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 
       <script>
       $('.menu').on('click',function(e){

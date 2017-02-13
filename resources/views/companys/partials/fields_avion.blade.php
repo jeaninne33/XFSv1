@@ -3,10 +3,9 @@
       <div class="form-input col-md-16" id="campos">
           <div class="row" id="airplanes.lenght" ng-repeat="airplane  in airplanes">
                 <p><b>Datos del Avión #1<b><p/>
-
-            <div class="col-md-2">
+              <div class="col-md-2">
               [[ Form::label('tipo', 'Tipo de Avion *')]]
-            [[ Form::text('tipo', null, ['class' => 'input-text full-width','ng-model'=>'airplane.tipo',  'ng-required' => 'true']) ]]
+              [[ Form::text('tipo', null, ['class' => 'input-text full-width','ng-model'=>'airplane.tipo',  'ng-required' => 'true']) ]]
               </div>
               <div class="col-md-2">
                 [[ Form::label('nombre', 'Nombre')]]
@@ -27,12 +26,10 @@
               <div class="col-md-2">
                 [[ Form::label('licencia1', 'Licencia 1 *')]]
               [[ Form::text('licencia1', null, ['class' => 'input-text full-width','ng-model'=>'airplane.licencia1',  'ng-required' => 'true']) ]]
-
               </div>
               <div class="col-md-2">
                 [[ Form::label('licencia2', 'Licencia 2')]]
               [[ Form::text('licencia2', null, ['class' => 'input-text full-width','ng-model'=>'airplane.licencia2']) ]]
-
               </div>
               <div class="col-md-2">
                 [[ Form::label('registro', 'Registro')]]

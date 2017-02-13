@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
           $companys = Company::all();//orderBy('id','DESC');
         //  return view('principal',compact('companys'));
-          return  view('principal')
+        return  view('principal')
         ->with('companys', $companys);
     }
 
