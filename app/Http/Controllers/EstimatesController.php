@@ -5,6 +5,7 @@ namespace XFS\Http\Controllers;
 use Illuminate\Http\Request;
 use XFS\Estimate;
 use XFS\Company;
+use XFS\Servicio;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 
@@ -32,7 +33,8 @@ class EstimatesController extends Controller
       $estimates=Estimate::all();
     //  $companys=Company::all();
     //  $indicador=1;
-      return view('estimates.create',compact('estimates'));
+      $servicios=Servicio::Lists('nombre','id');
+      return view('estimates.create',compact('estimates','servicios'));
 
     }
     // public function cliente($id)

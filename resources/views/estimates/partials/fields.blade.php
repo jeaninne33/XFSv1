@@ -1,5 +1,6 @@
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#home">Datos Generales</a></li>
+  <li  class="active"><a data-toggle="tab" href="#estimados">Estimados</a></li>
+  <li><a data-toggle="tab" href="#home">Datos Generales</a></li>
   <li><a data-toggle="tab" href="#menu1">FBO</a></li>
   <li><a data-toggle="tab" href="#menu2">Imagen</a></li>
   {{-- <li><a data-toggle="tab" href="#menu3">Aviones</a></li> --}}
@@ -31,7 +32,41 @@
 </div>
 <!--Modal-->
 <div class="tab-content">
-  <div id="home" class="tab-pane fade in active">
+  <div id="estimados" class="tab-pane fade in active">
+      <h3>Estimados</h3>
+    <div class="row form-group">
+        <div class="col-sms-6 col-sm-4">
+          [[ Form::label('servicios', 'Servicios')]]
+          [[ Form::select('id', $servicios, null, array('class' => 'input-text full-width')) ]]
+        </div>
+        <div class="col-sms-6 col-sm-8">
+            @include('estimates.partials.tbEstimados')
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sms-6 col-sm-4">
+          [[Form::label('descripcion', 'Descripción') ]]
+          [[ Form::text('descripcion', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sms-6 col-sm-4">
+          [[Form::label('cantidad', 'Cantidad') ]]
+          [[ Form::text('cantidad', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sms-6 col-sm-4">
+          [[Form::label('precio', 'Precio') ]]
+          [[ Form::text('precio', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+        </div>
+    </div>
+  </div>
+  {{-- <div id="menu4" class="tab-pane fade " style="display:none">
+    <h3>Menu 2</h3>
+    <p>Some content in menu 2.</p>
+  </div> --}}
+  <div id="home" class="tab-pane fade ">
     <h3>Datos Generales</h3>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
@@ -215,57 +250,5 @@
 
          </div>
      </div>
-  </div>
-  <div id="menu3" class="tab-pane fade">
-
-    <p>Some content in menu 2.</p>
-  </div>
-  <div id="menu4" class="tab-pane fade" style="display:none">
-    <h3>Menu 2</h3>
-    <p>Some content in menu 2.</p>
-  </div> --}}
+  </div>--}}
 </div>
-{{-- @section('scripts') --}}
-  <script>
-//   $('button').on('click','#btnCliente',function(event){
-//     $.get("", function(data, status){
-//         alert("Data: " + data + "\nStatus: " + status);
-//     })
-//
-// });
-// $('#btnCliente').on('click',function(e){
-//     alert($('#btnCliente').val());
-//     e.preventDefault();
-//         console.log(e);
-//         var id=e.target.value;
-//         $.get('/cliente/'+id, function(data){
-//              console.log(data);
-//             // $('#estado_id').empty();
-//             // $('#estado_id').append('<option value="">Seleccione el Estado</option>');
-//             //  $.each(data,function(index,estado){
-//             //    $('#estado_id').append('<option value="'+estado.id+'">'+estado.nombre+'</option>');
-//             //  });
-//            });
-// });
-// function ajaxRenderSection(id) {
-//    var id=e.target.value;
-//         $.ajax({
-//             type: 'GET',
-//             url:'/cliente'/+id ,
-//             dataType: 'json',
-//             success: function (data) {
-//                 //$('#principalPanel').empty().append($(data));
-//                 alert('hola mundo');
-//             },
-//             error: function (data) {
-//                 var errors = data.responseJSON;
-//                 if (errors) {
-//                     $.each(errors, function (i) {
-//                         console.log(errors[i]);
-//                     });
-//                 }
-//             }
-//         });
-//      };
-</script>
-{{-- @endsection --}}
