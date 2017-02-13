@@ -1,10 +1,13 @@
   <table id="example1" class="display" cellspacing="0" width="100%">
       <thead>
           <tr>
-              <td data-field="ID">ID</td>
-              <td data-field="Company">Compañia</td>
-              <td data-field="Pais">País</td>
-              <td data-field="Tipo">Tipo de Cliente</td>
+              <td data-field="Servicio">Servicio</td>
+              <td data-field="Descripcion">Descripcion</td>
+              <td data-field="Cantidad">Cantidad</td>
+              <td data-field="Precio">Precio</td>
+              <td data-field="subtotal">SubTotal</td>
+              <td data-field="subtotal">Ganancia</td>
+              <td data-field="subtotal">Total</td>
               {{-- <td>Aciones</td> --}}
           </tr>
       </thead>

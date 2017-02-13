@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-  <li  class="active"><a data-toggle="tab" href="#estimados">Estimados</a></li>
+  <li class="active"><a data-toggle="tab" href="#estimados">Estimados</a></li>
   <li><a data-toggle="tab" href="#home">Datos Generales</a></li>
   <li><a data-toggle="tab" href="#menu1">FBO</a></li>
   <li><a data-toggle="tab" href="#menu2">Imagen</a></li>
@@ -34,34 +34,37 @@
 <div class="tab-content">
   <div id="estimados" class="tab-pane fade in active">
       <h3>Estimados</h3>
-    <div class="row form-group">
+    <div class="row">
         <div class="col-sms-6 col-sm-4">
           [[ Form::label('servicios', 'Servicios')]]
-          [[ Form::select('id', $servicios, null, array('class' => 'input-text full-width')) ]]
+          [[ Form::select('servicios_id', $servicios, null, array('id'=>'servicios_id','class' => 'input-text full-width')) ]]
         </div>
-        <div class="col-sms-6 col-sm-8">
-            @include('estimates.partials.tbEstimados')
-        </div>
-    </div>
-    <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('descripcion', 'Descripción') ]]
           [[ Form::text('descripcion', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
         </div>
     </div>
-    <div class="row form-group">
+    <div class="row">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('cantidad', 'Cantidad') ]]
           [[ Form::text('cantidad', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
         </div>
-    </div>
-    <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('precio', 'Precio') ]]
           [[ Form::text('precio', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
         </div>
+        <div class="col-sms-6 col-sm-4">
+        </br>
+          <button type="button"  name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
+        </div>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-sms-5 col-md-12">
+            @include('estimates.partials.tbEstimados')
+        </div>
+    </div>
+    </div>
+
   {{-- <div id="menu4" class="tab-pane fade " style="display:none">
     <h3>Menu 2</h3>
     <p>Some content in menu 2.</p>
