@@ -49,11 +49,11 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('pais', 'Pais *') ]]
-          [[ Form::select('pais_id', $paises, null,['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id']) ]]
+          [[ Form::select('pais_id', $paises, null,['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id','ng-change'=>'getStates()']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado *') ]]
-          [[ Form::select('estado_id', array('' => 'Seleccione el Estado'), null, ['id' => 'estado_id','class' => 'selector full-width',  'required' => 'required','ng-model'=>'company.estado_id']) ]]
+          [[ Form::select('estado_id', array('' => 'Seleccione el Estado'), null, ['id' => 'estado_id','class' => 'selector full-width',  'required' => 'required','ng-model'=>'company.estado_id', 'ng-options'=>"state.id as state.nombre for state in states"]) ]]
 
         </div>
     </div>

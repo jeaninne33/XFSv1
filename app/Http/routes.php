@@ -19,9 +19,6 @@ Route::get('servicios',function(){
   return view('servicios');
 });
 
-/*Route::get('home',function(){
-  return view('layouts.home');
-});*/
 
 Route::get('principal', [
     'as' => 'principal',

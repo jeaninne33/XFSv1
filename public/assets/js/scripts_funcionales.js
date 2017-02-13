@@ -1,7 +1,7 @@
 $('#m2').removeClass('');
 $('#m2').addClass('active');
 
-$('#pais_id').on('change',function(e){
+/*$('#pais_id').on('change',function(e){
     //alert($('#pais_id').val());
     console.log(e);
     var id=e.target.value;
@@ -13,7 +13,7 @@ $('#pais_id').on('change',function(e){
            $('#estado_id').append('<option value="'+estado.id+'">'+estado.nombre+'</option>');
          });
        });
-});
+});+*/
 
 $('#tipo').on('change',function(e){
       console.log(e);

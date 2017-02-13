@@ -17,7 +17,6 @@ class IndexController extends Controller
     public function index()
 
     {
-      $companys = Company::all();
       return view('index');
     }
 
