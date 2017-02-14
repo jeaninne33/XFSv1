@@ -31,7 +31,7 @@
       <p ng-bind="message"></p>
     </div>
   </div>
-[[ Form::open(['route'=>'companys.store', 'id'=>'form1','method'=> 'POST', 'novalidate', 'ng-submit'=>'save($event)']) ]]
+[[ Form::open(['route'=>'companys.store', 'name'=>'form1','method'=> 'POST', 'novalidate', 'ng-submit'=>'save($event)']) ]]
   @include('companys.partials.fields')
 [[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]
