@@ -34,6 +34,7 @@
 
 <script>
    $('#example').dataTable();
+   $('#example1').dataTable();
 
   $('.btn-delete').click(function(e){
      e.preventDefault();//evita que se envie el formulario
