@@ -36,6 +36,25 @@
    $('#example').dataTable();
    $('#example1').dataTable();
 
+// $(document).ready(function() {
+//        var t = $('#example1').DataTable();
+//        var counter = 1;
+//
+//        $('#btnAdd').on( 'click', function () {
+//            t.row.add( [
+//                counter +'.1',
+//                counter +'.2',
+//                counter +'.3',
+//                counter +'.4',
+//                counter +'.5'
+//            ] ).draw( false );
+//
+//            counter++;
+//        } );
+//
+//        // Automatically add a first row of data
+//        $('#btnAdd').click();
+//    } );
   $('.btn-delete').click(function(e){
      e.preventDefault();//evita que se envie el formulario
      $("#dialog-confirm").html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>¿Esta Seguro que desea Eliminar el Registro?</p>');

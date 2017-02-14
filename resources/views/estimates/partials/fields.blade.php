@@ -37,25 +37,25 @@
     <div class="row">
         <div class="col-sms-6 col-sm-4">
           [[ Form::label('servicios', 'Servicios')]]
-          [[ Form::select('servicios_id', $servicios, null, array('id'=>'servicios_id','class' => 'input-text full-width')) ]]
+          [[ Form::select('servicios_id', $servicios, null, array('id'=>'servicios','class' => 'input-text full-width')) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('descripcion', 'Descripción') ]]
-          [[ Form::text('descripcion', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+          [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
         </div>
     </div>
     <div class="row">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('cantidad', 'Cantidad') ]]
-          [[ Form::text('cantidad', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('precio', 'Precio') ]]
-          [[ Form::text('precio', null, ['class' => 'input-text full-width' , 'required' => 'required']) ]]
+          [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
         </br>
-          <button type="button"  name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
+          <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
         </div>
     </div>
     <div class="row">
@@ -191,23 +191,24 @@
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Numero de Habitación *') ]]
-        [[ Form::text('num_habitacion1', null, ['class' => 'input-text full-width' ]) ]]
+        [[ Form::select('num_habitacion', array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['id' => 'num_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Tipo de Habitación *') ]]
-        [[ Form::text('tipo_hab', null, ['class' => 'input-text full-width' ]) ]]
+        [[ Form::select('num_habitacion', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
     </div>
+    <div class="row form-group">
     <div class="col-sms-6 col-sm-6">
       [[Form::label('Tipo de Cama*') ]]
-      [[ Form::text('tipo_cama', null, ['class' => 'input-text full-width' ]) ]]
+      [[ Form::select('tipo_cama', array('Individual'=>'Individual','Matrimonial'=>'Matrimonial','King Size'=>'King Size','Queen Size'=>'Queen Size'), null,['id' => 'tipo_cama','class' => 'selector full-width',  'required' => 'required']) ]]
     </div>
     <div class="col-sms-6 col-sm-6">
       [[Form::label('Numero de Estrellas *') ]]
-      [[ Form::text('tipo_estrellas', null, ['class' => 'input-text full-width' ]) ]]
+      [[ Form::select('tipo_estrellas', array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['id' => 'tipo_estrellas','class' => 'selector full-width',  'required' => 'required'])]]
     </div>
   </div>
-  </div>
+</div>
   {{-- <div id="menu2" class="tab-pane fade">
     <h3>Datos Administrativos</h3>
     <div class="row form-group">

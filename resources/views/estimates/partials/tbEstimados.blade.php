@@ -5,23 +5,29 @@
               <td data-field="Descripcion">Descripcion</td>
               <td data-field="Cantidad">Cantidad</td>
               <td data-field="Precio">Precio</td>
-              <td data-field="subtotal">SubTotal</td>
-              <td data-field="subtotal">Ganancia</td>
-              <td data-field="subtotal">Total</td>
+              <td data-field="Subtotal">SubTotal</td>
+              <td data-field="Ganancia">Ganancia</td>
+              <td data-field="Total">Total</td>
               {{-- <td>Aciones</td> --}}
           </tr>
       </thead>
-      <tbody id="datos">
-      {{-- @foreach($companys as $key => $value)
-          <tr data-id="{{$value->id}}" ondblclick="tbClientes({{$value->id}})">
-              <td>{{ $value->id }}</td>
-              <td>{{ $value->nombre }}</td>
-              <td>{{ $value->pais->nombre }}</td>
-              <td>{{ $value->tipo }}</td>
-              <td hidden>{{ $value->celular }}</td>
-              <td hidden>{{ $value->telefono }}</td>
-
-          </tr>
-      @endforeach --}}
-      </tbody>
+      <tfoot>
+             <tr>
+                <th colspan="7" style="text-align:right"><input type="text"></th>
+             </tr>
+      </tfoot>
   </table>
+  <div class="row">
+    <div class="col-sm-2 col-md-2 pull-right">
+      <label>Subtotal</label>
+      <input readonly name="subtotal" id="subtotal" type="text" value="$0.00" class="input-text full-width">
+      <label>Descuento</label>
+      <input name="descuento" id="descuento" min="0" max="100" value="0%" type="text" class="input-text full-width" required="required">
+
+      <label>Total Descuento</label>
+      <input readonly name="totalDescuento" id="totalDescuento" value="$0.00" type="text" class="input-text full-width">
+      <label>TOTAL</label>
+      <input readonly name="total" id="total" type="text" class="input-text full-width" value="$0.00">
+    </div>
+
+  </div>

@@ -34,7 +34,9 @@ class EstimatesController extends Controller
     //  $companys=Company::all();
     //  $indicador=1;
       $servicios=Servicio::Lists('nombre','id');
-      return view('estimates.create',compact('estimates','servicios'));
+      $servicios->prepend('Seleccione Servicio');  
+
+      return view('estimates.create',compact('estimates','servicios','i'));
 
     }
     // public function cliente($id)

@@ -2,6 +2,7 @@
 use XFS\Estado;
 use XFS\Company;
 use XFS\Pais;
+use XFS\Servicio;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -53,29 +54,26 @@ Route::get('/state/{id}',function($id){
   $estados=Estado::where('pais_id',$id)->get();
   return Response::json($estados);
 });
+Route::get('/services/{id}',function($id){
+$servicio=Servicio::where('id',$id)->get();
+return Response::json($servicio);
+});
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
-  //return Response::json("xfs");
-  //$indicador=1;
   if ($id==1) {
-    $companys = DB::table('companys')
-    ->join('paises', 'companys.pais_id', '=', 'paises.id')
-    ->select('companys.id', 'companys.nombre', 'companys.telefono','companys.celular', 'paises.nombre as pais','companys.tipo')
-    ->where('tipo','client')
-    ->get();
-  //  $companys=Company::whith('pais')where('tipo','client')->get(['id','nombre','pais.nombre','tipo']);
+  $tipo='client';
   }
   else {
-    $companys = DB::table('companys')
-    ->join('paises', 'companys.pais_id', '=', 'paises.id')
-    ->select('companys.id', 'companys.nombre',  'companys.telefono','companys.celular','paises.nombre as pais','companys.tipo')
-    ->where('tipo','prove')
-    ->get();
-    //$companys=Company::where ('tipo','prove')->get();
+  $tipo='prove';
   }
+  $companys = DB::table('companys')
+  ->join('paises', 'companys.pais_id', '=', 'paises.id')
+  ->select('companys.id', 'companys.nombre',  'companys.telefono','companys.celular','paises.nombre as pais','companys.tipo')
+  ->where('tipo',$tipo)
+  ->get();
   return Response::json($companys);
 });
-///
+
  Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
