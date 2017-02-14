@@ -77,15 +77,8 @@ class CompanyController extends Controller
      $data  = $request->all();
     // print_r($data);
    //  dd("aloo");
-      //if($request->ajax()){
-
-          Company::create($data);
-           //
-
-           return response()->json(['message' => 'Compañia Agregada Exitosamente']);
-           //return redirect()->route('companys.index')->with('success','Compañia Agregada Exitosamente');
-	    //}
-        //dd(Input::all());
+      //  Company::create($data);
+        return response()->json(['message' => 'Compañia Agregada Exitosamente']);
    }//fin store
 
 
@@ -132,14 +125,7 @@ class CompanyController extends Controller
      */
     public function update(CrearCompanysRequest $request, $id)
     {
-    /*  $this->validate($request, [
-        'nombre'       => 'required',
-        'correo' => 'required',
-        'direccion'      => 'required',
-        'representante'=> 'required',
-        'telefono'=> 'required|numeric',
-        ]);
-      */
+
       $company= Company::findOrFail($id);
 
       $company->fill($request->all());

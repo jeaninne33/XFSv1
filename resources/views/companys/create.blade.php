@@ -19,10 +19,10 @@
     <div class='alert alert-danger alert-dismissable' ng-show="show_error">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
        <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
-        <div  ng-repeat="error in message_error">
-          <p ng-bind="error"></p>
-      </div>
-
+        <ul><div  ng-repeat="(key,val) in message_error">
+            <li  >- @{{ val }}</li>
+        </div>
+        </ul>
     </div>
   </div>
   <div class="successMessages" ng-show="message">

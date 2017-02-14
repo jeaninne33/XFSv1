@@ -1,4 +1,5 @@
 angular.module("XHR",[])
+
 .controller("CompanyCtrl",['$scope','$http',function($scope, $http){
   $scope.company = {
     pais_id:0
@@ -20,30 +21,34 @@ $scope.getStates  = function () {
 $scope.message =  false;
 $scope.show_error =  false;
 $scope.message_error =  [];
- $scope.save =  function($event){
+$scope.save =  function($event){
     $event.preventDefault();
-    //return false;
     var company =  $scope.company;
     company["_token"] =  $("input[name=_token]").val();
-  //  alert($("#_token").attr("value"));
     company.aviones  =  $scope.airplanes;
-
     $http.post('/companys', company)
     .then(
     function(response){// success callback
        if(response.data.message)  {
-          $scope.message = response.data.message;
+        //  $scope.message = response.data.message;
+          $scope.show_error =  false;
+
+         if  (company.aviones.length > 0){
+            $scope.message="si hay aviones ";
+
+         }else{
+           $scope.message="no hay aviones ";
+         }
+          $scope.reset();
+
       }
-      $scope.show_error =  false;
+
     },
     function(response){// failure callback
         var errors = response.data;
         $scope.show_error =  true;
         $scope.message_error =  errors;
     }
-
- );
-
+   );//fin then
   };//fin save
-
-}]);
+}]);//fin controller companys
