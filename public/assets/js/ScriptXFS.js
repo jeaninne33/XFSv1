@@ -90,3 +90,17 @@ function metodoSeguimiento(){
 }
 $('#m4').removeClass('');
 $('#m4').addClass('active');
+
+$('#servicios_id').on('change',function(e){
+    //alert($('#pais_id').val());
+    console.log(e);
+    var id=e.target.value;
+    $.get('/servicios/'+id, function(data){
+         //console.log(data);
+        $('#descripcion').empty();
+
+         $.each(data,function(index,servicio){
+           $('#descripcion').append(servicio.descripcion);
+         });
+       });
+});
