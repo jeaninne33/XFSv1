@@ -19,19 +19,19 @@ $scope.getStates  = function () {
     }
   );
 };
-function getErrosAirplane () {
+/*function getErrosAirplane () {
     var errors =[];
-  if($scope.airplanes.tipo.$error.required==true){
+  if($scope.airplanes.nombre===null){
     errors.push("El Tipo de Avion es Obligatorio");
-  }else if ($scope.airplanes.matricula.$error.required==true){
+  }else if ($scope.airplanes.matriculad===null){
     errors.push("La matricula es Obligatoria");
-  }else if ($scope.airplanes.licencia1.$error.required==true){
+  }else if ($scope.airplanes.licencia1===null){
     errors.push("La Licencia 1 es Obligatoria");
-  }else if ($scope.airplanes.piloto1.$error.required==true){
+  }else if ($scope.airplanes.piloto1===null){
     errors.push("El Piloto 1 es Obligatorio");
   }
   return errors;
-};
+};*/
 
 $scope.message =  false;
 $scope.show_error =  false;
@@ -44,30 +44,35 @@ $scope.save =  function($event){
     $http.post('/companys', company)
     .then(
     function(response){// success callback
-       if(response.data.message)  {
-        //  $scope.message = response.data.message;
+       if(response.data.message=="bien")  {
+         $scope.message = "Compañia Agregada Exitosamente";
           $scope.show_error =  false;
-
-         if  (company.aviones.length > 0){
+         /*if  (company.aviones.length > 0){
             var errora=[];
-            errora=getErrosAirplane();
-            if(errora.length == 0){//$scope.form1.$error.required==false
+            //errora=getErrosAirplane();
+            //errora.length == 0
+            if($scope.form1.$error.required==false){//
                 $scope.message="todo bien por aviones";
             }else{
-
+              errora=$scope.form1.$error.required;
               $scope.show_error =  true;
-              $scope.message_error =  errora;
+              $scope.message_error = errora ;
+              $scope.message =  false;
             }
 
          }else{
-           ///$scope.message="no hay aviones ";
-         }
+           $scope.message="no hay aviones ";
+         }*/
+      }else{//sin no bien
+        $scope.show_error =  true;
+        $scope.message_error =  response.data.error;
       }
     },
     function(response){// failure callback
+       $scope.message =  false;//ocultamos el div del mensaje bien
         var errors = response.data;
-        $scope.show_error =  true;
-        $scope.message_error =  errors;
+        $scope.show_error =  true;//mostramos el div del mensaje error
+        $scope.message_error =  errors;//
     }
    );//fin then
   };//fin save
