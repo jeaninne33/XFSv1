@@ -57,8 +57,9 @@ var Servicio = $("#servicios").find('option:selected').text();
 var Descripcion=$("#descripcion").val();
 var Cantidad= $("#cantidad").val();
 var Precio= $("#precio").val();
-var Ganancia=0;
+var porcentaje=$('#ganancia').val().replace('%','')/100;
 var Subtotal=Cantidad * Precio;
+var Ganancia=Subtotal*porcentaje;
 var Total=Subtotal+Ganancia;
          table.row.add( [
              Servicio,
@@ -166,8 +167,8 @@ var porcentaje;
                 porcentaje="30%";
                 break;
           }
-          $('#ganancia').val(categoria);
-          
+          $('#ganancia').val(porcentaje);
+
           if (telefono!="" && celular=="") {
             $('select#metodo').val('Telefono')
             metodoSeguimiento();

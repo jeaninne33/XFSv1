@@ -1,8 +1,9 @@
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#estimados">Estimados</a></li>
-  <li><a data-toggle="tab" href="#home">Datos Generales</a></li>
+
+  <li class="active"><a data-toggle="tab" href="#home">Datos Generales</a></li>
   <li><a data-toggle="tab" href="#menu1">FBO</a></li>
   <li><a data-toggle="tab" href="#menu2">Imagen</a></li>
+  <li><a data-toggle="tab" href="#estimados">Estimados</a></li>
   {{-- <li><a data-toggle="tab" href="#menu3">Aviones</a></li> --}}
   {{-- <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li> --}}
 </ul>
@@ -32,7 +33,7 @@
 </div>
 <!--Modal-->
 <div class="tab-content">
-  <div id="estimados" class="tab-pane fade in active">
+  <div id="estimados" class="tab-pane fade">
       <h3>Estimados</h3>
     <div class="row">
         <div class="col-sms-6 col-sm-4">
@@ -47,11 +48,11 @@
     <div class="row">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('cantidad', 'Cantidad') ]]
-          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
+          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('precio', 'Precio') ]]
-          [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required']) ]]
+          [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
         </br>
@@ -69,12 +70,12 @@
     <h3>Menu 2</h3>
     <p>Some content in menu 2.</p>
   </div> --}}
-  <div id="home" class="tab-pane fade ">
+  <div id="home" class="tab-pane fade  in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-3">
            [[ Form::label('id', 'Numero de Estimado *')]]
-           [[Form::text('id', null, ['class' => 'input-text full-width' ])]]
+           [[Form::text('id', null, ['class' => 'input-text full-width','readonly' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-4">
@@ -115,13 +116,13 @@
         </div>
     </div>
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-6">
+        <div class="col-sms-6 col-sm-3">
           [[Form::label('fecha', 'Fecha Solicitada *') ]]
               [[Form::date('fecha_soli',null,['class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
         </div>
-        <div class="col-sms-6 col-sm-6">
+        <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
-          [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -135,7 +136,7 @@
           [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
           [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
         </div>
-        <div class="col-sms-6 col-sm-6">
+        <div class="col-sms-6 col-sm-4">
           <div class="telefono" style="display:block;" >
             @if ($indicador==0)
               [[Form::label('telefono', 'Telefono') ]]
@@ -159,7 +160,7 @@
         </div>
     </div>
     <div class="row form-group">
-          <div class="col-sms-6 col-sm-6">
+          <div class="col-sms-6 col-sm-3">
             [[Form::label('fecha', 'Fecha Seguimiento *') ]]
             [[Form::date('proximo_seguimiento',null,['class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
 
@@ -205,7 +206,7 @@
       </div>
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Tipo de Habitación *') ]]
-        [[ Form::select('num_habitacion', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
+        [[ Form::select('tipo_hab', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
     </div>
     <div class="row form-group">

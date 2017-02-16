@@ -67,12 +67,15 @@ class EstimatesController extends Controller
       $estimates->resumen=$request->input('resumen');
       $estimates->metodo_segui=$request->input('metodo');
       $estimates->fecha_soli=$request->input('fecha_soli');
+      $estimates->proximo_seguimiento=$request->input('proximo_seguimiento');
       $estimates->fbo=$request->input('fbo');
       $estimates->cantidad_fuel=$request->input('cantidad_fuel');
       $estimates->localidad=$request->input('localidad');
       $estimates->avion_id=$request->input('avion_id');
-      $estimates->proximo_seguimiento=$request->input('proximo_seguimiento');
-      
+      $estimates->num_habitacion=$request->input('num_habitacion');
+      $estimates->tipo_cama=$request->input('tipo_cama');
+      $estimates->tipo_hab=$request->input('tipo_hab');
+      $estimates->tipo_estrellas=$request->input('tipo_estrellas');
       $estimates->save();
         return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
     }
