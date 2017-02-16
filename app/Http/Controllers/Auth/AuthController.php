@@ -29,6 +29,17 @@ class AuthController extends Controller
 
     //entre comillas la ruta a la que deseas redireccionar
     //protected $redirectTo = '/';
+    public function showLogin()
+   {
+       // Verificamos si hay sesión activa
+       if (Auth::check())
+       {
+           // Si tenemos sesión activa mostrará la página de inicio
+             return Redirect::intended('/principal');
+       }
+       // Si no hay sesión activa mostramos el formulario
+       return view('login');
+   }
     public function postLogin()
     {
       $data = [
@@ -45,6 +56,14 @@ class AuthController extends Controller
         // Si los datos no son los correctos volvemos al login y mostramos un error
         return Redirect::back()->with('error_message', 'Correo Electronico o Contraseña')->withInput();
 
+    }
+    public function logOut()
+    {
+        // Cerramos la sesión
+        Auth::logout();
+        // Volvemos al login y mostramos un mensaje indicando que se cerró la sesión
+        return redirect()->route('/');
+        //return Redirect::to('/')->with('error_message', 'Logged out correctly');
     }
     /**
      * Create a new authentication controller instance.

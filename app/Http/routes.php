@@ -21,10 +21,6 @@ Route::get('servicios',function(){
 });
 
 
-Route::get('principal', [
-    'as' => 'principal',
-    'uses' => 'AdminController@index'
-]);
 
 Route::get('welcome', [
     'as' => 'welcome',
@@ -37,9 +33,6 @@ Route::get('login', [
   'uses'=> 'Auth\AuthController@getLogin',
    'as' => 'login'
 ]);
-Route::get('login2',function(){
-  return view('auth/login2');
-});
 //Route::resource('loginPost','LoginController');
 Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
@@ -79,11 +72,18 @@ Route::get('/clientes/{id}',function($id){
 
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
-Route::group(['before' => 'auth'], function()
+Route::group(['middleware' => 'auth'], function()
 {
+  Route::get('principal', [
+      'as' => 'principal',
+      'uses' => 'AdminController@index'
+  ]);
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
+  Route::get('/home',function(){
+    return view('layouts.home');
+  });
 });

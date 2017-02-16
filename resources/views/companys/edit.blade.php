@@ -10,12 +10,22 @@
 
 <br/>
 <!-- if there are creation errors, they will show here -->
-  @include('errors.errors')
-<div class="col-sm-12 no-float no-padding">
-   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT'))]]
+
+<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding">
+    @include('errors.message')
+
+   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT', 'novalidate'))]]
     @include('companys.partials.fields')
   [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
 </div>
+
+@endsection
+@section('scripts')
+
+<script>
+  $('#m2').removeClass('');
+  $('#m2').addClass('active');
+</script>
 
 @endsection

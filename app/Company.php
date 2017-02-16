@@ -47,4 +47,5 @@ class Company extends Eloquent
         }
      }
 
-   }
+    /**/
+   }//fin clase company

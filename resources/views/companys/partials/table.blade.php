@@ -23,9 +23,8 @@
             <td>
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
               <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
-
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-              <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
+              <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" ng-model="company.edit" ng-change="edit(company)" ng-href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
 
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
               <a class="btn-delete" title="Eliminar" aria-hidden="true" href="#!"><span class="glyphicon glyphicon-trash"></span></a>
