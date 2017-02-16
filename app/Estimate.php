@@ -16,4 +16,7 @@ class Estimate extends Model
      public function company() {
 		      return $this->belongsTo('XFS\Company','id', 'company_id');
 	  }
+    public function avion(){
+      return$this->hasMany('XFS\Avion','id','avion_id');
+    }
 }

@@ -3,6 +3,7 @@ use XFS\Estado;
 use XFS\Company;
 use XFS\Pais;
 use XFS\Servicio;
+use XFS\Avion;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,14 @@ Route::get('/services/{id}',function($id){
 $servicio=Servicio::where('id',$id)->get();
 return Response::json($servicio);
 });
+Route::get('/changeAvion/{id}',function($id){
+$avion=Avion::where('id',$id)->get();
+return Response::json($avion);
+});
+Route::get('/listAvion/{id}',function($id){
+$avion=Avion::where('company_id',$id)->get();
+return Response::json($avion);
+});
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
   if ($id==1) {
@@ -68,8 +77,9 @@ Route::get('/clientes/{id}',function($id){
   }
   $companys = DB::table('companys')
   ->join('paises', 'companys.pais_id', '=', 'paises.id')
-  ->select('companys.id', 'companys.nombre',  'companys.telefono','companys.celular','paises.nombre as pais','companys.tipo')
-  ->where('tipo',$tipo)
+  ->select('companys.id', 'companys.nombre',  'companys.telefono',
+  'companys.celular','paises.nombre as pais','companys.tipo','companys.categoria')
+  ->where('companys.tipo',$tipo)
   ->get();
   return Response::json($companys);
 });
