@@ -19,10 +19,10 @@
     <div class='alert alert-danger alert-dismissable' ng-show="show_error">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
        <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
-        <div  ng-repeat="error in message_error">
-          <p ng-bind="error"></p>
-      </div>
-
+        <ul><div  ng-repeat="error in message_error">
+            <li >- @{{ error[0] }}</li>
+        </div>
+        </ul>
     </div>
   </div>
   <div class="successMessages" ng-show="message">
@@ -31,7 +31,7 @@
       <p ng-bind="message"></p>
     </div>
   </div>
-[[ Form::open(['route'=>'companys.store', 'id'=>'form1','method'=> 'POST', 'novalidate', 'ng-submit'=>'save($event)']) ]]
+[[ Form::open(['route'=>'companys.store', 'name'=>'form1','method'=> 'POST', 'novalidate', 'ng-submit'=>'save($event)']) ]]
   @include('companys.partials.fields')
 [[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]

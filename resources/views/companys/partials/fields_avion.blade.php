@@ -2,7 +2,7 @@
         <div class="form-row">
       <div class="form-input col-md-16" id="campos">
           <div class="row" id="airplanes.lenght" ng-repeat="airplane  in airplanes">
-                <p><b>Datos del Avión #1<b><p/>
+                <p><b>Datos del Avión # @{{ $index+1 }}<b><p/>
               <div class="col-md-2">
               [[ Form::label('tipo', 'Tipo de Avion *')]]
               [[ Form::text('tipo', null, ['class' => 'input-text full-width','ng-model'=>'airplane.tipo',  'ng-required' => 'true']) ]]
