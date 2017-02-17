@@ -7,7 +7,8 @@
               <td data-field="Tipo">Tipo de Cliente</td>
               <td data-field="celular">Celular</td>
               <td data-field="telefono">Telefono</td>
-              <td data-field="categoria">Categoria</td>              
+              <td data-field="correo">Correo</td>
+              <td data-field="categoria">Categoria</td>
               {{-- <td>Aciones</td> --}}
           </tr>
       </thead>

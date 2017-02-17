@@ -31,6 +31,7 @@ function ajaxRenderSection(id) {
                   value.tipo,
                   value.celular,
                   value.telefono,
+                  value.correo,
                   categoria
               ] ).draw( false );
 
@@ -50,7 +51,13 @@ function ajaxRenderSection(id) {
             }
         });
     }
-
+$('#example tbody').on( 'click', 'img.icon-delete', function () {
+        table
+            .row( $(this).parents('tr') )
+            .remove()
+            .draw();
+    } );
+//tabla estimados
 function addRows(){
 var table = $('#example1').DataTable();
 var Servicio = $("#servicios").find('option:selected').text();
@@ -75,7 +82,43 @@ $('#total').val($('#sumTotal').val());
          //counter++;
 
 }
+function deleteRow(r) {
 
+    var list;
+    var Nombre, ACModelo, ACTipo,Fabricante, ID;
+    var index;
+    var i = r.parentNode.parentNode.rowIndex;
+    var datos = document.getElementById("datos");
+    tjq('#datos').val("");
+    document.getElementById("tbAeronave").deleteRow(i);
+
+     tjq("#tbAeronave tbody tr").each(function (index) {
+
+                tjq(this).children("td").each(function (index2) {
+
+                    switch (index2) {
+                        case 0:
+                            Nombre = tjq(this).text();
+                            break;
+                        case 1: ACModelo = tjq(this).text();
+                            break;
+                        case 2: ACTipo = tjq(this).text();
+                            break;
+                        case 3: Fabricante = tjq(this).text();
+                            break;
+                        case 4: ID = tjq(this).text();
+                            break;
+                    }
+
+                });
+
+                 list=Nombre+'-'+ACModelo+'-'+ACTipo+'-'+Fabricante+'-'+ID+'|';
+                 if (list!='undefined-undefined-undefined-undefined-undefined|') {
+                   datos.value=datos.value+(list);
+                 }
+     });
+}
+//tabla estimados
 $('#descuento').keyup(function(e) {
                var num = $(this).val();
                if (e.which!=8) {
@@ -130,11 +173,14 @@ $('#example > tbody').on('dblclick', '>tr', function () {
     						case 3: tipoC = $(this).text();
     								break;
     						case 4: celular = $(this).text();
-    										break;
+    								break;
     						case 5: telefono= $(this).text();
-    												break;
-                case 6: categoria= $(this).text();
-                												break;
+    								break;
+                case 6:
+                        correo=$(this).text();
+                    break;
+                case 7: categoria= $(this).text();
+                		break;
     				}
    });
 var porcentaje;
@@ -152,6 +198,7 @@ var porcentaje;
           $('#company_id').val(ID);
           $('#telefono').val(telefono);
           $('#celular').val(celular);
+          $('#correo').val(correo);
 
           switch (categoria) {
             case "PostPago":
@@ -169,12 +216,16 @@ var porcentaje;
           }
           $('#ganancia').val(porcentaje);
 
-          if (telefono!="" && celular=="") {
+          if (telefono!="" && celular==""&&correo=="" || ) {
             $('select#metodo').val('Telefono')
             metodoSeguimiento();
-          }else if(celular!="" && telefono==""){
+          }else if(celular!="" && telefono==""&&correo==""){
             $('select#metodo').val('Celular');
             metodoSeguimiento();
+          }
+          else if(correo!="" &&celular==""&&telefono) {
+              $('select#metodo').val('Correo');
+              metodoSeguimiento();
           }
           else{
             $('select#metodo').val('Telefono')
@@ -201,9 +252,15 @@ function metodoSeguimiento(){
             if(  tipo=="Telefono"){
                $(".celular").css("display", "none");
                $(".telefono").css("display", "block");
+               $(".correo").css("display", "none");
             }else if(tipo=="Celular"){
                 $(".celular").css("display", "block");
                 $(".telefono").css("display", "none");
+                $(".correo").css("display", "none");
+            }else{
+              $(".correo").css("display", "block");
+              $(".celular").css("display", "none");
+              $(".telefono").css("display", "none");
             }//fin si
 }
 $('#m4').removeClass('');

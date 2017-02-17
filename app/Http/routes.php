@@ -71,7 +71,7 @@ Route::get('/clientes/{id}',function($id){
   $companys = DB::table('companys')
   ->join('paises', 'companys.pais_id', '=', 'paises.id')
   ->select('companys.id', 'companys.nombre',  'companys.telefono',
-  'companys.celular','paises.nombre as pais','companys.tipo','companys.categoria')
+  'companys.celular','paises.nombre as pais','companys.tipo','companys.categoria','companys.correo')
   ->where('companys.tipo',$tipo)
   ->get();
   return Response::json($companys);

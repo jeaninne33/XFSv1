@@ -134,7 +134,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
-          [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
+          [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular','Correo'=>'Correo'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           <div class="telefono" style="display:block;" >
@@ -154,6 +154,16 @@
           @else
             [[Form::label('celular', 'Celular') ]]
             [[ Form::text('celular', $cliente->celular, ['class' => 'input-text full-width' ]) ]]
+          @endif
+
+          </div>
+          <div class="correo" style="display:none;" >
+          @if ($indicador==0)
+            [[Form::label('correo', 'Correo') ]]
+            [[ Form::text('correo', null, ['class' => 'input-text full-width' ]) ]]
+          @else
+            [[Form::label('correo', 'Correo') ]]
+            [[ Form::text('correo', $cliente->correo, ['class' => 'input-text full-width' ]) ]]
           @endif
 
           </div>
@@ -188,7 +198,7 @@
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]
-          [[ Form::select('metodo', array('Seleccione Avion'), null,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
+          [[ Form::select('avion_id', array('Seleccione Avion'), null,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
 
     </div>
