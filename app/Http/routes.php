@@ -88,12 +88,19 @@ Route::group(['middleware' => 'auth'], function()
       'as' => 'principal',
       'uses' => 'AdminController@index'
   ]);
-  Route::resource('companys', 'CompanyController');
+ Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
+
+  /*Route::get('companys/{id?}', 'CompanyController@index',function(){
+    return view('companys.index');
+  });
+  Route::post('companys', 'CompanyController@store');
+  Route::post('companys/{id}', 'CompanyController@update');
+  Route::delete('companys/{id}', 'CompanyController@destroy');*/
+
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
-  Route::get('/home',function(){
-    return view('layouts.home');
-  });
+
+
 });

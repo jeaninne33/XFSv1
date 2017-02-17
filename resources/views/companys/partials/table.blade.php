@@ -1,3 +1,4 @@
+<p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
@@ -10,26 +11,26 @@
         </tr>
     </thead>
     <tbody>
-    @if(!$companys->isEmpty())
+      @if(!$companys->isEmpty())
        @foreach($companys as $key => $value)
-         <tr data-id="{{$value->id}}">
+         <tr data-id="{{ $value->id }}">
             <td>{{ $value->id }}</td>
-            <td>{{ $value->nombre }}</td>
-            <td>{{ $value->correo }}</td>
-            <td>{{ $value->pais->nombre }}</td>
-            <td>{{ $value->tipo }}</td>
+           <td>{{ $value->nombre }}</td>
+             <td>{{ $value->correo }}</td>
+             <td>{{ $value->pais->nombre }}</td>
+             <td>{{ $value->tipo }}</td>
 
-            <!-- we will also add show, edit, and delete buttons -->
-            <td>
-                <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-              <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
+             <!-- we will also add show, edit, and delete buttons -->
+             <td>
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-              <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" ng-model="company.edit" ng-change="edit(company)" ng-href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
+               <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
+                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+               <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" ng-model="company.edit" ng-change="edit(company)" ng-href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
 
-                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-              <a class="btn-delete" title="Eliminar" aria-hidden="true" href="#!"><span class="glyphicon glyphicon-trash"></span></a>
+                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+               <a class="btn-delete" title="Eliminar" aria-hidden="true" href="#!"><span class="glyphicon glyphicon-trash"></span></a>
 
-            </td>
+             </td>
         </tr>
       @endforeach
     @endif

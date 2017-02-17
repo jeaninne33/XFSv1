@@ -6214,7 +6214,7 @@ ul.check-circle li:before {
 
 /* 2.22. Animated effect ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 .animated {
-  visibility: hidden;
+ visibility: hidden;
 }
 
 .no-cssanimations .animated, body.is-mobile .animated {

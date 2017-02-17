@@ -6,9 +6,13 @@
 
 @endsection
 @section('contenido')
-
-
-<h3>Listado de Compañias</h3>
+<div ng-controller="CompanyCtrl">
+<p><h2 ><i class=" soap-icon-hotel-1 circle"></i> <strong>Compañias</strong></h2>
+    [[ Form::label('tipo', 'Filtrar por Tipo de Relacion: ')]]
+    <select ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
+       <option value="">--Elige opcion--</option>
+     </select>
+</p>
   <div class="errorMessages"></div>
   <div class="successMessages"></div>
   <div class="alert alert" id="mensaje" style="display: none;">
@@ -22,21 +26,17 @@
 
 
 
+    <div class="col-sms-12 col-sm-12"  >
 
-        <div class="col-sms-12 col-sm-12">
-            @include('companys.partials.table')
+          	  @include('companys.partials.table')
         </div>
       </div>
-
-    </div>
-
-   </div>
 
 
 [[Form::open(['route' => ['companys.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]
-
+</div>
 @endsection
 
 @section('scripts')

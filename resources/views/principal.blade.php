@@ -2,18 +2,18 @@
 @section('css')
 @endsection
 @section('contenido')
-
    <div id="dashboard" class="tab-pane fade in active">
-      <h1 class="no-margin skin-color">¡Bienvenido Usuario: {{ Auth::user()->name }} !</h1>
-      <p></p>
+      <h1 class="no-margin skin-color">¡Bienvenido <strong> {{ strtoupper(Auth::user()->name) }} </strong>!</h1>
+        <p><h2 ><i class=" soap-icon-plane"></i> <strong>Intranet de Xfligth Support </strong> <i class=" soap-icon-plane-right"></i></h2>
+    </p>
       <br />
       <div class="row block">
           <div class="col-sm-6 col-md-3">
-              <a href="hotel-list-view.html">
+              <a href="{{ route('companys.index') }}">
                   <div class="fact blue">
                       <div class="numbers counters-box">
                           <dl>
-                              <dt class="display-counter" data-value="3200">0</dt>
+                              <dt class="display-counter" data-value="3200">{{$companys}}</dt>
                               <dd>Compañias</dd>
                           </dl>
                           <i class="icon soap-icon-hotel-1"></i>
@@ -26,11 +26,11 @@
               </a>
           </div>
           <div class="col-sm-6 col-md-3">
-              <a href="flight-list-view.html">
+              <a href="{{ route('servicios.index') }}">
                   <div class="fact yellow">
                       <div class="numbers counters-box">
                           <dl>
-                              <dt class="display-counter" data-value="4509">0</dt>
+                              <dt class="display-counter" data-value="4509">{{$servicios}}</dt>
                               <dd>Servicios</dd>
                           </dl>
                           <i class="icon soap-icon-fueltank"></i>
@@ -43,7 +43,7 @@
               </a>
           </div>
           <div class="col-sm-6 col-md-3">
-              <a href="car-list-view.html">
+              <a href="{{ route('estimates.index') }}">
                   <div class="fact red">
                       <div class="numbers counters-box">
                           <dl>
@@ -79,13 +79,7 @@
       </div>
       <div class="notification-area">
           <div class="info-box block">
-              <span class="close"></span>
-              <p>This is your Dashboard, the place to check your Profile, respond to Reservation Requests, view upcoming Trip Information, and much more.</p>
-              <br />
-              <ul class="circle">
-                  <li><span class="skin-color">Learn How It Works</span> — Watch a short video that shows you how Travelo works.</li>
-                  <li><span class="skin-color">Get Help</span> — View our help section and FAQs to get started on Travelo. </li>
-              </ul>
+            
           </div>
       </div>
       <hr>
