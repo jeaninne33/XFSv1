@@ -25,15 +25,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/css/animate.min.css">
 
-    <!-- Current Page Styles -->
-    <link rel="stylesheet" type="text/css" href="assets/components/revolution_slider/css/settings.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="assets/components/revolution_slider/css/style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="assets/components/jquery.bxslider/jquery.bxslider.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="assets/components/flexslider/flexslider.css" media="screen" />
-
-    <!-- Main Style -->
     <link id="main-style" rel="stylesheet" href="assets/css/style.css">
 
     <!-- Updated Styles -->
@@ -47,7 +39,7 @@
     <!--SWEETALERT-->
     <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
     <link href="assets/dist/sweetalert.css" rel="stylesheet" />
-  
+
 </head>
 <body class="soap-login-page style3 body-blank">
     <div id="page-wrapper" class="wrapper-blank">
@@ -99,30 +91,5 @@
 
     </div>
 
-
-    <!-- Javascript -->
-    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.noconflict.js"></script>
-    <script type="text/javascript" src="assets/js/modernizr.2.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
-
-    <!-- Twitter Bootstrap -->
-    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
-
-    <!-- parallax -->
-    <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
-
-    <!-- waypoint -->
-    <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
-
-    <!-- load page Javascript -->
-    <script type="text/javascript" src="assets/js/theme-scripts.js"></script>
-    <script type="text/javascript" src="assets/js/scripts.js"></script>
-
-    <script type="text/javascript">
-        enableChaser = 0; //disable chaser
-    </script>
 </body>
 </html>

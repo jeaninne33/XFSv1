@@ -7,19 +7,19 @@
                   <!-- Slide1 -->
                   <li data-transition="slidedown" data-slotamount="5" data-masterspeed="1000">
                       <!-- MAIN IMAGE -->
-                      <img src="images/XfligthSupport_Rampa_G550.png" alt="xflightsupport rampa g550"/>
+                      <img src="{{ asset("assets/images/XfligthSupport_Rampa_G550.png") }}" alt="xflightsupport rampa g550"/>
                   </li>
 
                   <!-- Slide2 -->
                   <li data-transition="slidedown" data-slotamount="7" data-masterspeed="1000">
                       <!-- MAIN IMAGE -->
-                      <img src="images/XfligthSupport_G550_Rampa.png" alt="xflightsupport rampa g550"/>
+                      <img src="{{ asset("assets/images/XfligthSupport_RampaG550.png") }}" alt="xflightsupport rampa g550"/>
                   </li>
 
                   <!-- Slide3 -->
                   <li data-transition="slidedown" data-slotamount="7" data-masterspeed="1000">
                       <!-- MAIN IMAGE -->
-                      <img src="images/XfligthSupport_RampaG550.png" alt="xflightsupport rampa G550"/>
+                      <img src="{{ asset("assets/images/XfligthSupport_RampaG550.png") }}" alt="xflightsupport rampa G550"/>
                   </li>
               </ul>
           </div>
@@ -30,7 +30,7 @@
           <div class="large-block image-box style6">
                   <article class="box">
                       <figure class="col-md-5">
-                          <a  title="" class="middle-block"><img class="middle-item" src="images/XfligthSuppor_PRIVATE_JET_CHARTER.png" alt="XFLIGHTSUPPORT QUIENES SOMOS" width="476" height="318" /></a>
+                          <a  title="" class="middle-block"><img class="middle-item" src="{{ asset("assets/images/XfligthSuppor_PRIVATE_JET_CHARTER.png") }}" alt="XFLIGHTSUPPORT QUIENES SOMOS" width="476" height="318" /></a>
                       </figure>
                       <div class="details col-md-offset-5">
                           <h4 class="box-title"><strong>QUIENES SOMOS</strong></h4>
@@ -57,7 +57,7 @@
                   <div class="col-md-6">
                       <article class="box">
                           <figure class="animated" data-animation-type="fadeInLeft" data-animation-duration="1">
-                              <a href="combustible.html" title=""><img src="images/XfligthSupport_fuel_private_jet_charter.png" alt="Combustible" width="270" height="192" /></a>
+                              <a href="combustible.html" title=""><img src="{{ asset("assets/images/XfligthSupport_fuel_private_jet_charter.png") }}" alt="Combustible" width="270" height="192" /></a>
                           </figure>
                           <div class="details">
                               <h4>COMBUSTIBLE</h4>
@@ -69,7 +69,7 @@
                   <div class="col-md-6">
                       <article class="box">
                           <figure class="animated" data-animation-type="fadeInLeft" data-animation-duration="1" data-animation-delay="0.4">
-                              <a href="servicio-meteorologico.html" title=""><img src="images/XfligthSupport_serviciometereologico_private_jet_charter.png" alt="Servicio Metereologico" width="270" height="192" /></a>
+                              <a href="servicio-meteorologico.html" title=""><img src="{{ asset("assets/images/XfligthSupport_serviciometereologico_private_jet_charter.png") }}" alt="Servicio Metereologico" width="270" height="192" /></a>
                           </figure>
                           <div class="details">
                               <h4>SERVICIO METEOROLÓGICO</h4>
@@ -81,7 +81,7 @@
                   <div class="col-md-6">
                       <article class="box">
                           <figure class="animated" data-animation-type="fadeInLeft" data-animation-duration="1">
-                              <a href="handling.html" title=""><img src="images/XfligthSupport_handling_private_jet_charter.png" alt="Handling" width="270" height="192" /></a>
+                              <a href="handling.html" title=""><img src="{{ asset("assets/images/XfligthSupport_handling_private_jet_charter.png") }}" alt="Handling" width="270" height="192" /></a>
                           </figure>
                           <div class="details">
                               <h4>HANDLING</h4>
@@ -93,7 +93,7 @@
                   <div class="col-md-6">
                       <article class="box">
                           <figure class="animated" data-animation-type="fadeInLeft" data-animation-duration="1" data-animation-delay="0.4">
-                              <a href="Catering.html" title=""><img src="images/XfligthSuppor_caterin_private_jet_charter.png" alt="Catering" width="270" height="192" /></a>
+                              <a href="Catering.html" title=""><img src="{{ asset("assets/images/XfligthSuppor_caterin_private_jet_charter.png") }}" alt="Catering" width="270" height="192" /></a>
                           </figure>
                           <div class="details">
                               <h4>CATERING DELUXE</h4>

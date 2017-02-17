@@ -19,48 +19,39 @@
     <meta name="generator" content="HTML,BOOTSTRAP,JAVASCRIPT,JQUERY" />
     <!--<meta name="robots" content=""-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset("assets/icoXFS.ico") }}" type="image/x-icon">
 
+      <!-- Theme Styles -->
+      <link rel="stylesheet" href="{{ asset("assets/css/bootstrap.min.css") }}">
+      <link rel="stylesheet" href="{{ asset("assets/css/font-awesome.min.css") }}">
+      <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
+      <!-- Main Style -->
+      <link id="main-style" rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
+      <!-- Current Page Styles -->
+      <link rel="stylesheet" type="text/css" href="{{ asset("assets/components/revolution_slider/css/settings.css") }}" media="screen" />
+      <link rel="stylesheet" type="text/css" href="{{ asset("assets/components/revolution_slider/css/style.css") }}" media="screen" />
+      <link rel="stylesheet" type="text/css" href="{{ asset("assets/components/jquery.bxslider/jquery.bxslider.css") }}" media="screen" />
+      <link rel="stylesheet" type="text/css" href="{{ asset("assets/components/flexslider/flexslider.css") }}" media="screen" />
+
+
+      <!-- Responsive Styles -->
+      <link rel="stylesheet" href="{{ asset("assets/css/responsive.css") }}">
+      <!-- Responsive Styles -->
+      <link rel="stylesheet" href="{{ asset("assets/css/updates.css") }}">
+      <!--SWEETALERT-->
+      <link href="{{ asset("assets/dist/sweetalert.css") }}" rel="stylesheet" />
     <!-- Theme Styles -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" href="assets/css/animate.min.css">
 
-    <!-- Current Page Styles -->
-    <link rel="stylesheet" type="text/css" href="components/revolution_slider/css/settings.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="components/revolution_slider/css/style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="components/jquery.bxslider/jquery.bxslider.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="components/flexslider/flexslider.css" media="screen" />
 
-    <!-- Main Style -->
-    <link id="main-style" rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Updated Styles -->
-    <link rel="stylesheet" href="assets/css/updates.css">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/custom.css">
-    <!-- Datatable Styles -->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-    <!-- Responsive Styles -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <!--SWEETALERT-->
-    <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
-    <link href="assets/dist/sweetalert.css" rel="stylesheet" />
-    <!--footer header-->
-    <script src="js/header-footer.js"></script>
-    <!-- CSS for IE -->
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" type="text/css" href="css/ie.css" />
-    <![endif]-->   <!-- Javascript Page Loader -->
-    <!--<script type="text/javascript" src="js/pace.min.js" data-pace-options='{ "ajax": false }'></script>
-    <script type="text/javascript" src="js/page-loading.js"></script>-->
 </head>
 <body>
     <div id="page-wrapper">
         <header id="header" class="navbar-static-top">
-            <div style="background-image:url(images/header.png)" class="topnav hidden-xs">
+            <div style="background-image:url({{ asset("assets/images/header.png") }})" class="topnav hidden-xs">
                 <div class="container">
                     <ul class="quick-menu pull-left">
                         <!--<li><a href="#">My Account</a></li>-->
@@ -89,26 +80,6 @@
                           @endif
 
                       </li>
-
-                        <!--<li><a href="#" class="soap-popupbox">SIGNUP</a></li>-->
-                        <!--<li class="ribbon currency">
-                        <a href="#" title="">USD</a>
-                        <ul class="menu mini">
-                            <li><a href="#" title="AUD">AUD</a></li>
-                            <li><a href="#" title="BRL">BRL</a></li>
-                            <li class="active"><a href="#" title="USD">USD</a></li>
-                            <li><a href="#" title="CAD">CAD</a></li>
-                            <li><a href="#" title="CHF">CHF</a></li>
-                            <li><a href="#" title="CNY">CNY</a></li>
-                            <li><a href="#" title="CZK">CZK</a></li>
-                            <li><a href="#" title="DKK">DKK</a></li>
-                            <li><a href="#" title="EUR">EUR</a></li>
-                            <li><a href="#" title="GBP">GBP</a></li>
-                            <li><a href="#" title="HKD">HKD</a></li>
-                            <li><a href="#" title="HUF">HUF</a></li>
-                            <li><a href="#" title="IDR">IDR</a></li>
-                        </ul>
-                    </li>-->
                     </ul>
                 </div>
             </div>
@@ -122,7 +93,7 @@
                 <div class="container">
                     <h1 class="logo navbar-brand">
                         <a href="{{url('/')}}" title="XFlight Support - Inicio">
-                            <img src="images/logo.png" alt="XflightSupport"/>
+                            <img src="{{ asset('assets/images/logo.png')}}" alt="XflightSupport"/>
                         </a>
                     </h1>
 
@@ -222,25 +193,7 @@
                         </li>
 
                         <li><a href="#" class="soap-popupbox" onclick="mjslogin">INICIO SESIÓN</a></li>
-                        <!--<li><a href="#travelo-signup" class="soap-popupbox">SIGNUP</a></li>-->
-                        <!--<li class="ribbon currency menu-color-skin">
-                        <a href="#">USD</a>
-                        <ul class="menu mini">
-                            <li><a href="#" title="AUD">AUD</a></li>
-                            <li><a href="#" title="BRL">BRL</a></li>
-                            <li class="active"><a href="#" title="USD">USD</a></li>
-                            <li><a href="#" title="CAD">CAD</a></li>
-                            <li><a href="#" title="CHF">CHF</a></li>
-                            <li><a href="#" title="CNY">CNY</a></li>
-                            <li><a href="#" title="CZK">CZK</a></li>
-                            <li><a href="#" title="DKK">DKK</a></li>
-                            <li><a href="#" title="EUR">EUR</a></li>
-                            <li><a href="#" title="GBP">GBP</a></li>
-                            <li><a href="#" title="HKD">HKD</a></li>
-                            <li><a href="#" title="HUF">HUF</a></li>
-                            <li><a href="#" title="IDR">IDR</a></li>
-                        </ul>
-                    </li>-->
+
                     </ul>
 
                 </nav>
@@ -250,7 +203,7 @@
 
         @yield('content')
 
-        <footer style="background-image: url(images/footer.png);" id="footer">
+        <footer style="background-image: url({{ asset('assets/images/footer.png')}});" id="footer">
                     <div class="footer-wrapper">
                         <div class="container">
                             <div class="row">
@@ -348,7 +301,7 @@
                         <div class="container">
                             <div class="logo pull-left">
                                 <a href="{{url('/')}}" title="XFlightSupport - Inicio">
-                                    <img src="images/logo.png" alt="XflightSupport" />
+                                    <img src="{{ asset('assets/images/logo.png')}}" alt="XflightSupport" />
                                 </a>
                             </div>
                             <div class="pull-right">
@@ -370,46 +323,46 @@
 
 
             <!-- Javascript -->
-            <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
-            <script type="text/javascript" src="assets/js/jquery.noconflict.js"></script>
-            <script type="text/javascript" src="assets/js/modernizr.2.7.1.min.js"></script>
-            <script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-            <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-            <script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/jquery-1.11.1.min.js") }}"></script>
 
+            <script type="text/javascript" src="{{ asset("assets/js/modernizr.2.7.1.min.js") }}"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/jquery-migrate-1.2.1.min.js") }}"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/jquery.placeholder.js") }}"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
             <!-- Twitter Bootstrap -->
-            <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
+          <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+
 
             <!-- load revolution slider scripts -->
-            <script type="text/javascript" src="components/revolution_slider/js/jquery.themepunch.tools.min.js"></script>
-            <script type="text/javascript" src="components/revolution_slider/js/jquery.themepunch.revolution.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/components/revolution_slider/js/jquery.themepunch.tools.min.js") }}"></script>
+            <script type="text/javascript" src="{{ asset("assets/components/revolution_slider/js/jquery.themepunch.revolution.min.js") }}"></script>
 
             <!-- load BXSlider scripts -->
-            <script type="text/javascript" src="components/jquery.bxslider/jquery.bxslider.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/components/jquery.bxslider/jquery.bxslider.min.js") }}"></script>
 
             <!-- Flex Slider -->
-            <script type="text/javascript" src="components/flexslider/jquery.flexslider.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/components/flexslider/jquery.flexslider.js") }}"></script>
 
             <!-- parallax -->
-            <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
+            <script type="text/javascript" src=""></script>
 
             <!-- parallax -->
-            <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
-            <!-- datatable jquery -->
-            <script type="text/javascript" href="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/jquery.stellar.min.js") }}"></script>
             <!-- waypoint -->
-            <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
+            <script type="text/javascript" src="{{ asset("assets/js/waypoints.min.js") }}"></script>
 
-            <!-- load page Javascript -->
-            <script type="text/javascript" src="assets/js/theme-scripts.js"></script>
-            <script type="text/javascript" src="assets/js/scripts.js"></script>
+            <!-- load page Javascript-->
+            <script type="text/javascript" src="{{ asset("assets/js/theme-scripts.js") }}"></script>
             <!--SWEETALERT-->
             <!--<script src="sweetalert2/sweetalert2.min.js"></script>-->
-            <script src="assets/js/sweetalert.js"></script>
-            <script src="dist/sweetalert.min.js"></script>
+            <script src="{{ asset("assets/js/sweetalert.js") }}"></script>
+            <script src="{{ asset("assets/dist/sweetalert.min.js") }}"></script>
             <script type="text/javascript">
-                tjq(document).ready(function() {
-                    tjq('.revolution-slider').revolution(
+                $(document).ready(function() {
+                  //alert("aja");
+                  $('.revolution-slider').revolution(
                     {
                         sliderType:"standard",
         				sliderLayout:"auto",

@@ -27,7 +27,7 @@ class CompanyController extends Controller
    public function _construc(){
 
         //$this->beforeFilter('@finCompanys',['only'=>['show','edit','update','destroy']]);
-        $this->middleware('auth');
+      //  $this->middleware('auth');
     }
 
   /*   public function finCompanys(Route $route){
@@ -39,10 +39,17 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
 
-          $companys = Company::all();//orderBy('id','DESC');
-          return  view('companys.index')
-        ->with('companys', $companys);
-
+          $companys =  Company::all();
+          //orderBy('id','DESC');
+      //  return  response()->view('companys.index')->json($companys);
+        //->with('companys', $companys);
+      /*  return response($companys);*/
+      /*  return $companys;
+      return response() ->view('companys.index')
+            ->json($companys);*/
+          // return response()->json(  $companys);
+      return view('companys.index',['companys'=>$companys]);
+        //  return response(view('companys.index',array('companys'=>$companys)),200, ['Content-Type' => 'application/json']);
     }
 
 

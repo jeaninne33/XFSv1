@@ -4,6 +4,29 @@ var app = angular.module("XHR",[])
 
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
+  $scope.filtros=[
+     {
+       id:"client",
+       nombre:"clientes"
+     },
+     {
+       id:"prove",
+       nombre:"Proveedores"
+     },
+     {
+      id:"cp",
+       nombre:"Clientes/Proveedores"
+     }
+   ];
+$http.get("/companys").then(
+  function(resp){
+  $scope.companys =resp.companys;
+  //alert(resp.companys);
+  },
+  function (){
+
+  });
+
 $scope.company = {
       pais_id:0 };
 

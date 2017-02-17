@@ -48,7 +48,7 @@
         <div class="container">
 
 
-              <img src="{{ asset('assets/icoXFS.ico')}}"  width="30" height="30"/>
+              <img src="{{ asset('assets/icoXFS2.ico')}}"  width="30" height="30"/>
 
 
 

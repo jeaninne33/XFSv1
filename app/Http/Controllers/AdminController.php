@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use XFS\Company;
+use XFS\Servicio;
+use XFS\Estimate;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -18,9 +20,11 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-          $companys = Company::all();//orderBy('id','DESC');
+          $companys = Company::all()->count();//orderBy('id','DESC');
+          $servicios = Servicio::all()->count();
+          $estimates = Estimate::all()->count();
         //  return view('principal',compact('companys'));
-        return  view('principal')
+        return  view('principal',compact('servicios'),compact('estimates'))
         ->with('companys', $companys);
     }
 
