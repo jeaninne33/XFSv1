@@ -5,10 +5,11 @@ namespace XFS\Http\Controllers;
 use Illuminate\Http\Request;
 use XFS\Estimate;
 use XFS\Company;
+use XFS\Avion;
 use XFS\Servicio;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 class EstimatesController extends Controller
 {
     /**
@@ -31,12 +32,14 @@ class EstimatesController extends Controller
     public function create()
     {
       $estimates=Estimate::all();
+      //$avion=Avion::Lists('tipo','id');
     //  $companys=Company::all();
     //  $indicador=1;
-      $servicios=Servicio::Lists('nombre','id');
-      $servicios->prepend('Seleccione Servicio');  
+     $indicador=0;
+     $servicios=Servicio::Lists('nombre','id');
+     $servicios->prepend('Seleccione Servicio');
 
-      return view('estimates.create',compact('estimates','servicios','i'));
+      return view('estimates.create',compact('estimates','servicios','indicador'));
 
     }
     // public function cliente($id)
@@ -56,9 +59,24 @@ class EstimatesController extends Controller
      */
     public function store(Request $request)
     {
-        $estimates = new Estimates;
-        $estimates->id=$request->input('id');
-        $estimates->save();
+      $estimates = new Estimate;
+
+      $estimates->company_id=$request->input('company_id');
+      $estimates->prove_id=$request->input('prove_id');
+      $estimates->estado=$request->input('estado');
+      $estimates->resumen=$request->input('resumen');
+      $estimates->metodo_segui=$request->input('metodo');
+      $estimates->fecha_soli=$request->input('fecha_soli');
+      $estimates->proximo_seguimiento=$request->input('proximo_seguimiento');
+      $estimates->fbo=$request->input('fbo');
+      $estimates->cantidad_fuel=$request->input('cantidad_fuel');
+      $estimates->localidad=$request->input('localidad');
+      $estimates->avion_id=$request->input('avion_id');
+      $estimates->num_habitacion=$request->input('num_habitacion');
+      $estimates->tipo_cama=$request->input('tipo_cama');
+      $estimates->tipo_hab=$request->input('tipo_hab');
+      $estimates->tipo_estrellas=$request->input('tipo_estrellas');
+      $estimates->save();
         return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
     }
 
@@ -81,7 +99,37 @@ class EstimatesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $estimates=Estimate::findOrFail($id);
+        // $estimates = DB::table('estimates')
+        // ->join('companys', 'companys.id', '=', 'estimates.company_id')
+        // ->select('estimates.*', 'companys.nombre as nombreC ')
+        // ->where('estimates.id',$id)
+        // ->where('companys.id',$estimates->company_id)
+        // ->where('companys.id',$estimates->prove_id)
+        // ->get();
+        $cliente = DB::table('companys')
+                    ->select('nombre as nombreC','id as company_id','celular','telefono')
+                    ->where('id', $estimates->prove_id)
+                    ->first();
+        $proveedor = DB::table('companys')
+                    ->select('nombre as nombreP','id as prove_id','celular','telefono')
+                    ->where('id', $estimates->company_id)
+                    ->first();
+        //$cliente=DB::table('company')($estimates->company_id)->get();
+        //$proveedor=Company::find($estimates->prove_id)->get();
+        // $cliente = DB::table('estimates')
+        // ->join('companys', 'companys.id', '=', 'estimates.company_id')
+        // ->select('companys.nombre as nombreC')
+        // ->whereIn('companys.id',[$estimates->prove_id,$estimates->company_id]);
+        // $proveedor = DB::table('estimates')
+        //     ->join('companys', 'companys.id', '=', 'estimates.company_id')
+        //     ->select('companys.nombre as nombreP')
+        //     ->whereIn('companys.id',[$estimates->prove_id,$estimates->company_id])
+        //     ->union($cliente)
+        //     ->get();
+        $indicador=1;
+        $servicios=Servicio::Lists('nombre','id');
+        return view ('estimates.edit',compact('estimates','servicios','cliente','proveedor','indicador'));
     }
 
     /**
