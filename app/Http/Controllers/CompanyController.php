@@ -88,9 +88,6 @@ class CompanyController extends Controller
           $error= array();
          foreach ($aviones as $indice =>$array ) {
            $i=$indice+1;
-           $a=Avion::where('licencia1' , $array["licencia1"])->get() ;
-           $error['prueba']=[empty($a)];
-
             if((isset($array["tipo"]) && empty($array["tipo"])) || !isset($array["tipo"])){
               $error["tipo"]=["El campo Tipo de Avion #".$i." es Obligatorio"];
             }
@@ -105,7 +102,6 @@ class CompanyController extends Controller
              if ((isset($array["licencia1"]) && empty($array["licencia1"])) || !isset($array["licencia1"])) {
                 $error["licencia1"]=["El campo Licencia 1 de Avion #".$i." es Obligatorio"];
             }else{
-
               if(!empty(Avion::where('licencia1' , $array["licencia1"])->count())){
                  $error["lidupli"]=["Ya existe la licencia1 del Avion#".$i." en la Base de Datos"];
               }
@@ -114,7 +110,6 @@ class CompanyController extends Controller
                $error["piloto1"]=["El campo Piloto1 de Avion #".$i." es Obligatorio"];
              }
              if (isset($array["certificado"])) {
-
                if(!empty(Avion::where('certificado' , $array["certificado"])->count())){
                   $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
                }
@@ -173,6 +168,7 @@ class CompanyController extends Controller
 
                
              }
+
 
 
           }//fin foreach

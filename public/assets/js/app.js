@@ -1,5 +1,7 @@
 
+
 var app = angular.module("XHR",[])
+
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
 $scope.company = {
@@ -55,5 +57,4 @@ app.controller("EditCompanyCtrl", function($scope,$routeParams, $http){
    //$scope.company=data;
   // $scope.company = RestApi.query();
 });//EditCompanyCtrl
-
 
