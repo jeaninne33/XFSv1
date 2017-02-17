@@ -47,23 +47,7 @@
     <!--SWEETALERT-->
     <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
     <link href="assets/dist/sweetalert.css" rel="stylesheet" />
-    <!--footer header-->
-    <script src="js/header-footer.js"></script>
-    <!-- CSS for IE -->
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" type="text/css" href="css/ie.css" />
-    <![endif]-->
-
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-      <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-    <![endif]-->
-
-    <!-- Javascript Page Loader -->
-    <!--<script type="text/javascript" src="js/pace.min.js" data-pace-options='{ "ajax": false }'></script>
-    <script type="text/javascript" src="js/page-loading.js"></script>-->
+  
 </head>
 <body class="soap-login-page style3 body-blank">
     <div id="page-wrapper" class="wrapper-blank">

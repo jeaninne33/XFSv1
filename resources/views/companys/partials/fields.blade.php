@@ -11,8 +11,8 @@
     <h3>Datos Generales</h3>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
-           [[ Form::label('nombre', 'Nombre de la Compañia *')]]
-           [[Form::text('nombre', null, ['class' => 'input-text full-width',  'required' => 'required' ,'ng-model'=>'company.nombre' ])]]
+           [[ Form::label('nombre', 'Nombre de la Compañia *')]]<!--  -->
+           [[Form::text('nombre', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.nombre'  ])]]
 
         </div>
         <div class="col-sms-6 col-sm-6">
@@ -23,7 +23,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('direccion', 'Dirección Fisica *') ]]
-          [[ Form::text('direccion', null, ['class' => 'input-text full-width',  'required' => 'required' ,'ng-model'=>'company.direccion']) ]]
+          [[ Form::text('direccion', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.direccion' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('direccion_cuenta', 'Direccion de factura *') ]]

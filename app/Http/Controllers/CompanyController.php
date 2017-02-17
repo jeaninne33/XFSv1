@@ -24,12 +24,13 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-  /*  public function _construc(){
+   public function _construc(){
 
-        $this->beforeFilter('@finCompanys',['only'=>['show','edit','update','destroy']]);
+        //$this->beforeFilter('@finCompanys',['only'=>['show','edit','update','destroy']]);
+        $this->middleware('auth');
     }
 
-    public function finCompanys(Route $route){
+  /*   public function finCompanys(Route $route){
         $this->companys =Company::findOrFail($route->getParameter('companys'));
         dd($this->companys);
 
@@ -87,22 +88,20 @@ class CompanyController extends Controller
           $error= array();
          foreach ($aviones as $indice =>$array ) {
            $i=$indice+1;
-           $a=Avion::where('licencia1' , $array["licencia1"])->get() ;
-           $error['prueba']=[empty($a)];
             if((isset($array["tipo"]) && empty($array["tipo"])) || !isset($array["tipo"])){
               $error["tipo"]=["El campo Tipo de Avion #".$i." es Obligatorio"];
             }
              if ((isset($array["matricula"]) && empty($array["matricula"])) || !isset($array["matricula"])) {
                $error["matricula"]=["El campo Matricula de Avion #".$i." es Obligatorio"];
              }else{
-               if(!empty(Avion::where('matricula' , $array["matricula"]))){
+               if(!empty(Avion::where('matricula' , $array["matricula"])->count())){
                   $error["mdupli"]=["Ya existe la matricula del Avion#".$i." en la Base de Datos"];
                }
              }
              if ((isset($array["licencia1"]) && empty($array["licencia1"])) || !isset($array["licencia1"])) {
                 $error["licencia1"]=["El campo Licencia 1 de Avion #".$i." es Obligatorio"];
             }else{
-              if(!empty(Avion::where('licencia1' , $array["licencia1"]))){
+              if(!empty(Avion::where('licencia1' , $array["licencia1"])->count())){
                  $error["lidupli"]=["Ya existe la licencia1 del Avion#".$i." en la Base de Datos"];
               }
             }
@@ -110,12 +109,10 @@ class CompanyController extends Controller
                $error["piloto1"]=["El campo Piloto1 de Avion #".$i." es Obligatorio"];
              }
              if (isset($array["certificado"])) {
-               if(!empty(Avion::where('certificado' , $array["certificado"]))){
+               if(!empty(Avion::where('certificado' , $array["certificado"])->count())){
                   $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
                }
              }
-
-
           }//fin foreach
           if(!empty($error)){
               $band=false;
@@ -203,12 +200,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //  //
-        // get the nerd
       $companys = Company::findOrFail($id);
       $paises = Pais::lists('nombre','id');
-      $paises->prepend(' Seleccione el País');
-
        // show the edit form and pass the nerd
       return view('companys.edit', compact('paises'))->with('companys',$companys);
     }

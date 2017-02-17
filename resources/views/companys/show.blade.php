@@ -113,9 +113,53 @@
           </h5>
         </div>
         <div id="menu3" class="tab-pane fade">
+          <h3><p>
+          Aviones <small>
+                    Se muestran los datos de los Aviones
+              </small></p>
+          </h3>
+          <br/>
+          <h5>
+
+          @foreach( $companys->aviones as $indice =>$air )
+          <table border="0" style="with:600px;" class="table table-condensed">
+            <tr>  <p><strong>Datos del Avión #  {{$indice+1}}<strong><p/></tr>
+            <tr>
+              <td><strong>Tipo de Avión:</strong> {{ $air->tipo }}<br></td>
+              <td><strong>Nombre:</strong> {{ $air->nombre }}<br></td>
+              <td><strong>Modelo:</strong> {{ $air->modelo }}<br></td>
+            </tr>
+            <tr>
+              <td><strong>Fabricante:</strong> {{ $air->fabricante }}<br></td>
+              <td><strong>Matricula:</strong> {{ $air->matricula }}<br></td>
+              <td><strong>Licencia 1:</strong> {{ $air->licencia }}<br></td>
+            </tr>
+            <tr>
+              <td><strong>Licencia 2:</strong> {{ $air->licencia }}<br></td>
+              <td><strong>Registro:</strong> {{ $air->registro }}<br></td>
+              <td><strong>Piloto 1:</strong> {{ $air->piloto1 }}<br></td>
+            </tr>
+            <tr>
+              <td><strong>Piloto 2:</strong> {{ $air->piloto2 }}<br></td>
+              <td><strong>Certificado:</strong> {{ $air->certificado }}<br></td>
+              <td><strong>Seguro:</strong> {{ $air->seguro }}<br></td>
+            </tr>
+          </table><br/>
+          @endforeach
+
+            </h5>
         </div>
         <div id="menu4" class="tab-pane fade">
         </div>
  </div>
+
+@endsection
+
+@section('scripts')
+
+<script>
+  $('#m2').removeClass('');
+  $('#m2').addClass('active');
+</script>
 
 @endsection
