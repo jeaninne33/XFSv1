@@ -12,10 +12,10 @@
 
 <!-- if there are creation errors, they will show here -->
 
-
-
 <div ng-controller="CompanyCtrl" class="col-sm-12 no-float no-padding">
+
   @include('errors.message')
+
 [[ Form::open(['route'=>'companys.store', 'name'=>'form1','method'=> 'POST', 'novalidate', 'ng-submit'=>'save($event)']) ]]
   @include('companys.partials.fields')
 [[ Form::submit('Agregar Compañia', array('id'=>'registro','class' => 'btn btn-primary')) ]]

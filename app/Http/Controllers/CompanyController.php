@@ -94,6 +94,7 @@ class CompanyController extends Controller
              if ((isset($array["matricula"]) && empty($array["matricula"])) || !isset($array["matricula"])) {
                $error["matricula"]=["El campo Matricula de Avion #".$i." es Obligatorio"];
              }else{
+
                if(!empty(Avion::where('matricula' , $array["matricula"])->count())){
                   $error["mdupli"]=["Ya existe la matricula del Avion#".$i." en la Base de Datos"];
                }
@@ -113,6 +114,63 @@ class CompanyController extends Controller
                   $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
                }
              }
+          }//fin foreach
+          if(!empty($error)){
+              $band=false;
+          }else{
+            $airplane=true;
+          }
+     }//fin si hay aviones
+
+     if($band){
+       DB::beginTransaction();
+       try {
+           $company=Company::create($data);
+           if($airplane){
+             foreach( $aviones as $indice =>$air ){
+              $avion=New Avion;
+              $avion->tipo=$air['tipo'];
+              $avion->matricula=$air['matricula'];
+              $avion->licencia1=$air['licencia1'];
+              $avion->piloto1=$air['piloto1'];
+              if(isset($air["modelo"])){
+                  $avion->modelo=$air['modelo'];
+              }
+              if(isset($air["fabricante"])){
+                  $avion->fabricante=$air['fabricante'];
+              }
+              if(isset($air["nombre"])){
+                  $avion->nombre=$air['nombre'];
+              }
+              if(isset($air["licencia2"])){
+                  $avion->licencia2=$air['licencia2'];
+              }
+              if(isset($air["piloto2"])){
+                  $avion->piloto2=$air['piloto2'];
+              }
+              if(isset($air["certificado"])){
+                  $avion->certificado=$air['certificado'];
+              }
+              if(isset($air["seguro"])){
+                  $avion->seguro=$air['seguro'];
+              }
+              if(isset($air["registro"])){
+                  $avion->registro=$air['registro'];
+              }
+              $company->aviones()->save($avion);
+            }//fin para
+          }//fin si hay aviones
+          } catch (Exception $e) {
+             DB::rollback();
+             $error[]=[$e->getMessage()];
+          }
+
+
+               
+             }
+
+
+
           }//fin foreach
           if(!empty($error)){
               $band=false;

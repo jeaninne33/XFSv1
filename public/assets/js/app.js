@@ -1,4 +1,7 @@
+
+
 var app = angular.module("XHR",[])
+
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
 $scope.company = {
@@ -17,6 +20,7 @@ $scope.getStates  = function () {
     }
   );
 };
+
 
 $scope.message =  false;
 $scope.show_error =  false;
@@ -47,10 +51,10 @@ $scope.save =  function($event){
    );//fin then
   };//fin save
 
-
 }]);//fin controller companys
 
 app.controller("EditCompanyCtrl", function($scope,$routeParams, $http){
    //$scope.company=data;
   // $scope.company = RestApi.query();
 });//EditCompanyCtrl
+
