@@ -28,13 +28,64 @@
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
 {{-- <script type="text/javascript" src="{{asset("assets/js/bootstrap-table.js")}}"></script> --}}
-<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
 
 
 <script>
    $('#example').dataTable();
    $('#example1').dataTable();
+  //  $('#example1').DataTable({
+  //    "columnDefs": [
+  //      { "visible": false, "targets": 0 }
+  //    ]
+  //  });
+  var tab=  $('#example1').DataTable();
+  tab.column( 0 ).visible( false );
+   $('#example1 tbody').on( 'click', 'a.btn-delete', function () {
+
+       tab
+           .row( $(this).parents('tr') )
+           .remove()
+           .draw();
+   } );
+//    $('#example1 tbody').on( 'click', 'tr', function () {
+//     var id = tab.row( this ).id();
+// alert( 'Row index: '+tab.row( this ).index() );
+//     alert( 'Clicked row id '+id );
+// } );
+  //end remove rows
+  //dbclick table clientes
+  $('#example1 tbody').on('click', 'a.btn-edit', function () {
+       var index=tab.row($( this ).parents('tr')).index();
+       var data = tab.row($(this ).parents('tr')).data();
+       //alert( 'You clicked on '+data[0]+'\'s row' );
+       $('#servicios').val(data[0]);
+       $('#descripcion').val(data[2]);
+       $('#cantidad').val(data[3]);
+       $('#precio').val(data[4]);
+       $('.plus').css("display","none");
+       $('.edit').css("display","block");
+   } );
+  $('#example1 tbody').on('dblclick', 'tr', function () {
+       var data = tab.row( this ).data();
+       //alert( 'You clicked on '+data[0]+'\'s row' );
+       $('#servicios').val(data[0]);
+       $('#descripcion').val(data[2]);
+       $('#cantidad').val(data[3]);
+       $('#precio').val(data[4]);
+       $('.plus').css("display","none");
+       $('.edit').css("display","block");
+   } );
+  //end dbclick clientes
+  $('#example1 tbody').on( 'click','a.editar', function () {
+      var index=tab.row($( this ).parents('tr')).index();
+      tab
+          .row( $(index).parents('tr') )
+          .remove()
+          .draw();
+        //  addRows();
+  } );
 
 // $(document).ready(function() {
 //        var t = $('#example1').DataTable();

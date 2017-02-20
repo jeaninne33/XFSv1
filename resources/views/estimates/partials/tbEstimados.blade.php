@@ -1,6 +1,7 @@
   <table id="example1" class="display" cellspacing="0" width="100%">
       <thead>
           <tr>
+            <td data-field="idServicio">ID</td>
               <td data-field="Servicio">Servicio</td>
               <td data-field="Descripcion">Descripcion</td>
               <td data-field="Cantidad">Cantidad</td>
@@ -8,12 +9,12 @@
               <td data-field="Subtotal">SubTotal</td>
               <td data-field="Ganancia">Ganancia</td>
               <td data-field="Total">Total</td>
-              {{-- <td>Aciones</td> --}}
+              <td>Aciones</td>
           </tr>
       </thead>
       <tfoot>
              <tr>
-                <th colspan="7" style="text-align:right"><input type="text"></th>
+                <th colspan="9" style="text-align:right"><input type="text"></th>
              </tr>
       </tfoot>
   </table>

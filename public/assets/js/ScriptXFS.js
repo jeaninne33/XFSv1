@@ -1,3 +1,4 @@
+
 function ajaxRenderSection(id) {
         $.ajax({
             type: 'GET',
@@ -51,16 +52,12 @@ function ajaxRenderSection(id) {
             }
         });
     }
-$('#example tbody').on( 'click', 'img.icon-delete', function () {
-        table
-            .row( $(this).parents('tr') )
-            .remove()
-            .draw();
-    } );
+
 //tabla estimados
 function addRows(){
 var table = $('#example1').DataTable();
 var Servicio = $("#servicios").find('option:selected').text();
+var idServicio = $("#servicios").val();
 var Descripcion=$("#descripcion").val();
 var Cantidad= $("#cantidad").val();
 var Precio= $("#precio").val();
@@ -69,56 +66,40 @@ var Subtotal=Cantidad * Precio;
 var Ganancia=Subtotal*porcentaje;
 var Total=Subtotal+Ganancia;
          table.row.add( [
+             idServicio,
              Servicio,
              Descripcion,
              Cantidad,
              '$'+Precio,
              '$'+Subtotal,
              '$'+Ganancia,
-             '$'+Total
+             '$'+Total,
+             '<a class="btn-edit glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>'+' '+
+             '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
+
          ] ).draw( false );
+$("#servicios").val(0);
+$("#descripcion").val('');
+$("#cantidad").val('');
+$("#precio").val('');
 $('#subtotal').val($('#subto').val());
 $('#total').val($('#sumTotal').val());
          //counter++;
-
 }
-function deleteRow(r) {
-
-    var list;
-    var Nombre, ACModelo, ACTipo,Fabricante, ID;
-    var index;
-    var i = r.parentNode.parentNode.rowIndex;
-    var datos = document.getElementById("datos");
-    tjq('#datos').val("");
-    document.getElementById("tbAeronave").deleteRow(i);
-
-     tjq("#tbAeronave tbody tr").each(function (index) {
-
-                tjq(this).children("td").each(function (index2) {
-
-                    switch (index2) {
-                        case 0:
-                            Nombre = tjq(this).text();
-                            break;
-                        case 1: ACModelo = tjq(this).text();
-                            break;
-                        case 2: ACTipo = tjq(this).text();
-                            break;
-                        case 3: Fabricante = tjq(this).text();
-                            break;
-                        case 4: ID = tjq(this).text();
-                            break;
-                    }
-
-                });
-
-                 list=Nombre+'-'+ACModelo+'-'+ACTipo+'-'+Fabricante+'-'+ID+'|';
-                 if (list!='undefined-undefined-undefined-undefined-undefined|') {
-                   datos.value=datos.value+(list);
-                 }
-     });
+// $('#example').on('click', 'a.btn-edit', function (e) {
+//     e.preventDefault();
+//
+//     editor.edit( $(this).closest('tr'), {
+//         title: 'Edit record',
+//         buttons: 'Update'
+//     } );
+// } );
+function updateRows(r){
+  
 }
-//tabla estimados
+
+
+
 $('#descuento').keyup(function(e) {
                var num = $(this).val();
                if (e.which!=8) {
@@ -216,14 +197,14 @@ var porcentaje;
           }
           $('#ganancia').val(porcentaje);
 
-          if (telefono!="" && celular==""&&correo=="" || ) {
+          if (telefono!="") {
             $('select#metodo').val('Telefono')
             metodoSeguimiento();
-          }else if(celular!="" && telefono==""&&correo==""){
+          }else if(celular!=""){
             $('select#metodo').val('Celular');
             metodoSeguimiento();
           }
-          else if(correo!="" &&celular==""&&telefono) {
+          else if(correo!="") {
               $('select#metodo').val('Correo');
               metodoSeguimiento();
           }
@@ -306,7 +287,7 @@ $('#example1').DataTable( {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -314,14 +295,14 @@ $('#example1').DataTable( {
 
             // Total over this page
             pageTotal = api
-                .column( 6, { page: 'current'} )
+                .column( 7, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 6 ).footer() ).html(
+            $( api.column( 7 ).footer() ).html(
                 '<input hidden type="text" id="subto" value="'+'$'+pageTotal+'"/>'+'<input hidden type="text" id="sumTotal" value="'+'$'+ total+'"/>'
 
             );

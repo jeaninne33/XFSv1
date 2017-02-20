@@ -46,18 +46,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sms-6 col-sm-4">
+      <div class="col-sms-6 col-sm-4">
           [[Form::label('cantidad', 'Cantidad') ]]
           [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0']) ]]
-        </div>
-        <div class="col-sms-6 col-sm-4">
+      </div>
+      <div class="col-sms-6 col-sm-4">
           [[Form::label('precio', 'Precio') ]]
           [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
-        </div>
-        <div class="col-sms-6 col-sm-4">
+      </div>
+      <div class="col-sms-6 col-sm-4">
         </br>
-          <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
-        </div>
+          <div class="plus" style="display:block">
+            <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
+          </div>
+          <div class="edit" style="display:none">
+            {{-- <button type="button" name="btnedit" id="btnedit" class="btn-editar btn btn-primary glyphicon glyphicon-pencil"></button> --}}
+           <a class="editar glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
+          </div>
+      </div>
     </div>
     <div class="row">
         <div class="col-sms-5 col-md-12">
