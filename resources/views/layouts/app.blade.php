@@ -85,7 +85,9 @@
                   </ul>
                   <div class="tab-content">
                     <div id="contenido" class="tab-pane fade in active">
-
+                   <!-- angular templating -->
+                   <!-- this is where content will be injected -->
+                   <div ng-view></div>
                         	@yield('contenido')
 
                     </div>
@@ -103,6 +105,9 @@
       <!-- Twitter Bootstrap -->
       <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+      <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.min.js"></script>-->
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
+
 
       <script>
       $('.menu').on('click',function(e){

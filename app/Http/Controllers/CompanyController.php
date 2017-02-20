@@ -47,8 +47,9 @@ class CompanyController extends Controller
       /*  return $companys;
       return response() ->view('companys.index')
             ->json($companys);*/
-          // return response()->json(  $companys);
-      return view('companys.index',['companys'=>$companys]);
+    //  return response()->json(  $companys);
+      return response( $companys);
+      //return view('companys.index',['companys'=>$companys]);
         //  return response(view('companys.index',array('companys'=>$companys)),200, ['Content-Type' => 'application/json']);
     }
 
@@ -84,160 +85,102 @@ class CompanyController extends Controller
    public function store(CrearCompanysRequest $request)
    {
      $data  = $request->all();
-    //  print_r($data);
-    //dd($data);
-      //  Company::create($data);
-      $band=true;
-      $airplane=false;
-      $aviones=$data["aviones"];
-      if(!empty($aviones)){
-      //print_r($json);
-          $error= array();
-         foreach ($aviones as $indice =>$array ) {
-           $i=$indice+1;
-            if((isset($array["tipo"]) && empty($array["tipo"])) || !isset($array["tipo"])){
-              $error["tipo"]=["El campo Tipo de Avion #".$i." es Obligatorio"];
-            }
-             if ((isset($array["matricula"]) && empty($array["matricula"])) || !isset($array["matricula"])) {
-               $error["matricula"]=["El campo Matricula de Avion #".$i." es Obligatorio"];
-             }else{
-
-               if(!empty(Avion::where('matricula' , $array["matricula"])->count())){
-                  $error["mdupli"]=["Ya existe la matricula del Avion#".$i." en la Base de Datos"];
-               }
-             }
-             if ((isset($array["licencia1"]) && empty($array["licencia1"])) || !isset($array["licencia1"])) {
-                $error["licencia1"]=["El campo Licencia 1 de Avion #".$i." es Obligatorio"];
+   //  print_r($data);
+   //dd($data);
+     //  Company::create($data);
+     $band=true;
+     $airplane=false;
+     $aviones=$data["aviones"];
+     if(!empty($aviones)){
+     //print_r($json);
+         $error= array();
+        foreach ($aviones as $indice =>$array ) {
+          $i=$indice+1;
+           if((isset($array["tipo"]) && empty($array["tipo"])) || !isset($array["tipo"])){
+             $error["tipo"]=["El campo Tipo de Avion #".$i." es Obligatorio"];
+           }
+            if ((isset($array["matricula"]) && empty($array["matricula"])) || !isset($array["matricula"])) {
+              $error["matricula"]=["El campo Matricula de Avion #".$i." es Obligatorio"];
             }else{
-              if(!empty(Avion::where('licencia1' , $array["licencia1"])->count())){
-                 $error["lidupli"]=["Ya existe la licencia1 del Avion#".$i." en la Base de Datos"];
+              if(!empty(Avion::where('matricula' , $array["matricula"])->count())){
+                 $error["mdupli"]=["Ya existe la matricula del Avion#".$i." en la Base de Datos"];
               }
             }
-             if ((isset($array["piloto1"]) && empty($array["piloto1"])) || !isset($array["piloto1"])) {
-               $error["piloto1"]=["El campo Piloto1 de Avion #".$i." es Obligatorio"];
+            if ((isset($array["licencia1"]) && empty($array["licencia1"])) || !isset($array["licencia1"])) {
+               $error["licencia1"]=["El campo Licencia 1 de Avion #".$i." es Obligatorio"];
+           }else{
+             if(!empty(Avion::where('licencia1' , $array["licencia1"])->count())){
+                $error["lidupli"]=["Ya existe la licencia1 del Avion#".$i." en la Base de Datos"];
              }
-             if (isset($array["certificado"])) {
-               if(!empty(Avion::where('certificado' , $array["certificado"])->count())){
-                  $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
-               }
+           }
+            if ((isset($array["piloto1"]) && empty($array["piloto1"])) || !isset($array["piloto1"])) {
+              $error["piloto1"]=["El campo Piloto1 de Avion #".$i." es Obligatorio"];
+            }
+            if (isset($array["certificado"])) {
+              if(!empty(Avion::where('certificado' , $array["certificado"])->count())){
+                 $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
+              }
+            }
+         }//fin foreach
+         if(!empty($error)){
+             $band=false;
+         }else{
+           $airplane=true;
+         }
+    }//fin si hay aviones
+
+    if($band){
+      DB::beginTransaction();
+      try {
+          $company=Company::create($data);
+          if($airplane){
+            foreach( $aviones as $indice =>$air ){
+             $avion=New Avion;
+             $avion->tipo=$air['tipo'];
+             $avion->matricula=$air['matricula'];
+             $avion->licencia1=$air['licencia1'];
+             $avion->piloto1=$air['piloto1'];
+             if(isset($air["modelo"])){
+                 $avion->modelo=$air['modelo'];
              }
-          }//fin foreach
-          if(!empty($error)){
-              $band=false;
-          }else{
-            $airplane=true;
-          }
-     }//fin si hay aviones
-
-     if($band){
-       DB::beginTransaction();
-       try {
-           $company=Company::create($data);
-           if($airplane){
-             foreach( $aviones as $indice =>$air ){
-              $avion=New Avion;
-              $avion->tipo=$air['tipo'];
-              $avion->matricula=$air['matricula'];
-              $avion->licencia1=$air['licencia1'];
-              $avion->piloto1=$air['piloto1'];
-              if(isset($air["modelo"])){
-                  $avion->modelo=$air['modelo'];
-              }
-              if(isset($air["fabricante"])){
-                  $avion->fabricante=$air['fabricante'];
-              }
-              if(isset($air["nombre"])){
-                  $avion->nombre=$air['nombre'];
-              }
-              if(isset($air["licencia2"])){
-                  $avion->licencia2=$air['licencia2'];
-              }
-              if(isset($air["piloto2"])){
-                  $avion->piloto2=$air['piloto2'];
-              }
-              if(isset($air["certificado"])){
-                  $avion->certificado=$air['certificado'];
-              }
-              if(isset($air["seguro"])){
-                  $avion->seguro=$air['seguro'];
-              }
-              if(isset($air["registro"])){
-                  $avion->registro=$air['registro'];
-              }
-              $company->aviones()->save($avion);
-            }//fin para
-          }//fin si hay aviones
-          } catch (Exception $e) {
-             DB::rollback();
-             $error[]=[$e->getMessage()];
-          }
-
-
-               
+             if(isset($air["fabricante"])){
+                 $avion->fabricante=$air['fabricante'];
              }
+             if(isset($air["nombre"])){
+                 $avion->nombre=$air['nombre'];
+             }
+             if(isset($air["licencia2"])){
+                 $avion->licencia2=$air['licencia2'];
+             }
+             if(isset($air["piloto2"])){
+                 $avion->piloto2=$air['piloto2'];
+             }
+             if(isset($air["certificado"])){
+                 $avion->certificado=$air['certificado'];
+             }
+             if(isset($air["seguro"])){
+                 $avion->seguro=$air['seguro'];
+             }
+             if(isset($air["registro"])){
+                 $avion->registro=$air['registro'];
+             }
+             $company->aviones()->save($avion);
+           }//fin para
+         }//fin si hay aviones
+         } catch (Exception $e) {
+            DB::rollback();
+            $error[]=[$e->getMessage()];
+         }
 
+         // Hacemos los cambios permanentes ya que no han habido errores
+         DB::commit();
 
-
-          }//fin foreach
-          if(!empty($error)){
-              $band=false;
-          }else{
-            $airplane=true;
-          }
-     }//fin si hay aviones
-
-     if($band){
-       DB::beginTransaction();
-       try {
-           $company=Company::create($data);
-           if($airplane){
-             foreach( $aviones as $indice =>$air ){
-              $avion=New Avion;
-              $avion->tipo=$air['tipo'];
-              $avion->matricula=$air['matricula'];
-              $avion->licencia1=$air['licencia1'];
-              $avion->piloto1=$air['piloto1'];
-              if(isset($air["modelo"])){
-                  $avion->modelo=$air['modelo'];
-              }
-              if(isset($air["fabricante"])){
-                  $avion->fabricante=$air['fabricante'];
-              }
-              if(isset($air["nombre"])){
-                  $avion->nombre=$air['nombre'];
-              }
-              if(isset($air["licencia2"])){
-                  $avion->licencia2=$air['licencia2'];
-              }
-              if(isset($air["piloto2"])){
-                  $avion->piloto2=$air['piloto2'];
-              }
-              if(isset($air["certificado"])){
-                  $avion->certificado=$air['certificado'];
-              }
-              if(isset($air["seguro"])){
-                  $avion->seguro=$air['seguro'];
-              }
-              if(isset($air["registro"])){
-                  $avion->registro=$air['registro'];
-              }
-              $company->aviones()->save($avion);
-            }//fin para
-          }//fin si hay aviones
-          } catch (Exception $e) {
-             DB::rollback();
-             $error[]=[$e->getMessage()];
-          }
-
-          // Hacemos los cambios permanentes ya que no han habido errores
-          DB::commit();
-
-          $result=['message' => 'bien', 'error'=> $error];
-     }else{
-       $result=['message' => 'mal','error'=> $error];
-     }//fin si band
-     return response()->json($result);
-    //datos['message' => 'Compañia Agregada Exitosamente']
+         $result=['message' => 'bien', 'error'=> $error];
+    }else{
+      $result=['message' => 'mal','error'=> $error];
+    }//fin si band
+    return response()->json($result);
+   //datos['message' => 'Compañia Agregada Exitosamente']
    }//fin store
 
 

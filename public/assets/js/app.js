@@ -1,7 +1,37 @@
 
 
-var app = angular.module("XHR",[])
+var app = angular.module("XHR", ['ngRoute']);
 
+//hacemos el ruteo de nuestra aplicación
+app.config(function($routeProvider){
+//  alert($routeProvider);
+	$routeProvider.when("/companys", {
+		templateUrl : "companys/index.blade.php",
+    controller : "CompanyCtrl"
+	});
+	//esta es la forma de decirle a angular que vamos a pasar una variable por la url
+	/*.when('/companys/{companys}/edit', {
+      templateUrl : "companys/edit.blade.php",
+     controller : "EditCompanyCtrl"
+   })
+	.when("/companys/create", {
+		title: 'Añadir usuario',
+		templateUrl : "companys/create.blade.php",
+		controller : "CompanyCtrl"
+	})
+	.when("/companys/{companys}", {
+		title: 'Editar usuario',
+		templateUrl : "companys/show.blade.php",
+		controller : "CompanyCtrl"
+	})
+ 	.when("/remove/:id", {
+ 		title: 'Eliminar usuario',
+ 		templateUrl : "templates/remove.html",
+ 		controller : "removeController"
+ 	});
+ 	//.otherwise({ redirectTo : "/"})*/
+  $locationProvider.html5Mode(true);
+});
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
   $scope.filtros=[
@@ -24,14 +54,19 @@ app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
 
      }
    ];
-$http.get("/companys").then(
-  function(resp){
-  $scope.companys =resp.companys;
-  //alert(resp.companys);
-  },
-  function (){
 
-  });
+  $scope.init = function() {
+  // $scope.loading = true;
+
+   $http.get("/companys").then(
+     function(resp){
+     $scope.companys =resp;
+     //alert(resp.companys);
+     },
+     function (){
+
+     });
+ };
 
 $scope.company = {
       pais_id:0 };
@@ -79,6 +114,7 @@ $scope.save =  function($event){
     }
    );//fin then
   };//fin save
+  $scope.init();
 
 }]);//fin controller companys
 
@@ -86,4 +122,3 @@ app.controller("EditCompanyCtrl", function($scope,$routeParams, $http){
    //$scope.company=data;
   // $scope.company = RestApi.query();
 });//EditCompanyCtrl
-
