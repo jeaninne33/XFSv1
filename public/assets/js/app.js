@@ -13,6 +13,12 @@ app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
      {
       id:"cp",
        nombre:"Clientes/Proveedores"
+
+     },
+     {
+      id:"todos",
+       nombre:"Todos"
+
      }
    ];
 $http.get("/companys").then(
