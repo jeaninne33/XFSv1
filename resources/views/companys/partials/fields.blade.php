@@ -10,7 +10,7 @@
   <div id="home" class="tab-pane fade in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-6">
+        <div class="col-sms-6 col-sm-6" >
            [[ Form::label('nombre', 'Nombre de la Compañia *')]]<!--  -->
            [[Form::text('nombre', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.nombre'  ])]]
 
@@ -48,8 +48,8 @@
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
-          [[Form::label('pais', 'Pais *') ]]
-          [[ Form::select('pais_id', $paises, null,['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id','ng-change'=>'getStates()']) ]]
+          [[Form::label('pais_id', 'Pais *') ]]
+          [[ Form::select('pais_id', $paises, ['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id','ng-change'=>'getStates()']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado *') ]]

@@ -49,32 +49,32 @@ Route::get('/state/{id}',function($id){
   return Response::json($estados);
 });
 Route::get('/services/{id}',function($id){
-$servicio=Servicio::where('id',$id)->get();
-return Response::json($servicio);
+  $servicio=Servicio::where('id',$id)->get();
+  return Response::json($servicio);
 });
 Route::get('/changeAvion/{id}',function($id){
-$avion=Avion::where('id',$id)->get();
-return Response::json($avion);
+  $avion=Avion::where('id',$id)->get();
+  return Response::json($avion);
 });
 Route::get('/listAvion/{id}',function($id){
-$avion=Avion::where('company_id',$id)->get();
-return Response::json($avion);
+  $avion=Avion::where('company_id',$id)->get();
+  return Response::json($avion);
 });
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
-  if ($id==1) {
-  $tipo='client';
-  }
-  else {
-  $tipo='prove';
-  }
-  $companys = DB::table('companys')
-  ->join('paises', 'companys.pais_id', '=', 'paises.id')
-  ->select('companys.id', 'companys.nombre',  'companys.telefono',
-  'companys.celular','paises.nombre as pais','companys.tipo','companys.categoria','companys.correo')
-  ->where('companys.tipo',$tipo)
-  ->get();
-  return Response::json($companys);
+    if ($id==1) {
+    $tipo='client';
+    }
+    else {
+    $tipo='prove';
+    }
+    $companys = DB::table('companys')
+    ->join('paises', 'companys.pais_id', '=', 'paises.id')
+    ->select('companys.id', 'companys.nombre',  'companys.telefono',
+    'companys.celular','paises.nombre as pais','companys.tipo','companys.categoria','companys.correo')
+    ->where('companys.tipo',$tipo)
+    ->get();
+    return Response::json($companys);
 });
 
  Route::get('estimates/cliente','EstimatesController@cliente');
@@ -90,17 +90,7 @@ Route::group(['middleware' => 'auth'], function()
   ]);
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
-
-  /*Route::get('companys/{id?}', 'CompanyController@index',function(){
-    return view('companys.index');
-  });
-  Route::post('companys', 'CompanyController@store');
-  Route::post('companys/{id}', 'CompanyController@update');
-  Route::delete('companys/{id}', 'CompanyController@destroy');*/
-
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
-
-
 });

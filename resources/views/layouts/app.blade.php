@@ -105,14 +105,13 @@
       <!-- Twitter Bootstrap -->
       <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-      <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.min.js"></script>-->
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.min.js"></script>
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
 
 
       <script>
       $('.menu').on('click',function(e){
             console.log(e);
-
             var id=$(this).attr("id");
            if (id==1){  // alert('10');
            window.location.href ="{{ route('principal') }}";

@@ -15,7 +15,7 @@
 </p>
   <div class="errorMessages"></div>
   <div class="successMessages"></div>
-  <div class="alert alert" id="mensaje" style="display: none;">
+  <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
     <p>

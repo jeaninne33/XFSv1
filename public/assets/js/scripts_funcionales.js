@@ -180,25 +180,28 @@ function clearMessages(){
     $(".successMessages").html('');
 }
 //eliminar
-$('.btn-delete').click(function(e){
+$(document).on('click', '.btn-delete',function (e) {
+
    e.preventDefault();//evita que se envie el formulario
    var row=$(this).parents('tr');
    var id=row.data('id');
+  //alert(id);
    if (confirm("¿Esta Seguro que desea Eliminar el Registro?") == true) {
        var form =$('#form-delete');
        var url=form.attr('action').replace(':COM_ID',id);
        var data=form.serialize();
+
        $("#mensaje").css("display", "block");
-          $('#mensaje').toggleClass('alert alert alert-success');//cambiar la clase
+       $('#mensaje').addClass('alert alert alert-success');//cambiar la clase
        $.post(url, data, function(result){
           $('#mensaje').html(result);
-        //alert(row);
-        // row.fadeOut();
+           $('#example').find('.'+id).fadeOut();
+           //row.fadeOut();
        }).fail(function(){
-           $('#mensaje').toggleClass('alert alert alert-danger');
+           $('#mensaje').addClass('alert alert alert-danger');
             $('#mensaje').html('Error. La compañia no fue eliminada');
          //alert('La compañia no fue eliminada');
-           row.show();
+          $('#example').find('.'+id).show();
        });
    }
 });

@@ -29,23 +29,14 @@ class Company extends Eloquent
     public function estado() {
         return $this->hasOne('XFS\Estado','id','estado_id');
     }
-
-     public function scopeBusqueda($query, $busqueda)
-     {
-      //dd("scope: ". $busqueda);//muestra los datos
-
-        if(trim($busqueda)!=""){
-          $query->where(\DB::raw("UPPER(nombre)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"))->orWhere(\DB::raw("UPPER(direccion)"),"LIKE", \DB::raw("UPPER('%$busqueda%')"));
-         }
-     }
-     public function scopeTipo($query, $relacion)
-     {
-      //dd("scope: ". $busqueda);//muestra los datos
-        $tipo=config('options.relacion');
-        if($relacion != "" && isset($tipo[$relacion])){
-          $query->where('relacion', $relacion);
-        }
-     }
-
+    public function tipos($tipo) {
+      if($tipo=='client'){
+        return 'Cliente';
+      }else if($tipo=='prove'){
+          return 'Proveedor';
+      }else if($tipo=='cp'){
+            return 'Cliente/Proveedor';
+      }
+    }//fin metodp
     /**/
    }//fin clase company

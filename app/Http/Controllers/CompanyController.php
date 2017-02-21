@@ -27,29 +27,19 @@ class CompanyController extends Controller
    public function _construc(){
 
         //$this->beforeFilter('@finCompanys',['only'=>['show','edit','update','destroy']]);
-      //  $this->middleware('auth');
+    //  $this->beforeFilter('@find', ['only'=>['show','update','destroy']]);
     }
 
-  /*   public function finCompanys(Route $route){
-        $this->companys =Company::findOrFail($route->getParameter('companys'));
-        dd($this->companys);
-
+  /*   public function find(Route $route){
+        $this->company =Company::findOrFail($route->getParameter('companys'));
     }*/
 
     public function index(Request $request)
     {
 
           $companys =  Company::all();
-          //orderBy('id','DESC');
-      //  return  response()->view('companys.index')->json($companys);
-        //->with('companys', $companys);
-      /*  return response($companys);*/
-      /*  return $companys;
-      return response() ->view('companys.index')
-            ->json($companys);*/
-    //  return response()->json(  $companys);
-      return response( $companys);
-      //return view('companys.index',['companys'=>$companys]);
+      // return response()->json( $companys->toArray());
+      return view('companys.index',['companys'=>$companys]);
         //  return response(view('companys.index',array('companys'=>$companys)),200, ['Content-Type' => 'application/json']);
     }
 

@@ -24,8 +24,9 @@ class AdminController extends Controller
           $servicios = Servicio::all()->count();
           $estimates = Estimate::all()->count();
         //  return view('principal',compact('companys'));
-        return  view('principal',compact('servicios'),compact('estimates'))
-        ->with('companys', $companys);
+         return  view('principal',compact('servicios'),compact('estimates'))
+      ->with('companys', $companys);
+      //  return view('companys.index');
     }
 
     /**

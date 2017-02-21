@@ -1,9 +1,9 @@
 
 
-var app = angular.module("XHR", ['ngRoute']);
+var app = angular.module("XHR", []);
 
 //hacemos el ruteo de nuestra aplicación
-app.config(function($routeProvider){
+/*app.config(function($routeProvider){
 //  alert($routeProvider);
 	$routeProvider.when("/companys", {
 		templateUrl : "companys/index.blade.php",
@@ -29,15 +29,15 @@ app.config(function($routeProvider){
  		templateUrl : "templates/remove.html",
  		controller : "removeController"
  	});
- 	//.otherwise({ redirectTo : "/"})*/
-  $locationProvider.html5Mode(true);
-});
+ 	//.otherwise({ redirectTo : "/"})
+//  $locationProvider.html5Mode(true);
+});*/
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
   $scope.filtros=[
      {
        id:"client",
-       nombre:"clientes"
+       nombre:"Clientes"
      },
      {
        id:"prove",
@@ -47,26 +47,26 @@ app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
       id:"cp",
        nombre:"Clientes/Proveedores"
 
-     },
+     } /*,
      {
       id:"todos",
        nombre:"Todos"
 
-     }
+     }*/
    ];
 
   $scope.init = function() {
   // $scope.loading = true;
-
    $http.get("/companys").then(
      function(resp){
-     $scope.companys =resp;
-     //alert(resp.companys);
+     $scope.companys =resp.data;
+     //alert($scope.companys);
      },
      function (){
 
      });
  };
+
 
 $scope.company = {
       pais_id:0 };
@@ -84,8 +84,6 @@ $scope.getStates  = function () {
     }
   );
 };
-
-
 $scope.message =  false;
 $scope.show_error =  false;
 $scope.message_error =  [];
@@ -114,11 +112,29 @@ $scope.save =  function($event){
     }
    );//fin then
   };//fin save
-  $scope.init();
+  //$scope.init();
 
 }]);//fin controller companys
 
-app.controller("EditCompanyCtrl", function($scope,$routeParams, $http){
-   //$scope.company=data;
+app.controller("EditCompanyCtrl", function($scope , $http){
+  $scope.company = {
+        pais_id:0 };
+//alert($scope.company.pais_id);
+  $scope.airplanes = [];
+  $scope.states = [];
+  $scope.getStates  = function () {
+    var url  = "/state/"+$scope.company.pais_id;
+
+    $http.get(url).then(
+      function(resp){
+        $scope.states  =  resp.data;
+        //alert(resp);
+      },
+      function (){
+
+      }
+    );
+  };
+    $scope.getStates()
   // $scope.company = RestApi.query();
 });//EditCompanyCtrl
