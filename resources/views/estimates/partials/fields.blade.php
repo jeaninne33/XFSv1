@@ -1,8 +1,8 @@
 <ul class="nav nav-tabs">
 
   <li class="active"><a data-toggle="tab" href="#home">Datos Generales</a></li>
-  <li><a data-toggle="tab" href="#menu1">FBO</a></li>
-  <li><a data-toggle="tab" href="#menu2">Imagen</a></li>
+  <li><a data-toggle="tab" href="#fbo">FBO</a></li>
+  <li><a data-toggle="tab" href="#imagen">Imagen</a></li>
   <li><a data-toggle="tab" href="#estimados">Estimados</a></li>
   {{-- <li><a data-toggle="tab" href="#menu3">Aviones</a></li> --}}
   {{-- <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li> --}}
@@ -33,44 +33,7 @@
 </div>
 <!--Modal-->
 <div class="tab-content">
-  <div id="estimados" class="tab-pane fade">
-      <h3>Estimados</h3>
-    <div class="row">
-        <div class="col-sms-6 col-sm-4">
-          [[ Form::label('servicios', 'Servicios')]]
-          [[ Form::select('servicios_id', $servicios, null, array('id'=>'servicios','class' => 'input-text full-width')) ]]
-        </div>
-        <div class="col-sms-6 col-sm-4">
-          [[Form::label('descripcion', 'Descripción') ]]
-          [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-sms-6 col-sm-4">
-          [[Form::label('cantidad', 'Cantidad') ]]
-          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0']) ]]
-      </div>
-      <div class="col-sms-6 col-sm-4">
-          [[Form::label('precio', 'Precio') ]]
-          [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
-      </div>
-      <div class="col-sms-6 col-sm-4">
-        </br>
-          <div class="plus" style="display:block">
-            <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
-          </div>
-          <div class="edit" style="display:none">
-            {{-- <button type="button" name="btnedit" id="btnedit" class="btn-editar btn btn-primary glyphicon glyphicon-pencil"></button> --}}
-           <a class="editar glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
-          </div>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-sms-5 col-md-12">
-            @include('estimates.partials.tbEstimados')
-        </div>
-    </div>
-    </div>
+
 
   {{-- <div id="menu4" class="tab-pane fade " style="display:none">
     <h3>Menu 2</h3>
@@ -100,6 +63,7 @@
           <button type="button"  value="1" onclick="ajaxRenderSection(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
         </div>
     </div>
+
     <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Proveedor', 'Proveedor *') ]]
@@ -118,13 +82,13 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('Estado', 'Estado *') ]]
-          [[ Form::select('estado',array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'),['class' => 'input-text full-width' ,  'required' => 'required' ]) ]]
+          [[ Form::select('estado',array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'),['id'=>'estado','class' => 'input-text full-width' ,  'required' => 'required' ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-3">
           [[Form::label('fecha', 'Fecha Solicitada *') ]]
-              [[Form::date('fecha_soli',null,['class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+              [[Form::date('fecha_soli',null,['id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
@@ -134,7 +98,7 @@
     <div class="row form-group">
         <div class="col-sms-12 col-sm-12">
           [[Form::label('resumen', 'Resumen') ]]
-          [[ Form::text('resumen', null, ['class' => 'input-text full-width' ]) ]]
+          [[ Form::text('resumen', null, ['id'=>'resumen','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -146,20 +110,20 @@
           <div class="telefono" style="display:block;" >
             @if ($indicador==0)
               [[Form::label('telefono', 'Telefono') ]]
-              [[ Form::text('telefono', null, ['class' => 'input-text full-width' ]) ]]
+              [[ Form::text('telefono', null, ['id'=>'telefono','class' => 'input-text full-width' ]) ]]
             @else
               [[Form::label('telefono', 'Telefono') ]]
-              [[ Form::text('telefono', $cliente->telefono, ['class' => 'input-text full-width' ]) ]]
+              [[ Form::text('telefono', $cliente->telefono, ['id'=>'telefono','class' => 'input-text full-width' ]) ]]
             @endif
 
           </div>
           <div class="celular" style="display:none;" >
           @if ($indicador==0)
             [[Form::label('celular', 'Celular') ]]
-            [[ Form::text('celular', null, ['class' => 'input-text full-width' ]) ]]
+            [[ Form::text('celular', null, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
           @else
             [[Form::label('celular', 'Celular') ]]
-            [[ Form::text('celular', $cliente->celular, ['class' => 'input-text full-width' ]) ]]
+            [[ Form::text('celular', $cliente->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
           @endif
 
           </div>
@@ -184,7 +148,7 @@
         </div>
     </div>
 </div>
-  <div id="menu1" class="tab-pane fade">
+  <div id="fbo" class="tab-pane fade">
     <h3>Datos de Gasolina</h3>
     <div class="row form-group">
         <div class="col-sms-12 col-sm-6">
@@ -236,6 +200,46 @@
     </div>
   </div>
 </div>
+<div id="estimados" class="tab-pane fade">
+    <h3>Estimados</h3>
+  <div class="row">
+      <div class="col-sms-6 col-sm-4">
+        [[ Form::label('servicios', 'Servicios')]]
+        [[ Form::select('servicio_id', $servicios, null, array('id'=>'servicios','class' => 'input-text full-width')) ]]
+      </div>
+      <div class="col-sms-6 col-sm-4">
+        [[Form::label('descripcion', 'Descripción') ]]
+        [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-sms-6 col-sm-4">
+        [[Form::label('cantidad', 'Cantidad') ]]
+        [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0']) ]]
+    </div>
+    <div class="col-sms-6 col-sm-4">
+        [[Form::label('precio', 'Precio') ]]
+        [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
+    </div>
+    <div class="col-sms-6 col-sm-4">
+      </br>
+        <div class="plus" style="display:block">
+          <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
+        </div>
+        <div class="edit" style="display:none">
+          {{-- <button type="button" name="btnedit" id="btnedit" class="btn-editar btn btn-primary glyphicon glyphicon-pencil"></button> --}}
+         <a class="editar glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-sms-5 col-md-12">
+          @include('estimates.partials.tbEstimados')
+      </div>
+  </div>
+</div>
+</div>
+
   {{-- <div id="menu2" class="tab-pane fade">
     <h3>Datos Administrativos</h3>
     <div class="row form-group">

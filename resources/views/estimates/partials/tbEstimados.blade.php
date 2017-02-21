@@ -1,4 +1,4 @@
-  <table id="example1" class="display" cellspacing="0" width="100%">
+  <table id="example1" name="tbEstimates" class="display" cellspacing="0" width="100%">
       <thead>
           <tr>
             <td data-field="idServicio">ID</td>
@@ -29,6 +29,9 @@
       <input readonly name="totalDescuento" id="totalDescuento" value="$0.00" type="text" class="input-text full-width">
       <label>TOTAL</label>
       <input readonly name="total" id="total" type="text" class="input-text full-width" value="$0.00">
+      <label>GANANCIA</label>
+      <input readonly name="ganancia_total" id="gananciatotal" type="text" class="input-text full-width" value="$0.00">
+    </div>
     </div>
 
   </div>

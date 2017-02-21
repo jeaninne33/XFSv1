@@ -19,4 +19,7 @@ class Estimate extends Model
     public function avion(){
       return$this->hasMany('XFS\Avion','id','avion_id');
     }
+    public function date_estimates(){
+      return $this->belongsTo('XFS\date_estimates','estimates_id','id');
+    }
 }

@@ -7,6 +7,7 @@ use XFS\Estimate;
 use XFS\Company;
 use XFS\Avion;
 use XFS\Servicio;
+use XFS\date_estimates;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -60,7 +61,7 @@ class EstimatesController extends Controller
     public function store(Request $request)
     {
       $estimates = new Estimate;
-
+      $date_estimates= new date_estimates;
       $estimates->company_id=$request->input('company_id');
       $estimates->prove_id=$request->input('prove_id');
       $estimates->estado=$request->input('estado');
@@ -77,6 +78,22 @@ class EstimatesController extends Controller
       $estimates->tipo_hab=$request->input('tipo_hab');
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
       $estimates->save();
+    //  $idEstimate=Estimate::last();
+    //  dd($request->input('tbEstimates'))
+    //  $tbestimates=$request->input('tnEstimates');
+    //  foreach ($tbestimates as $key => $estimado) {
+      //  $date_estimates->cantidad=$estimado->cantidad;
+        // $date_estimates->precio=$request->input('precio');
+        // $date_estimates->descuento=$request->input('descuento');
+        // $date_estimates->recarga=$request->input('recarga');
+        // $date_estimates->subtotal=$request->input('subtotal');
+        // $date_estimates->subtotal_recarga=$request->input('subtotal_recarga');
+        // $date_estimates->total_recarga=$request->input('total_recarga');
+  //    }
+
+      //$date_estimates->estimate_id=$idEstimate->id;
+    //  $date_estimates->servicio_id=$request->input('servicio_id');
+    //  $date_estimates->save();
         return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
     }
 

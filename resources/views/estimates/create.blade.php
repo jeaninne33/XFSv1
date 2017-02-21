@@ -74,8 +74,8 @@
        $('#descripcion').val(data[2]);
        $('#cantidad').val(data[3]);
        $('#precio').val(data[4]);
-       $('.plus').css("display","none");
-       $('.edit').css("display","block");
+      //  $('.plus').css("display","none");
+      //  $('.edit').css("display","block");
    } );
   //end dbclick clientes
   $('#example1 tbody').on( 'click','a.editar', function () {
