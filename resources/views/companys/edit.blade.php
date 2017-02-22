@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('contenido')
-
-      <h2>Editar Compañia <strong> {{ $companys->nombre }}</strong></h2>
+<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="company={{$companys}}; airplanes={{$companys->aviones}}; " >
+      <h2>Editar Compañia <strong> @{{ company.nombre }}</strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
       </div>
@@ -11,9 +11,9 @@
 <br/>
 <!-- if there are creation errors, they will show here ng-init=""-->
 
-<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="company={{$companys}}; airplanes={{$companys->aviones}}; " >
+
     @include('errors.message')
-   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT', 'novalidate'))]]
+   [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT','ng-submit'=>'edit($event)', 'novalidate'))]]
     @include('companys.partials.fields')
   [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]

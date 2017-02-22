@@ -49,7 +49,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('pais_id', 'Pais *') ]]
-          [[ Form::select('pais_id', $paises, ['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id','ng-change'=>'getStates()']) ]]
+          [[ Form::select('pais_id', $paises, null, ['class' => 'selector full-width',  'required' => 'required', 'id' => 'pais_id','ng-model'=>'company.pais_id','ng-change'=>'getStates()']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado *') ]]
@@ -173,7 +173,7 @@
       <br/>
         <div class="pull-right">
           <button   ng-click="airplanes.push({})" type="button" class="btn btn-info"> <span class="glyphicon glyphicon-plus-sign"></span>Agregar Avion</button>
-          <button  ng-click="airplanes.pop()"  type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>Eliminar Avion</button>
+          <button  ng-click="airplanesdelete()"  type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span>Eliminar Avion</button>
         </div>
     </div>
   </div>

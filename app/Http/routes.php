@@ -48,6 +48,15 @@ Route::get('/state/{id}',function($id){
   $estados=Estado::where('pais_id',$id)->get();
   return Response::json($estados);
 });
+Route::get('/comp/{tip}',function($tip){
+  if($tip=="todos"){
+   $companys =  Company::all();
+ }else{
+   $companys=Company::where('tipo',$tip)->get();
+  }
+  return Response::json($companys);
+});
+
 Route::get('/services/{id}',function($id){
   $servicio=Servicio::where('id',$id)->get();
   return Response::json($servicio);
@@ -80,6 +89,7 @@ Route::get('/clientes/{id}',function($id){
  Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
+
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
 Route::group(['middleware' => 'auth'], function()
@@ -93,4 +103,5 @@ Route::group(['middleware' => 'auth'], function()
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
+  Route::post('avion/{avion}', [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
 });

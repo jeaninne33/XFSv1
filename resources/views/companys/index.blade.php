@@ -9,7 +9,7 @@
 <div ng-controller="CompanyCtrl">
 <p><h2 ><i class=" soap-icon-hotel-1 circle"></i> <strong>Compañias</strong></h2>
     [[ Form::label('tipo', 'Filtrar por Tipo de Relacion: ')]]
-    <select ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
+    <select ng-change="filter_table()" ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
        <option value="">--Elige opcion--</option>
      </select>
 </p>
