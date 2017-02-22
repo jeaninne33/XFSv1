@@ -72,7 +72,7 @@
             [[Form::text('prove_id',null,['id'=>'prove_id','hidden'])]]
           @else
             [[Form::text('nombreP', $proveedor->nombreP, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
-            [[Form::text('prove_id',$proveedor->nombreP,['id'=>'prove_id','hidden'])]]
+            [[Form::text('prove_id',$proveedor->prove_id,['id'=>'prove_id','hidden'])]]
           @endif
 
         </div>
@@ -130,10 +130,10 @@
           <div class="correo" style="display:none;" >
           @if ($indicador==0)
             [[Form::label('correo', 'Correo') ]]
-            [[ Form::text('correo', null, ['class' => 'input-text full-width' ]) ]]
+            [[ Form::text('correo', null, ['id'=>'correo','class' => 'input-text full-width' ]) ]]
           @else
             [[Form::label('correo', 'Correo') ]]
-            [[ Form::text('correo', $cliente->correo, ['class' => 'input-text full-width' ]) ]]
+            [[ Form::text('correo', $cliente->correo, ['id'=>'correo','class' => 'input-text full-width' ]) ]]
           @endif
 
           </div>
@@ -142,7 +142,7 @@
     <div class="row form-group">
           <div class="col-sms-6 col-sm-3">
             [[Form::label('fecha', 'Fecha Seguimiento *') ]]
-            [[Form::date('proximo_seguimiento',null,['class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+            [[Form::date('proximo_seguimiento',null,['id'=>'proximo_seguimiento','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
 
 
         </div>
@@ -153,18 +153,18 @@
     <div class="row form-group">
         <div class="col-sms-12 col-sm-6">
            [[ Form::label('fbo', 'FBO *')]]
-           [[Form::text('fbo', null, ['class' => 'input-text full-width' ])]]
+           [[Form::text('fbo', null, ['id'=>'fbo','class' => 'input-text full-width' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('cantidad', 'Cantidad aproximada *') ]]
-          [[ Form::text('cantidad_fuel', null, ['class' => 'input-text full-width' ]) ]]
+          [[ Form::text('cantidad_fuel', null, ['id'=>'cantidad_fuel','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Codigo Aeropuerto *') ]]
-        [[ Form::text('localidad', null, ['class' => 'input-text full-width' ]) ]]
+        [[ Form::text('localidad', null, ['id'=>'localidad','class' => 'input-text full-width' ]) ]]
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]

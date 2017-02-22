@@ -18,6 +18,7 @@
              </tr>
       </tfoot>
   </table>
+  <input type="text" name="estimado[]" id="estimado"/>
   <div class="row">
     <div class="col-sm-2 col-md-2 pull-right">
       <label>Subtotal</label>

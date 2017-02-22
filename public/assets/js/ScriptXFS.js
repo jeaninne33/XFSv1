@@ -8,12 +8,13 @@ function saveEstimates(){
     var metodo=$('#metodo').val();
     var telefono=$('#telefono').val();
     var celular=$('#celular').val();
-
+    var correo=$('#correo').val();
+    var proximo_seguimiento=$('#proximo_seguimiento').val();
   $.ajax({
     type: 'POST',
     url:'/estimates/store',
     dataType:'json'
-    data:
+  //  data:
   });
 }
 function ajaxRenderSection(id) {
@@ -72,6 +73,7 @@ function ajaxRenderSection(id) {
 
 //tabla estimados
 function addRows(){
+var estimates=[];
 var table = $('#example1').DataTable();
 var Servicio = $("#servicios").find('option:selected').text();
 var idServicio = $("#servicios").val();
@@ -95,6 +97,11 @@ var Total=Subtotal+Ganancia;
              '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
 
          ] ).draw( false );
+//estimates.push({idServicio:idServicio,Servicio:Servicio,Descripcion:Descripcion,Cantidad:Cantidad,Precio:Precio,Subtotal:Subtotal,Ganancia:Ganancia,Total:Total});
+estimates.push(idServicio,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total);
+console.log(estimates);
+var listEstimates=listEstimates+(estimates);
+$('#estimado').val(listEstimates);
 $("#servicios").val(0);
 $("#descripcion").val('');
 $("#cantidad").val('');

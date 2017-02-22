@@ -17,15 +17,12 @@
               <p>{{ $message }}</p>
           </div>
       @endif
-
+      <div class="errorMessages"></div>
+      <div class="successMessages"></div>
+      <div class="" id="mensaje" style="display: none;">
+      </div>
     <div class="panel-body">
-      [[Form::model (Request::all(), ['route' => 'servicios.index','method' =>'GET','class'=> 'navbar-form navbar-left pull-right', 'role'=>'search'])]]
-        <div class="form-group">
-            {{-- [[Form::text( 'busqueda', null, ['class'=>'form-control', 'placeholder'=>'Busqueda'] )]] --}}
-            {{-- [[Form::select( 'relacion', config('options.relacion'), null, ['class'=>'form-control'] )]] --}}
-        </div>
 
-      [[ Form::close()]]
       <p>
         <a class="btn btn-info" href="{{URL::to('servicios/create')}}" role="button">
           Nuevo Servicio
@@ -38,17 +35,24 @@
     </div>
   </div>
 </div>
+[[Form::open(['route' => ['servicios.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
+
+[[Form::close()]]
 @endsection
 
 @section('scripts')
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
-<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
   $('#example').dataTable();
-
-  $('.btn-delete').click(function(e){
+  var tab= $('#example').DataTable();
+  $('#example tbody').on('click', 'a.btn-delete', function (e) {
      e.preventDefault();//evita que se envie el formulario
+     var id = tab.row($(this ).parents('tr')).data();
+     var form =$('#form-delete');
+     var url=form.attr('action').replace(':COM_ID',id[0]);
+     var data=form.serialize();
      $("#dialog-confirm").html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>¿Esta Seguro que desea Eliminar el Registro?</p>');
      $( "#dialog-confirm" ).dialog({
          resizable: false,
@@ -58,24 +62,20 @@
          buttons: {
            "Aceptar": function() {
              $( this ).dialog( "close" );
-             var row=$(this).parents('tr');
-             var id=row.data('id');
-             var form =$('#form-delete');
-             var url=form.attr('action').replace(':COM_ID',id);
-             var data=form.serialize();
+             //var row=$(this).parents('tr');
              $("#mensaje").css("display", "block");
                 $('#mensaje').toggleClass('alert alert alert-success');//cambiar la clase
              $.post(url,data, function(result){
                 $('#mensaje').html(result);
               // alert(result);
-               row.fadeOut();
+              $('#example').find('.'+id).fadeOut();
 
              }).fail(function(){
                  $('#mensaje').toggleClass('alert alert alert-danger');
 
                   $('#mensaje').html('La compañia no fue eliminada');
                //alert('La compañia no fue eliminada');
-               row.show();
+              $('#example').find('.'+id).show();
              });
            },
            "Cancelar": function() {

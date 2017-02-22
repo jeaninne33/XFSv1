@@ -20,8 +20,21 @@ class EstimatesController extends Controller
      */
     public function index()
     {
-      $estimates=Estimate::all();
+      //$estimates=Estimate::all();
+      //$cliente=DB::table('company')($estimates->company_id)->get();
+    //  $proveedor=Company::find($estimates->prove_id)->get();
+      // $proveedor = DB::table('estimates')
+      // ->join('companys', 'companys.id', '=', 'estimates.company_id')
+      // ->select('estimates.id','companys.nombre','estimates.estado',
+      // 'fecha_soli','total','resumen',DB::raw(''));
 
+      $estimates = DB::table('estimates')
+          ->join('companys', 'companys.id', '=', 'estimates.company_id')
+          ->select(DB::raw("estimates.id, companys.nombre, estimates.estado,
+          fecha_soli,total,resumen,
+          (SELECT nombre FROM companys where tipo='prove')AS proveedor"))
+          // ->union($proveedor)
+          ->get();
       return view ('estimates.index')->with('estimates',$estimates);
     }
 
@@ -125,7 +138,7 @@ class EstimatesController extends Controller
         // ->where('companys.id',$estimates->prove_id)
         // ->get();
         $cliente = DB::table('companys')
-                    ->select('nombre as nombreC','id as company_id','celular','telefono')
+                    ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
                     ->where('id', $estimates->prove_id)
                     ->first();
         $proveedor = DB::table('companys')
@@ -158,7 +171,26 @@ class EstimatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $estimates=Estimate::findOrFail($id);
+
+      $estimates->company_id=$request->input('company_id');
+      $estimates->prove_id=$request->input('prove_id');
+      $estimates->estado=$request->input('estado');
+      $estimates->resumen=$request->input('resumen');
+      $estimates->metodo_segui=$request->input('metodo');
+      $estimates->fecha_soli=$request->input('fecha_soli');
+      $estimates->proximo_seguimiento=$request->input('proximo_seguimiento');
+      $estimates->fbo=$request->input('fbo');
+      $estimates->cantidad_fuel=$request->input('cantidad_fuel');
+      $estimates->localidad=$request->input('localidad');
+      $estimates->avion_id=$request->input('avion_id');
+      $estimates->num_habitacion=$request->input('num_habitacion');
+      $estimates->tipo_cama=$request->input('tipo_cama');
+      $estimates->tipo_hab=$request->input('tipo_hab');
+      $estimates->tipo_estrellas=$request->input('tipo_estrellas');
+
+      $estimates->save();
+      return redirect()->route('estimates.index')->with('success','Estimado Modificado con Exito');
     }
 
     /**
