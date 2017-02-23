@@ -48,7 +48,7 @@
         <div class="container">
 
 
-              <img src="{{ asset('assets/icoXFS2.ico')}}"  width="30" height="30"/>
+              <img src="{{ asset('assets/images/LOGO XFS.png')}}"  height="28"/>
 
 
 
@@ -123,6 +123,7 @@
             //  alert('31');
             window.location.href ="{{ route('estimates.index') }}";
            }else if (id==5) {
+              window.location.href ="{{ route('invoices.index') }}";
            }else  {
          //  alert('>41');
            }//fin si

@@ -36,8 +36,7 @@ class Company extends Eloquent
             return 'Cliente/Proveedor';
       }
     }//fin metodp
-    public static function add_airplane($air) {
-        $avion=New Avion;
+    public static function obj_airplane($air, $avion) {
         $avion->tipo=$air['tipo'];
         $avion->matricula=$air['matricula'];
         $avion->licencia1=$air['licencia1'];
@@ -68,39 +67,6 @@ class Company extends Eloquent
         }
         return $avion;
     }//fin metodo añadir avion
-
-    public static function update_airplane($air) {
-        $avion=Avion::findOrFail($air['id']);
-        $avion->tipo=$air['tipo'];
-        $avion->matricula=$air['matricula'];
-        $avion->licencia1=$air['licencia1'];
-        $avion->piloto1=$air['piloto1'];
-        if(isset($air["modelo"])){
-            $avion->modelo=$air['modelo'];
-        }
-        if(isset($air["fabricante"])){
-            $avion->fabricante=$air['fabricante'];
-        }
-        if(isset($air["nombre"])){
-            $avion->nombre=$air['nombre'];
-        }
-        if(isset($air["licencia2"])){
-            $avion->licencia2=$air['licencia2'];
-        }
-        if(isset($air["piloto2"])){
-            $avion->piloto2=$air['piloto2'];
-        }
-        if(isset($air["certificado"])){
-            $avion->certificado=$air['certificado'];
-        }
-        if(isset($air["seguro"])){
-            $avion->seguro=$air['seguro'];
-        }
-        if(isset($air["registro"])){
-            $avion->registro=$air['registro'];
-        }
-        return $avion;
-    }//fin metodo update avion
 
     public static function validate_air($air) {
             $error= array();

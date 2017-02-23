@@ -49,6 +49,7 @@ Route::get('/state/{id}',function($id){
   return Response::json($estados);
 });
 Route::get('/comp/{tip}',function($tip){
+//  var_dump($tip);
   if($tip=="todos"){
    $companys =  Company::all();
  }else{
@@ -98,6 +99,7 @@ Route::group(['middleware' => 'auth'], function()
       'as' => 'principal',
       'uses' => 'AdminController@index'
   ]);
+  Route::resource('invoices', 'InvoiceController');
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
   Route::resource('servicios', 'ServicioController');

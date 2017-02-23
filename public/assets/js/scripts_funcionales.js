@@ -1,5 +1,3 @@
-$('#m2').removeClass('');
-$('#m2').addClass('active');
 
 /*$('#pais_id').on('change',function(e){
     //alert($('#pais_id').val());
@@ -33,10 +31,8 @@ $('#tipo').on('change',function(e){
             $(".avion").css("display", "block");
         }//fin si
     });
-
-  var num_input = 1; //Número Maximo de aviones
-
-/*  $("#add").on('click', function(){
+/* var num_input = 1; //Número Maximo de aviones
+ $("#add").on('click', function(){
       if(num_input <= 7) { //max input airplane
           //agregar campo
           var ac=num_input;
@@ -108,8 +104,6 @@ function validatedataAirplane(obj){
   }//fin para
   return errors;
 }
-
-
 function loadObjectData (obj, fields, data)
 {
   for (var key in data) { //  loop find field company

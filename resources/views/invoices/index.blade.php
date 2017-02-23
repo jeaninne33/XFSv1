@@ -7,31 +7,22 @@
 @endsection
 @section('contenido')
 <div ng-controller="indexCompany">
-<p><h2 ><i class=" soap-icon-hotel-1 circle"></i> <strong>Compañias</strong></h2>
-  <p><h2 > <strong>Listado de Compañias</strong></h2></p>
+<p><h2 ><i class=" icon soap-icon-stories circle"></i> Facturas de <strong>XFS</strong></h2>
+  <p><h2 > <strong>Listado de Facturas</strong></h2></p>
   <!--  [[ Form::label('tipo', 'Filtrar por Tipo de Relacion: ')]]
     <select ng-change="filter_table()" ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
        <option value="">--Elige opcion--</option>
      </select>
-<p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>
-   -->
+<p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>-->
 </p>
   <div class="errorMessages"></div>
   <div class="successMessages"></div>
   <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
-    <p>
-      <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
-        Nueva Compañia
-      </a>
-    </p>
-
-
-
     <div class="col-sms-12 col-sm-12"  >
 
-          	  @include('companys.partials.table')
+          	  @include('invoices.partials.table')
         </div>
       </div>
 
@@ -49,8 +40,8 @@
 
 <script>
   $('#example').dataTable();
-  $('#m2').removeClass('');
-  $('#m2').addClass('active');
+  $('#m5').removeClass('');
+  $('#m5').addClass('active');
 </script>
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
 @endsection
