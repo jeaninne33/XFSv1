@@ -1,37 +1,5 @@
-
-
 var app = angular.module("XHR", []);
 
-//hacemos el ruteo de nuestra aplicación
-/*app.config(function($routeProvider){
-//  alert($routeProvider);
-	$routeProvider.when("/companys", {
-		templateUrl : "companys/index.blade.php",
-    controller : "CompanyCtrl"
-	});
-	//esta es la forma de decirle a angular que vamos a pasar una variable por la url
-	/*.when('/companys/{companys}/edit', {
-      templateUrl : "companys/edit.blade.php",
-     controller : "EditCompanyCtrl"
-   })
-	.when("/companys/create", {
-		title: 'Añadir usuario',
-		templateUrl : "companys/create.blade.php",
-		controller : "CompanyCtrl"
-	})
-	.when("/companys/{companys}", {
-		title: 'Editar usuario',
-		templateUrl : "companys/show.blade.php",
-		controller : "CompanyCtrl"
-	})
- 	.when("/remove/:id", {
- 		title: 'Eliminar usuario',
- 		templateUrl : "templates/remove.html",
- 		controller : "removeController"
- 	});
- 	//.otherwise({ redirectTo : "/"})
-//  $locationProvider.html5Mode(true);
-});*/
 
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
   $scope.filtros=[
@@ -46,28 +14,12 @@ app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
      {
       id:"cp",
        nombre:"Clientes/Proveedores"
-
-     } /*,
+     } ,
      {
       id:"todos",
-       nombre:"Todos"
-
-     }*/
+       nombre:"todas las Compañias"
+     }
    ];
-
-  $scope.init = function() {
-  // $scope.loading = true;
-   $http.get("/companys").then(
-     function(resp){
-     $scope.companys =resp.data;
-     //alert($scope.companys);
-     },
-     function (){
-
-     });
- };
-
-
 $scope.company = {
       pais_id:0 };
 
@@ -84,11 +36,24 @@ $scope.getStates  = function () {
     }
   );
 };
+
+$scope.filter_table  = function () {
+  alert($scope.relacion.id);
+  var url  = "/comp/{tip}"+$scope.relacion.id;
+  $http.get(url).then(
+    function(resp){
+      $scope.compa  =  resp.data;
+      alert(  $scope.compa);
+    },
+    function (){
+
+    }
+  );
+};
 $scope.message =  false;
 $scope.show_error =  false;
 $scope.message_error =  [];
 $scope.save =  function($event){
-
     $event.preventDefault();
     var company =  $scope.company;
     company["_token"] =  $("input[name=_token]").val();
@@ -101,6 +66,7 @@ $scope.save =  function($event){
           $scope.show_error =  false;
       }else{//sin no bien
         $scope.show_error =  true;
+        $scope.message =  false;//ocultamos el div del mensaje bien
         $scope.message_error =  response.data.error;
       }
     },
@@ -113,9 +79,13 @@ $scope.save =  function($event){
    );//fin then
   };//fin save
   //$scope.init();
+  $scope.airplanesdelete  = function () {
+    $scope.airplanes.pop();
+  };
 
 }]);//fin controller companys
 
+//controlador de editar
 app.controller("EditCompanyCtrl", function($scope , $http){
   $scope.company = {
         pais_id:0 };
@@ -124,7 +94,6 @@ app.controller("EditCompanyCtrl", function($scope , $http){
   $scope.states = [];
   $scope.getStates  = function () {
     var url  = "/state/"+$scope.company.pais_id;
-
     $http.get(url).then(
       function(resp){
         $scope.states  =  resp.data;
@@ -135,6 +104,69 @@ app.controller("EditCompanyCtrl", function($scope , $http){
       }
     );
   };
-    $scope.getStates()
+//  $scope.getStates();
+  $scope.validate_air= function ($air) {
+    //alert($air.tipo);
+    if($air.tipo==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
+      return false;
+    }else{
+      return true;
+    }
+  };
+  $scope.airplanesdelete  = function () {
+    var largo=$scope.airplanes.length;
+    var nombre=$scope.airplanes[largo-1].tipo;
+    var id_air=$scope.airplanes[largo-1].id;
+    var data=[];
+    data["_token"] =  $("input[name=_token]").val();
+    if(largo>0 && $scope.validate_air($scope.airplanes[largo-1]) && id_air!=null){
+       if (confirm("¿Esta Seguro que desea Eliminar el Avion "+nombre+"?") === true) {
+
+         $http.post('/avion/'+id_air, data)
+         .then(
+         function(response){// success callback
+              $scope.message = response.data.message;
+              $scope.show_error =  false;
+              $scope.airplanes.pop();
+         },
+         function(response){// failure callback
+            $scope.message =  false;//ocultamos el div del mensaje bien
+             var errors = response.data;
+             $scope.show_error =  true;//mostramos el div del mensaje error
+             $scope.message_error =  errors;//
+
+         }
+       );//fin then
+     }//fin si es un avion de BD
+    }else{
+        $scope.airplanes.pop();
+    }
+  };
   // $scope.company = RestApi.query();
+  $scope.edit =  function($event){
+      $event.preventDefault();
+      var company =  $scope.company;
+      company["_token"] =  $("input[name=_token]").val();
+      company.aviones  =  $scope.airplanes;
+      var url='/companys/'+$scope.company.id;
+      $http.put(url, company)
+      .then(
+      function(response){// success callback
+         if(response.data.message=="bien")  {
+           $scope.message = "Compañia Actualizada Exitosamente";
+            $scope.show_error =  false;
+        }else{//sin no bien
+          $scope.message =  false;//ocultamos el div del mensaje bien
+          $scope.show_error =  true;
+          $scope.message_error =  response.data.error;
+        }
+      },
+      function(response){// failure callback
+         $scope.message =  false;//ocultamos el div del mensaje bien
+          var errors = response.data;
+          $scope.show_error =  true;//mostramos el div del mensaje error
+          $scope.message_error =  errors;//
+      }
+     );//fin then
+    };//fin save
 });//EditCompanyCtrl

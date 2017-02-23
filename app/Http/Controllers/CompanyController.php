@@ -4,12 +4,12 @@ namespace XFS\Http\Controllers;
 
 use Illuminate\Http\Requests;
 use XFS\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use XFS\Http\Requests\CrearCompanysRequest;
 use XFS\Http\Requests\editarCompanysRequest;
 use XFS\Company;
 use XFS\Pais;
 use XFS\Avion;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Redirector;
@@ -75,85 +75,25 @@ class CompanyController extends Controller
    public function store(CrearCompanysRequest $request)
    {
      $data  = $request->all();
-   //  print_r($data);
-   //dd($data);
-     //  Company::create($data);
      $band=true;
      $airplane=false;
      $aviones=$data["aviones"];
+     $error= array();
      if(!empty($aviones)){
-     //print_r($json);
-         $error= array();
-        foreach ($aviones as $indice =>$array ) {
-          $i=$indice+1;
-           if((isset($array["tipo"]) && empty($array["tipo"])) || !isset($array["tipo"])){
-             $error["tipo"]=["El campo Tipo de Avion #".$i." es Obligatorio"];
-           }
-            if ((isset($array["matricula"]) && empty($array["matricula"])) || !isset($array["matricula"])) {
-              $error["matricula"]=["El campo Matricula de Avion #".$i." es Obligatorio"];
-            }else{
-              if(!empty(Avion::where('matricula' , $array["matricula"])->count())){
-                 $error["mdupli"]=["Ya existe la matricula del Avion#".$i." en la Base de Datos"];
-              }
-            }
-            if ((isset($array["licencia1"]) && empty($array["licencia1"])) || !isset($array["licencia1"])) {
-               $error["licencia1"]=["El campo Licencia 1 de Avion #".$i." es Obligatorio"];
-           }else{
-             if(!empty(Avion::where('licencia1' , $array["licencia1"])->count())){
-                $error["lidupli"]=["Ya existe la licencia1 del Avion#".$i." en la Base de Datos"];
-             }
-           }
-            if ((isset($array["piloto1"]) && empty($array["piloto1"])) || !isset($array["piloto1"])) {
-              $error["piloto1"]=["El campo Piloto1 de Avion #".$i." es Obligatorio"];
-            }
-            if (isset($array["certificado"])) {
-              if(!empty(Avion::where('certificado' , $array["certificado"])->count())){
-                 $error["cerdupli"]=["Ya existe la certificado del Avion#".$i." en la Base de Datos"];
-              }
-            }
-         }//fin foreach
+         $error=Company::validate_air($aviones);
          if(!empty($error)){
              $band=false;
          }else{
            $airplane=true;
          }
     }//fin si hay aviones
-
     if($band){
       DB::beginTransaction();
       try {
           $company=Company::create($data);
           if($airplane){
             foreach( $aviones as $indice =>$air ){
-             $avion=New Avion;
-             $avion->tipo=$air['tipo'];
-             $avion->matricula=$air['matricula'];
-             $avion->licencia1=$air['licencia1'];
-             $avion->piloto1=$air['piloto1'];
-             if(isset($air["modelo"])){
-                 $avion->modelo=$air['modelo'];
-             }
-             if(isset($air["fabricante"])){
-                 $avion->fabricante=$air['fabricante'];
-             }
-             if(isset($air["nombre"])){
-                 $avion->nombre=$air['nombre'];
-             }
-             if(isset($air["licencia2"])){
-                 $avion->licencia2=$air['licencia2'];
-             }
-             if(isset($air["piloto2"])){
-                 $avion->piloto2=$air['piloto2'];
-             }
-             if(isset($air["certificado"])){
-                 $avion->certificado=$air['certificado'];
-             }
-             if(isset($air["seguro"])){
-                 $avion->seguro=$air['seguro'];
-             }
-             if(isset($air["registro"])){
-                 $avion->registro=$air['registro'];
-             }
+             $avion=Company::add_airplane($air);
              $company->aviones()->save($avion);
            }//fin para
          }//fin si hay aviones
@@ -161,21 +101,15 @@ class CompanyController extends Controller
             DB::rollback();
             $error[]=[$e->getMessage()];
          }
-
          // Hacemos los cambios permanentes ya que no han habido errores
          DB::commit();
-
          $result=['message' => 'bien', 'error'=> $error];
     }else{
       $result=['message' => 'mal','error'=> $error];
     }//fin si band
     return response()->json($result);
-   //datos['message' => 'Compañia Agregada Exitosamente']
    }//fin store
-
-
-
-    /**
+  /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -211,18 +145,53 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CrearCompanysRequest $request, $id)
+    public function update(editarCompanysRequest $request, $id)
     {
-
       $company= Company::findOrFail($id);
+      $data  = $request->all();
+      $band=true;
+      $airplane=false;
+      $aviones=$data["aviones"];
+      $error= array();
+      if(!empty($aviones)){
+      //print_r($json);
+          $error=Company::validate_air($aviones);
+          if(!empty($error)){
+              $band=false;
+          }else{
+            $airplane=true;
+          }
+     }//fin si hay aviones
+     if($band){
+       DB::beginTransaction();
+       try {
+           $company->fill($request->all());
+           $company->save();
+           if($airplane){
+             foreach( $aviones as $indice =>$air ){
+                 if(isset($air["id"])){//si ya existe el avion en bd
+                   $avion=Company::update_airplane($air);
+                 }else{
+                   $avion=Company::add_airplane($air);
+                 }
 
-      $company->fill($request->all());
-      $company->save();
-      // Session::flash('message', 'Successfully update nerd!');
-       return redirect()->route('companys.index')
-                       ->with('success','Compañia Actualizada Exitosamente');
+              $company->aviones()->save($avion);
+            }//fin para
+          }//fin si hay aviones
+          } catch (Exception $e) {
+             DB::rollback();
+             $error[]=[$e->getMessage()];
+          }
+          // Hacemos los cambios permanentes ya que no han habido errores
+          DB::commit();
+          $result=['message' => 'bien', 'error'=> $error];
+     }else{
+       $result=['message' => 'mal','error'=> $error];
+     }//fin si band
+     return response()->json($result);
+      /* return redirect()->route('companys.index')
+                       ->with('success','Compañia Actualizada Exitosamente');*/
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -249,6 +218,20 @@ class CompanyController extends Controller
                  ->with('success', $mensaje);
        }
 
+
+      //return $affectedRows;
+    }
+
+    public function avion_destroy($id_air, Request $request)
+    {
+        $air=Avion::findOrFail($id_air);
+      //  $air=Avion::where('company_id', $id)->where('id', $id_air )->get();
+        $mensaje='El Avion '.$air->tipo.' fue eliminado Exitosamente';
+        if (!is_null($air)) {
+            $air->delete();
+            $result=['message' => $mensaje];
+            return response()->json($result);
+       }
 
       //return $affectedRows;
     }
