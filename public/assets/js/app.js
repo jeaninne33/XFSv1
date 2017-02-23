@@ -1,7 +1,8 @@
 var app = angular.module("XHR", []);
 
-
-app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
+app.controller("indexCompany",['$scope','$http',function($scope, $http){
+  $scope.company = {
+        pais_id:0 };
   $scope.filtros=[
      {
        id:"client",
@@ -20,9 +21,24 @@ app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
        nombre:"todas las Compañias"
      }
    ];
+
+$scope.filter_table  = function () {
+  //alert($scope.relacion.id);
+  var url  = "/comp/"+$scope.relacion.id;
+  $http.get(url).then(
+    function(resp){
+      $scope.compa  =  resp.data;
+      //alert(  $scope.compa);
+    },
+    function (){
+    }
+  );
+};//
+}]);//fin controller index
+
+app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
 $scope.company = {
       pais_id:0 };
-
 $scope.airplanes = [];
 $scope.states = [];
 $scope.getStates  = function () {
@@ -32,21 +48,6 @@ $scope.getStates  = function () {
       $scope.states  =  resp.data;
     },
     function (){
-
-    }
-  );
-};
-
-$scope.filter_table  = function () {
-  alert($scope.relacion.id);
-  var url  = "/comp/{tip}"+$scope.relacion.id;
-  $http.get(url).then(
-    function(resp){
-      $scope.compa  =  resp.data;
-      alert(  $scope.compa);
-    },
-    function (){
-
     }
   );
 };
@@ -82,7 +83,6 @@ $scope.save =  function($event){
   $scope.airplanesdelete  = function () {
     $scope.airplanes.pop();
   };
-
 }]);//fin controller companys
 
 //controlador de editar
@@ -100,13 +100,11 @@ app.controller("EditCompanyCtrl", function($scope , $http){
         //alert(resp);
       },
       function (){
-
       }
     );
   };
 //  $scope.getStates();
   $scope.validate_air= function ($air) {
-    //alert($air.tipo);
     if($air.tipo==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
       return false;
     }else{
@@ -134,7 +132,6 @@ app.controller("EditCompanyCtrl", function($scope , $http){
              var errors = response.data;
              $scope.show_error =  true;//mostramos el div del mensaje error
              $scope.message_error =  errors;//
-
          }
        );//fin then
      }//fin si es un avion de BD

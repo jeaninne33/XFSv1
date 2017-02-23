@@ -3,29 +3,27 @@
     <thead>
         <tr>
             <td>ID</td>
-            <td>Nombre</td>
-            <td>Correo</td>
-            <td>Pais</td>
-            <td>Tipo</td>
+            <td>Cliente</td>
+            <td>Fecha</td>
+            <td>Estado</td>
+            <td>Monto</td>
             <td>Aciones</td>
         </tr>
     </thead>
     <tbody>
-      @if(!$companys->isEmpty())
-       @foreach($companys as $key => $value)
+      @if(!$invoices->isEmpty())
+       @foreach($invoices as $key => $value)
          <tr data-id="{{ $value->id }}" class="{{ $value->id }}">
             <td>{{ $value->id }}</td>
-             <td>{{ $value->nombre }}</td>
-             <td>{{ $value->correo }}</td>
-             <td>{{ $value->pais->nombre }}</td>
-             <td>{{ $value->tipos($value->tipo) }}</td>
+             <td>{{ $value->company->nombre }}</td>
+             <td>{{ $value->fecha }}</td>
+             <td>{{ $value->estados($value->estado) }}</td>
+             <td>{{ $value->total }}</td>
 
              <!-- we will also add show, edit, and delete buttons -->
              <td>
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-               <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
-                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-               <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
+               <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('invoices/' . $value->id) }}"></a>
                  <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
                <a class="btn-delete" title="Eliminar" aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
 

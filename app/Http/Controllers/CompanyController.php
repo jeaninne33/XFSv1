@@ -36,11 +36,8 @@ class CompanyController extends Controller
 
     public function index(Request $request)
     {
-
-          $companys =  Company::all();
-      // return response()->json( $companys->toArray());
-      return view('companys.index',['companys'=>$companys]);
-        //  return response(view('companys.index',array('companys'=>$companys)),200, ['Content-Type' => 'application/json']);
+        $companys =  Company::with('pais')->get();
+        return view('companys.index',compact('companys'));
     }
 
 
@@ -51,8 +48,6 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //  // load the create form (app/views/nerds/create.blade.php)
-
         $paises = Pais::lists('nombre','id');
         $paises->prepend('Seleccione el País');
         return view('companys.create', compact('paises'));
@@ -93,7 +88,8 @@ class CompanyController extends Controller
           $company=Company::create($data);
           if($airplane){
             foreach( $aviones as $indice =>$air ){
-             $avion=Company::add_airplane($air);
+             $avion=New Avion;
+             $avion=Company::obj_airplane($air, $avion);
              $company->aviones()->save($avion);
            }//fin para
          }//fin si hay aviones
@@ -170,9 +166,11 @@ class CompanyController extends Controller
            if($airplane){
              foreach( $aviones as $indice =>$air ){
                  if(isset($air["id"])){//si ya existe el avion en bd
-                   $avion=Company::update_airplane($air);
-                 }else{
-                   $avion=Company::add_airplane($air);
+                   $avion=Avion::findOrFail($air['id']);
+                   $avion=Company::obj_airplane($air , $avion);
+                 }else{//si el avion es nuevo
+                   $avion=New Avion;
+                   $avion=Company::obj_airplane($air, $avion);
                  }
 
               $company->aviones()->save($avion);
@@ -200,27 +198,18 @@ class CompanyController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        //
-     //  dd($id);
        // abort(500);
         $comp=Company::findOrFail($id);
-
         $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
         if (!is_null($comp)) {
             $comp->delete();
-           // Session::flash('message', 'Successfully delete nerd!');
-
             if($request->ajax()){
                 return $mensaje;
-
             }
            return redirect()->route('companys.index')
                  ->with('success', $mensaje);
        }
-
-
-      //return $affectedRows;
-    }
+    }//fin destroy
 
     public function avion_destroy($id_air, Request $request)
     {
@@ -232,7 +221,5 @@ class CompanyController extends Controller
             $result=['message' => $mensaje];
             return response()->json($result);
        }
-
-      //return $affectedRows;
     }
 }
