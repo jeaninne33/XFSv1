@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-<h1>Mostrando la Factura <strong> {{ $companys->nombre }}</strong></h1>
+<h1>Mostrando la Factura <strong> {{ $invoice->id }}</strong></h1>
 <div class="pull-right">
          <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
      </div>

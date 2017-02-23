@@ -9,8 +9,9 @@
         </tr>
     </thead>
     <tbody>
+    @if(!$servicio->isEmpty())
     @foreach($servicio as $key => $value)
-        <tr>
+        <tr  data-id="{{ $value->id }}" class="{{ $value->id }}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
             <td>{{ $value->descripcion }}</td>
@@ -30,5 +31,6 @@
             </td>
         </tr>
     @endforeach
+   @endif
     </tbody>
 </table>

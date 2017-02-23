@@ -9,8 +9,6 @@
 
       <p><h2 ><i class=" soap-icon-fueltank circle"></i> <strong>Servicios</strong></h2>
         <p><h2 > <strong>Listado de Servicios</strong></h2></p></p>
-        <div class="errorMessages"></div>
-        <div class="successMessages"></div>
         <div class="" id="mensaje" style="display: none;">
         </div>
        <div class="panel-body">
@@ -30,7 +28,16 @@
 [[Form::close()]]
 
 </div>
-
+@endsection
+@section('scripts')
+<!--scripts necesarios en esta vista -->
+<!-- datatable jquery -->
+<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script>
+  $('#example').dataTable();
+  $('#m3').removeClass('');
+  $('#m3').addClass('active');
+</script>
 </script>
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
 @endsection

@@ -16,8 +16,6 @@
 <p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>
    -->
 </p>
-  <div class="errorMessages"></div>
-  <div class="successMessages"></div>
   <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
@@ -27,14 +25,11 @@
       </a>
     </p>
 
-
-
     <div class="col-sms-12 col-sm-12"  >
 
           	  @include('companys.partials.table')
         </div>
       </div>
-
 
 [[Form::open(['route' => ['companys.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 

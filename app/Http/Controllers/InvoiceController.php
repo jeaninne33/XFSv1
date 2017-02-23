@@ -22,18 +22,11 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
     public function index(Request $request)
     {
-
       $invoices =  invoice::with('company')->get();
-
       return view('invoices.index', compact('invoices'));
-
-   }
-
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +40,6 @@ class InvoiceController extends Controller
         $paises->prepend('Seleccione el País');
         return view('companys.create', compact('paises'));*/
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -75,10 +67,10 @@ class InvoiceController extends Controller
     public function show($id)
     {
         //
-        /*$companys = Company::findOrFail($id);
+        $invoice = Company::findOrFail($id);
         // load the view and pass the nerds
         // show the view and pass the nerd to it
-         return view('companys.show')->with('companys', $companys);*/
+         return view('invoices.show', compact('invoice'));
     }
 
     /**
@@ -90,7 +82,6 @@ class InvoiceController extends Controller
     public function edit($id)
     {
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -100,7 +91,6 @@ class InvoiceController extends Controller
      */
     public function update(editarCompanysRequest $request, $id)
     {
-
     }
     /**
      * Remove the specified resource from storage.
@@ -110,19 +100,15 @@ class InvoiceController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        //
      //  dd($id);
        // abort(500);
       /*  $comp=Company::findOrFail($id);
-
         $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
         if (!is_null($comp)) {
             $comp->delete();
            // Session::flash('message', 'Successfully delete nerd!');
-
             if($request->ajax()){
                 return $mensaje;
-
             }
            return redirect()->route('companys.index')
                  ->with('success', $mensaje);

@@ -21,8 +21,6 @@ Route::get('servicios',function(){
   return view('servicios');
 });
 
-
-
 Route::get('welcome', [
     'as' => 'welcome',
     'uses' => 'HomeController@index'
@@ -62,14 +60,17 @@ Route::get('/services/{id}',function($id){
   $servicio=Servicio::where('id',$id)->get();
   return Response::json($servicio);
 });
+
 Route::get('/changeAvion/{id}',function($id){
   $avion=Avion::where('id',$id)->get();
   return Response::json($avion);
 });
+
 Route::get('/listAvion/{id}',function($id){
   $avion=Avion::where('company_id',$id)->get();
   return Response::json($avion);
 });
+
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
     if ($id==1) {
@@ -90,7 +91,6 @@ Route::get('/clientes/{id}',function($id){
  Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
-
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
 Route::group(['middleware' => 'auth'], function()
@@ -105,5 +105,6 @@ Route::group(['middleware' => 'auth'], function()
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
-  Route::post('avion/{avion}', [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
+  Route::post('avion/{avion}',
+   [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
 });

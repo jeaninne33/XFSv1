@@ -186,14 +186,17 @@ $(document).on('click', '.btn-delete',function (e) {
        var data=form.serialize();
 
        $("#mensaje").css("display", "block");
-       $('#mensaje').addClass('alert alert alert-success');//cambiar la clase
+       $('#mensaje').addClass('alert alert alert-success alert-dismissable');//cambiar la clase
+       var msj='<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
        $.post(url, data, function(result){
-          $('#mensaje').html(result);
+           msj+=result;
+          $('#mensaje').html(msj);
            $('#example').find('.'+id).fadeOut();
            //row.fadeOut();
        }).fail(function(){
-           $('#mensaje').addClass('alert alert alert-danger');
-            $('#mensaje').html('Error. La compañia no fue eliminada');
+           $('#mensaje').addClass('alert alert alert-danger alert-dismissable');
+            msj+="Error. El registro no fue eliminado";
+            $('#mensaje').html(msj);
          //alert('La compañia no fue eliminada');
           $('#example').find('.'+id).show();
        });
