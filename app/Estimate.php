@@ -14,9 +14,12 @@ class Estimate extends Model
 'tipo_hab','tipo_cama','tipo_estrellas','imagen','categoria','descuento','ganancia','subtotal','total',
 'prove_id','company_id','avion_id'];
      public function company() {
-		      return $this->belongsTo('XFS\Company','id', 'company_id');
+		      return $this->belongsTo('XFS\Company','company_id', 'id');
 	  }
     public function avion(){
       return$this->hasMany('XFS\Avion','id','avion_id');
+    }
+    public function date_estimates(){
+      return $this->belongsTo('XFS\date_estimates','estimates_id','id');
     }
 }

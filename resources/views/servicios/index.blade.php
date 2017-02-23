@@ -14,6 +14,7 @@
         <div class="" id="mensaje" style="display: none;">
         </div>
        <div class="panel-body">
+
       <p>
         <a class="btn btn-info" href="{{URL::to('servicios/create')}}" role="button">
           Nuevo Servicio
@@ -27,17 +28,9 @@
 [[Form::open(['route' => ['servicios.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]
-</div>
-@endsection
 
-@section('scripts')
-<!--scripts necesarios en esta vista -->
-<!-- datatable jquery -->
-<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script>
-$('#example').dataTable();
-$('#m3').removeClass('');
-$('#m3').addClass('active');
+</div>
+
 </script>
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
 @endsection

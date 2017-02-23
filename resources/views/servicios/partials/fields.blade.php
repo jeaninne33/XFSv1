@@ -12,7 +12,7 @@
 <div class="row form-group">
   <div class="col-sms-6 col-sm-6">
     [[ Form::label('categoria_id', 'Categoria')]]
-    [[ Form::select('categoria_id', $categorias, null, array('class' => 'input-text full-width')) ]]
+    [[ Form::select('categoria_id', $categorias, null, array('class' => 'input-text full-width','required')) ]]
 
   </div>
 </div>

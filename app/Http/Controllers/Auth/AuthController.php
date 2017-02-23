@@ -6,6 +6,7 @@ use XFS\User;
 use Auth;
 use Redirect;
 use Validator;
+use Session;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -53,8 +54,9 @@ class AuthController extends Controller
             // Si nuestros datos son correctos mostramos la página de inicio
             return Redirect::intended('/principal');
         }
+        Session::flash('flash_message', 'Correo Electronico o Contraseña no Son validos!');
         // Si los datos no son los correctos volvemos al login y mostramos un error
-        return Redirect::back()->with('error_message', 'Correo Electronico o Contraseña')->withInput();
+        return Redirect::back();
 
     }
     public function logOut()

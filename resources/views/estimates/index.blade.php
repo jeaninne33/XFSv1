@@ -18,7 +18,7 @@
 
     <p>
       <a class="btn btn-info" href="{{URL::to('estimates/create')}}" role="button">
-        Nueva Estimado
+        Nuevo Estimado
       </a>
     </p>
 

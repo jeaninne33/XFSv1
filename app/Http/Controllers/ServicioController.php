@@ -41,6 +41,7 @@ class ServicioController extends Controller
      */
     public function create()
     {
+
       $categorias=Categoria::Lists('nombre','id');
       $categorias->prepend(' --- Seleccione un Servicio --- ');
       return view('servicios.create',compact('categorias'));
@@ -54,12 +55,12 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-      /*$this->validate($request, [
+      $this->validate($request, [
       'nombre'       => 'required|unique:servicios,nombre',
       'descripcion' => 'required',
       'categoria_id'  => 'required',
       ]);
-     Servicio::create($request->all());*/
+  //   Servicio::create($request->all());
      $servicio = new Servicio;
      $servicio->nombre=$request->input('nombre');
      $servicio->descripcion=$request->input('descripcion');
@@ -129,11 +130,24 @@ class ServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
-      Servicio::find($id)->delete();
+      $servicio=Servicio::findOrFail($id);
+
+              $mensaje='El Servicio <b>'.$servicio->nombre.'</b> fue eliminada Exitosamente';
+              if (!is_null($servicio)) {
+                  $servicio->delete();
+                 // Session::flash('message', 'Successfully delete nerd!');
+
+                  if($request->ajax()){
+                      return $mensaje;
+
+                  }
+                 return redirect()->route('servicios.index')
+                       ->with('success', $mensaje);
+             }
+
       //Session::flash('message', 'Successfully delete nerd!');
-      return redirect()->route('servicios.index')
-                    ->with('success','Servicio eliminado Exitosamente');
-    }
+
+     }
 }
