@@ -27,14 +27,25 @@ class EstimatesController extends Controller
       // ->join('companys', 'companys.id', '=', 'estimates.company_id')
       // ->select('estimates.id','companys.nombre','estimates.estado',
       // 'fecha_soli','total','resumen',DB::raw(''));
-
-      $estimates = DB::table('estimates')
-          ->join('companys', 'companys.id', '=', 'estimates.company_id')
-          ->select(DB::raw("estimates.id, companys.nombre, estimates.estado,
-          fecha_soli,total,resumen,
-          (SELECT nombre FROM companys where tipo='prove')AS proveedor"))
-          // ->union($proveedor)
-          ->get();
+      $estimates=DB::select(
+      DB::raw("SELECT
+        e.id,
+        c.nombre,
+        cp.nombre AS proveedor,
+        e.estado,
+        e.fecha_soli,
+        total,
+        resumen
+        FROM estimates e
+        INNER JOIN companys c ON c.id=e.company_id
+        INNER JOIN companys cp ON cp.id=e.prove_id ") );
+      // $estimates = DB::table('estimates')
+      //     ->join('companys', 'companys.id', '=', 'estimates.company_id')
+      //     ->join('companys','companys.id','=','estimates.prove_id')
+      //     ->select(DB::raw("e.id, c.nombre,cp.nombre as proveedor, estado,
+      //     fecha_soli,total,resumen"))
+      //     // ->union($proveedor)
+      //     ->get();
       return view ('estimates.index')->with('estimates',$estimates);
     }
 

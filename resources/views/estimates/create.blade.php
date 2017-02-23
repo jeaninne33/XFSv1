@@ -40,8 +40,14 @@
   //      { "visible": false, "targets": 0 }
   //    ]
   //  });
+  var tab1=$('#example').DataTable();
+  tab1.column(3).visible(false);
+  tab1.column(4).visible(false);
+  tab1.column(6).visible(false);
+  tab1.column(7).visible(false);
   var tab=  $('#example1').DataTable();
   tab.column( 0 ).visible( false );
+
    $('#example1 tbody').on( 'click', 'a.btn-delete', function () {
 
        tab

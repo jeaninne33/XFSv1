@@ -47,17 +47,12 @@ function ajaxRenderSection(id) {
                   value.id,
                   value.nombre,
                   value.pais,
-                  value.tipo,
                   value.celular,
                   value.telefono,
                   value.correo,
+                  value.tipo,
                   categoria
               ] ).draw( false );
-
-              //$('#avion_id').append('<option value="">Seleccione el Estado</option>');
-              //$('#avion_id').append('<option value="'+value.avionID+'">'+value.tipoAvion+'</option>');
-
-
           });
             },
             error: function (data) {
@@ -70,7 +65,73 @@ function ajaxRenderSection(id) {
             }
         });
     }
+    //doble click tabla de cliente y proveedores para cargar en los intut del formulario
+    $('#example > tbody').on('dblclick', '>tr', function () {
+       var tab=$('#example').DataTable();
+       var datos = tab.row( this ).data();
+       var categoria=datos[7];
+       var porcentaje;
+          if (datos[6]=='client') {
+            //trae el el listado de aviones de ese cliente mas su matricula
+            $.get('/listAvion/'+datos[0], function(data){
+                console.log(data);
+                $('#avion_id').empty();
+                 $.each(data,function(index,value){
+                   $('#avion_id').append('<option value="'+value.id+'">'+value.tipo+'</option>');
+                });
+                $('#matricula').val(data[0].matricula);
+               });
+            //fin listado aviones clientes
+              $('#nombreC').val(datos[1]);
+              $('#company_id').val(datos[0]);
+              $('#telefono').val(datos[4]);
+              $('#celular').val(datos[3]);
+              $('#correo').val(datos[5]);
 
+              switch (categoria) {
+                case "PostPago":
+                    porcentaje="0%";
+                    break;
+                case "Prepago":
+                    porcentaje="20%";
+                    break;
+                case "De 1 a 15 días de crédito":
+                    porcentaje="25%";
+                    break;
+                case "De 16 a 30 días de crédito":
+                    porcentaje="30%";
+                    break;
+              }
+              $('#ganancia').val(porcentaje);
+
+              if (telefono!="") {
+                $('select#metodo').val('Telefono')
+                metodoSeguimiento();
+              }else if(celular!=""){
+                $('select#metodo').val('Celular');
+                metodoSeguimiento();
+              }
+              else if(correo!="") {
+                  $('select#metodo').val('Correo');
+                  metodoSeguimiento();
+              }
+              else{
+                $('select#metodo').val('Telefono')
+                metodoSeguimiento();
+              }
+          }else{
+              $('#nombreP').val(datos[1]);
+              $('#prove_id').val(datos[0]);
+          }
+
+              $('#clientes').modal('toggle');
+    });
+        // $("td").click(function(event) {
+        //    var row = $(this).attr("data-row");
+        //    var col = $(this).attr("data-col");
+        // alert(row+col);
+        //  };
+        //FIN DOBLE CLICK
 //tabla estimados
 function addRows(){
 var estimates=[];
@@ -161,93 +222,7 @@ var totalDescuento=subtotal*descuento;
 $('#totalDescuento').val('$'+totalDescuento);
 $('#total').val('$'+(subtotal-totalDescuento));
 }
-//doble click tabla de cliente y proveedores para cargar en los intut del formulario
-$('#example > tbody').on('dblclick', '>tr', function () {
 
-  $(this).children("td").each(function (i) {
-
-    				switch (i) {
-    						case 0:
-    								ID = $(this).text();
-    								break;
-    						case 1: Nombre = $(this).text();
-    								break;
-    						case 2: Pais = $(this).text();
-    								break;
-    						case 3: tipoC = $(this).text();
-    								break;
-    						case 4: celular = $(this).text();
-    								break;
-    						case 5: telefono= $(this).text();
-    								break;
-                case 6:
-                        correo=$(this).text();
-                    break;
-                case 7: categoria= $(this).text();
-                		break;
-    				}
-   });
-var porcentaje;
-      if (tipoC=='client') {
-
-        $.get('/listAvion/'+ID, function(data){
-            console.log(data);
-            $('#avion_id').empty();
-             $.each(data,function(index,value){
-               $('#avion_id').append('<option value="'+value.id+'">'+value.tipo+'</option>');
-            });
-            $('#matricula').val(data[0].matricula);
-           });
-          $('#nombreC').val(Nombre);
-          $('#company_id').val(ID);
-          $('#telefono').val(telefono);
-          $('#celular').val(celular);
-          $('#correo').val(correo);
-
-          switch (categoria) {
-            case "PostPago":
-                porcentaje="0%";
-                break;
-            case "Prepago":
-                porcentaje="20%";
-                break;
-            case "De 1 a 15 días de crédito":
-                porcentaje="25%";
-                break;
-            case "De 16 a 30 días de crédito":
-                porcentaje="30%";
-                break;
-          }
-          $('#ganancia').val(porcentaje);
-
-          if (telefono!="") {
-            $('select#metodo').val('Telefono')
-            metodoSeguimiento();
-          }else if(celular!=""){
-            $('select#metodo').val('Celular');
-            metodoSeguimiento();
-          }
-          else if(correo!="") {
-              $('select#metodo').val('Correo');
-              metodoSeguimiento();
-          }
-          else{
-            $('select#metodo').val('Telefono')
-            metodoSeguimiento();
-          }
-      }else{
-          $('#nombreP').val(Nombre);
-          $('#prove_id').val(ID);
-      }
-
-          $('#clientes').modal('toggle');
-});
-    // $("td").click(function(event) {
-    //    var row = $(this).attr("data-row");
-    //    var col = $(this).attr("data-col");
-    // alert(row+col);
-    //  };
-    //FIN DOBLE CLICK
 function metodoSeguimiento(){
     //$('#metodo').on('change',function(e){
         //  console.log(e);

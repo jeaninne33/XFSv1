@@ -11,6 +11,6 @@ class Servicio extends Model
 
     public function categoria()
     {
-      return $this->hasOne('XFS\Categoria','id','categoria_id');
+      return $this->belongsTo('XFS\Categoria','categoria_id');
     }
 }

@@ -4,11 +4,12 @@
               <td data-field="ID">ID</td>
               <td data-field="Company">Compañia</td>
               <td data-field="Pais">País</td>
-              <td data-field="Tipo">Tipo de Cliente</td>
               <td data-field="celular">Celular</td>
               <td data-field="telefono">Telefono</td>
               <td data-field="correo">Correo</td>
-              <td data-field="categoria">Categoria</td>
+              <td data-field="tipo">tipo</td>
+              <td data-field="categoria">categoria</td>
+
               {{-- <td>Aciones</td> --}}
           </tr>
       </thead>

@@ -24,7 +24,7 @@ class ServicioController extends Controller
         $request->get(''))
       ->tipo($request->get('relacion'))
       ->orderBy('id','DESC')->paginate(5);*/
-    $servicio = Servicio::all();
+    $servicio = Servicio::with('categoria')->get();
      /*$servicios = DB::table('servicios')
   	->join('categorias', 'categorias.id', '=', 'servicios.categoria_id', 'inner', true)
   	->select('servicios.id', 'servicios.nombre', 'servicios.descripcion', 'categorias.nombre as nbCategoria')
@@ -58,7 +58,7 @@ class ServicioController extends Controller
       $this->validate($request, [
       'nombre'       => 'required|unique:servicios,nombre',
       'descripcion' => 'required',
-      'categoria_id'  => 'required',
+      'categoria_id'  => 'required_if:categoria_id,0',
       ]);
   //   Servicio::create($request->all());
      $servicio = new Servicio;
@@ -109,8 +109,8 @@ class ServicioController extends Controller
     {
       $this->validate($request, [
         'nombre'       => 'required',
-        'descripcion' => 'required',
-        'categoria_id'      => 'required',
+        'descripcion'  => 'required',
+        'categoria_id' => 'required',
 
         ]);
         $servicio = Servicio::find($id);
