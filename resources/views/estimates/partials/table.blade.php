@@ -3,19 +3,26 @@
     <thead>
         <tr>
             <td>ID</td>
-            <td>Nombre</td>
-            <td>Direccion</td>
-            <td>Tipo</td>
+            <td>Cliente</td>
+            <td>Proveedor</td>
+            <td>Estado</td>
+            <td>Fecha</td>
+            <td>Total</td>
+            <td>Resumen</td>
             <td>Aciones</td>
         </tr>
     </thead>
     <tbody>
     @foreach($estimates as $key => $value)
+    
         <tr data-id="{{$value->id}}">
-            <td>{{ $value->fbo }}</td>
+            <td>{{ $value->id }}</td>
+            <td>{{ $value->nombre }}</td>
+            <td>{{ $value->proveedor }}</td>
+            <td>{{ $value->estado }}</td>
             <td>{{ $value->fecha_soli }}</td>
-            <td>{{ $value->localidad }}</td>
-            <td>{{ $value->metodo_segui }}</td>
+            <td>{{ $value->total }}</td>
+            <td>{{ $value->resumen }}</td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>

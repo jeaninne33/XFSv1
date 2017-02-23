@@ -1,4 +1,22 @@
 
+function saveEstimates(){
+    var company_id=$('#company_id').val();
+    var prove_id=$('#prove_id').val();
+    var estado=$('#estado').val();
+    var fecha_soli=$('#fecha_soli').val();
+    var resumen=$('#resumen').val();
+    var metodo=$('#metodo').val();
+    var telefono=$('#telefono').val();
+    var celular=$('#celular').val();
+    var correo=$('#correo').val();
+    var proximo_seguimiento=$('#proximo_seguimiento').val();
+  $.ajax({
+    type: 'POST',
+    url:'/estimates/store',
+    dataType:'json'
+  //  data:
+  });
+}
 function ajaxRenderSection(id) {
         $.ajax({
             type: 'GET',
@@ -55,6 +73,7 @@ function ajaxRenderSection(id) {
 
 //tabla estimados
 function addRows(){
+var estimates=[];
 var table = $('#example1').DataTable();
 var Servicio = $("#servicios").find('option:selected').text();
 var idServicio = $("#servicios").val();
@@ -78,12 +97,18 @@ var Total=Subtotal+Ganancia;
              '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
 
          ] ).draw( false );
+//estimates.push({idServicio:idServicio,Servicio:Servicio,Descripcion:Descripcion,Cantidad:Cantidad,Precio:Precio,Subtotal:Subtotal,Ganancia:Ganancia,Total:Total});
+estimates.push(idServicio,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total);
+console.log(estimates);
+var listEstimates=listEstimates+(estimates);
+$('#estimado').val(listEstimates);
 $("#servicios").val(0);
 $("#descripcion").val('');
 $("#cantidad").val('');
 $("#precio").val('');
 $('#subtotal').val($('#subto').val());
 $('#total').val($('#sumTotal').val());
+$('#gananciatotal').val($('#gtotal').val());
          //counter++;
 }
 // $('#example').on('click', 'a.btn-edit', function (e) {
@@ -94,9 +119,7 @@ $('#total').val($('#sumTotal').val());
 //         buttons: 'Update'
 //     } );
 // } );
-function updateRows(r){
-  
-}
+
 
 
 
@@ -293,6 +316,12 @@ $('#example1').DataTable( {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
+                gananciaTotal = api
+                    .column( 6 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
             // Total over this page
             pageTotal = api
                 .column( 7, { page: 'current'} )
@@ -303,7 +332,9 @@ $('#example1').DataTable( {
 
             // Update footer
             $( api.column( 7 ).footer() ).html(
-                '<input hidden type="text" id="subto" value="'+'$'+pageTotal+'"/>'+'<input hidden type="text" id="sumTotal" value="'+'$'+ total+'"/>'
+                '<input hidden type="text" id="subto" value="'+'$'+pageTotal+'"/>'+'<input hidden type="text" id="sumTotal" value="'+'$'+ total+'"/>'+
+                '<input hidden type="text" id="gtotal" value="'+'$'+gananciaTotal+'"/>'
+
 
             );
         }
