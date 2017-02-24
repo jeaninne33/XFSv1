@@ -102,6 +102,7 @@ class EstimatesController extends Controller
       $estimates->tipo_hab=$request->input('tipo_hab');
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
       $estimates->save();
+  
     //  $idEstimate=Estimate::last();
     //  dd($request->input('tbEstimates'))
     //  $tbestimates=$request->input('tnEstimates');

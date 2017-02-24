@@ -48,7 +48,7 @@
         <div class="container">
 
 
-              <img src="{{ asset('assets/images/LOGO XFS.png')}}"  height="28"/>
+              <img src="{{ asset('assets/images/LOGO XFS.png')}}"/>
 
 
 

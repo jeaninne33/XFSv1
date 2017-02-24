@@ -1,22 +1,58 @@
 
 function saveEstimates(){
+  var table = $('#example1').DataTable();
+
+
+
     var company_id=$('#company_id').val();
     var prove_id=$('#prove_id').val();
     var estado=$('#estado').val();
     var fecha_soli=$('#fecha_soli').val();
     var resumen=$('#resumen').val();
     var metodo=$('#metodo').val();
-    var telefono=$('#telefono').val();
-    var celular=$('#celular').val();
-    var correo=$('#correo').val();
     var proximo_seguimiento=$('#proximo_seguimiento').val();
+    var fbo=$('#fbo').val();
+    var localidad=$('#localidad').val();
+    var avion_id=$('#avion_id').val();
+    var num_habitacion=$('#num_habitacion').val();
+    var tipo_hab=$('#tipo_hab').val();
+    var tipo_cama=$('#tipo_cama').val();
+    var tipo_estrellas=$('#tipo_estrellas').val();
+  //  var Estimado=[];
+    var Estimado = new Array();
+    var List=[];
+    var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
+//se recorre la tabla fila por fila y se inserta en un objeto json y se pasa por POST con ajax al controlador
+table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+      var data = this.data();
+      var lista ={
+      'ID':data[0],
+      'Servicio':data[1],
+      'Descripcion':data[2],
+      'Cantidad':data[3],
+      'Precio':data[4],
+      'Subtotal':data[5],
+      'Ganancia':data[6],
+      'Total':data[7]
+    };
+      Estimado.push(lista);
+  });
   $.ajax({
     type: 'POST',
     url:'/estimates/store',
     dataType:'json'
-  //  data:
+    data: { idServicio:ID,companyid:company_id,proveid:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,localida:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas },
+    success: function (estimado) {
+            alert('estimado registrado con exito');
+            //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
+        },
+        //Mensaje de error en caso de fallo
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
   });
 }
+
 function ajaxRenderSection(id) {
         $.ajax({
             type: 'GET',
