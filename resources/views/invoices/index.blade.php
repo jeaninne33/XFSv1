@@ -9,17 +9,18 @@
 <div ng-controller="indexCompany">
 <p><h2 ><i class=" icon soap-icon-stories circle"></i> Facturas de <strong>XFS</strong></h2>
   <p><h2 > <strong>Listado de Facturas</strong></h2></p>
-  <!--  [[ Form::label('tipo', 'Filtrar por Tipo de Relacion: ')]]
-    <select ng-change="filter_table()" ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
-       <option value="">--Elige opcion--</option>
-     </select>
-<p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>-->
 </p>
   <div class="errorMessages"></div>
   <div class="successMessages"></div>
   <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
+    <p>
+      <a class="btn btn-info" href="{{URL::to('invoices/create/3')}}" role="button">
+        Nueva factura
+      </a>
+    </p>
+
     <div class="col-sms-12 col-sm-12"  >
 
           	  @include('invoices.partials.table')

@@ -48,15 +48,21 @@ Route::get('/state/{id}',function($id){
   $estados=Estado::where('pais_id',$id)->get();
   return Response::json($estados);
 });
-Route::get('/comp/{tip}',function($tip){
-  if($tip=="todos"){
+/*Route::get('/comp/{tip}',function($tip){
+/*  if($tip=="todos"){
    $companys =  Company::all();
  }else{
    $companys=Company::where('tipo',$tip)->get();
-  }
-  return Response::json($companys);
-});
 
+  //return Response::json($companys);
+    return view('companys.partials.table', compact('tip'));
+
+});*/
+
+/*Route::get('/table/{data}',function(){
+  $companys=json_decode(data);
+  return view('companys.partials.table', compact('companys'));
+});*/
 Route::get('/services/{id}',function($id){
   $servicio=Servicio::where('id',$id)->get();
   return Response::json($servicio);
@@ -101,8 +107,10 @@ Route::group(['middleware' => 'auth'], function()
   ]);
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
+  Route::resource ('invoices','InvoiceController');
   Route::resource('servicios', 'ServicioController');
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
+  Route::get('invoices/create/{invoices}', [ 'as'=>'invoices.create','uses' => 'InvoiceController@create']);
   Route::post('avion/{avion}', [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
 });

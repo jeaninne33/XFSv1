@@ -6,6 +6,7 @@ use Illuminate\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use XFS\Company;
+use XFS\Estimate;
 use XFS\Invoice;
 use XFS\Pais;
 use XFS\Avion;
@@ -32,13 +33,33 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, $id)
     {
-        //  // load the create form (app/views/nerds/create.blade.php)
-
-      /*  $paises = Pais::lists('nombre','id');
-        $paises->prepend('Seleccione el País');
-        return view('companys.create', compact('paises'));*/
+        //(object)  // load the create form (app/views/nerds/create.blade.php)
+        $estimate=DB::select(
+        DB::raw("SELECT
+        e.id,
+        e.fbo,
+        e.localidad,
+        e.company_id,
+        e.avion_id,
+        c.nombre,
+        c.direccion_cuenta,
+        c.telefono_admin,
+        c.categoria,
+        e.estado,
+        e.fecha_soli,
+        d.matricula
+        FROM estimates e, companys c, aviones d
+        where c.id=e.company_id and d.id=e.avion_id and e.id='$id'
+          " ));
+          //$estimate=$estimate;
+      /*  $estimate = Estimate::findOrFail($id);
+       $datos_estimado=$estimate->date_estimates();
+       $id=$estimate->company();
+       $paises = Pais::lists('nombre','id');
+        $paises->prepend('Seleccione el País');*/
+        return view('invoices.create', compact('estimate'))->with('datos_estimado','$datos_estimado')->with('company', '$company');
     }
     /**
      * Store a newly created resource in storage.

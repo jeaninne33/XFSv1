@@ -5,6 +5,7 @@
       <h2>Editar Compañia <strong> @{{ company.nombre }}</strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
+               
       </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 

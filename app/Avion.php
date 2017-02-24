@@ -11,6 +11,6 @@ class Avion extends Model
      protected $fillable = ['tipo', 'matricula', 'licencia1','licencia2','registro','piloto1','piloto2','certificado','seguro'];
 
      public function company() {
-		      return $this->belongsTo('XF\Company', 'company_id');
+		      return $this->belongsTo('XF\Company','id', 'company_id');
 	  }
 }

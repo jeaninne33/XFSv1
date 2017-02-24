@@ -19,8 +19,7 @@ class Company extends Eloquent
      public function servicios() {
         return $this->belongsToMany('XFS\Servicio', 'company_id', 'id')->withPivot('precio')->withTimestamps();
    }
-   //
-//'return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
+   
     public function pais() {
         return $this->hasOne('XFS\Pais','id','pais_id');
     }

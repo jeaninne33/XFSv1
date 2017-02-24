@@ -22,8 +22,8 @@
          <h5>
            <table border="0" style="with:600px;" class="table table-condensed">
              <tr>
-               <td><strong>id:</strong> {{ $companys->id }}<br></td>
-               <td><strong</strong> {{ $companys->website }}<br></td>
+               <td colspan="2"><strong>id:</strong> {{ $companys->id }}<br></td>
+
              </tr>
              <tr>
              <tr>

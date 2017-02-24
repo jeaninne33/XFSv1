@@ -25,14 +25,21 @@ app.controller("indexCompany",['$scope','$http',function($scope, $http){
 $scope.filter_table  = function () {
   //alert($scope.relacion.id);
   var url  = "/comp/"+$scope.relacion.id;
-  $http.get(url).then(
+//  $('#tabla').empty();
+  //$( "#tabla" ).load(url);
+  /*$http.get(url).then(
     function(resp){
-      $scope.compa  =  resp.data;
+      var data=resp.data;
+      var url="/table/"+data;
+    //  $scope.compa  =  resp.data;
+      $('#tabla').empty();
+      //$( "#tabla" ).load(url);
+    //  $('#tabla').append($(resp.data))
       //alert(  $scope.compa);
     },
     function (){
     }
-  );
+  );*/
 };//
 }]);//fin controller index
 
@@ -167,3 +174,6 @@ app.controller("EditCompanyCtrl", function($scope , $http){
      );//fin then
     };//fin save
 });//EditCompanyCtrl
+app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
+  $scope.invoice = {};
+}]);//fin controller companys

@@ -11,7 +11,7 @@ class Invoice extends Model
     // protected $fillable = ['nombre', 'pais_id'];
     protected $fillable=['id','fecha','plazo',
 'fecha_vencimiento','localidad','resumen','fbo','categoria','descuento','ganancia','subtotal',
-'total','prove_id','company_id','estimate_id','avion_id'];
+'total','prove_id','company_id','estimate_id','avion_id', 'informacion','estado'];
 
     public function company() {
 		  return $this->belongsTo('XFS\Company','id', 'company_id');
@@ -22,6 +22,7 @@ class Invoice extends Model
     public function proveedor() {
       return $this->belongsTo('XFS\Company','id', 'prove_id');
     }
+    
     public function estados($estado) {
       if($estado=='1'){
         return 'No pagado';
@@ -31,4 +32,5 @@ class Invoice extends Model
             return 'Pago Vencido';
       }
     }//fin metodp
+
 }//fin clase
