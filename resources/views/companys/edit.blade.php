@@ -2,7 +2,7 @@
 
 @section('contenido')
 <div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="company={{$companys}}; airplanes={{$companys->aviones}}; " >
-      <h2>Editar Compañia <strong> @{{ company.nombre }}</strong></h2>{{var_dump($companys)}}
+      <h2>Editar Compañia <strong> @{{ company.nombre }}</strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
 

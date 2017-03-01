@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" ng-init="estimate={{$estimate}}"> {{var_dump($estimate)}}
+<ul class="nav nav-tabs" ng-init="invoice={{json_encode($invoice)}}">
   <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu2">Datos de la Compañia</a></li>
@@ -10,9 +10,13 @@
   <div id="home" class="tab-pane fade in active">
     <h3>Datos Generales de la Factura</h3>
     <div class="row form-group">
-        <div class="col-sms-12 col-sm-12">
+        <div class="col-sms-6 col-sm-6">
           [[Form::label('fbo', 'FBO *') ]]
-          [[ Form::text('fbo', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
+          [[ Form::text('fbo', null, ['ng-value'=>"@{{ estimate[0].fbo}}",'class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
+        </div>
+        <div class="col-sms-6 col-sm-6">
+          [[Form::label('Localidad', 'Localidad *') ]]
+          [[ Form::text('localidad', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.localidad']) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -32,7 +36,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('avion_id', 'Matricula del Avion') ]]
-          [[ Form::text('avion_id', null, ['class' => 'input-text full-width','ng-model'=>'invoice.avion_id' ]) ]]
+          [[ Form::select('avion_id',array($estimate[0]->avion_id=>$estimate[0]->matricula), $estimate[0]->avion_id, ['class' => 'input-text full-width','ng-model'=>'invoice.avion_id' ]) ]]
         </div>
     </div>
     <div class="row form-group">

@@ -175,5 +175,12 @@ app.controller("EditCompanyCtrl", function($scope , $http){
     };//fin save
 });//EditCompanyCtrl
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
-  $scope.invoice = {};
+
+  /*angular.forEach($scope.estimate, function (value, index) {
+
+   //$scope.estimate.log(value[index].matricula + ' ' + index);
+ });*/
+ $scope.invoice = {
+   };
+
 }]);//fin controller companys
