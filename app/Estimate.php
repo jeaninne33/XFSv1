@@ -22,14 +22,4 @@ class Estimate extends Model
     public function date_estimates(){
       return $this->hasMany('XFS\date_estimates','estimate_id','id');
     }
-    public function profit($cat) {
-      if($cat=='0'){
-        return 0.00;
-      }else if($cat=='1'){
-            return 0.10;
-      }else if($cat=='2'){
-            return 0.20;
-      }else if($cat=='3'){
-            return 0.30;
-    }//fin metodp
 }

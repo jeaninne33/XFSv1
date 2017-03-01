@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" ng-init="">
+<ul class="nav nav-tabs" ng-init="estimate={{$estimate}}"> {{var_dump($estimate)}}
   <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu2">Datos de la Compañia</a></li>
@@ -10,13 +10,7 @@
   <div id="home" class="tab-pane fade in active">
     <h3>Datos Generales de la Factura</h3>
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-6" >
-          <input type="text" name="x" id="x" value="{{ $estimate[0]->nombre}}" ng-model="invoice.x"/>
-           [[ Form::label('localidad', 'Localidad *')]]<!--  -->
-           [[Form::text('localidad', null, ['value'=>'probando','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.localidad' ])]]
-
-        </div>
-        <div class="col-sms-6 col-sm-6">
+        <div class="col-sms-12 col-sm-12">
           [[Form::label('fbo', 'FBO *') ]]
           [[ Form::text('fbo', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
         </div>

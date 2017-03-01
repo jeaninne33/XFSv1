@@ -12,7 +12,7 @@
 
 <!-- if there are creation errors, they will show here -->
 
-<div ng-controller="InvoiceCtrl" class="col-sm-12 no-float no-padding">
+<div ng-controller="InvoiceCtrl" class="col-sm-12 no-float no-padding" ng-init="invoice.localidad={{$estimate[0]->localidad}}">
 
   @include('errors.message')
 

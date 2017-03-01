@@ -4,6 +4,7 @@ namespace XFS\Http\Controllers;
 
 use Illuminate\Http\Requests;
 use XFS\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use XFS\Company;
 use XFS\Estimate;
@@ -36,7 +37,7 @@ class InvoiceController extends Controller
     public function create(Request $request, $id)
     {
         //(object)  // load the create form (app/views/nerds/create.blade.php)
-        $estimate=DB::select(
+        $estimates=DB::select(
         DB::raw("SELECT
         e.id,
         e.fbo,
@@ -50,9 +51,12 @@ class InvoiceController extends Controller
         e.estado,
         e.fecha_soli,
         d.matricula
-        FROM estimates e, companys c, aviones d
-        where c.id=e.company_id and d.id=e.avion_id and e.id='$id'
-          " ));
+        FROM estimates e
+        INNER JOIN companys c ON c.id=e.company_id
+        INNER JOIN aviones d ON d.id=e.avion_id
+        where e.id='$id'" ));
+
+        $estimate = collect($estimates);
           //$estimate=$estimate;
       /*  $estimate = Estimate::findOrFail($id);
        $datos_estimado=$estimate->date_estimates();
