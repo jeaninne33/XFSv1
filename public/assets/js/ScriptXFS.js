@@ -1,9 +1,6 @@
 
 function saveEstimates(){
-  var table = $('#example1').DataTable();
-
-
-
+    var table = $('#example1').DataTable();
     var company_id=$('#company_id').val();
     var prove_id=$('#prove_id').val();
     var estado=$('#estado').val();
@@ -40,8 +37,9 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
   $.ajax({
     type: 'POST',
     url:'/estimates/store',
-    dataType:'json'
-    data: { idServicio:ID,companyid:company_id,proveid:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,localida:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas },
+    dataType:'json',
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,localida:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas,Estimado },
     success: function (estimado) {
             alert('estimado registrado con exito');
             //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
