@@ -84,6 +84,8 @@ class EstimatesController extends Controller
      */
     public function store(Request $request)
     {
+      $data=$request->all();
+      $dateE=$data['Estimado'];
       $estimates = new Estimate;
       $date_estimates= new date_estimates;
       $estimates->company_id=$request->input('company_id');
@@ -102,7 +104,17 @@ class EstimatesController extends Controller
       $estimates->tipo_hab=$request->input('tipo_hab');
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
       $estimates->save();
-  
+      foreach ($dateE as $i => $datos) {
+        $date_estimates->servicio_id=$dateE[0];
+        $date_estimates->cantidad=$dateE[3];
+        $date_estimates->precio=$dateE[4];
+        $date_estimates->subtotal=$dateE[5];
+        $date_estimates->ganancia=$dateE[6];
+        $date_estimates->Total=$dateE[7];
+
+        $date_estimates->save();        
+      }
+
     //  $idEstimate=Estimate::last();
     //  dd($request->input('tbEstimates'))
     //  $tbestimates=$request->input('tnEstimates');
