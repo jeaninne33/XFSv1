@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth'], function()
       'as' => 'principal',
       'uses' => 'AdminController@index'
   ]);
+    Route::resource('invoices', 'InvoiceController');
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');
   Route::resource ('invoices','InvoiceController');

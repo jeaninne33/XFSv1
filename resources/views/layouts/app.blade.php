@@ -18,7 +18,7 @@
     <meta name="generator" content="HTML,BOOTSTRAP,JAVASCRIPT,JQUERY" />
     <!--<meta name="robots" content=""-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Meta Tags -->
     <meta charset="utf-8">
 
@@ -48,7 +48,7 @@
         <div class="container">
 
 
-              <img src="{{ asset('assets/images/LOGO XFS.png')}}"  height="28"/>
+              <img src="{{ asset('assets/images/LOGO XFS.png')}}"/>
 
 
 
