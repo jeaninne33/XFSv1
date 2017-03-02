@@ -95,12 +95,14 @@ $scope.save =  function($event){
 //controlador de editar
 app.controller("EditCompanyCtrl", function($scope , $http){
   $scope.company = {
-        pais_id:0 };
-//alert($scope.company.pais_id);
+    pais_id:0
+  };
   $scope.airplanes = [];
   $scope.states = [];
+//  alert($("select#pais_id").val());
   $scope.getStates  = function () {
     var url  = "/state/"+$scope.company.pais_id;
+    //alert($scope.company.pais_id);
     $http.get(url).then(
       function(resp){
         $scope.states  =  resp.data;
@@ -110,7 +112,6 @@ app.controller("EditCompanyCtrl", function($scope , $http){
       }
     );
   };
-//  $scope.getStates();
   $scope.validate_air= function ($air) {
     if($air.tipo==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
       return false;
@@ -173,6 +174,7 @@ app.controller("EditCompanyCtrl", function($scope , $http){
       }
      );//fin then
     };//fin save
+
 });//EditCompanyCtrl
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 
@@ -180,7 +182,8 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 
    //$scope.estimate.log(value[index].matricula + ' ' + index);
  });*/
- $scope.invoice = {
-   };
+ $scope.invoice = {};
+  $scope.avion = [];
+ //alert($scope.invoice.avion_id);
 
 }]);//fin controller companys

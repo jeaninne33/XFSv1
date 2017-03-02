@@ -11,8 +11,8 @@
 <br/>
 
 <!-- if there are creation errors, they will show here -->
-
-<div ng-controller="InvoiceCtrl" class="col-sm-12 no-float no-padding" ng-init="invoice.localidad={{$estimate[0]->localidad}}">
+<?php $avion = array('id'=>$estimate[0]->avion_id, 'nombre'=> $estimate[0]->matricula);?>
+<div ng-controller="InvoiceCtrl" class="col-sm-12 no-float no-padding" ng-init="invoice={{json_encode($invoice)}}; avion={{json_encode($avion)}}; data_invoices={{json_encode($datos_estimado)}}">
 
   @include('errors.message')
 
@@ -24,5 +24,8 @@
 </div>
 @endsection
 @section('scripts')
-
+  <script>
+    $('#m5').removeClass('');
+    $('#m5').addClass('active');
+  </script>
 @endsection

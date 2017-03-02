@@ -64,17 +64,23 @@ class InvoiceController extends Controller
               'matricula' => $estimate[0]->matricula,
             );
 
-        //$invoice=collect($invoice);
-         //(object);collect
-          //$estimate=$estimate;
-      /*  $estimate = Estimate::findOrFail($id);
-       $datos_estimado=$estimate->date_estimates();
-       $id=$estimate->company();
-       $paises = Pais::lists('nombre','id');
-        $paises->prepend('Seleccione el País');
-->with('invoice', '$invoice')
-        */
-        return view('invoices.create', compact('estimate'), compact('invoice'));
+        $datos=DB::select(
+        DB::raw("SELECT
+        id,
+        cantidad,
+        descuento,
+        precio,
+        recarga,
+        subtotal,
+        subtotal_recarga,
+        total_recarga,
+        total,
+        servicio_id,
+        categoria_id
+        FROM dates_estimates
+        where estimate_id='$id'" ));
+        $datos_estimado =collect( $datos);
+        return view('invoices.create', compact('estimate'), compact('invoice'))->with('datos_estimado',$datos_estimado);
     }
     /**
      * Store a newly created resource in storage.

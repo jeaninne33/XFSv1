@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" ng-init="invoice={{json_encode($invoice)}}">
+<ul class="nav nav-tabs" >
   <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu2">Datos de la Compañia</a></li>
@@ -6,7 +6,7 @@
   <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li>
 </ul>
 
-<div class="tab-content">
+<div class="tab-content">{{var_dump(json_encode($avion))}}
   <div id="home" class="tab-pane fade in active">
     <h3>Datos Generales de la Factura</h3>
     <div class="row form-group">
@@ -36,7 +36,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('avion_id', 'Matricula del Avion') ]]
-          [[ Form::select('avion_id',array($estimate[0]->avion_id=>$estimate[0]->matricula), $estimate[0]->avion_id, ['class' => 'input-text full-width','ng-model'=>'invoice.avion_id' ]) ]]
+          [[ Form::select('avion_id',  array('Seleccione'), $estimate[0]->avion_id, [ 'ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -48,35 +48,46 @@
   </div>
   <div id="menu1" class="tab-pane fade">
     <h3>Items de la Factura</h3>
-    <div class="row form-group">
-        <div class="col-sms-12 col-sm-12">
-           [[ Form::label('correo', 'Correo *')]]
-           [[Form::email('correo', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.correo'])]]
+    <table border="0" style="with:900px;" class="table table-hover">
+      <thead>
+    <tr>
+      <th>Servicio</th>
+      <th>Descripción</th>
+      <th>Fecha del Servicio</th>
+      <th>Cantidad</th>
+      <th>$Precio</th>
+      <th>$Subtotal</th>
+      <th>$Ganancia</th>
+      <th>$Total</th>
+      <th></th>
+    </tr>
+  </thead>
+   <tbody>
+      <tr>
+        <td>
+          [[ Form::select('servicio_id', array('id'=>'servicios'), null, array('id'=>'servicios', 'ng-model'=>'datos.resumen')) ]]
+        </td>
+        <td>
+          [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
+        </td>
+        <td>
+          [[ Form::date('fecha', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha' ]) ]]
+        </td>
+        <td>
+          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0']) ]]
+        </td>
+        <td>
+            [[ Form::text('precio', null, ['id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00']) ]]
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+   </table>
 
-        </div>
 
-    </div>
-    <div class="row form-group">
-      <div class="col-sms-6 col-sm-6">
-        [[Form::label('telefono_admin', 'Teléfono *') ]]
-        [[ Form::text('telefono_admin', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.telefono_admin']) ]]
-      </div>
-        <div class="col-sms-6 col-sm-6">
-          [[ Form::label('celular', 'Celular')]]
-        [[ Form::text('celular', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.celular']) ]]
-        </div>
-
-
-    </div>
-    <div class="row form-group">
-      <div class="proveedor" style="display:none;" >
-        <div class="col-sms-12 col-sm-12">
-           [[ Form::label('servicio_disp', 'Tipo de Servicio Disponible *')]]
-            [[ Form::select('servicio_disp', array('' => 'Seleccione','Av. General','Commercial','Fuel Release'), null, ['id' => 'servicio_disp','class' => 'selector full-width', 'required' => 'required' ,'ng-model'=>'invoice.servicio_disp']) ]]
-        </div>
-      </div>
-
-    </div>
   </div>
   <div id="menu2" class="tab-pane fade">
     <h3>Datos del Cliente</h3>

@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('contenido')
-<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="company={{$companys}}; airplanes={{$companys->aviones}}; " >
+<?php $estados = array('id'=>$companys->estado->id, 'nombre'=> $companys->estado->nombre);?>
+<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="company={{json_encode($companys)}}; airplanes={{json_encode($companys->aviones)}}; paises={{json_encode($paises)}}; states={{json_encode($estados)}}" >
       <h2>Editar Compañia <strong> @{{ company.nombre }}</strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>

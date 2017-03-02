@@ -22,7 +22,10 @@ class Invoice extends Model
     public function proveedor() {
       return $this->belongsTo('XFS\Company','id', 'prove_id');
     }
-    
+    public function datos() {
+        return $this->hasMany('XFS\Date_invoice', 'invoice_id', 'id');
+   }
+
     public function estados($estado) {
       if($estado=='1'){
         return 'No pagado';

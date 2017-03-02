@@ -52,8 +52,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $paises = Pais::lists('nombre','id');
-        $paises->prepend('Seleccione el País');
+        $paises = Pais::select('id', 'nombre')->get();
         return view('companys.create', compact('paises'));
     }
 
@@ -133,7 +132,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
       $companys = Company::findOrFail($id);
-      $paises = Pais::lists('nombre','id');
+      $paises = Pais::select('id', 'nombre')->get();
        // show the edit form and pass the nerd
       return view('companys.edit', compact('paises'))->with('companys',$companys);
     }

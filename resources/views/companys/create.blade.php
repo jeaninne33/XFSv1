@@ -12,7 +12,7 @@
 
 <!-- if there are creation errors, they will show here -->
 
-<div ng-controller="CompanyCtrl" class="col-sm-12 no-float no-padding">
+<div ng-controller="CompanyCtrl" class="col-sm-12 no-float no-padding"  ng-init="paises={{json_encode($paises)}};" >
 
   @include('errors.message')
 
