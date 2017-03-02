@@ -56,14 +56,25 @@ class InvoiceController extends Controller
         INNER JOIN aviones d ON d.id=e.avion_id
         where e.id='$id'" ));
 
-        $estimate = collect($estimates);
+        $estimate =collect( $estimates);
+        $invoice=array(
+              'localidad'  => $estimate[0]->localidad,
+              'fbo' => $estimate[0]->fbo,
+              'avion_id' => $estimate[0]->avion_id,
+              'matricula' => $estimate[0]->matricula,
+            );
+
+        //$invoice=collect($invoice);
+         //(object);collect
           //$estimate=$estimate;
       /*  $estimate = Estimate::findOrFail($id);
        $datos_estimado=$estimate->date_estimates();
        $id=$estimate->company();
        $paises = Pais::lists('nombre','id');
-        $paises->prepend('Seleccione el País');*/
-        return view('invoices.create', compact('estimate'))->with('datos_estimado','$datos_estimado')->with('company', '$company');
+        $paises->prepend('Seleccione el País');
+->with('invoice', '$invoice')
+        */
+        return view('invoices.create', compact('estimate'), compact('invoice'));
     }
     /**
      * Store a newly created resource in storage.
