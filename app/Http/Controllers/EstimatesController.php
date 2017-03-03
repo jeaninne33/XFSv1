@@ -84,18 +84,11 @@ class EstimatesController extends Controller
      */
     public function store(Request $request)
     {
-      $dataE=$request->input('Estimado');
-      // foreach ($dataE as $key => $value) {
-      //
-      //   if ($request->ajax()) {
-      //     return $value['ID'];
-      //   }
-      // }
-
-
-      //$dateE=$data['Estimado'];
       $estimates = new Estimate;
       $date_estimates= new date_estimates;
+
+      $dataE=$request->input('Estimado');
+
       $estimates->company_id=$request->input('company_id');
       $estimates->prove_id=$request->input('prove_id');
       $estimates->estado=$request->input('estado');
@@ -111,36 +104,58 @@ class EstimatesController extends Controller
       $estimates->tipo_cama=$request->input('tipo_cama');
       $estimates->tipo_hab=$request->input('tipo_hab');
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
+      $estimates->categoria=$request->input('tipoCategoria');
+      $estimates->descuento=$request->input('descuento');
+      $estimates->ganancia=$request->input('gananciatotal');
+      $estimates->subtotal=$request->input('subtotal');
+      $estimates->total=$request->input('total');
       $estimates->save();
-      foreach ($dataE as $i => $datos) {
-        $date_estimates->servicio_id=$datos['ID'];
-        $date_estimates->cantidad=$datos['Cantidad'];
-        $date_estimates->precio=$datos['Precio'];
-        $date_estimates->subtotal=$datos['Subtotal'];
-        $date_estimates->ganancia=$datos['Ganancia'];
-        $date_estimates->Total=$datos['Total'];        
-      }
-      $date_estimates->save();
-      if ($request->ajax()) {
-        return $dataE;
-      }
-    //  $idEstimate=Estimate::last();
-    //  dd($request->input('tbEstimates'))
-    //  $tbestimates=$request->input('tnEstimates');
-    //  foreach ($tbestimates as $key => $estimado) {
-      //  $date_estimates->cantidad=$estimado->cantidad;
-        // $date_estimates->precio=$request->input('precio');
-        // $date_estimates->descuento=$request->input('descuento');
-        // $date_estimates->recarga=$request->input('recarga');
-        // $date_estimates->subtotal=$request->input('subtotal');
-        // $date_estimates->subtotal_recarga=$request->input('subtotal_recarga');
-        // $date_estimates->total_recarga=$request->input('total_recarga');
-  //    }
 
-      //$date_estimates->estimate_id=$idEstimate->id;
-    //  $date_estimates->servicio_id=$request->input('servicio_id');
-    //  $date_estimates->save();
+      foreach ($dataE as $i => $datos) {
+        $dateEstimates = date_estimates::create(array(
+          'servicio_id' => $datos['ID'],
+          'cantidad' => $datos['Cantidad'],
+          'precio'=> $datos['Precio'],
+          'subtotal'=>$datos['Subtotal'],
+          'recarga'=>$datos['Ganancia'],
+          'total'=>$datos['Total'],
+          'estimate_id'=>$estimates->id,
+          'descuento'=>$request->input('descuento'),
+          'total_recarga'=>$request->input('gananciatotal')
+
+        ));
+      }
+      // for ($i=0; $i < sizeof($dataE) ; $i++) {
+      //     $date_estimates->servicio_id=$dataE[$i]['ID'];
+      //     $date_estimates->cantidad=$dataE[$i]['Cantidad'];
+      //     $date_estimates->precio=$dataE[$i]['Precio'];
+      //     $date_estimates->subtotal=$dataE[$i]['Subtotal'];
+      //     $date_estimates->recarga=$dataE[$i]['Ganancia'];
+      //     $date_estimates->total=$dataE[$i]['Total'];
+      //     $date_estimates->estimate_id=$estimates->id;
+      //     $date_estimates->descuento=$request->input('descuento');
+      //     $date_estimates->total_recarga=$request->input('gananciatotal');
+      //     $date_estimates->save();
+      // }
+
+      // foreach ($dataE as $i => $datos) {
+      //   $date_estimates->servicio_id=$datos['ID'];
+      //   $date_estimates->cantidad=$datos['Cantidad'];
+      //   $date_estimates->precio=$datos['Precio'];
+      //   $date_estimates->subtotal=$datos['Subtotal'];
+      //   $date_estimates->recarga=$datos['Ganancia'];
+      //   $date_estimates->total=$datos['Total'];
+      //   $date_estimates->estimate_id=$estimates->id;
+      //   $date_estimates->descuento=$request->input('descuento');
+      //   $date_estimates->total_recarga=$request->input('gananciatotal');
+      //   $date_estimates->save();
+      // }
+      $mjs='El estimado se Agrego Correctamente';
+      if ($request->ajax()) {
+        return $mjs;
         return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
+      }
+
     }
 
     /**

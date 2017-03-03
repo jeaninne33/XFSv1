@@ -94,6 +94,7 @@
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
           [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
+          <input type="text" id="tipoCategoria" hidden="hidden"/>
         </div>
     </div>
     <div class="row form-group">
@@ -210,7 +211,7 @@
       </div>
       <div class="col-sms-6 col-sm-4">
         [[Form::label('descripcion', 'Descripción') ]]
-        [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
+        [[ Form::text('descripcion', null, ['readonly','id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required']) ]]
       </div>
   </div>
   <div class="row">

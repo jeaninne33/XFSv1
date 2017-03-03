@@ -16,9 +16,35 @@ function saveEstimates(){
     var tipo_hab=$('#tipo_hab').val();
     var tipo_cama=$('#tipo_cama').val();
     var tipo_estrellas=$('#tipo_estrellas').val();
+    var descuento=$('#descuento').val().replace('%','');
+    var subtotal=$('#subtotal').val().replace('$','');
+    var totalDescuento=$('#totalDescuento').val().replace('$','');
+    var total=$('#total').val().replace('$','');
+    var tipoCategoria=$('#tipoCategoria');
+    var gananciatotal=$('#gananciatotal').val().replace('$','');
     var token =$('#token').val();
     var Estimado = new Array();
-    var List=[];
+    var DatosEstimado=[
+      company_id,
+      prove_id,
+      estado,
+      fecha_soli,
+      resumen,
+      metodo,
+      proximo_seguimiento,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      avion_id,
+      num_habitacion,
+      tipo_hab,
+      tipo_cama,
+      tipo_estrellas,
+      subtotal,
+      totalDescuento,
+      total,
+      tipoCategoria
+    ];
     var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
 //se recorre la tabla fila por fila y se inserta en un objeto json y se pasa por POST con ajax al controlador
 table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
@@ -28,25 +54,44 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
       'Servicio':data[1],
       'Descripcion':data[2],
       'Cantidad':data[3],
-      'Precio':data[4],
-      'Subtotal':data[5],
-      'Ganancia':data[6],
-      'Total':data[7]
+      'Precio':data[4].replace('$',''),
+      'Subtotal':data[5].replace('$',''),
+      'Ganancia':data[6].replace('$',''),
+      'Total':data[7].replace('$','')
     };
       Estimado.push(lista);
   });
+  $("#mensaje").css("display", "block");
+
   $.ajax({
     type: 'POST',
     url:'/estimates',
     dataType:'json',
     headers: {'X-CSRF-TOKEN': token},
-    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,cantidad_fuel:cantidad_fuel,localidad:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas,Estimado:Estimado },
+  //  data:{DatosEstimado:DatosEstimado,Estimado:Estimado,descuento:descuento,gananciatotal},
+    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,
+      resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,
+      fbo:fbo,cantidad_fuel:cantidad_fuel,localidad:localidad,
+      avion_id:avion_id,num_habitacion:num_habitacion,
+      tipo_hab:tipo_hab,tipo_cama:tipo_cama,
+      tipo_estrellas:tipo_estrellas,
+      Estimado:Estimado,
+      descuento:descuento,
+      totalDescuento:totalDescuento,
+      gananciatotal:gananciatotal,
+      total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
     success: function (estimado) {
-            alert('estimado registrado con exito');
+      $('#mensaje').toggleClass('alert alert alert-success');
+      $('#mensaje').html(estimado);
+      console.log(estimado);
+      //  window.location()
+    //   location.href ="/estimates/index";
             //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
         },
         //Mensaje de error en caso de fallo
         error: function (ex) {
+          $('#mensaje').toggleClass('alert alert alert-danger');
+          $('#mensaje').html('Ocurrio un error inesperado: '+ex);
             alert('Failed to retrieve states.' + ex);
         }
   });
@@ -106,6 +151,7 @@ function ajaxRenderSection(id) {
        var tab=$('#example').DataTable();
        var datos = tab.row( this ).data();
        var categoria=datos[7];
+       var tipoCategoria;
        var porcentaje;
           if (datos[6]=='client') {
             //trae el el listado de aviones de ese cliente mas su matricula
@@ -127,19 +173,23 @@ function ajaxRenderSection(id) {
               switch (categoria) {
                 case "PostPago":
                     porcentaje="0%";
+                    tipoCategoria=0;
                     break;
                 case "Prepago":
                     porcentaje="20%";
+                    tipoCategoria=1;
                     break;
                 case "De 1 a 15 días de crédito":
                     porcentaje="25%";
+                    tipoCategoria=2;
                     break;
                 case "De 16 a 30 días de crédito":
                     porcentaje="30%";
+                    tipoCategoria=3;
                     break;
               }
               $('#ganancia').val(porcentaje);
-
+              $('#tipoCategoria').val(tipoCategoria);
               if (telefono!="") {
                 $('select#metodo').val('Telefono')
                 metodoSeguimiento();
@@ -161,6 +211,7 @@ function ajaxRenderSection(id) {
           }
 
               $('#clientes').modal('toggle');
+
     });
         // $("td").click(function(event) {
         //    var row = $(this).attr("data-row");
