@@ -8,14 +8,15 @@ function saveEstimates(){
     var resumen=$('#resumen').val();
     var metodo=$('#metodo').val();
     var proximo_seguimiento=$('#proximo_seguimiento').val();
-    var fbo=$('#fbo').val();
+    var fbo=$('#nbFBO').val();
+    var cantidad_fuel=$('#cantidad_fuel').val();
     var localidad=$('#localidad').val();
     var avion_id=$('#avion_id').val();
     var num_habitacion=$('#num_habitacion').val();
     var tipo_hab=$('#tipo_hab').val();
     var tipo_cama=$('#tipo_cama').val();
     var tipo_estrellas=$('#tipo_estrellas').val();
-  //  var Estimado=[];
+    var token =$('#token').val();
     var Estimado = new Array();
     var List=[];
     var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
@@ -36,10 +37,10 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
   });
   $.ajax({
     type: 'POST',
-    url:'/estimates/store',
+    url:'/estimates',
     dataType:'json',
-    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,localida:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas,Estimado },
+    headers: {'X-CSRF-TOKEN': token},
+    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,fbo:fbo,cantidad_fuel:cantidad_fuel,localidad:localidad,avion_id:avion_id,num_habitacion:num_habitacion,tipo_hab:tipo_hab,tipo_cama:tipo_cama,tipo_estrellas:tipo_estrellas,Estimado:Estimado },
     success: function (estimado) {
             alert('estimado registrado con exito');
             //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
@@ -52,6 +53,8 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
 }
 
 function ajaxRenderSection(id) {
+  var table = $('#example').DataTable();
+    table.clear();
         $.ajax({
             type: 'GET',
             url:'/clientes/'+id,
@@ -59,8 +62,7 @@ function ajaxRenderSection(id) {
             success: function (data) {
               //  $('#datos').empty();
               var categoria;
-              var table = $('#example').DataTable();
-                table.clear();
+
                 $.each(data, function(index, value){
               /* Vamos agregando a nuestra tabla las filas necesarias */
             switch (value.categoria) {

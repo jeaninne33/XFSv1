@@ -19,8 +19,9 @@
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
 [[ Form::open(['route'=>'estimates.store', 'method'=> 'POST']) ]]
+
   @include('estimates.partials.fields')
-[[ Form::submit('Agregar Estimado', array('class' => 'btn btn-primary')) ]]
+[[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]
 [[ Form::close() ]]
 </div>
 @endsection

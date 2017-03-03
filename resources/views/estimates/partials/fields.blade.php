@@ -9,7 +9,7 @@
 </ul>
 <!-- Trigger the modal with a button -->
 
-
+<input type="hidden" name="_token" id="token" value="{{csrf_token()}}"/>
 <!-- Modal -->
 <div id="clientes" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -42,18 +42,18 @@
   <div id="home" class="tab-pane fade  in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-3">
+        <div id="NroEstimado" style="display:none" class="col-sms-6 col-sm-3">
            [[ Form::label('id', 'Numero de Estimado *')]]
            [[Form::text('id', null, ['class' => 'input-text full-width','readonly' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-4">
-          [[Form::label('Cliente', 'Cliente') ]]
+          [[Form::label('Cliente', 'Cliente *') ]]
           @if ($indicador==0)
-            [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width' ]) ]]
+            [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
             [[Form::text('company_id',null,['id'=>'company_id','hidden'])]]
           @else
-            [[Form::text('nombreC', $cliente->nombreC, ['id'=>'nombreC','class' => 'input-text full-width' ]) ]]
+            [[Form::text('nombreC', $cliente->nombreC, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
             [[Form::text('company_id',$cliente->company_id,['id'=>'company_id','hidden'])]]
           @endif
 
@@ -68,7 +68,7 @@
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Proveedor', 'Proveedor *') ]]
           @if ($indicador==0)
-            [[Form::text('nombreP',null, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
+            [[Form::text('nombreP',null, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required', 'readonly' ]) ]]
             [[Form::text('prove_id',null,['id'=>'prove_id','hidden'])]]
           @else
             [[Form::text('nombreP', $proveedor->nombreP, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
@@ -82,7 +82,8 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('Estado', 'Estado *') ]]
-          [[ Form::select('estado',array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'),['id'=>'estado','class' => 'input-text full-width' ,  'required' => 'required' ]) ]]
+
+          [[ Form::select('estado', array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['id' => 'estado','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -153,7 +154,7 @@
     <div class="row form-group">
         <div class="col-sms-12 col-sm-6">
            [[ Form::label('fbo', 'FBO *')]]
-           [[Form::text('fbo', null, ['id'=>'fbo','class' => 'input-text full-width' ])]]
+           [[Form::text('fbo', null, ['id'=>'nbFBO','class' => 'input-text full-width' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-6">
@@ -186,7 +187,7 @@
       </div>
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Tipo de Habitación *') ]]
-        [[ Form::select('tipo_hab', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
+        [[ Form::select('tipo_hab', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_hab','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
     </div>
     <div class="row form-group">
