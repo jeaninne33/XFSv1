@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use XFS\Company;
 use XFS\Estimate;
+use XFS\Servicio;
 use XFS\Invoice;
 use XFS\Pais;
 use XFS\Avion;
@@ -50,6 +51,10 @@ class InvoiceController extends Controller
         c.categoria,
         e.estado,
         e.fecha_soli,
+        e.subtotal,
+        e.ganancia,
+        e.descuento,
+        e.total,
         d.matricula
         FROM estimates e
         INNER JOIN companys c ON c.id=e.company_id
@@ -62,25 +67,33 @@ class InvoiceController extends Controller
               'fbo' => $estimate[0]->fbo,
               'avion_id' => $estimate[0]->avion_id,
               'matricula' => $estimate[0]->matricula,
+              'categoria'=> $estimate[0]->categoria,
+              'subtotal'=> $estimate[0]->subtotal,
+              'ganancia'=> $estimate[0]->ganancia,
+              'descuento'=> $estimate[0]->descuento,
+              'total'=> $estimate[0]->total
             );
 
         $datos=DB::select(
         DB::raw("SELECT
-        id,
-        cantidad,
-        descuento,
-        precio,
-        recarga,
-        subtotal,
-        subtotal_recarga,
-        total_recarga,
-        total,
-        servicio_id,
-        categoria_id
-        FROM dates_estimates
+        a.id,
+        a.cantidad,
+        a.descuento,
+        a.precio,
+        a.recarga,
+        a.subtotal,
+        a.subtotal_recarga,
+        a.total_recarga,
+        a.total,
+        a.servicio_id,
+        a.categoria_id,
+        b.descripcion
+        FROM dates_estimates a
+        INNER JOIN servicios b on a.servicio_id=b.id
         where estimate_id='$id'" ));
         $datos_estimado =collect( $datos);
-        return view('invoices.create', compact('estimate'), compact('invoice'))->with('datos_estimado',$datos_estimado);
+        $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+        return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
     }
     /**
      * Store a newly created resource in storage.

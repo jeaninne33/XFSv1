@@ -178,12 +178,68 @@ app.controller("EditCompanyCtrl", function($scope , $http){
 });//EditCompanyCtrl
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 
-  /*angular.forEach($scope.estimate, function (value, index) {
+   $scope.invoice = {};
+   $scope.avion = [];
+   $scope.servicios = {};
+   $scope.data_invoices = [];
+   //alert($scope.invoice.avion_id);
+   $scope.delete = function(index){//delete item factura specific
+        $scope.data_invoices.splice(index, 1);
+   };
+   $scope.search_descrip = function(obj, key, value){//delete item factura specific
+         for (var i = 0; i < $scope.servicios.length; i++) {
+            if (obj[i][key] === value) {
+                return obj[i].descripcion;
+            }
+        }//fin para
+      return null;
+   };
+   $scope.inicializar = function(index){//
+       var servicio_id=$scope.data_invoices[index].servicio_id;
+       var descripcion=$scope.search_descrip($scope.servicios,'id', servicio_id);
+        $scope.data_invoices[index].cantidad=0;
+        $scope.data_invoices[index].precio=0.00;
+        $scope.data_invoices[index].subtotal=0.00;
+        $scope.data_invoices[index].total=0.00;
+        $scope.data_invoices[index].descripcion=descripcion;
+      //alert($scope.data_invoices[index].cantidad);
+   };
+   $scope.categoria = function(a){//
+     //alert(a);
+     if(a=='0'){
+       return 0.00;
+     }else if(a=='1'){
+         return 0.20;
+     }else if(a=='2'){
+           return 0.25;
+     }else if(a=='3'){
+          return 0.30;
+     }
+      //alert($scope.data_invoices[index].cantidad);
+   };
+   $scope.calcular = function(index){//calculate operations aritmetics
+      var categoria=$scope.categoria($scope.invoice.categoria);
+      var precio=parseFloat($scope.data_invoices[index].precio);
+      var cantidad=parseFloat($scope.data_invoices[index].cantidad);
+      var subtotal=(cantidad*precio).toFixed(2);
+      var ganancia=parseFloat(categoria*subtotal);
 
-   //$scope.estimate.log(value[index].matricula + ' ' + index);
- });*/
- $scope.invoice = {};
-  $scope.avion = [];
- //alert($scope.invoice.avion_id);
-
+      var total=ganancia+subtotal;
+      //alert(total);
+      var f_subtotal=parseFloat($scope.invoice.subtotal);
+      $scope.data_invoices[index].subtotal=subtotal;
+      $scope.data_invoices[index].ganancia=ganancia;
+      $scope.data_invoices[index].total=total;
+       f_subtotal=f_subtotal+total;
+      $scope.invoice.subtotal=f_subtotal.toFixed(2);
+   };
+   $scope.validate_decimal=function(valor){
+    /*var RE = /^\d*(\.\d{1})?\d{0,1}$/;
+    if (RE.test(valor)) {
+        return true;
+    } else {
+        return false;
+    }*/
+   //}
+   };
 }]);//fin controller companys

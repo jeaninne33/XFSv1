@@ -48,7 +48,7 @@ class editarCompanysRequest extends Request
           'telefono_admin'=> 'required|numeric|min:6',
           'banco'=> 'max:50',
           'cuenta'=> 'max:50',
-          'direccion_cuenta'=> 'max:50',
+          'direccion_cuenta'=> 'required|max:50',
           'aba'=> 'max:50',
           'tipo'=> 'required|in:client,prove,cp',
           'cargo'=> 'required|max:50',

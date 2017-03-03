@@ -1530,8 +1530,8 @@ input.input-text, select, textarea, span.custom-select {
 }
 
 input.input-text, textarea, span.custom-select {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 7px;
+  /*padding-right: 15px;*/
   height: 34px;
 }
 input.input-text.input-large, textarea.input-large, span.custom-select.input-large {
