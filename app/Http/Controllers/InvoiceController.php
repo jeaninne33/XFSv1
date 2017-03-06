@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
 use DB;
+use XFS\Http\Requests\CrearInvoicesRequest;
 
 class InvoiceController extends Controller
 {
@@ -44,6 +45,7 @@ class InvoiceController extends Controller
         e.fbo,
         e.localidad,
         e.company_id,
+        e.prove_id,
         e.avion_id,
         c.nombre,
         c.direccion_cuenta,
@@ -55,9 +57,11 @@ class InvoiceController extends Controller
         e.ganancia,
         e.descuento,
         e.total,
-        d.matricula
+        d.matricula,
+        f.nombre as prove
         FROM estimates e
         INNER JOIN companys c ON c.id=e.company_id
+        INNER JOIN companys f ON f.id=e.prove_id
         INNER JOIN aviones d ON d.id=e.avion_id
         where e.id='$id'" ));
 
@@ -71,8 +75,11 @@ class InvoiceController extends Controller
               'subtotal'=> $estimate[0]->subtotal,
               'ganancia'=> $estimate[0]->ganancia,
               'descuento'=> $estimate[0]->descuento,
-              'total'=> $estimate[0]->total
-            );
+              'total'=> $estimate[0]->total,
+              'estimate_id'=> $estimate[0]->id,
+              'company_id'=> $estimate[0]->company_id,
+              'prove_id'=> $estimate[0]->prove_id
+              );
 
         $datos=DB::select(
         DB::raw("SELECT
@@ -109,7 +116,7 @@ class InvoiceController extends Controller
     */
     //CrearCompanys
     //Request $request
-   public function store(CrearCompanysRequest $request)
+   public function store(CrearInvoicesRequest $request)
    {
 
    }//fin store

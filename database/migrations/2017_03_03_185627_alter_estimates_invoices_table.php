@@ -13,10 +13,12 @@ class AlterEstimatesInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
+            $table->string('resumen',500)->nullable()->change();
             //
         });
         Schema::table('estimates', function (Blueprint $table) {
-            //
+            $table->double('total_descuento', 10, 2)->default(0);
+            $table->string('resumen',500)->nullable()->change();
         });
     }
 
@@ -29,6 +31,12 @@ class AlterEstimatesInvoicesTable extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             //
+              $table->string('resumen',500)->change();
+        });
+        Schema::table('estimates', function (Blueprint $table) {
+            //
+              $table->dropColumn('total_descuento');
+              $table->string('resumen',500)->change();
         });
     }
 }

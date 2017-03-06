@@ -10,6 +10,12 @@
   <div id="home" class="tab-pane fade in active">
     <h3>Datos Generales de la Factura</h3>
     <div class="row form-group">
+        <div class="col-sms-6 col-sm-6 ">
+          [[Form::label('ID del Estimado') ]]
+          [[ Form::text('estimate_id', null, ['readonly','class' => 'input-text full-width' ,'ng-model'=>'invoice.estimate_id']) ]]
+        </div>
+    </div>
+    <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fbo', 'FBO *') ]]
           [[ Form::text('fbo', null, ['ng-value'=>"@{{ estimate[0].fbo}}",'class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
@@ -78,7 +84,7 @@
           [[ Form::date('fecha_servicio', null, ['class' => 'input-text full-width',  'required' => 'required', 'ng-model'=>'dato.fecha_servicio'] ) ]]
         </td>
         <td>
-          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0', 'ng-model'=>'dato.cantidad']) ]]
+          [[ Form::text('cantidad', null, ['id'=>'cantidad','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'0', 'ng-model'=>'dato.cantidad',' ng-change'=>'calcular($index)']) ]]
         </td>
         <td>
             [[ Form::text('precio', null, ['ng-pattern'=>'/^[0-9]+(\.[0-9]{1,2})?$/','step'=>"0.01",'id'=>'precio','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00',' ng-change'=>'calcular($index)','ng-model'=>'dato.precio']) ]]
@@ -87,7 +93,7 @@
           [[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00','readonly', 'ng-model'=>'dato.subtotal']) ]]
         </td>
         <td>
-          [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'dato.ganancia']) ]]
+          [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'dato.recarga']) ]]
         </td>
         <td>
           [[ Form::text('total', null, ['id'=>'total','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'dato.total']) ]]
@@ -96,13 +102,18 @@
            <a class="btn-delete" title="Eliminar"  ng-click="delete($index)"aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
         </td>
       </tr>
+      <tfoot>
+        <tr>
+          <td colspan="9"><!--<span class="help-block" ng-show="!form1.$pristine && !form1.precio.$valid"><p style="color:rgb(235, 160, 162)">  Precio Invalido! Debe introducir un decimal con 2 caracteres ej: 5.23 (Solo admite el .)</p>
+        </span>--></td>
+        </tr>
+      </tfoot>
         </tbody>
-      </table> <span class="help-block" ng-show="!form1.precio.$valid">
-                  <p style="color:rgb(235, 160, 162)">  Precio Invalido! Debe introducir un decimal con 2 caracteres ej: 5.23 (Solo admite el .)</p>
-                </span>
+      </table>
+
        <div class="row">
            <div class="col-sm-6 col-md-4 pull-right">
-            Subtotal: $[[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'invoice.subtotal']) ]]
+            Subtotal: $[[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly' ,'ng-model'=>'invoice.subtotal']) ]]
                 <br/>Descuento: %[[ Form::text('descuento', null, ['id'=>'descuento','class' => 'input-text' , 'required' => 'required','placeholder'=>'0.00%', 'readonly','ng-model'=>'invoice.descuento']) ]]
              <br/>Total Descuento: $ [[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'invoice.subtotal']) ]]
           </div>
@@ -118,9 +129,10 @@
   <div id="menu2" class="tab-pane fade">
     <h3>Datos del Cliente</h3>
     <h5>
+      [[ Form::hidden('company_id', null, ['id'=>'company_id','class' => 'input-text full-width' ,'ng-model'=>'invoice.company_id']) ]]
     <table border="0" style="with:600px;" class="table">
       <tr>
-        <td colspan="2"><strong>id: </strong> {{ $estimate[0]->id}}<br></td>
+        <td colspan="2"><strong>id: </strong> {{ $estimate[0]->company_id}}<br></td>
       </tr>
       <tr>
         <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $estimate[0]->nombre}}<br></td>

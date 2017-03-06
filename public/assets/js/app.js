@@ -185,6 +185,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
    //alert($scope.invoice.avion_id);
    $scope.delete = function(index){//delete item factura specific
         $scope.data_invoices.splice(index, 1);
+        $scope.invoice.subtotal=$scope.total();
    };
    $scope.search_descrip = function(obj, key, value){//delete item factura specific
          for (var i = 0; i < $scope.servicios.length; i++) {
@@ -197,7 +198,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
    $scope.inicializar = function(index){//
        var servicio_id=$scope.data_invoices[index].servicio_id;
        var descripcion=$scope.search_descrip($scope.servicios,'id', servicio_id);
-        $scope.data_invoices[index].cantidad=0;
+        $scope.data_invoices[index].cantidad=1;
         $scope.data_invoices[index].precio=0.00;
         $scope.data_invoices[index].subtotal=0.00;
         $scope.data_invoices[index].total=0.00;
@@ -217,29 +218,61 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
      }
       //alert($scope.data_invoices[index].cantidad);
    };
+   $scope.total = function(){//sum the total amount
+     var obj=$scope.data_invoices;
+     var acum=0;
+         for (var i = 0; i < $scope.data_invoices.length; i++) {
+            if (obj[i]['subtotal'] != null) {
+                acum=parseFloat((acum+parseFloat(obj[i].subtotal)).toFixed(2));
+            }
+        }//fin para
+      return acum;
+   };
    $scope.calcular = function(index){//calculate operations aritmetics
-      var categoria=$scope.categoria($scope.invoice.categoria);
-      var precio=parseFloat($scope.data_invoices[index].precio);
-      var cantidad=parseFloat($scope.data_invoices[index].cantidad);
-      var subtotal=(cantidad*precio).toFixed(2);
-      var ganancia=parseFloat(categoria*subtotal);
-
-      var total=ganancia+subtotal;
-      //alert(total);
-      var f_subtotal=parseFloat($scope.invoice.subtotal);
-      $scope.data_invoices[index].subtotal=subtotal;
-      $scope.data_invoices[index].ganancia=ganancia;
-      $scope.data_invoices[index].total=total;
-       f_subtotal=f_subtotal+total;
-      $scope.invoice.subtotal=f_subtotal.toFixed(2);
+     var precio=parseFloat($scope.data_invoices[index].precio);
+     var cantidad=parseInt($scope.data_invoices[index].cantidad);
+     if(precio!=0  && precio!=null){
+          var categoria=$scope.categoria($scope.invoice.categoria);
+          var subtotal=parseFloat((cantidad*precio).toFixed(2));//bien
+          var ganancia=parseFloat(categoria*subtotal);//si es numero
+          var total=ganancia+subtotal;
+          $scope.data_invoices[index].subtotal=subtotal;
+          $scope.data_invoices[index].recarga=ganancia;
+          $scope.data_invoices[index].total=total;
+          //  alert(typeof(totall));
+          $scope.invoice.subtotal=$scope.total();
+     }
    };
-   $scope.validate_decimal=function(valor){
-    /*var RE = /^\d*(\.\d{1})?\d{0,1}$/;
-    if (RE.test(valor)) {
-        return true;
-    } else {
-        return false;
-    }*/
-   //}
+   $scope.validate_precio= function ($air) {
+  /*   if($air.precio==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
+       return false;
+     }else{
+       return true;
+     }*/
    };
+   $scope.save =  function($event){
+       $event.preventDefault();
+       var invoice =  $scope.invoice;
+       invoice["_token"] =  $("input[name=_token]").val();
+       invoice.data_invoices  =  $scope.data_invoices;
+       $http.post('/invoices', invoice)
+       .then(
+       function(response){// success callback
+          if(response.data.message=="bien")  {
+            $scope.message = "Factura Agregada Exitosamente";
+             $scope.show_error =  false;
+         }else{//sin no bien
+           $scope.show_error =  true;
+           $scope.message =  false;//ocultamos el div del mensaje bien
+           $scope.message_error =  response.data.error;
+         }
+       },
+       function(response){// failure callback
+          $scope.message =  false;//ocultamos el div del mensaje bien
+           var errors = response.data;
+           $scope.show_error =  true;//mostramos el div del mensaje error
+           $scope.message_error =  errors;//
+       }
+      );//fin then
+     };//fin save
 }]);//fin controller companys
