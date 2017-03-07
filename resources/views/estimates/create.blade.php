@@ -8,7 +8,7 @@
 @section('contenido')
   <div id="mensaje" style="display:none" class="alert alert-danger alert-dismissable fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Error!</strong><label id='validar'></label><strong>Campos Requeridos!</strong>
+    <strong>Error! </strong><label id='validar'></label><strong>Campos Requeridos!</strong>
   </div>
 <h2>Agregar Estimados</h2>
 
