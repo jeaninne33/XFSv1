@@ -27,11 +27,11 @@ class CrearInvoicesRequest extends Request
     public function rules()
     {
         return [
-            'fecha' => 'required|date|date_format:Y-m-d',
+            'fecha' => 'required|date',
             'plazo'      => 'required',
-            'fecha_vencimiento'=> 'required|date|date_format:Y-m-d',
+            'fecha_vencimiento'=> 'required|date',
             'localidad'=> 'required|max:140',
-            'resumen'=> 'required|max:500',
+            'resumen'=> 'max:500',
             'fbo'=> 'required|max:150',
             'categoria'=> 'required|numeric',
             'descuento'=> 'required|numeric',
@@ -44,6 +44,16 @@ class CrearInvoicesRequest extends Request
             'avion_id'=> 'required',
             'informacion'=> 'max:150',
             'estado'=> 'required|max:250',
+            'fecha_pago'=> 'date',
+            'metodo_pago'=> 'max:250',
         ];
     }
+          public function messages()
+        {
+          return [
+              'fecha.required'=> 'El campo Fecha de la Factura es obligatorio',
+              'fecha_vencimiento.required' => 'El campo Fecha de Vencimientos es obligatorio',
+              'fecha.date'=> 'La Fecha de la Factura no corresponde con el formato Y-m-d',
+          ];
+       }
 }

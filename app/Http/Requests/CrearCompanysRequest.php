@@ -54,4 +54,12 @@ class CrearCompanysRequest extends Request
 
         ];
     }
+    public function messages()
+  {
+    return [
+        'pais_id.required'=> 'El campo Pais es obligatorio',
+        'codigop.max' => 'El campo Codigo Postal tiene un maximo de 7 caracteres',
+        'tipo_prove.in'=> 'El campo Tipo de Provedor no corresponde a las opciones',
+    ];
+ }
 }

@@ -10,6 +10,7 @@ use XFS\Company;
 use XFS\Estimate;
 use XFS\Servicio;
 use XFS\Invoice;
+use XFS\Date_invoice;
 use XFS\Pais;
 use XFS\Avion;
 use Illuminate\Support\Facades\Validator;
@@ -57,6 +58,7 @@ class InvoiceController extends Controller
         e.ganancia,
         e.descuento,
         e.total,
+        e.total_descuento,
         d.matricula,
         f.nombre as prove
         FROM estimates e
@@ -76,32 +78,32 @@ class InvoiceController extends Controller
               'ganancia'=> $estimate[0]->ganancia,
               'descuento'=> $estimate[0]->descuento,
               'total'=> $estimate[0]->total,
+              'total_descuento'=> $estimate[0]->total_descuento,
               'estimate_id'=> $estimate[0]->id,
               'company_id'=> $estimate[0]->company_id,
               'prove_id'=> $estimate[0]->prove_id
               );
 
-        $datos=DB::select(
-        DB::raw("SELECT
-        a.id,
-        a.cantidad,
-        a.descuento,
-        a.precio,
-        a.recarga,
-        a.subtotal,
-        a.subtotal_recarga,
-        a.total_recarga,
-        a.total,
-        a.servicio_id,
-        a.categoria_id,
-        b.descripcion
-        FROM dates_estimates a
-        INNER JOIN servicios b on a.servicio_id=b.id
-        where estimate_id='$id'" ));
-        $datos_estimado =collect( $datos);
-        $servicios = Servicio::select('id', 'nombre','descripcion')->get();
-        return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
-    }
+          $datos=DB::select(
+          DB::raw("SELECT
+          a.cantidad,
+          a.descuento,
+          a.precio,
+          a.recarga,
+          a.subtotal,
+          a.subtotal_recarga,
+          a.total_recarga,
+          a.total,
+          a.servicio_id,
+          a.categoria_id,
+          b.descripcion
+          FROM dates_estimates a
+          INNER JOIN servicios b on a.servicio_id=b.id
+          where estimate_id='$id'" ));
+          $datos_estimado =collect( $datos);
+          $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+          return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
+      }
     /**
      * Store a newly created resource in storage.
      *
@@ -118,7 +120,46 @@ class InvoiceController extends Controller
     //Request $request
    public function store(CrearInvoicesRequest $request)
    {
+     $data  = $request->all();
 
+     $band=true;
+     $items=$data["data_invoices"];
+  //   var_dump($items[0]);
+     $error= array();
+     if(!empty($items)){
+         $error=Invoice::validate_items($items);
+         if(!empty($error)){
+             $band=false;
+             $error=array('pestaña'=>["Error en los Items de la Factura"])+$error;
+         }else{
+           $datos=true;
+         }
+    }else{
+      $error['Items']=['Debe Agregar los items de la factura'];
+      $band=false;
+    }//fin si hay aviones
+    if($band){
+      DB::beginTransaction();
+      try {
+         $invoice=Invoice::create($data);
+          if($datos){
+            foreach( $items as $indice =>$datos_invoices ){
+             $item=New Date_invoice;
+             $item=Company::obj_airplane($datos_invoices, $item);
+             $invoice->datos()->save($item);
+           }//fin para
+         }//fin si hay aviones
+         } catch (Exception $e) {
+            DB::rollback();
+            $error[]=[$e->getMessage()];
+         }
+         // Hacemos los cambios permanentes ya que no han habido errores
+         DB::commit();
+         $result=['message' => 'bien', 'error'=> $error];
+    }else{
+      $result=['message' => 'mal','error'=> $error];
+    }//fin si band
+    return response()->json($result);
    }//fin store
   /**
      * Display the specified resource.

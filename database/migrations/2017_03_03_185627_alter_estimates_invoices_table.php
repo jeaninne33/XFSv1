@@ -14,6 +14,8 @@ class AlterEstimatesInvoicesTable extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             $table->string('resumen',500)->nullable()->change();
+            $table->date('fecha_pago')->nullable();
+            $table->string('Metodo_pago')->nullable();
             //
         });
         Schema::table('estimates', function (Blueprint $table) {
@@ -30,9 +32,11 @@ class AlterEstimatesInvoicesTable extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            //
               $table->string('resumen',500)->change();
+              $table->dropColumn('fecha_pago');
+              $table->dropColumn('metodo_pago');
         });
+        
         Schema::table('estimates', function (Blueprint $table) {
             //
               $table->dropColumn('total_descuento');

@@ -43,6 +43,7 @@ $scope.filter_table  = function () {
 };//
 }]);//fin controller index
 
+///////////CompanyCtrl CONTROLLER
 app.controller("CompanyCtrl",['$scope','$http',function($scope, $http){
 $scope.company = {
       pais_id:0 };
@@ -92,7 +93,7 @@ $scope.save =  function($event){
   };
 }]);//fin controller companys
 
-//controlador de editar
+///////////////controlador de editar
 app.controller("EditCompanyCtrl", function($scope , $http){
   $scope.company = {
     pais_id:0
@@ -176,16 +177,45 @@ app.controller("EditCompanyCtrl", function($scope , $http){
     };//fin save
 
 });//EditCompanyCtrl
+
+///////////INVOICES CONTROLLER
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 
-   $scope.invoice = {};
+   $scope.invoice = {
+     fecha:new Date()
+   };
    $scope.avion = [];
    $scope.servicios = {};
    $scope.data_invoices = [];
-   //alert($scope.invoice.avion_id);
+   $scope.estados=[
+      {id:"1",
+        nombre:"No pagado"
+      },
+      {  id:"2",
+        nombre:"Pagado"
+      },
+      { id:"3",
+        nombre:"Pago Vencido"
+      }
+    ];
+  //$scope.invoice.estado = {id: '1'};
+
+    $scope.metodos=[
+       {nombre:"Cheque"
+       },
+       {nombre:"Debito/Credito"
+       },
+       {nombre:"Efectivo"
+      },
+      { nombre:"Transferencia Bancaria"
+      }
+     ];
    $scope.delete = function(index){//delete item factura specific
         $scope.data_invoices.splice(index, 1);
-        $scope.invoice.subtotal=$scope.total();
+        var sub=$scope.subtotal();
+        $scope.invoice.subtotal=sub;
+        $scope.invoice.total=sub;
+        $scope.invoice.ganancia=$scope.ganancia();
    };
    $scope.search_descrip = function(obj, key, value){//delete item factura specific
          for (var i = 0; i < $scope.servicios.length; i++) {
@@ -218,7 +248,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
      }
       //alert($scope.data_invoices[index].cantidad);
    };
-   $scope.total = function(){//sum the total amount
+   $scope.subtotal = function(){//sum the total amount
      var obj=$scope.data_invoices;
      var acum=0;
          for (var i = 0; i < $scope.data_invoices.length; i++) {
@@ -228,10 +258,32 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         }//fin para
       return acum;
    };
+   $scope.ganancia = function(){//sum the total amount
+     var obj=$scope.data_invoices;
+     var acum=0;
+         for (var i = 0; i < $scope.data_invoices.length; i++) {
+            if (obj[i]['recarga'] != null) {
+                acum=parseFloat((acum+parseFloat(obj[i].recarga)).toFixed(2));
+            }
+        }//fin para
+      return acum;
+   };
+   $scope.total = function(){//sum the total amount
+     var subtotal=parseFloat($scope.invoice.subtotal);
+     var desc=parseFloat($scope.invoice.descuento);
+     var total_des=0;
+     var total=0;
+     if(subtotal!=null && desc!=null && desc!=0 && !isNaN(desc)){
+        total_des=parseFloat((subtotal*desc).toFixed(2));
+        total=parseFloat((subtotal-total_des).toFixed(2));
+        $scope.invoice.total_descuento=total_des;
+        $scope.invoice.total=total;
+     }
+   };
    $scope.calcular = function(index){//calculate operations aritmetics
      var precio=parseFloat($scope.data_invoices[index].precio);
      var cantidad=parseInt($scope.data_invoices[index].cantidad);
-     if(precio!=0  && precio!=null){
+     if(precio!=0  && precio!=null && !isNaN(precio) && !isNaN(cantidad)){
           var categoria=$scope.categoria($scope.invoice.categoria);
           var subtotal=parseFloat((cantidad*precio).toFixed(2));//bien
           var ganancia=parseFloat(categoria*subtotal);//si es numero
@@ -240,9 +292,13 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
           $scope.data_invoices[index].recarga=ganancia;
           $scope.data_invoices[index].total=total;
           //  alert(typeof(totall));
-          $scope.invoice.subtotal=$scope.total();
+         var subtotal=$scope.subtotal();
+          $scope.invoice.subtotal=subtotal;
+          $scope.invoice.total=subtotal;
+          $scope.invoice.ganancia=$scope.ganancia();
      }
    };
+
    $scope.validate_precio= function ($air) {
   /*   if($air.precio==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
        return false;
