@@ -7,11 +7,15 @@ function saveEstimates(){
     var fecha_soli=$('#fecha_soli').val();
     var resumen=$('#resumen').val();
     var metodo=$('#metodo').val();
+    var telefono=$('#telefono').val();
+    var celular=$('#celular').val();
+    var correo=$('#correo').val();
     var proximo_seguimiento=$('#proximo_seguimiento').val();
     var fbo=$('#nbFBO').val();
     var cantidad_fuel=$('#cantidad_fuel').val();
     var localidad=$('#localidad').val();
     var avion_id=$('#avion_id').val();
+    var matricula=$('#matricula').val();
     var num_habitacion=$('#num_habitacion').val();
     var tipo_hab=$('#tipo_hab').val();
     var tipo_cama=$('#tipo_cama').val();
@@ -20,31 +24,11 @@ function saveEstimates(){
     var subtotal=$('#subtotal').val().replace('$','');
     var totalDescuento=$('#totalDescuento').val().replace('$','');
     var total=$('#total').val().replace('$','');
-    var tipoCategoria=$('#tipoCategoria');
+    var tipoCategoria=$('#tCategoria').val();
     var gananciatotal=$('#gananciatotal').val().replace('$','');
     var token =$('#token').val();
     var Estimado = new Array();
-    var DatosEstimado=[
-      company_id,
-      prove_id,
-      estado,
-      fecha_soli,
-      resumen,
-      metodo,
-      proximo_seguimiento,
-      fbo,
-      cantidad_fuel,
-      localidad,
-      avion_id,
-      num_habitacion,
-      tipo_hab,
-      tipo_cama,
-      tipo_estrellas,
-      subtotal,
-      totalDescuento,
-      total,
-      tipoCategoria
-    ];
+
     var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
 //se recorre la tabla fila por fila y se inserta en un objeto json y se pasa por POST con ajax al controlador
 table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
@@ -61,37 +45,104 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
     };
       Estimado.push(lista);
   });
-  $("#mensaje").css("display", "block");
+  var ok =true;
+  var mjs="";
 
-  $.ajax({
-    type: 'POST',
-    url:'/estimates',
-    dataType:'json',
-    headers: {'X-CSRF-TOKEN': token},
-  //  data:{DatosEstimado:DatosEstimado,Estimado:Estimado,descuento:descuento,gananciatotal},
-    data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,
-      resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,
-      fbo:fbo,cantidad_fuel:cantidad_fuel,localidad:localidad,
-      avion_id:avion_id,num_habitacion:num_habitacion,
-      tipo_hab:tipo_hab,tipo_cama:tipo_cama,
-      tipo_estrellas:tipo_estrellas,
-      Estimado:Estimado,
-      descuento:descuento},
-    success: function (estimado) {
-      $('#mensaje').toggleClass('alert alert alert-success');
-      $('#mensaje').html(estimado);
-      console.log(estimado);
-      //  window.location()
-    //   location.href ="/estimates/index";
-            //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
-        },
-        //Mensaje de error en caso de fallo
-        error: function (ex) {
-          $('#mensaje').toggleClass('alert alert alert-danger');
-          $('#mensaje').html('Ocurrio un error inesperado: '+ex);
-            alert('Failed to retrieve states.' + ex);
-        }
-  });
+    if (company_id == "") {
+         mjs += "Cliente - "
+         ok = false;
+     }
+     if (prove_id == "") {
+         mjs += "Proveedor -"
+         ok = false;
+     }
+     if (fecha_soli == "") {
+         mjs += "Fecha Solicitada -"
+         ok = false;
+     }
+     if (metodo == "Telefono" && telefono=="") {
+         mjs += "Telefono -"
+         ok = false;
+     }
+     if (metodo == "Celular" && celular=="") {
+         mjs += "Celular -"
+         ok = false;
+     }
+     if (metodo == "Correo" && correo=="") {
+         mjs += "Correo -"
+         ok = false;
+     }
+     if (proximo_seguimiento=="") {
+         mjs += "Proximo Seguimiento - "
+         ok = false;
+     }
+     if (fbo=="") {
+         mjs += "FBO - "
+         ok = false;
+     }
+     if (cantidad_fuel=="") {
+         mjs += "Cantidad Aproximada - "
+         ok = false;
+     }
+     if (localidad=="") {
+         mjs += "Localidad - "
+         ok = false;
+     }
+     if (avion_id=="") {
+         mjs += "Tipo de Aeronave - "
+         ok = false;
+     }
+     if (matricula=="") {
+         mjs += "Registro de Aeronave - "
+         ok = false;
+     }
+     if (tipoCategoria=="") {
+         mjs += "Ganancia - "
+         ok = false;
+     }
+     if (ok == false) {
+      // $('#mensaje').toggleClass('alert alert-danger');
+        $('#mensaje').css('display','block');
+        $('#validar').html(' '+mjs+' ');
+         //document.getElementById('error').innerHTML = mjs;
+     }
+//  $("#mensaje").css("display", "block");
+    else if (ok==true) {
+
+      $.ajax({
+        type: 'POST',
+        url:'/estimates',
+        dataType:'json',
+        headers: {'X-CSRF-TOKEN': token},
+      //  data:{DatosEstimado:DatosEstimado,Estimado:Estimado,descuento:descuento,gananciatotal},
+        data: { company_id:company_id,prove_id:prove_id,estado:estado,fecha_soli:fecha_soli,
+          resumen:resumen,metodo:metodo,proximo_seguimiento:proximo_seguimiento,
+          fbo:fbo,cantidad_fuel:cantidad_fuel,localidad:localidad,
+          avion_id:avion_id,num_habitacion:num_habitacion,
+          tipo_hab:tipo_hab,tipo_cama:tipo_cama,
+          tipo_estrellas:tipo_estrellas,
+          Estimado:Estimado,
+          descuento:descuento,totalDescuento:totalDescuento,
+          gananciatotal:gananciatotal,
+          total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
+        success: function (estimado) {
+          $('#mensaje').toggleClass('alert alert-success');
+          $('#mensaje').html(estimado);
+          console.log(estimado);
+          //  window.location()
+        //   location.href ="/estimates/index";
+                //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
+            },
+            //Mensaje de error en caso de fallo
+            error: function (ex) {
+              $('#mensaje').toggleClass('alert alert-danger');
+              $('#mensaje').html('Ocurrio un error inesperado: '+ex);
+                alert('Failed to retrieve states.' + ex);
+            }
+      });
+
+    }
+
 }
 
 function ajaxRenderSection(id) {
@@ -148,7 +199,7 @@ function ajaxRenderSection(id) {
        var tab=$('#example').DataTable();
        var datos = tab.row( this ).data();
        var categoria=datos[7];
-       var tipoCategoria;
+       var tCategoria;
        var porcentaje;
           if (datos[6]=='client') {
             //trae el el listado de aviones de ese cliente mas su matricula
@@ -170,23 +221,23 @@ function ajaxRenderSection(id) {
               switch (categoria) {
                 case "PostPago":
                     porcentaje="0%";
-                    tipoCategoria=0;
+                    tCategoria=0;
                     break;
                 case "Prepago":
                     porcentaje="20%";
-                    tipoCategoria=1;
+                    tCategoria=1;
                     break;
                 case "De 1 a 15 días de crédito":
                     porcentaje="25%";
-                    tipoCategoria=2;
+                    tCategoria=2;
                     break;
                 case "De 16 a 30 días de crédito":
                     porcentaje="30%";
-                    tipoCategoria=3;
+                    tCategoria=3;
                     break;
               }
               $('#ganancia').val(porcentaje);
-              $('#tipoCategoria').val(tipoCategoria);
+              $('#tCategoria').val(tCategoria);
               if (telefono!="") {
                 $('select#metodo').val('Telefono')
                 metodoSeguimiento();
@@ -218,52 +269,71 @@ function ajaxRenderSection(id) {
         //FIN DOBLE CLICK
 //tabla estimados
 function addRows(){
-var estimates=[];
-var table = $('#example1').DataTable();
-var Servicio = $("#servicios").find('option:selected').text();
-var idServicio = $("#servicios").val();
-var Descripcion=$("#descripcion").val();
-var Cantidad= $("#cantidad").val();
-var Precio= $("#precio").val().replace('$','');
-var porcentaje=$('#ganancia').val().replace('%','')/100;
-var Subtotal=Cantidad * Precio;
-var Ganancia=Subtotal*porcentaje;
-var Total=Subtotal+Ganancia;
-         table.row.add( [
-             idServicio,
-             Servicio,
-             Descripcion,
-             Cantidad,
-             '$'+Precio,
-             '$'+Subtotal,
-             '$'+Ganancia,
-             '$'+Total,
-             '<a class="btn-edit glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>'+' '+
-             '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
+  var estimates=[];
+  var table = $('#example1').DataTable();
+  var Servicio = $("#servicios").find('option:selected').text();
+  var idServicio = $("#servicios").val();
+  var Descripcion=$("#descripcion").val();
+  var Cantidad= $("#cantidad").val();
+  var Precio= $("#precio").val().replace('$','');
+  var porcentaje=$('#ganancia').val().replace('%','')/100;
+  var Subtotal=Cantidad * Precio;
+  var Ganancia=Subtotal*porcentaje;
+  var Total=Subtotal+Ganancia;
+  var ok =true;
+  var mjs="";
 
-         ] ).draw( false );
+    if (Servicio == "Seleccione Servicio") {
+         mjs += "Servicios - "
+         ok = false;
+     }
+     if (Descripcion == "") {
+         mjs += "Descripcion -"
+         ok = false;
+     }
+     if (Precio == "") {
+         mjs += "Precio -"
+         ok = false;
+     }
+     if (Cantidad == "") {
+         mjs += "Cantidad"
+         ok = false;
+     }
+     if (ok == false) {
+      // $('#mensaje').toggleClass('alert alert-danger');
+        $('#mensaje').css('display','block');
+        $('#validar').html(mjs);
+         //document.getElementById('error').innerHTML = mjs;
+     }
+     else if (ok==true) {
+
+       table.row.add( [
+           idServicio,
+           Servicio,
+           Descripcion,
+           Cantidad,
+           '$'+Precio,
+           '$'+Subtotal,
+           '$'+Ganancia,
+           '$'+Total,
+           '<a class="btn-edit glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>'+' '+
+           '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
+
+       ] ).draw( false );
 
 
-$("#servicios").val(0);
-$("#descripcion").val('');
-$("#cantidad").val('');
-$("#precio").val('');
-$('#subtotal').val($('#subto').val());
-$('#total').val($('#sumTotal').val());
-$('#gananciatotal').val($('#gtotal').val());
-         //counter++;
+          $("#servicios").val(0);
+          $("#descripcion").val('');
+          $("#cantidad").val('');
+          $("#precio").val('');
+          $('#subtotal').val($('#subto').val());
+          $('#total').val($('#sumTotal').val());
+          $('#gananciatotal').val($('#gtotal').val());
+
+    }
+
+
 }
-// $('#example').on('click', 'a.btn-edit', function (e) {
-//     e.preventDefault();
-//
-//     editor.edit( $(this).closest('tr'), {
-//         title: 'Edit record',
-//         buttons: 'Update'
-//     } );
-// } );
-
-
-
 
 $('#descuento').keyup(function(e) {
                var num = $(this).val();

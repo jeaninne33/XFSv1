@@ -6,7 +6,10 @@
 {{-- <link rel="stylesheet" href="{{asset("assets/css/bootstrap-table.css")}}"> --}}
 @endsection
 @section('contenido')
-
+  <div id="mensaje" style="display:none" class="alert alert-danger alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error!</strong><label id='validar'></label><strong>Campos Requeridos!</strong>
+  </div>
 <h2>Agregar Estimados</h2>
 
 <div class="pull-right">
@@ -21,6 +24,7 @@
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
 <br/>
+
 
 <!-- if there are creation errors, they will show here -->
   @include('errors.errors')

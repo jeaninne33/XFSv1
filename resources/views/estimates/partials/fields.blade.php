@@ -94,7 +94,7 @@
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
           [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
-          <input type="text" id="tipoCategoria" hidden="hidden"/>
+          <input type="text" id="tCategoria" hidden="hidden"/>
         </div>
     </div>
     <div class="row form-group">
@@ -177,7 +177,7 @@
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Registro de Aeronaves *') ]]
-        [[ Form::text('matricula', null, ['id'=>'matricula','class' => 'input-text full-width' ]) ]]
+        [[ Form::text('matricula', null, ['readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
       </div>
     </div>
     <h3>Datos de Congierge</h3>

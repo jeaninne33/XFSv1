@@ -109,14 +109,10 @@ class EstimatesController extends Controller
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
       $estimates->categoria=$request->input('tipoCategoria');
       $estimates->descuento=$request->input('descuento');
-      foreach ($dataE as $key => $value) {
-        $subtotal=$subtotal+$value['Subtotal'];
-        $total=$total+$value['Total'];
-        $ganancia=$ganancia+$value['Ganancia'];
-      }
-      $estimates->ganancia=$ganancia;
-      $estimates->subtotal=$subtotal;
-      $estimates->total=$total;
+      $estimates->total_descuento=$request->input('totalDescuento');
+      $estimates->ganancia=$request->input('gananciatotal');
+      $estimates->subtotal=$request->input('subtotal');
+      $estimates->total=$request->input('total');
       $estimates->save();
 
       foreach ($dataE as $i => $datos) {
@@ -130,7 +126,6 @@ class EstimatesController extends Controller
           'estimate_id'=>$estimates->id,
           'descuento'=>$request->input('descuento'),
           'total_recarga'=>$request->input('gananciatotal')
-
         ));
       }
       // for ($i=0; $i < sizeof($dataE) ; $i++) {
