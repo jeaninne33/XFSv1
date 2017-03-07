@@ -8,8 +8,15 @@
 @section('contenido')
 
 <h2>Agregar Estimados</h2>
+
 <div class="pull-right">
-         <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
+  <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
+</div>
+<div class="pull-right col-sm-5">
+  <a id="invoices" class="btn btn-primary soap-icon-card" href="#"> Invoice</a>
+  <a class="btn btn-primary soap-icon-stories" href="#">Fuel Release</a>
+  <a class="btn btn-primary soap-icon-list" href="#">Imprimir</a>
+  <a class="btn btn-primary soap-icon-generalmessage" href="#">Enviar Correo</a>
 </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
@@ -36,6 +43,7 @@
 <script>
    $('#example').dataTable();
    $('#example1').dataTable();
+   var index;
   //  $('#example1').DataTable({
   //    "columnDefs": [
   //      { "visible": false, "targets": 0 }
@@ -64,55 +72,63 @@
   //end remove rows
   //dbclick table clientes
   $('#example1 tbody').on('click', 'a.btn-edit', function () {
-       var index=tab.row($( this ).parents('tr')).index();
+       //index=tab.row($( this ).parents('tr')).index();
        var data = tab.row($(this ).parents('tr')).data();
-       //alert( 'You clicked on '+data[0]+'\'s row' );
+      //var id = tab.row($(this).parents('tr')).id();
+      // alert( 'ID:'+id+'index:'+index );
+       $('#servicios').val(data[0]);
+       $('#descripcion').val(data[2]);
+       $('#cantidad').val(data[3]);
+       $('#precio').val(data[4].replace('$',''));
+       $('.plus').css("display","none");
+       $('.edit').css("display","block");
+
+       tab
+           .row( $(this).parents('tr') )
+           .remove()
+           .draw();
+   } );
+  $('#example1').on('dblclick', 'tr', function () {
+       var data = tab.row( this ).data();
+      //  var id = tab.row(this).id();
+      //  alert( 'You clicked on '+id+'\'s row' );
        $('#servicios').val(data[0]);
        $('#descripcion').val(data[2]);
        $('#cantidad').val(data[3]);
        $('#precio').val(data[4]);
        $('.plus').css("display","none");
        $('.edit').css("display","block");
-   } );
-  $('#example1 tbody').on('dblclick', 'tr', function () {
-       var data = tab.row( this ).data();
-       //alert( 'You clicked on '+data[0]+'\'s row' );
-       $('#servicios').val(data[0]);
-       $('#descripcion').val(data[2]);
-       $('#cantidad').val(data[3]);
-       $('#precio').val(data[4]);
-      //  $('.plus').css("display","none");
-      //  $('.edit').css("display","block");
-   } );
-  //end dbclick clientes
-  $('#example1 tbody').on( 'click','a.editar', function () {
-      var index=tab.row($( this ).parents('tr')).index();
-      tab
-          .row( $(index).parents('tr') )
-          .remove()
-          .draw();
-        //  addRows();
-  } );
 
-// $(document).ready(function() {
-//        var t = $('#example1').DataTable();
-//        var counter = 1;
-//
-//        $('#btnAdd').on( 'click', function () {
-//            t.row.add( [
-//                counter +'.1',
-//                counter +'.2',
-//                counter +'.3',
-//                counter +'.4',
-//                counter +'.5'
-//            ] ).draw( false );
-//
-//            counter++;
-//        } );
-//
-//        // Automatically add a first row of data
-//        $('#btnAdd').click();
-//    } );
+              tab
+                  .row( $(this).parents('tr') )
+                  .remove()
+                  .draw();
+   } );
+
+
+  //end dbclick clientes
+  $('#btnedit').on( 'click',function () {
+      //var index=tab.row($( this ).parents('tr')).index();
+  // document.getElementById("example1").deleteRow(index+1);
+   //tab.draw(true);
+      // tab
+      //     .row( $(this).parents('tr') )
+      //     .remove()
+      //     .draw();
+      $('.plus').css("display","block");
+      $('.edit').css("display","none");
+         addRows();
+  } );
+$('#invoices').css("display","none");
+$('#estado').on('change',function(){
+  if ($('#estado').val()=='Aceptado') {
+      $('#invoices').css("display","block");
+  }
+  else {
+    $('#invoices').css("display","none");
+  }
+});
+
   $('.btn-delete').click(function(e){
      e.preventDefault();//evita que se envie el formulario
      $("#dialog-confirm").html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>¿Esta Seguro que desea Eliminar el Registro?</p>');

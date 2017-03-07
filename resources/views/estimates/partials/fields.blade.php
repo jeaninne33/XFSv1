@@ -229,8 +229,8 @@
           <button type="button" onclick="addRows()" name="btnCliente" id="btnAdd" class="btn btn-primary glyphicon glyphicon-plus"></button>
         </div>
         <div class="edit" style="display:none">
-          {{-- <button type="button" name="btnedit" id="btnedit" class="btn-editar btn btn-primary glyphicon glyphicon-pencil"></button> --}}
-         <a class="editar glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
+          <button type="button" name="btnedit" id="btnedit" class="btn-editar btn btn-primary glyphicon glyphicon-pencil"></button>
+         {{-- <a class="editar glyphicon glyphicon-pencil btn btn-primary" title="Editar" href="#"></a> --}}
         </div>
     </div>
   </div>

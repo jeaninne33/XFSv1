@@ -76,10 +76,7 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
       tipo_hab:tipo_hab,tipo_cama:tipo_cama,
       tipo_estrellas:tipo_estrellas,
       Estimado:Estimado,
-      descuento:descuento,
-      totalDescuento:totalDescuento,
-      gananciatotal:gananciatotal,
-      total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
+      descuento:descuento},
     success: function (estimado) {
       $('#mensaje').toggleClass('alert alert alert-success');
       $('#mensaje').html(estimado);
@@ -227,7 +224,7 @@ var Servicio = $("#servicios").find('option:selected').text();
 var idServicio = $("#servicios").val();
 var Descripcion=$("#descripcion").val();
 var Cantidad= $("#cantidad").val();
-var Precio= $("#precio").val();
+var Precio= $("#precio").val().replace('$','');
 var porcentaje=$('#ganancia').val().replace('%','')/100;
 var Subtotal=Cantidad * Precio;
 var Ganancia=Subtotal*porcentaje;
@@ -245,11 +242,8 @@ var Total=Subtotal+Ganancia;
              '<a class="btn-delete" title="Eliminar" aria-hidden="true" href="#"><span class="glyphicon glyphicon-trash"></span></a>'
 
          ] ).draw( false );
-//estimates.push({idServicio:idServicio,Servicio:Servicio,Descripcion:Descripcion,Cantidad:Cantidad,Precio:Precio,Subtotal:Subtotal,Ganancia:Ganancia,Total:Total});
-estimates.push(idServicio,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total);
-console.log(estimates);
-var listEstimates=listEstimates+(estimates);
-$('#estimado').val(listEstimates);
+
+
 $("#servicios").val(0);
 $("#descripcion").val('');
 $("#cantidad").val('');
