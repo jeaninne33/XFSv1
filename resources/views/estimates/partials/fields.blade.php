@@ -17,12 +17,15 @@
     <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Listado de Clientes</h4>
+          <h4 class="modal-title"><label id="titulo"></label></h4>
         </div>
         <div class="modal-body">
-
+          <div class="cliente" style="display:none">
             @include('estimates.partials.tbClientes')
-
+          </div>
+          <div class="correo" style="display:none">
+          @include('Mail.mail')
+         </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -60,7 +63,7 @@
         </div>
         <div class="col-sms-6 col-sm-2">
           <br/>
-          <button type="button"  value="1" onclick="ajaxRenderSection(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+          <button type="button"  value="1" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
         </div>
     </div>
 
@@ -78,7 +81,7 @@
         </div>
         <div class="col-sms-6 col-sm-1">
           <br/>
-          <button type="button"  value="0" onclick="ajaxRenderSection(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+          <button type="button"  value="0" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class=" btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('Estado', 'Estado *') ]]

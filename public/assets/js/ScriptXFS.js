@@ -466,7 +466,24 @@ $('#example1').DataTable( {
         }
 
     } );
+function modal(a){
+  if (a==1) {
+      $('#titulo').html('Listado de Clientes');
+      $('.correo').css('display','none');
+      $('.cliente').css('display','block');
+  }
+  else if (a==0) {
+    $('#titulo').html('Listado de Proveedores');
+    $('.correo').css('display','none');
+    $('.cliente').css('display','block');
+  }
+  else {
+    $('#titulo').html('Correo');
+    $('.cliente').css('display','none');
+    $('.correo').css('display','block');
+  }
 
+}
 
     /*$('#pais_id').on('change',function(e){
         //alert($('#pais_id').val());

@@ -96,7 +96,7 @@ Route::get('/clientes/{id}',function($id){
  Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
-
+Route::resource('mail','MailController');
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
 Route::group(['middleware' => 'auth'], function()

@@ -19,7 +19,7 @@
   <a id="invoices" class="btn btn-primary soap-icon-card" href="#"> Invoice</a>
   <a class="btn btn-primary soap-icon-stories" href="#">Fuel Release</a>
   <a class="btn btn-primary soap-icon-list" href="#">Imprimir</a>
-  <a class="btn btn-primary soap-icon-generalmessage" href="#">Enviar Correo</a>
+  <a id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</a>
 </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
@@ -45,6 +45,7 @@
 
 
 <script>
+
    $('#example').dataTable();
    $('#example1').dataTable();
    var index;
@@ -68,6 +69,7 @@
            .remove()
            .draw();
    } );
+
 //    $('#example1 tbody').on( 'click', 'tr', function () {
 //     var id = tab.row( this ).id();
 // alert( 'Row index: '+tab.row( this ).index() );
