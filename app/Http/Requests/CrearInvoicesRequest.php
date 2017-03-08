@@ -8,7 +8,10 @@ use Iluminate\Routing\Route;
 class CrearInvoicesRequest extends Request
 {
 
-
+  public function _construc(){
+      $fecha=date("Y-m-d");
+      //var_dump(($this->route->getParameter('companys')));
+  }
     /**
      * Determine if the user is authorized to make this request.
      *

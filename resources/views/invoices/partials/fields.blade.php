@@ -11,7 +11,7 @@
     <h3>Datos Generales de la Factura</h3>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6 ">
-          [[Form::label('ID del Estimado') ]]
+          [[Form::label('Número del Estimado') ]]
           [[ Form::text('estimate_id', null, ['readonly','class' => 'input-text full-width' ,'ng-model'=>'invoice.estimate_id']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
@@ -43,7 +43,6 @@
         </div>
     </div>
     <div class="row form-group">
-
         <div class="col-sms-6 col-sm-6">
           [[Form::label('avion_id', 'Matricula del Avion') ]]
           [[ Form::select('avion_id',  array('' => 'Seleccione'), $estimate[0]->avion_id, ['ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
@@ -118,8 +117,10 @@
           [[ Form::text('total', null, ['id'=>'total','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'dato.total']) ]]
         </td>
         <td>
+            [[ Form::hidden('subtotal_recarga', null, ['id'=>'subtotal_recarga','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'ng-model'=>'dato.subtotal_recarga']) ]]
            <a class="btn-delete" title="Eliminar"  ng-click="delete($index)"aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
         </td>
+
       </tr>
       <tfoot>
         <tr>
@@ -170,7 +171,8 @@
 
      </tr>
        <tr>
-        <td colspan="2"><strong>Ganacia %: </strong>{{  '00.'.$estimate[0]->categoria.'0'}}<br></td>
+
+        <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($estimate[0]->categoria)}}<br></td>
 
       </tr>
       </table>

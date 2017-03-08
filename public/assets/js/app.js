@@ -232,6 +232,8 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         $scope.data_invoices[index].precio=0.00;
         $scope.data_invoices[index].subtotal=0.00;
         $scope.data_invoices[index].total=0.00;
+        $scope.data_invoices[index].recarga=0.00;
+        $scope.data_invoices[index].subtotal_recarga=0.00;
         $scope.data_invoices[index].descripcion=descripcion;
       //alert($scope.data_invoices[index].cantidad);
    };
@@ -286,13 +288,15 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
      if(precio!=0  && precio!=null && !isNaN(precio) && !isNaN(cantidad)){
           var categoria=$scope.categoria($scope.invoice.categoria);
           var subtotal=parseFloat((cantidad*precio).toFixed(2));//bien
-          var ganancia=parseFloat(categoria*subtotal);//si es numero
-          var total=ganancia+subtotal;
+          var ganancia=parseFloat((categoria*subtotal).toFixed(2));//si es numero
+          var total=parseFloat((ganancia+subtotal).toFixed(2));
+          var subtotal_recarga=parseFloat((precio+parseFloat((categoria*precio).toFixed(2)).toFixed(2)));
           $scope.data_invoices[index].subtotal=subtotal;
           $scope.data_invoices[index].recarga=ganancia;
           $scope.data_invoices[index].total=total;
+          $scope.data_invoices[index].subtotal_recarga=subtotal_recarga;
           //  alert(typeof(totall));
-         var subtotal=$scope.subtotal();
+          var subtotal=$scope.subtotal();
           $scope.invoice.subtotal=subtotal;
           $scope.invoice.total=subtotal;
           $scope.invoice.ganancia=$scope.ganancia();
