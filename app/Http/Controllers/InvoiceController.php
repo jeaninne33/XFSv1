@@ -172,7 +172,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         //
-        $invoice = Company::findOrFail($id);
+        $invoice = Invoice::findOrFail($id);
         // load the view and pass the nerds
         // show the view and pass the nerd to it
          return view('invoices.show', compact('invoice'));
@@ -205,19 +205,53 @@ class InvoiceController extends Controller
      */
     public function destroy($id, Request $request)
     {
-     //  dd($id);
-       // abort(500);
-      /*  $comp=Company::findOrFail($id);
-        $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
-        if (!is_null($comp)) {
-            $comp->delete();
-           // Session::flash('message', 'Successfully delete nerd!');
-            if($request->ajax()){
-                return $mensaje;
-            }
-           return redirect()->route('companys.index')
-                 ->with('success', $mensaje);
-       }*/
+    }
+    public function print_invoice($id)
+    {
+        $invoice = $this->getDatainvoice($id);
+        $date = date('Y-m-d');
+
+        $items =Date_invoice::where('invoice_id' , $id)->get();
+        //var_dump($items);
+        $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice');
+    }
+
+    public function getDatainvoice($id)
+    {
+      $invoice=DB::select(
+      DB::raw("SELECT
+      e.id,
+      e.fbo,
+      e.plazo,
+      e.fecha_vencimiento,
+      e.fecha_pago,
+      e.resumen,
+      e.estado,
+      e.localidad,
+      e.company_id,
+      e.prove_id,
+      e.avion_id,
+      c.nombre as cliente,
+      c.direccion_cuenta,
+      c.telefono_admin,
+      c.categoria,
+      e.estado,
+      e.subtotal,
+      e.ganancia,
+      e.descuento,
+      e.total,
+      e.total_descuento,
+      d.matricula,
+      f.nombre as prove
+      FROM invoices e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys f ON f.id=e.prove_id
+      INNER JOIN aviones d ON d.id=e.avion_id
+      where e.id='$id'" ));
+        return collect($invoice);
     }
 
 }

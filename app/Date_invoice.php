@@ -8,6 +8,11 @@ class Date_invoice extends Eloquent
 'total','invoice_id','servicio_id'];
 
   public function invoice() {
-       return $this->belongsTo('XF\Invoice','id', 'invoice_id');
+       return $this->belongsTo('XFS\Invoice','id', 'invoice_id');
  }
+
+ public function servicio() {
+      return $this->belongsTo('XFS\Servicio', 'servicio_id','id');
+}
+
 }//fin clase

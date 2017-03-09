@@ -36,6 +36,20 @@ class Invoice extends Model
             return 'Pago Vencido';
       }
     }//fin metodp
+    public function validate_float($num) {
+      $patron="/^0[.]{0,1}[0-9]{0,2}$/";
+    //  /^\d{1,2}(\.\d{1,2})?$/ patron con 2 entreros y dos decimales
+        if (preg_match($patron, $num)){
+         return true;
+        }else{
+           if ($num==1){
+               return true;
+           }else{
+             return false;
+           }
+        }
+    }//fin metodp
+
     public function categoria($a) {
       //alert(a);
       if($a=='0'){
@@ -54,14 +68,21 @@ class Invoice extends Model
       $fecha=date("Y-m-d");
     //  dd(date_format(new DateTime($datos["fecha"]), 'Y-m-d')<$fecha);
       $error= array();
-      if((isset($datos["fecha"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
-        $error["fecha"]=["La Fecha de la Factura no puede ser mayor a la fecha actual"];
+       $valid_duplicate=Invoice::where('estimate_id' , $datos["estimate_id"])->count();
+      if((isset($datos["estimate_id"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
       }
-      if( (isset($datos["fecha_vencimiento"])) && ( (date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha"]), 'Y-m-d')))){
-       $error["fecha_vencimiento"]=["La Fecha de Vencimiento no puede ser menor a la Fecha de la Factura "];
-      }
-      if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))<(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
-      $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
+      if((isset($datos["fecha"])) && (!empty($valid_duplicate))){
+        $error["duplicate"]=["Registro Duplicado! Ya existe la factura para el estimado Numero: ".$datos["estimate_id"]];
+      }else{
+        if((isset($datos["fecha"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
+          $error["fecha"]=["La Fecha de la Factura no puede ser mayor a la fecha actual"];
+        }
+        if( (isset($datos["fecha_vencimiento"])) && ( (date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha"]), 'Y-m-d')))){
+         $error["fecha_vencimiento"]=["La Fecha de Vencimiento no puede ser menor a la Fecha de la Factura "];
+        }
+        if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))<(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
+        $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
+        }
       }
       return $error;
     }
@@ -72,6 +93,9 @@ class Invoice extends Model
       $error= array();
       foreach ($item as $indice =>$array ) {
          $i=$indice+1;
+         $patron="/^[0-9]+(\.[0-9]{1,2})?$/";
+       //  /^\d{1,2}(\.\d{1,2})?$/ patron con 2 entreros y dos decimales
+       //   /^0[.]{0,1}[0-9]{0,2}$/
          if((isset($array["servicio_id"]) && empty($array["servicio_id"])) || !isset($array["servicio_id"])){
             $error["servicio"]=["El campo Servicio del item #".$i." es Obligatorio"];
           }
@@ -79,14 +103,21 @@ class Invoice extends Model
              $error["fecha_servicio"]=["El campo Fecha del Servicio del item #".$i." es Obligatorio"];
          }
          if((isset($array["fecha_servicio"])) && (date_format(new DateTime($array["fecha_servicio"]), 'Y-m-d')>$fecha)){
-            $error["fecha_servicio"]=["La Fecha del Servicio del item #".$i." no puede ser mayor a la fecha actual"];
+            $error["fecha_servicio1"]=["La Fecha del Servicio del item #".$i." no puede ser mayor a la fecha actual"];
          }
-         if ((isset($array["cantidad"]) && empty($array["cantidad"])) || !isset($array["cantidad"])) {
-              $error["cantidad"]=["El campo Cantidad del item #".$i." es Obligatorio"];
+         if (isset($array["cantidad"]) && !preg_match("/^\d+$/",$array["cantidad"])) {
+              $error["cantidad"]=["El campo Cantidad del item #".$i." debe ser numérico"];
         }
+        if ((isset($array["cantidad"]) && empty($array["cantidad"])) || !isset($array["cantidad"])) {
+             $error["cantidad"]=["El campo Cantidad del item #".$i." es Obligatorio"];
+       }
         if ((isset($array["precio"]) && empty($array["precio"])) || !isset($array["precio"])) {
-             $error["precio"]=["El campo Precio del item #".$i." es Obligatorio"];
+             $error["precio"]=["El campo Precio del item #".$i." es Obligatorio. Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
         }
+        if (isset($array["precio"]) && !preg_match($patron,$array["precio"])) {
+             $error["precio1"]=["El Precio del item #".$i." es Invalido! Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
+        }
+
       }//fin foreach
          return $error;
 

@@ -27,7 +27,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de la Factura *') ]]
-          [[ Form::date('fecha', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha' ]) ]]
+          [[ Form::date('fecha', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
         </div>
 
     </div>
@@ -35,7 +35,7 @@
 
         <div class="col-sms-6 col-sm-6">
           [[Form::label('plazos', 'Plazos de Pago *') ]]
-          [[ Form::select('plazo', config('plazo.plazo'), null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.plazo'  ]) ]]
+          [[ Form::select('plazo', config('plazo.plazo'), null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.plazo',' ng-change'=>'plazo()'  ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de Vencimiento *') ]]
@@ -49,7 +49,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado Factura') ]]
-          [[ Form::select('estado',  array('' => 'Seleccione'), "1", ['id' => 'estado', 'ng-options' =>"estado.id as estado.nombre for estado in estados",'ng-model'=>'invoice.estado','class' => 'input-text full-width' ]) ]]
+          [[ Form::select('estado',  array('' => 'Seleccione'), null, ['id' => 'estado', 'ng-options' =>"estado.id as estado.nombre for estado in estados",'ng-model'=>'invoice.estado','class' => 'input-text full-width' ]) ]]
         </div>
 
     </div>
@@ -91,7 +91,7 @@
         </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="dato  in data_invoices track by $index">
+      <tr ng-repeat="dato in data_invoices track by $index">
         <td>
           [[ Form::select('servicio_id', array(''=>'Seleccione'), null, ['ng-options'=>"servicio.id as servicio.nombre for servicio in servicios",'id'=>'servicio_id', 'ng-model'=>'dato.servicio_id',  ' ng-change'=>'inicializar($index)']) ]]
         </td>
@@ -134,7 +134,7 @@
        <div class="row">
            <div class="col-sm-6 col-md-4 pull-right" style="text-align:right;">
             Subtotal: $[[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly' ,'ng-model'=>'invoice.subtotal']) ]]
-                <br/>Descuento: %[[ Form::text('descuento', null, ['id'=>'descuento','class' => 'input-text' , 'required' => 'required','placeholder'=>'0.00%','ng-model'=>'invoice.descuento',' ng-change'=>'total()']) ]]
+                <br/>Descuento: %[[ Form::text('descuento', null, ['ng-pattern'=>'/^[0-9]+(\.[0-9]{1,2})?$/','step'=>"0.01", 'id'=>'descuento','class' => 'input-text' , 'required' => 'required','placeholder'=>'0.00%','ng-model'=>'invoice.descuento',' ng-change'=>'total()']) ]]
              <br/>Total Descuento: $ [[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'invoice.total_descuento']) ]]
           </div>
 
@@ -168,12 +168,9 @@
       </tr>
       <tr>
        <td colspan="2"><strong>Teléfono: </strong>{{ $estimate[0]->telefono_admin}}<br></td>
-
      </tr>
        <tr>
-
         <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($estimate[0]->categoria)}}<br></td>
-
       </tr>
       </table>
      </h5>

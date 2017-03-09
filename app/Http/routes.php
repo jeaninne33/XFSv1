@@ -113,5 +113,6 @@ Route::group(['middleware' => 'auth'], function()
   Route::resource ('categoria', 'CategoriaController');
   Route::resource ('contratos','ContratoController');
   Route::get('invoices/create/{invoices}', [ 'as'=>'invoices.create','uses' => 'InvoiceController@create']);
+  Route::get('invoices_pdf/{invoices}', [ 'as'=>'invoices.pdf','uses' => 'InvoiceController@print_invoice']);
   Route::post('avion/{avion}', [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
 });

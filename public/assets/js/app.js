@@ -198,8 +198,11 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         nombre:"Pago Vencido"
       }
     ];
-  //$scope.invoice.estado = {id: '1'};
+    //$scope.invoice.estado =$scope.estados[0];
+    //alert(  $('#estado').val());
 
+//$("#estado option[value="+ 1 +"]").attr("selected",true);
+  $('#estado option:contains("No pagado")').attr('selected','selected');
     $scope.metodos=[
        {nombre:"Cheque"
        },
@@ -260,6 +263,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         }//fin para
       return acum;
    };
+
    $scope.ganancia = function(){//sum the total amount
      var obj=$scope.data_invoices;
      var acum=0;
@@ -270,6 +274,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         }//fin para
       return acum;
    };
+
    $scope.total = function(){//sum the total amount
      var subtotal=parseFloat($scope.invoice.subtotal);
      var desc=parseFloat($scope.invoice.descuento);
@@ -282,6 +287,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         $scope.invoice.total=total;
      }
    };
+
    $scope.calcular = function(index){//calculate operations aritmetics
      var precio=parseFloat($scope.data_invoices[index].precio);
      var cantidad=parseInt($scope.data_invoices[index].cantidad);
@@ -303,12 +309,22 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
      }
    };
 
-   $scope.validate_precio= function ($air) {
-  /*   if($air.precio==null || $air.matricula==null || $air.piloto1==null || $air.licencia1==null){
-       return false;
-     }else{
-       return true;
-     }*/
+   $scope.plazo= function () {
+     if($scope.invoice.fecha!=null && $scope.invoice.plazo!=null){
+       var fecha= new Date($scope.invoice.fecha);
+       var plazo=$scope.invoice.plazo;
+
+       var f_venci;
+       if(plazo=="1"){
+         $scope.invoice.fecha_vencimiento=fecha;
+       }else if(plazo=="2"){
+         $scope.invoice.fecha_vencimiento=null;
+       }else{
+         var dias=parseInt(plazo);
+          f_venci=new Date(fecha.setDate(fecha.getDate() + dias));
+          $scope.invoice.fecha_vencimiento=f_venci;
+       }
+     }
    };
    $scope.save =  function($event){
        $event.preventDefault();
