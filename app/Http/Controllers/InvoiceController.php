@@ -98,6 +98,7 @@ class InvoiceController extends Controller
           where estimate_id='$id'" ));
           $datos_estimado =collect( $datos);
           $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+        //  gettype($estimate);
           return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
       }
     /**
@@ -112,7 +113,7 @@ class InvoiceController extends Controller
     *
     * @return Response
     */
-    //CrearCompanys
+
     //Request $request
    public function store(CrearInvoicesRequest $request)
    {
@@ -186,6 +187,14 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
+      $invoice = Invoice::findOrFail($id);
+      $items =Date_invoice::where('invoice_id' , $id)->get();
+      $estimate=Company::findOrFail($invoice->company_id);
+
+  ///   var_dump($estimate);
+      // load the view and pass the nerds
+      // show the view and pass the nerd to it
+       return view('invoices.edit', compact('invoice','items','estimate'));
     }
     /**
      * Update the specified resource in storage.
@@ -226,6 +235,7 @@ class InvoiceController extends Controller
       e.id,
       e.fbo,
       e.plazo,
+      e.fecha,
       e.fecha_vencimiento,
       e.fecha_pago,
       e.resumen,

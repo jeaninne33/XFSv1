@@ -47,7 +47,7 @@
                   <div class="fact red">
                       <div class="numbers counters-box">
                           <dl>
-                              <dt class="display-counter" data-value="3250">0</dt>
+                              <dt class="display-counter" data-value="3250">{{$estimates}}</dt>
                               <dd>Estimados</dd>
                           </dl>
                           <i class="icon soap-icon-card"></i>
@@ -60,11 +60,11 @@
               </a>
           </div>
           <div class="col-sm-6 col-md-3">
-              <a href="cruise-list-view.html">
+              <a href="{{ route('invoices.index') }}">
                   <div class="fact green">
                       <div class="numbers counters-box">
                           <dl>
-                              <dt class="display-counter" data-value="1570">0</dt>
+                              <dt class="display-counter" data-value="1570">{{$invoices}}</dt>
                               <dd>Facturas</dd>
                           </dl>
                           <i class="icon soap-icon-stories"></i>
@@ -79,7 +79,7 @@
       </div>
       <div class="notification-area">
           <div class="info-box block">
-            
+
           </div>
       </div>
       <hr>

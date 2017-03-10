@@ -156,6 +156,7 @@
     <h3>Datos del Cliente</h3>
     <h5>
       [[ Form::hidden('company_id', null, ['id'=>'company_id','class' => 'input-text full-width' ,'ng-model'=>'invoice.company_id']) ]]
+@if(!empty($estimate))
     <table border="0" style="with:600px;" class="table">
       <tr>
         <td colspan="2"><strong>Número: </strong> {{ $estimate[0]->company_id}}<br></td>
@@ -173,6 +174,7 @@
         <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($estimate[0]->categoria)}}<br></td>
       </tr>
       </table>
+    @endif
      </h5>
 
   </div>

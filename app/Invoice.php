@@ -15,13 +15,13 @@ class Invoice extends Model
 'total','prove_id','company_id','estimate_id','avion_id', 'informacion','estado','metodo_pago','fecha_pago', 'total_descuento'];
 
     public function company() {
-		  return $this->belongsTo('XFS\Company','id', 'company_id');
+		  return $this->belongsTo('XFS\Company','company_id','id');
 	  }
     public function avion(){
-       return $this->belongsTo('XFS\Avion','id','avion_id');
+       return $this->belongsTo('XFS\Avion','avion_id', 'id');
     }
     public function proveedor() {
-      return $this->belongsTo('XFS\Company','id', 'prove_id');
+      return $this->belongsTo('XFS\Company','prove_id','id' );
     }
     public function datos() {
         return $this->hasMany('XFS\Date_invoice', 'invoice_id', 'id');
@@ -90,32 +90,32 @@ class Invoice extends Model
     public static function validate_items($item) {
       $fecha=date("Y-m-d");
     // dd($fecha);
-      $error= array();
+    $error= array();
       foreach ($item as $indice =>$array ) {
          $i=$indice+1;
          $patron="/^[0-9]+(\.[0-9]{1,2})?$/";
        //  /^\d{1,2}(\.\d{1,2})?$/ patron con 2 entreros y dos decimales
        //   /^0[.]{0,1}[0-9]{0,2}$/
          if((isset($array["servicio_id"]) && empty($array["servicio_id"])) || !isset($array["servicio_id"])){
-            $error["servicio"]=["El campo Servicio del item #".$i." es Obligatorio"];
+            $error["servicio".$i]=["El campo Servicio del item #".$i." es Obligatorio"];
           }
           if ((isset($array["fecha_servicio"]) && empty($array["fecha_servicio"])) || !isset($array["fecha_servicio"])) {
-             $error["fecha_servicio"]=["El campo Fecha del Servicio del item #".$i." es Obligatorio"];
+             $error["fecha_servicio".$i]=["El campo Fecha del Servicio del item #".$i." es Obligatorio"];
          }
          if((isset($array["fecha_servicio"])) && (date_format(new DateTime($array["fecha_servicio"]), 'Y-m-d')>$fecha)){
-            $error["fecha_servicio1"]=["La Fecha del Servicio del item #".$i." no puede ser mayor a la fecha actual"];
+            $error["fecha_servicio1".$i]=["La Fecha del Servicio del item #".$i." no puede ser mayor a la fecha actual"];
          }
          if (isset($array["cantidad"]) && !preg_match("/^\d+$/",$array["cantidad"])) {
-              $error["cantidad"]=["El campo Cantidad del item #".$i." debe ser numérico"];
+              $error["cantidad".$i]=["El campo Cantidad del item #".$i." debe ser numérico"];
         }
         if ((isset($array["cantidad"]) && empty($array["cantidad"])) || !isset($array["cantidad"])) {
-             $error["cantidad"]=["El campo Cantidad del item #".$i." es Obligatorio"];
+             $error["cantidad1".$i]=["El campo Cantidad del item #".$i." es Obligatorio"];
        }
         if ((isset($array["precio"]) && empty($array["precio"])) || !isset($array["precio"])) {
-             $error["precio"]=["El campo Precio del item #".$i." es Obligatorio. Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
+             $error["precio".$i]=["El campo Precio del item #".$i." es Obligatorio. Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
         }
         if (isset($array["precio"]) && !preg_match($patron,$array["precio"])) {
-             $error["precio1"]=["El Precio del item #".$i." es Invalido! Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
+             $error["precio1".$i]=["El Precio del item #".$i." es Invalido! Debe introducir un decimal con 2 caracteres (Solo admite el .)"];
         }
 
       }//fin foreach
