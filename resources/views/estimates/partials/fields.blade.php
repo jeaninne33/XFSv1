@@ -92,7 +92,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-3">
           [[Form::label('fecha', 'Fecha Solicitada *') ]]
-              [[Form::date('fecha_soli',null,['id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+          [[Form::date('fecha_soli',null,['id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
