@@ -63,8 +63,8 @@ class EstimatesController extends Controller
      $indicador=0;
      $servicios=Servicio::Lists('nombre','id');
      $servicios->prepend('Seleccione Servicio');
-
-      return view('estimates.create',compact('estimates','servicios','indicador'));
+     $visible="none";
+      return view('estimates.create',compact('visible','estimates','servicios','indicador'));
 
     }
     // public function cliente($id)
@@ -180,21 +180,47 @@ class EstimatesController extends Controller
      */
     public function edit($id)
     {
-        $estimates=Estimate::findOrFail($id);
-
-
-        $cliente = DB::table('companys')
-                    //->join()
-                    ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
-
-                    ->where('id', $estimates->prove_id)
-                    ->first();
-        $proveedor = DB::table('companys')
-                    ->select('nombre as nombreP','id as prove_id','celular','telefono')
-                    ->where('id', $estimates->company_id)
-                    ->first();
-
-        $indicador=1;
+        //$estimates=Estimate::findOrFail($id);
+        $estimates=DB::select(
+        DB::raw("SELECT
+        e.id,
+        c.id as company_id,
+        c.nombre AS nombrec,
+        cp.id AS prove_id,
+        cp.nombre AS nombrep,
+        estado,
+        fecha_soli,
+        ganancia,
+        resumen,
+        metodo_segui,
+        c.telefono,
+        c.celular,
+        c.correo,
+        proximo_seguimiento,
+        fbo,
+        cantidad_fuel,
+        localidad,
+        a.id as avion_id,
+        matricula,
+        total
+        FROM estimates e
+        INNER JOIN companys c ON c.id=e.company_id
+        INNER JOIN companys cp ON cp.id=e.prove_id
+        INNER JOIN aviones a ON a.company_id=c.id
+        WHERE e.id=$id"));
+        // $cliente = DB::table('companys')
+        //             //->join()
+        //             ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
+        //
+        //             ->where('id', $estimates->prove_id)
+        //             ->first();
+        // $proveedor = DB::table('companys')
+        //             ->select('nombre as nombreP','id as prove_id','celular','telefono')
+        //             ->where('id', $estimates->company_id)
+        //             ->first();
+        // dd($estimates[0]->id);
+       $idEstimates=$estimates[0]->id;
+        $indicador=0;
         $servicios=Servicio::Lists('nombre','id');
         $servicios->prepend('Seleccione Servicio');
         $date=DB::select(
@@ -209,9 +235,10 @@ class EstimatesController extends Controller
           total
           FROM dates_estimates de
           INNER JOIN servicios s ON s.id=de.servicio_id
-          WHERE estimate_id=$estimates->id"));
+          WHERE estimate_id=$idEstimates "));
+          $visible="block";
         // $date=date_estimates::where('estimate_id',$estimates->id)->get();
-        return view ('estimates.edit',compact('date','estimates','servicios','cliente','proveedor','indicador'));
+        return view ('estimates.edit',compact('date','servicios','indicador','visible'))->with('estimates',$estimates);
     }
 
     /**
