@@ -258,7 +258,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
      var acum=0;
          for (var i = 0; i < $scope.data_invoices.length; i++) {
             if (obj[i]['subtotal'] != null) {
-                acum=parseFloat((acum+parseFloat(obj[i].subtotal)).toFixed(2));
+                acum=parseFloat((acum+parseFloat(obj[i].total)).toFixed(2));
             }
         }//fin para
       return acum;
@@ -296,7 +296,8 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
           var subtotal=parseFloat((cantidad*precio).toFixed(2));//bien
           var ganancia=parseFloat((categoria*subtotal).toFixed(2));//si es numero
           var total=parseFloat((ganancia+subtotal).toFixed(2));
-          var subtotal_recarga=parseFloat((precio+parseFloat((categoria*precio).toFixed(2)).toFixed(2)));
+          var recarga=parseFloat((categoria*precio).toFixed(2));
+          var subtotal_recarga=parseFloat((precio+recarga).toFixed(2));
           $scope.data_invoices[index].subtotal=subtotal;
           $scope.data_invoices[index].recarga=ganancia;
           $scope.data_invoices[index].total=total;
@@ -352,3 +353,11 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
       );//fin then
      };//fin save
 }]);//fin controller companys
+
+////////////////
+app.controller("editInvoiceCtrl",['$scope','$http',function($scope, $http){
+  $scope.invoice = {};
+  $scope.avion = [];
+  $scope.servicios = {};
+  $scope.data_invoices = [];
+}]);//fin controller EditCompanyCtrlInvoiceCtrl

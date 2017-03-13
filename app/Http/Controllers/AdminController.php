@@ -9,6 +9,7 @@ use XFS\Http\Controllers\Controller;
 use XFS\Company;
 use XFS\Servicio;
 use XFS\Estimate;
+use XFS\Invoice;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -23,9 +24,9 @@ class AdminController extends Controller
           $companys = Company::all()->count();//orderBy('id','DESC');
           $servicios = Servicio::all()->count();
           $estimates = Estimate::all()->count();
+          $invoices = Invoice::all()->count();
         //  return view('principal',compact('companys'));
-         return  view('principal',compact('servicios'),compact('estimates'))
-      ->with('companys', $companys);
+         return  view('principal',compact('servicios','estimates','companys','invoices'));
       //  return view('companys.index');
     }
 
