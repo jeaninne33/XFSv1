@@ -3,68 +3,49 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Example 2</title>
-    <style>
-        html{
-            margin: 0 0 1cm 0;
-        }
-        body{
-            font-family: Myriad Pro, helvetica, sans-serif;
-            font-size:11px;
-            color: #000;
-            background: #fff;
-            text-align:justify;
-            margin: 3cm 1cm 1cm 1cm;
-            border: 4px solid #229FC3;
-            }
-        .header {
-          /*border: 1px solid #C00;*/
-        }
-        table thead {
-          /*color: #fff;*/
-          background-color: #A9A9A9;
-        }
-        .contenido{
-         text-align: center;
-        }
-        .otro{
-          text-align: left;
-          width: 527px;
-        }
-        div.contenido table {
-           margin: 0 auto;
-           text-align: left;
-      }
-
-      .cintillo{
-        /*position: relative;*/
-        top: 40px;
-        height: 200px;
-        margin-top:45px;
-        /* background-image: url("assets/images/pdf/cintillo.png");*/
-        /*background-color: #F5F5F5;*/
-      }
-
-      .footer { position: fixed; bottom: 0px; }
-      .pagenum:before { content: counter(page); }
-    </style>
+    <link rel="stylesheet" href="assets/css/print_pdf.css">
   </head>
 
 <body>
-  <div class="header">
-    <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
-    <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
-  </div>
-      <div class="panel panel-primary11">
-          <div class="panel-body" >
-             <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/invoice.png" >
-          </div>
-</div>
-<div class="cintillo">
-  <p align="right"><h2>Factura Número: {{ $invoice[0]->id }}</h2></p>
-  <div class="date"><h3>Fecha de Factura: {{date_format(date_create( $invoice[0]->fecha), 'm/d/Y')}}</h3></div>
-</div>
+    <div class="header">
+      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
+      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
+    </div>
+    <div class="panel panel-primary11">
+      <div class="panel-body" >
+         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/invoice.png" >
+      </div>
+    </div>
+
 
 <div class="contenido" >
+  <div class="cintillo">
+      <span class="texto-i">
+        <strong>Codigo Cliente: </strong> {{$invoice[0]->company_id}}
+        <br/>
+        <strong>Cliente: </strong> {{$invoice[0]->cliente}}
+        <br/>
+        <strong>Email: </strong> {{$invoice[0]->correo}}
+        <br/>
+        <strong>Representante: </strong> {{$invoice[0]->representante}}
+        <br/>
+        <strong>Dirección: </strong> {{$invoice[0]->representante}}
+      </span>
+      <span class="texto-d">
+        <strong>Número de Factura:</strong> {{$invoice[0]->id}}
+        <br/>
+        <strong>Fecha Emisión: </strong> {{date_format(date_create( $invoice[0]->fecha), 'm/d/Y') }}
+        <br/>
+        <strong>FBO: </strong> {{$invoice[0]->fbo}}
+        <br/>
+        <strong>Codigo Areopuerto: </strong> {{$invoice[0]->localidad}}
+        <br/>
+        <strong>Placa: </strong> {{$invoice[0]->matricula}}
+      </span>
+      <img style="position: relative; height:130px;width:100%;" src="assets/images/pdf/cintillo.png" >
+
+  </div>
+
   <table class="display" cellspacing="0" width="527" border="0">
       <thead >
           <tr>
@@ -112,11 +93,17 @@
         </tr>
       </tfoot>
   </table>
-  <div class="otro">
-    <p><strong>Resumen de la Factura: </strong>{{$invoice[0]->resumen}}</p>
-    <p><strong>Fecha de Vencimeinto: </strong>{{date_format(date_create( $invoice[0]->fecha_vencimiento), 'm/d/Y')}}</p>
-  </div>
+      <div class="otro">
+        <p><strong>Resumen de la Factura: </strong>{{$invoice[0]->resumen}}</p>
+        <p><strong>Fecha de Vencimeinto: </strong>{{date_format(date_create( $invoice[0]->fecha_vencimiento), 'm/d/Y')}}</p>
+      </div>
+      <div class="foot">
+ <img style="height:100%;width:100%;" src="assets/images/pdf/invoice base.png" >
+      </div>
 </div>
 
+    <div class="pie">
+     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="assets/images/pdf/REDES.png" >
+    </div>
   </body>
 </html>

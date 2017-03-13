@@ -356,8 +356,59 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 
 ////////////////
 app.controller("editInvoiceCtrl",['$scope','$http',function($scope, $http){
-  $scope.invoice = {};
+  $scope.invoice.fecha= new Date($scope.invoice.fecha);
+  $scope.invoice.fecha_vencimiento= new Date($scope.invoice.vencimiento);
+  $scope.invoice.fecha_pago= new Date($scope.invoice.fecha_pago);
   $scope.avion = [];
   $scope.servicios = {};
   $scope.data_invoices = [];
+  $scope.estados=[
+     {id:"1",
+       nombre:"No pagado"
+     },
+     {  id:"2",
+       nombre:"Pagado"
+     },
+     { id:"3",
+       nombre:"Pago Vencido"
+     }
+   ];
+   //$scope.invoice.estado =$scope.estados[0];
+   //alert(  $('#estado').val());
+
+//$("#estado option[value="+ 1 +"]").attr("selected",true)
+   $scope.metodos=[
+      {nombre:"Cheque"
+      },
+      {nombre:"Debito/Credito"
+      },
+      {nombre:"Efectivo"
+     },
+     { nombre:"Transferencia Bancaria"
+     }
+    ];
+}]);//fin controller EditCompanyCtrlInvoiceCtrl
+///////////////////reportes
+
+////////////////
+app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
+  $scope.servicios = {};
+  $scope.reporte = {};
+  $scope.relacion =  function($event){
+     $event.preventDefault();
+     if ( $scope.reporte.desde==null ||$scope.reporte.hasta==null){
+       alert("error campos vacios");
+     }else{
+       var hoy=new Date();
+       var desde=new Date($scope.reporte.desde);
+       var hasta=new Date($scope.reporte.hasta);
+       if(desde>hoy){
+         alert("la fecha desde no puede ser mayor a la fecha actua");
+       }
+       if(hasta<desde){
+          alert("la fecha hasta no puede ser mayor a la fecha desde");
+       }
+
+     }
+  };
 }]);//fin controller EditCompanyCtrlInvoiceCtrl

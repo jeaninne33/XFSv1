@@ -11,10 +11,10 @@
 <br/>
 <!-- if there are creation errors, they will show here ng-init=""-->
 
-{{var_dump($estimate)}}
+{{--var_dump($estimate)--}}
     @include('errors.message')
    [[Form::model($invoice, array('route' => array('companys.update', $invoice->id), 'method' => 'PUT','ng-submit'=>'edit($event)', 'novalidate'))]]
-      @include('invoices.partials.fields')
+      @include('invoices.partials.fields_edit')
   [[ Form::submit('Editar Compañia', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
 </div>

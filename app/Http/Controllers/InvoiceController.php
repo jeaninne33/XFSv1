@@ -190,11 +190,13 @@ class InvoiceController extends Controller
       $invoice = Invoice::findOrFail($id);
       $items =Date_invoice::where('invoice_id' , $id)->get();
       $estimate=Company::findOrFail($invoice->company_id);
+      $items =collect( $items);
+      $servicios = Servicio::select('id', 'nombre','descripcion')->get();
 
-  ///   var_dump($estimate);
+    //var_dump($invoice);
       // load the view and pass the nerds
       // show the view and pass the nerd to it
-       return view('invoices.edit', compact('invoice','items','estimate'));
+       return view('invoices.edit', compact('invoice','items','estimate','servicios'));
     }
     /**
      * Update the specified resource in storage.
@@ -248,6 +250,8 @@ class InvoiceController extends Controller
       c.direccion_cuenta,
       c.telefono_admin,
       c.categoria,
+      c.representante,
+      c.correo,
       e.estado,
       e.subtotal,
       e.ganancia,

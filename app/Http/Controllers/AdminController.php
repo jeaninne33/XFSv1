@@ -35,11 +35,41 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+     public function index_reports()
+     {
+         //  return view('principal',compact('companys'));
+          return  view('reports.index');
+       //  return view('companys.index');
+     }
+     public function reports_relacion()
+     {
+         //  return view('principal',compact('companys'));
+          $servicios = Servicio::select('id', 'nombre')->get();
+          return  view('reports.relation', compact('servicios'));
+       //  return view('companys.index');
+     }
+     public function generate_relacion(Request $request)
+     {
+       $data  = $request->all();
+       if(isset($data["desde"]) && isset($data["hasta"])  && !empty($array["desde"]) && !empty($array["hasta"]))
+       {//SELECT * FROM invoices WHERE fecha BETWEEN '2017-01-01' AND '2017-03-13';
+         //todo bien hasta ahora! extramemos las fechas
+         $desde=date_format(new DateTime($data["desde"]), 'Y-m-d');
+         $hasta=date_format(new DateTime($data["hasta"]), 'Y-m-d');
+         $fechas="invoice.fecha BETWEEN '$desde' AND '$hasta'";
+         if(!isset($data["servicio_id"])){
+           $servicio="";
+         }else{
+           $servi=$data["servicio_id"];
+           $servicio="and servicio_id='$servi'";
+         }
 
+       }
+         //  return view('principal',compact('companys'));
+          $servicios = Servicio::select('id', 'nombre')->get();
+          return  view('reports.relation', compact('servicios'));
+       //  return view('companys.index');
+     }
     /**
      * Store a newly created resource in storage.
      *
