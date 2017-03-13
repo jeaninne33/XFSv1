@@ -11,6 +11,9 @@ class date_estimates extends Model
   'total_recarga','total','estimate_id','servicio_id','categoria_id'];
 
   public function estimate() {
-       return $this->belongsTo('XF\Estimate', 'id','estimate_id');
+       return $this->belongsTo('XFS\Estimate', 'id','estimate_id');
+  }
+  public function servicio(){
+    return $this->hasMany('XFS\Servicio','id','servicio_id');
   }
 }//fin clase

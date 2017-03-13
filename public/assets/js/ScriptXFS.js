@@ -485,6 +485,26 @@ function modal(a){
 
 }
 
+function enviarCorreo(){
+  var email=$('#email').val();
+  var subject=$('#subject').val();
+  var body=$('#body').val();
+  var token =$('#token').val();
+  $.ajax({
+    type:'POST',
+    url:'/mail/store',
+    dataType:'json',
+    headers: {'X-CSRF-TOKEN': token},
+    data:{email:email,subject:subject,body:body},
+    success:function(mensaje){
+      alert(mensaje);
+    },
+    erro:function(ex){
+      alert('Failed to retrieve states.' + ex);
+    }
+  });
+
+}
     /*$('#pais_id').on('change',function(e){
         //alert($('#pais_id').val());
         console.log(e);

@@ -47,18 +47,15 @@
     <div class="row form-group">
         <div id="NroEstimado" style="display:{{$visible}}" class="col-sms-6 col-sm-3">
            [[ Form::label('id', 'Numero de Estimado *')]]
-           [[Form::text('id', $estimates->id, ['class' => 'input-text full-width','readonly' ])]]
+           [[Form::text('id', $estimates[0]->id, ['class' => 'input-text full-width','readonly' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Cliente', 'Cliente *') ]]
-          @if ($indicador==0)
-            [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
-            {{-- [[Form::text('company_id',null,['id'=>'company_id','hidden'])]] --}}
-          @else
-            [[Form::text('nombreC', $cliente->nombreC, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
-            {{-- [[Form::text('company_id',$cliente->company_id,['id'=>'company_id','hidden'])]] --}}
-          @endif
+
+            [[Form::text('nombreC', $estimates[0]->nombrec, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
+            [[Form::text('company_id',$estimates[0]->company_id,['id'=>'company_id','hidden'])]]
+
 
         </div>
         <div class="col-sms-6 col-sm-2">
@@ -70,13 +67,10 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Proveedor', 'Proveedor *') ]]
-          @if ($indicador==0)
-            [[Form::text('nombreP',null, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required', 'readonly' ]) ]]
-            [[Form::text('prove_id',null,['id'=>'prove_id','hidden'])]]
-          @else
-            [[Form::text('nombreP', $proveedor->nombreP, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
-            {{-- [[Form::text('prove_id',$proveedor->prove_id,['id'=>'prove_id','hidden'])]] --}}
-          @endif
+
+            [[Form::text('nombreP', $estimates[0]->nombrep, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
+            [[Form::text('prove_id',$estimates[0]->prove_id,['id'=>'prove_id','hidden'])]]
+
 
         </div>
         <div class="col-sms-6 col-sm-1">
@@ -85,61 +79,51 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('Estado', 'Estado *') ]]
-
-          [[ Form::select('estado', array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['id' => 'estado','class' => 'selector full-width',  'required' => 'required']) ]]
+          [[Form::select('estado', array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['id' => 'estado','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-3">
           [[Form::label('fecha', 'Fecha Solicitada *') ]]
-          [[Form::date('fecha_soli',null,['id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+          [[Form::date('fecha_soli',$estimates[0]->fecha_soli,['id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
-          [[ Form::text('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
+          [[ Form::text('ganancia', $estimates[0]->ganancia, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
           <input type="text" id="tCategoria" hidden="hidden"/>
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-12 col-sm-12">
           [[Form::label('resumen', 'Resumen') ]]
-          [[ Form::text('resumen', null, ['id'=>'resumen','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('resumen', $estimates[0]->resumen, ['id'=>'resumen','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-4">
           [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
-          [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular','Correo'=>'Correo'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
+          [[ Form::select('metodo',array('Telefono'=>'Telefono','Celular'=>'Celular','Correo'=>'Correo'), null,['id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           <div class="telefono" style="display:block;" >
-            @if ($indicador==0)
+
+
               [[Form::label('telefono', 'Telefono') ]]
-              [[ Form::text('telefono', null, ['id'=>'telefono','class' => 'input-text full-width' ]) ]]
-            @else
-              [[Form::label('telefono', 'Telefono') ]]
-              {{-- [[ Form::text('telefono', $cliente->telefono, ['id'=>'telefono','class' => 'input-text full-width' ]) ]] --}}
-            @endif
+              [[ Form::text('telefono', $estimates[0]->telefono, ['id'=>'telefono','class' => 'input-text full-width' ]) ]]
+
 
           </div>
           <div class="celular" style="display:none;" >
-          @if ($indicador==0)
+
             [[Form::label('celular', 'Celular') ]]
-            {{-- [[ Form::text('celular', null, ['id'=>'celular','class' => 'input-text full-width' ]) ]] --}}
-          @else
-            [[Form::label('celular', 'Celular') ]]
-            {{-- [[ Form::text('celular', $cliente->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]] --}}
-          @endif
+            [[ Form::text('celular', $estimtes[0]->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
 
           </div>
           <div class="correo" style="display:none;" >
-          @if ($indicador==0)
+
             [[Form::label('correo', 'Correo') ]]
-            [[ Form::text('correo', null, ['id'=>'correo','class' => 'input-text full-width' ]) ]]
-          @else
-            [[Form::label('correo', 'Correo') ]]
-            {{-- [[ Form::text('correo', $cliente->correo, ['id'=>'correo','class' => 'input-text full-width' ]) ]] --}}
-          @endif
+            [[ Form::text('correo', $estimates[0]->correo, ['id'=>'correo','class' => 'input-text full-width' ]) ]]
+
 
           </div>
         </div>
@@ -147,7 +131,7 @@
     <div class="row form-group">
           <div class="col-sms-6 col-sm-3">
             [[Form::label('fecha', 'Fecha Seguimiento *') ]]
-            [[Form::date('proximo_seguimiento',null,['id'=>'proximo_seguimiento','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+            [[Form::date('proximo_seguimiento',$estimates[0]->proximo_seguimiento,['id'=>'proximo_seguimiento','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
 
 
         </div>
@@ -158,18 +142,18 @@
     <div class="row form-group">
         <div class="col-sms-12 col-sm-6">
            [[ Form::label('fbo', 'FBO *')]]
-           [[Form::text('fbo', null, ['id'=>'nbFBO','class' => 'input-text full-width' ])]]
+           [[Form::text('fbo',$estimates[0]->fbo, ['id'=>'nbFBO','class' => 'input-text full-width' ])]]
 
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('cantidad', 'Cantidad aproximada *') ]]
-          [[ Form::text('cantidad_fuel', null, ['id'=>'cantidad_fuel','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('cantidad_fuel', $estimates[0]->cantidad_fuel, ['id'=>'cantidad_fuel','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Codigo Aeropuerto *') ]]
-        [[ Form::text('localidad', null, ['id'=>'localidad','class' => 'input-text full-width' ]) ]]
+        [[ Form::text('localidad', $estimates[0]->localidad, ['id'=>'localidad','class' => 'input-text full-width' ]) ]]
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]
@@ -180,7 +164,7 @@
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Registro de Aeronaves *') ]]
-        [[ Form::text('matricula', null, ['readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
+        [[ Form::text('matricula', $estimates[0]->matricula, ['readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
       </div>
     </div>
     <h3>Datos de Congierge</h3>

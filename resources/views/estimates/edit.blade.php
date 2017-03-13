@@ -7,7 +7,7 @@
 @endsection
 @section('contenido')
 
-      <h2>Editar Estimado <strong> {{$estimates->id}} </strong></h2>
+      <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
       </div>
@@ -17,8 +17,8 @@
 <!-- if there are creation errors, they will show here -->
 @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-   [[Form::model($estimates, array('route' => array('estimates.update', $estimates->id), 'method' => 'PUT'))]]
-    @include('estimates.partials.fields')
+   [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]]
+    @include('estimates.partials.fieldsEdit')
   [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
 </div>

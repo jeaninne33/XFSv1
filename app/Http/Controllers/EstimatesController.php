@@ -63,8 +63,8 @@ class EstimatesController extends Controller
      $indicador=0;
      $servicios=Servicio::Lists('nombre','id');
      $servicios->prepend('Seleccione Servicio');
-
-      return view('estimates.create',compact('estimates','servicios','indicador'));
+     $visible="none";
+      return view('estimates.create',compact('visible','estimates','servicios','indicador'));
 
     }
     // public function cliente($id)
@@ -180,37 +180,65 @@ class EstimatesController extends Controller
      */
     public function edit($id)
     {
-        $estimates=Estimate::findOrFail($id);
-        // $estimates = DB::table('estimates')
-        // ->join('companys', 'companys.id', '=', 'estimates.company_id')
-        // ->select('estimates.*', 'companys.nombre as nombreC ')
-        // ->where('estimates.id',$id)
-        // ->where('companys.id',$estimates->company_id)
-        // ->where('companys.id',$estimates->prove_id)
-        // ->get();
-        $cliente = DB::table('companys')
-                    ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
-                    ->where('id', $estimates->prove_id)
-                    ->first();
-        $proveedor = DB::table('companys')
-                    ->select('nombre as nombreP','id as prove_id','celular','telefono')
-                    ->where('id', $estimates->company_id)
-                    ->first();
-        //$cliente=DB::table('company')($estimates->company_id)->get();
-        //$proveedor=Company::find($estimates->prove_id)->get();
-        // $cliente = DB::table('estimates')
-        // ->join('companys', 'companys.id', '=', 'estimates.company_id')
-        // ->select('companys.nombre as nombreC')
-        // ->whereIn('companys.id',[$estimates->prove_id,$estimates->company_id]);
-        // $proveedor = DB::table('estimates')
-        //     ->join('companys', 'companys.id', '=', 'estimates.company_id')
-        //     ->select('companys.nombre as nombreP')
-        //     ->whereIn('companys.id',[$estimates->prove_id,$estimates->company_id])
-        //     ->union($cliente)
-        //     ->get();
-        $indicador=1;
+        //$estimates=Estimate::findOrFail($id);
+        $estimates=DB::select(
+        DB::raw("SELECT
+        e.id,
+        c.id as company_id,
+        c.nombre AS nombrec,
+        cp.id AS prove_id,
+        cp.nombre AS nombrep,
+        estado,
+        fecha_soli,
+        ganancia,
+        resumen,
+        metodo_segui,
+        c.telefono,
+        c.celular,
+        c.correo,
+        proximo_seguimiento,
+        fbo,
+        cantidad_fuel,
+        localidad,
+        a.id as avion_id,
+        matricula,
+        total
+        FROM estimates e
+        INNER JOIN companys c ON c.id=e.company_id
+        INNER JOIN companys cp ON cp.id=e.prove_id
+        INNER JOIN aviones a ON a.company_id=c.id
+        WHERE e.id=$id"));
+        // $cliente = DB::table('companys')
+        //             //->join()
+        //             ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
+        //
+        //             ->where('id', $estimates->prove_id)
+        //             ->first();
+        // $proveedor = DB::table('companys')
+        //             ->select('nombre as nombreP','id as prove_id','celular','telefono')
+        //             ->where('id', $estimates->company_id)
+        //             ->first();
+        // dd($estimates[0]->id);
+       $idEstimates=$estimates[0]->id;
+        $indicador=0;
         $servicios=Servicio::Lists('nombre','id');
-        return view ('estimates.edit',compact('estimates','servicios','cliente','proveedor','indicador'));
+        $servicios->prepend('Seleccione Servicio');
+        $date=DB::select(
+        DB::raw("SELECT
+          s.id AS servicioid,
+          s.nombre AS nbservicio,
+          s.descripcion,
+          cantidad,
+          precio,
+          subtotal,
+          recarga,
+          total
+          FROM dates_estimates de
+          INNER JOIN servicios s ON s.id=de.servicio_id
+          WHERE estimate_id=$idEstimates "));
+          $visible="block";
+        // $date=date_estimates::where('estimate_id',$estimates->id)->get();
+        return view ('estimates.edit',compact('date','servicios','indicador','visible'))->with('estimates',$estimates);
     }
 
     /**
