@@ -34,7 +34,6 @@
   @include('estimates.partials.fields')
 [[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]
 [[ Form::close() ]]
-<input id="metodo" type="hidden" value="save"/>
 </div>
 @endsection
 @section('scripts')

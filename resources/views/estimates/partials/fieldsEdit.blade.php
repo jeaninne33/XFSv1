@@ -116,7 +116,7 @@
           <div class="celular" style="display:none;" >
 
             [[Form::label('celular', 'Celular') ]]
-            [[ Form::text('celular', $estimates[0]->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
+            [[ Form::text('celular', $estimtes[0]->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
 
           </div>
           <div class="correo" style="display:none;" >
