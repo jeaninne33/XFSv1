@@ -19,10 +19,10 @@
 <div class="col-sm-12 no-float no-padding">
    [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]]
     @include('estimates.partials.fieldsEdit')
-  [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
+  [[ Form::button('Editar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]
   [[ Form::close() ]]
 </div>
-
+<input id="metodo" type="hidden" value="update"/>
 @endsection
 @section('scripts')
 <!--scripts necesarios en esta vista -->
