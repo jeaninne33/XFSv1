@@ -27,7 +27,7 @@
               @include('Mail.mail')
            </div>
            <div class="fuelrelease" style="display:none">
-              @include('estimates.partials.Fuel-releasefields')
+              @include('estimates.partials.fuel-releaseFields')
            </div>
         </div>
         <div class="modal-footer">
