@@ -470,17 +470,26 @@ function modal(a){
   if (a==1) {
       $('#titulo').html('Listado de Clientes');
       $('.correo').css('display','none');
+      $('.fuelrelease').css('display','none');
       $('.cliente').css('display','block');
   }
   else if (a==0) {
     $('#titulo').html('Listado de Proveedores');
+    $('.fuelrelease').css('display','none');
     $('.correo').css('display','none');
     $('.cliente').css('display','block');
   }
-  else {
+  else if (a==2) {
     $('#titulo').html('Correo');
+    $('.fuelrelease').css('display','none');
     $('.cliente').css('display','none');
     $('.correo').css('display','block');
+  }
+  else {
+    $('#titulo').html('Fuel Release');
+    $('.cliente').css('display','none');
+    $('.correo').css('display','none');
+    $('.fuelrelease').css('display','block');
   }
 
 }
@@ -504,6 +513,39 @@ function enviarCorreo(){
     }
   });
 
+}
+function fuelRelease(){
+  var table = $('#example1').DataTable();
+  var idEstimates=$('#idEstimates').val();
+  var company_id=$('#company_id').val();
+  var prove_id=$('#prove_id').val();
+  var estado=$('#estado').val();
+  var fecha_soli=$('#fecha_soli').val();
+  var resumen=$('#resumen').val();
+  var metodo=$('#metodo').val();
+  var telefono=$('#telefono').val();
+  var celular=$('#celular').val();
+  var correo=$('#correo').val();
+  var proximo_seguimiento=$('#proximo_seguimiento').val();
+  var fbo=$('#nbFBO').val();
+  var cantidad_fuel=$('#cantidad_fuel').val();
+  var localidad=$('#localidad').val();
+  var avion_id=$('#avion_id').val();
+  var matricula=$('#matricula').val();
+  var num_habitacion=$('#num_habitacion').val();
+  var tipo_hab=$('#tipo_hab').val();
+  var tipo_cama=$('#tipo_cama').val();
+  var tipo_estrellas=$('#tipo_estrellas').val();
+  var descuento=$('#descuento').val().replace('%','');
+  var subtotal=$('#subtotal').val().replace('$','');
+  var totalDescuento=$('#totalDescuento').val().replace('$','');
+  var total=$('#total').val().replace('$','');
+  var tipoCategoria=$('#tCategoria').val();
+  var gananciatotal=$('#gananciatotal').val().replace('$','');
+  var token =$('#token').val();
+  var Estimado = new Array();
+  var tipo,ruta;
+  var metodo=$('#metodo').val();
 }
     /*$('#pais_id').on('change',function(e){
         //alert($('#pais_id').val());

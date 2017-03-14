@@ -201,6 +201,7 @@ class EstimatesController extends Controller
         cantidad_fuel,
         localidad,
         a.id as avion_id,
+        a.tipo,
         matricula,
         total
         FROM estimates e

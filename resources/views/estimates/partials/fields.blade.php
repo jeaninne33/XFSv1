@@ -20,12 +20,15 @@
           <h4 class="modal-title"><label id="titulo"></label></h4>
         </div>
         <div class="modal-body">
-          <div class="cliente" style="display:none">
-            @include('estimates.partials.tbClientes')
-          </div>
-          <div class="correo" style="display:none">
-          @include('Mail.mail')
-         </div>
+           <div class="cliente" style="display:none">
+              @include('estimates.partials.tbClientes')
+           </div>
+           <div class="correo" style="display:none">
+              @include('Mail.mail')
+           </div>
+           <div class="fuelrelease" style="display:none">
+              @include('estimates.partials.Fuel-releasefields')
+           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -63,7 +66,7 @@
         </div>
         <div class="col-sms-6 col-sm-2">
           <br/>
-          <button type="button"  value="1" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+          <button type="button" value="1" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
         </div>
     </div>
 
