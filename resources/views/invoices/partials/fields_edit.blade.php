@@ -2,8 +2,6 @@
   <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
   <li><a data-toggle="tab" href="#menu2">Datos de la Compañia</a></li>
-  <li><a data-toggle="tab" href="#menu3" class="avion" style="display:none;">Aviones</a></li>
-  <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li>
 </ul>
 
 <div class="tab-content">
@@ -16,7 +14,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fbo', 'FBO *') ]]
-          [[ Form::text('fbo', null, ['ng-value'=>"@{{ estimate[0].fbo}}",'class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
+          [[ Form::text('fbo', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -45,7 +43,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('avion_id', 'Matricula del Avion') ]]
-          [[ Form::select('avion_id',  array('' => 'Seleccione'), $estimate[0]->avion_id, ['ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
+          [[ Form::select('avion_id',  array('' => 'Seleccione'), $invoice->avion_id, ['ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado Factura') ]]
@@ -60,30 +58,30 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha_pago', 'Fecha de Pago ') ]]
-          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago' ]) ]]
+          [[ Form::date('fecha_pago', null, ['readonly','class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago' ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-12 col-sm-12">
           [[Form::label('Resumen', 'Resumen') ]]
-          [[ Form::text('resumen', null, ['class' => 'input-text full-width','ng-model'=>'invoice.resumen' ]) ]]  </div>
+          [[ Form::text('resumen', null, ['readonly','class' => 'input-text full-width','ng-model'=>'invoice.resumen' ]) ]]  </div>
     </div>
 
   </div>
   <div id="menu1" class="tab-pane fade">
     <h3>Items de la Factura
       <p><small>
-               Se agregan los datos de la factura. <b>   Los campos con (*) son obligatorios</b>
+              Datos de la factura. <b></b>
           </small></p>
     </h3>
     <table border="0" style="with:900px;" class="table table-hover">
       <thead>
         <tr>
-          <th>Servicio*</th>
+          <th>Servicio</th>
           <th>Descripción</th>
-          <th>Fecha del Servicio *</th>
-          <th>Cantidad *</th>
-          <th>$Precio *</th>
+          <th>Fecha del Servicio</th>
+          <th>Cantidad </th>
+          <th>$Precio </th>
           <th>$Subtotal</th>
           <th>$Ganancia</th>
           <th>$Total</th>
@@ -93,7 +91,7 @@
       <tbody>
       <tr ng-repeat="dato in data_invoices track by $index">
         <td>
-          [[ Form::select('servicio_id', array(''=>'Seleccione'), null, ['ng-options'=>"servicio.id as servicio.nombre for servicio in servicios",'id'=>'servicio_id', 'ng-model'=>'dato.servicio_id',  ' ng-change'=>'inicializar($index)']) ]]
+          [[ Form::select('servicio_id', array(''=>'Seleccione'), null, ['disabled','ng-options'=>"servicio.id as servicio.nombre for servicio in servicios",'id'=>'servicio_id', 'ng-model'=>'dato.servicio_id',  ' ng-change'=>'inicializar($index)']) ]]
         </td>
         <td>
           [[ Form::text('descripcion', null, ['id'=>'descripcion','class' => 'input-text full-width' , 'required' => 'required', 'ng-model'=>'dato.descripcion']) ]]
@@ -156,23 +154,25 @@
     <h3>Datos del Cliente</h3>
     <h5>
       [[ Form::hidden('company_id', null, ['id'=>'company_id','class' => 'input-text full-width' ,'ng-model'=>'invoice.company_id']) ]]
+@if(!empty($estimate))
     <table border="0" style="with:600px;" class="table">
       <tr>
-        <td colspan="2"><strong>Número: </strong> {{ $estimate[0]->company_id}}<br></td>
+        <td colspan="2"><strong>Número: </strong> {{ $estimate->id}}<br></td>
       </tr>
       <tr>
-        <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $estimate[0]->nombre}}<br></td>
+        <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $estimate->nombre}}<br></td>
       </tr>
       <tr>
-        <td colspan="2"><strong>Direccion de factura: </strong>{{ $estimate[0]->direccion_cuenta}} </td>
+        <td colspan="2"><strong>Direccion de factura: </strong>{{ $estimate->direccion_cuenta}} </td>
       </tr>
       <tr>
-       <td colspan="2"><strong>Teléfono: </strong>{{ $estimate[0]->telefono_admin}}<br></td>
+       <td colspan="2"><strong>Teléfono: </strong>{{ $estimate->telefono_admin}}<br></td>
      </tr>
        <tr>
-        <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($estimate[0]->categoria)}}<br></td>
+        <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($estimate->categoria)}}<br></td>
       </tr>
       </table>
+    @endif
      </h5>
 
   </div>

@@ -76,12 +76,12 @@
           <div id="main">
               <div class="tab-container full-width-style arrow-left dashboard">
                   <ul class="tabs">
-                      <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="#dashboard"><i class="soap-icon-address circle"></i>Inicio</a></li>
+                      <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="#"><i class="soap-icon-address circle"></i>Inicio</a></li>
                       <li id="m2" class=""><a class="menu" id="2" data-toggle="tab" href="#"><i class="soap-icon-hotel-1 circle"></i>Compañias</a></li>
-                      <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="#wishlist"><i class="soap-icon-fueltank circle"></i>Servicios</a></li>
-                      <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="#travel-stories"><i class="soap-icon-card circle"></i>Estimados</a></li>
-                      <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="#travel-stories"><i class="soap-icon-stories circle"></i>Facturas</a></li>
-                      <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="#travel-stories"><i class="soap-icon-conference circle"></i>Reportes</a></li>
+                      <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="#"><i class="soap-icon-fueltank circle"></i>Servicios</a></li>
+                      <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="#"><i class="soap-icon-card circle"></i>Estimados</a></li>
+                      <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="#"><i class="soap-icon-stories circle"></i>Facturas</a></li>
+                      <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="#"><i class="soap-icon-list circle"></i>Reportes</a></li>
                   </ul>
                   <div class="tab-content">
                     <div id="contenido" class="tab-pane fade in active">
@@ -105,7 +105,7 @@
       <!-- Twitter Bootstrap -->
       <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-  
+
 
       <script>
       $('.menu').on('click',function(e){
@@ -124,6 +124,7 @@
               window.location.href ="{{ route('invoices.index') }}";
            }else  {
          //  alert('>41');
+             window.location.href ="{{ route('reports') }}";
            }//fin si
       });
       </script>
