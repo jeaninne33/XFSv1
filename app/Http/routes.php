@@ -107,6 +107,7 @@ Route::group(['middleware' => 'auth'], function()
   ]);
   Route::get('reports', [  'as' => 'reports','uses' => 'AdminController@index_reports'  ]);
   Route::get('relation', [  'as' => 'relacion','uses' => 'AdminController@reports_relacion'  ]);
+  Route::post('relation', [ 'as'=>'relacion','uses' => 'AdminController@generate_relacion']);
   Route::resource('invoices', 'InvoiceController');
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');

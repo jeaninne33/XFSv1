@@ -2,21 +2,21 @@
 @section('css')
 @endsection
 @section('contenido')
-  <h2>Reporte de la Relación entre el Estimado y la Factura </h2>
-  <div class="pull-right">
-           <a class="btn btn-primary" href="{{ route('reports') }}"> Atrás</a>
-  </div>
-
-
-  <br/>
 
   <!-- if there are creation errors, they will show here -->
 
   <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="servicios={{json_encode($servicios)}};">
+    <h2>Reporte de la Relación entre el Estimado y la Factura </h2>
+    <div class="pull-right">
+             <a class="btn btn-primary" href="{{ route('reports') }}"> Atrás</a>
+    </div>
 
+
+    <br/>
+<p>
     @include('errors.message')
-
-    [[ Form::open(['route'=>'invoices.store', 'name'=>'form1','method'=> 'POST', 'target'=>"_blank",  'novalidate', 'ng-submit'=>'relacion($event)']) ]]
+</p>
+    [[ Form::open(['route'=>'relacion', 'name'=>'form1','method'=> 'POST', 'target'=>"_blank",  'novalidate', 'ng-submit'=>'relacion($event)']) ]]
     <h3>Datos del Reporte</h3><p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6 ">

@@ -13,7 +13,6 @@
 <br/>
 <!-- if there are creation errors, they will show here ng-init=""-->
 
-
     @include('errors.message')
    [[Form::model($companys, array('route' => array('companys.update', $companys->id), 'method' => 'PUT','ng-submit'=>'edit($event)', 'novalidate'))]]
     @include('companys.partials.fields')

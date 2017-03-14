@@ -394,21 +394,62 @@ app.controller("editInvoiceCtrl",['$scope','$http',function($scope, $http){
 app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
   $scope.servicios = {};
   $scope.reporte = {};
+  $scope.show_error =  false;
+     $scope.message =  false;
   $scope.relacion =  function($event){
+    var errors={};
+    var band=true;
      $event.preventDefault();
      if ( $scope.reporte.desde==null ||$scope.reporte.hasta==null){
-       alert("error campos vacios");
+       errors['campos']= ["Error! Los campos con (*) son Obligatorios"];
+       band=false;
      }else{
        var hoy=new Date();
        var desde=new Date($scope.reporte.desde);
        var hasta=new Date($scope.reporte.hasta);
        if(desde>hoy){
-         alert("la fecha desde no puede ser mayor a la fecha actua");
+          band=false;
+          errors['desde']= ["La Fecha Desde no puede ser mayor a la Fecha Actual"];
        }
        if(hasta<desde){
-          alert("la fecha hasta no puede ser mayor a la fecha desde");
+          band=false;
+          errors['hasta']= ["La Fecha Hasta no puede ser mayor a la Fecha Desde"];
        }
-
+       if(hasta>hoy){
+         band=false;
+         errors['hastam']= ["La Fecha Hasta no puede ser mayor a la Fecha Actual"];
+       }
+     }//fin si
+    // alert(errors.length != null);
+     if(!band){
+       $scope.show_error =  true;
+       $scope.message =  false;//ocultamos el div del mensaje bien
+       $scope.message_error =  errors;
+     }else{
+        $scope.show_error =  false;//ocultamos el div del mensaje error
+        $scope.message = "Su Reporte se esta generando en otra pestaña";
+        var relation =  $scope.reporte;
+        relation["_token"] =  $("input[name=_token]").val();
+        $http.post('/relation', relation)
+        .then(
+        function(response){// success callback
+           if(response.data.message=="bien")  {
+             $scope.message = "Factura Agregada Exitosamente";
+              $scope.show_error =  false;
+          }else{//sin no bien
+            $scope.show_error =  true;
+            $scope.message =  false;//ocultamos el div del mensaje bien
+            $scope.message_error =  response.data.error;
+          }
+        },
+        function(response){// failure callback
+           $scope.message =  false;//ocultamos el div del mensaje bien
+            var errors = response.data;
+            $scope.show_error =  true;//mostramos el div del mensaje error
+            $scope.message_error =  errors;//
+        }
+       );//fin then
      }
+
   };
 }]);//fin controller EditCompanyCtrlInvoiceCtrl
