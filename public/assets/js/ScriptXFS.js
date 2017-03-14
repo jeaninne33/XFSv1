@@ -1,6 +1,7 @@
 
 function saveEstimates(){
     var table = $('#example1').DataTable();
+    var idEstimates=$('#idEstimates').val();
     var company_id=$('#company_id').val();
     var prove_id=$('#prove_id').val();
     var estado=$('#estado').val();
@@ -28,7 +29,8 @@ function saveEstimates(){
     var gananciatotal=$('#gananciatotal').val().replace('$','');
     var token =$('#token').val();
     var Estimado = new Array();
-
+    var tipo,ruta;
+    var metodo=$('#metodo').val();
     var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
 //se recorre la tabla fila por fila y se inserta en un objeto json y se pasa por POST con ajax al controlador
 table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
@@ -108,10 +110,17 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
      }
 //  $("#mensaje").css("display", "block");
     else if (ok==true) {
+      if (metodo=="save") {
+        tipo="POST";
+        ruta="/estimates";
+      }else {
+        tipo="PUT";
+        ruta="/estimates/update/"+idEstimates;
+      }
 
       $.ajax({
-        type: 'POST',
-        url:'/estimates',
+        type: tipo,
+        url:ruta,
         dataType:'json',
         headers: {'X-CSRF-TOKEN': token},
       //  data:{DatosEstimado:DatosEstimado,Estimado:Estimado,descuento:descuento,gananciatotal},
@@ -126,6 +135,7 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
           gananciatotal:gananciatotal,
           total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
         success: function (estimado) {
+          window.location.href ="{{ route('estimates') }}";
           $('#mensaje').toggleClass('alert alert-success');
           $('#mensaje').html(estimado);
           console.log(estimado);
