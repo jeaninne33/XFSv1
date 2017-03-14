@@ -48,11 +48,11 @@
   <div id="home" class="tab-pane fade  in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">
-        <div id="NroEstimado" style="display:{{$visible}}" class="col-sms-6 col-sm-3">
+        {{-- <div id="NroEstimado" style="display:{{$visible}}" class="col-sms-6 col-sm-3">
            [[ Form::label('id', 'Numero de Estimado *')]]
            [[Form::text('id', $estimates->id, ['class' => 'input-text full-width','readonly' ])]]
 
-        </div>
+        </div> --}}
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Cliente', 'Cliente *') ]]
           @if ($indicador==0)
