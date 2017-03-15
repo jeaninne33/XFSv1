@@ -24,18 +24,19 @@
            </a>
        </div>
        <div class="col-sm-6 col-md-3">
-           <a href="{{ route('servicios.index') }}">
+           <a href="{{ route('servicios.pdf') }}" target="_blank">
                <div class="fact yellow">
                    <div class="numbers counters-box">
                        <dl>
                            <dt class="display-counter" data-value="4509">{{--$servicios--}}</dt>
-                           <dd>Servicios</dd>
+                           <br/>
+                           <dd>Listado de Servicios</dd>
                        </dl>
                        <i class="icon soap-icon-fueltank"></i>
                    </div>
                    <div class="description">
                        <i class="icon soap-icon-longarrow-right"></i>
-                       <span>Ver Servicios</span>
+                       <span>Ver Reporte</span>
                    </div>
                </div>
            </a>
@@ -58,18 +59,19 @@
            </a>
        </div>
        <div class="col-sm-6 col-md-3">
-           <a href="{{ route('invoices.index') }}">
+           <a href="{{ route('invoice') }}">
                <div class="fact green">
                    <div class="numbers counters-box">
                        <dl>
                            <dt class="display-counter" data-value="1570">{{--$invoices--}}</dt>
-                           <dd>Facturas</dd>
+                           <br/>
+                           <dd>     Reportes Facturas</dd>
                        </dl>
                        <i class="icon soap-icon-stories"></i>
                    </div>
                    <div class="description">
                        <i class="icon soap-icon-longarrow-right"></i>
-                       <span>Ver Facturas</span>
+                       <span>Ver Reporte</span>
                    </div>
                </div>
            </a>

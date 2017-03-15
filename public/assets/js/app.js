@@ -395,8 +395,11 @@ app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
   $scope.servicios = {};
   $scope.reporte = {};
   $scope.show_error =  false;
-     $scope.message =  false;
+  $scope.message =  false;
+  $scope.report = null;
   $scope.relacion =  function($event){
+  //  alert($scope.tipo);
+    var url=$scope.tipo;
     var errors={};
     var band=true;
      $event.preventDefault();
@@ -427,20 +430,16 @@ app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
        $scope.message_error =  errors;
      }else{
         $scope.show_error =  false;//ocultamos el div del mensaje error
-        $scope.message = "Su Reporte se esta generando en otra pestaña";
         var relation =  $scope.reporte;
         relation["_token"] =  $("input[name=_token]").val();
-        $http.post('/relation', relation)
+        $http.post('/'+url, relation)
         .then(
         function(response){// success callback
-           if(response.data.message=="bien")  {
-             $scope.message = "Factura Agregada Exitosamente";
-              $scope.show_error =  false;
-          }else{//sin no bien
-            $scope.show_error =  true;
-            $scope.message =  false;//ocultamos el div del mensaje bien
-            $scope.message_error =  response.data.error;
-          }
+          var report=null;
+          $scope.message = "Su Reporte se esta generando en una ventana emergente! Debe habilitar los popup del navegador";
+          report = "data:application/pdf;base64,"+ response.data;
+          window.open(report,"Reportes XFS", "width=800,height=600");
+
         },
         function(response){// failure callback
            $scope.message =  false;//ocultamos el div del mensaje bien
@@ -450,6 +449,6 @@ app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
         }
        );//fin then
      }
-
   };
+
 }]);//fin controller EditCompanyCtrlInvoiceCtrl

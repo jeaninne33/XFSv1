@@ -5,19 +5,19 @@
 
   <!-- if there are creation errors, they will show here -->
 
-  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='relation'; servicios=[{{json_encode($servicios)}}];">
-    <h2>Reporte de la Relación entre el Estimado y la Factura </h2>
+  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='invoice'">
+    <h2>Reporte de Facturas de XFS </h2>
     <div class="pull-right">
              <a class="btn btn-primary" href="{{ route('reports') }}"> Atrás</a>
     </div>
-
 
     <br/>
 <p>
     @include('errors.message')
 </p>
-    [[ Form::open(['route'=>'relacion', 'name'=>'form1','method'=> 'POST', 'target'=>"_blank",  'novalidate', 'ng-submit'=>'relacion($event)']) ]]
+    [[ Form::open(['route'=>'invoice', 'name'=>'form1','method'=> 'POST', 'target'=>"_blank",  'novalidate', 'ng-submit'=>'relacion($event)']) ]]
     <h3>Filtros del Reporte</h3><p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
+  [[ Form::hidden('tipo', null, ['class' => 'input-text full-width' ,'ng-model'=>'reporte.tipo','ng-value'=>'invoice']) ]]
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6 ">
           [[Form::label('Desde *') ]]
