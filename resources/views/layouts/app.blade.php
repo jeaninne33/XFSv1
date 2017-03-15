@@ -124,7 +124,7 @@
               window.location.href ="{{ route('invoices.index') }}";
            }else  {
          //  alert('>41');
-             window.location.href ="{{ route('reports') }}";
+            window.location.href ="{{ route('reports') }}";
            }//fin si
       });
       </script>

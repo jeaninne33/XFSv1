@@ -516,36 +516,48 @@ function enviarCorreo(){
 }
 function fuelRelease(){
   var table = $('#example1').DataTable();
-  var idEstimates=$('#idEstimates').val();
-  var company_id=$('#company_id').val();
-  var prove_id=$('#prove_id').val();
-  var estado=$('#estado').val();
-  var fecha_soli=$('#fecha_soli').val();
-  var resumen=$('#resumen').val();
-  var metodo=$('#metodo').val();
-  var telefono=$('#telefono').val();
-  var celular=$('#celular').val();
-  var correo=$('#correo').val();
-  var proximo_seguimiento=$('#proximo_seguimiento').val();
-  var fbo=$('#nbFBO').val();
-  var cantidad_fuel=$('#cantidad_fuel').val();
-  var localidad=$('#localidad').val();
-  var avion_id=$('#avion_id').val();
-  var matricula=$('#matricula').val();
-  var num_habitacion=$('#num_habitacion').val();
-  var tipo_hab=$('#tipo_hab').val();
-  var tipo_cama=$('#tipo_cama').val();
-  var tipo_estrellas=$('#tipo_estrellas').val();
-  var descuento=$('#descuento').val().replace('%','');
-  var subtotal=$('#subtotal').val().replace('$','');
-  var totalDescuento=$('#totalDescuento').val().replace('$','');
-  var total=$('#total').val().replace('$','');
-  var tipoCategoria=$('#tCategoria').val();
-  var gananciatotal=$('#gananciatotal').val().replace('$','');
+  var idEstimado=$('#id').val();
+  var ref=$('#ref').val();
+  var to=$('#to').val();
+  var from=$('#from').val();
+  var fecha_soli=$('#fecha_s').val();
+  var releaseRef=$('#releaseRef').val();
+  var codeAirport=$('#codeAirport').val();
+  var supplier=$('#supplier').val();
+  var fbo=$('#FBO1').val();
+  var handling=$('#handling').val();
+//  var fbo=$('#nbFBO').val();
+  var intoPlane=$('#intoPlane').val();
+  var phone=$('#phone').val();
+  var aircraft=$('#aircraft').val();
+  var operator=$('#operator').val();
+  var type=$('#type').val();
+  var fightNumber=$('#fightNumber').val();
+  var eta=$('#eta').val();
+  var etd=$('#etd').val();
+  var fp=$('#fp').val();
+  var quantity=$('#quantity').val();
   var token =$('#token').val();
   var Estimado = new Array();
-  var tipo,ruta;
-  var metodo=$('#metodo').val();
+//  var tipo,ruta;
+//  var metodo=$('#metodo').val();
+  $.ajax({
+    type:'GET',
+    url:'/fuel-release/',
+    dataType:'json',
+    headers: {'X-CSRF-TOKEN': token},
+    data:{id:idEstimado,ref:ref,to:to,from:from,
+      fecha_soli:fecha_soli,releaseRef:releaseRef,
+    codeAirport:codeAirport,supplier:supplier,fbo:fbo,intoPlane:intoPlane,
+  phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
+eta:eta,etd:etd,fp:fp,quantity:quantity},
+    success:function(mensaje){
+      alert(mensaje);
+    },
+    erro:function(ex){
+      alert('Failed to retrieve states.' + ex);
+    }
+  });
 }
     /*$('#pais_id').on('change',function(e){
         //alert($('#pais_id').val());

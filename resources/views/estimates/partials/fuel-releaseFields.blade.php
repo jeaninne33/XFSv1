@@ -5,11 +5,11 @@
        {{-- [[ Form::label('id', 'Estimate Number:$estimates[0]->id')]] --}}
        <label>Estimate Number: {{$estimates[0]->id}}</label>
     </div>
-</div>    
+</div>
     <div class="row form-group">
         <div id="NroEstimado" class="col-sms-6 col-sm-3">
            [[ Form::label('id', 'Ref Info #')]]
-           [[Form::text('id',null, ['class' => 'input-text full-width','readonly' ])]]
+           [[Form::text('ref',null, ['id'=>'ref','class' => 'input-text full-width'])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('to', 'To') ]]
@@ -52,7 +52,7 @@
         </div>
         <div class="col-sms-12 col-sm-4">
           [[Form::label('into', 'Into Plane')]]
-          [[Form::text('intoPLane',null, ['id'=>'intoPLane','class' => 'input-text full-width' ])]]
+          [[Form::text('intoPlane',null, ['id'=>'intoPlane','class' => 'input-text full-width' ])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('int', 'Into-Plane Phone Number ') ]]
@@ -84,10 +84,13 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Flight Purpose') ]]
-          [[ Form::select('fp', array('Private'=>'Private','Comercial'=>'Comercial','Medical Evacuation'=>'Medical Evacuation'), null,['id' => 'tipo_hab','class' => 'selector full-width',  'required' => 'required'])]]
+          [[ Form::select('fp', array('Private'=>'Private','Comercial'=>'Comercial','Medical Evacuation'=>'Medical Evacuation'), null,['id' => 'fp','class' => 'selector full-width',  'required' => 'required'])]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('quantity', 'Quantity') ]]
           [[ Form::text('quantity',  $estimates[0]->cantidad_fuel, ['id'=>'quantity','class' => 'input-text full-width' ]) ]]
         </div>
+    </div>
+    <div class="row">
+        <button type="button" name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</button>
     </div>
