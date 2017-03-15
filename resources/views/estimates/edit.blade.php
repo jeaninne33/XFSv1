@@ -8,8 +8,11 @@
 @section('contenido')
 
       <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
-      <div class="pull-right">
-               <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
+      <div class="pull-right col-sm-5">
+        <a id="invoices" class="btn btn-primary soap-icon-card" href="#"> Invoice</a>
+        <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
+        <a class="btn btn-primary soap-icon-list" href="#">Imprimir</a>
+        <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
       </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
@@ -36,7 +39,15 @@
    $('#example').dataTable();
    $('#example1').dataTable();
 
-
+   $('#invoices').css("display","none");
+   $('#estado').on('change',function(){
+     if ($('#estado').val()=='Aceptado') {
+         $('#invoices').css("display","block");
+     }
+     else {
+       $('#invoices').css("display","none");
+     }
+   });
   $('.btn-delete').click(function(e){
      e.preventDefault();//evita que se envie el formulario
      $("#dialog-confirm").html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>¿Esta Seguro que desea Eliminar el Registro?</p>');
