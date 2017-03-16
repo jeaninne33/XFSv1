@@ -5,7 +5,6 @@
     <title>Xfligth Support</title>
     <link rel="stylesheet" href="assets/css/print_pdf.css">
   </head>
-
 <body>
     <div class="header">
       <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
@@ -16,43 +15,42 @@
 
       </div>
     </div>
-
 <div class="contenido" >
   <div class="cintillo">
-      <h2>Reporte de Facturas desde {{date_format(date_create( $desde), 'm/d/Y')}} hasta {{date_format(date_create( $hasta), 'm/d/Y')}}</h2>
-          <h3>{{$titu}}</h3>
+      <h2>Reporte de Compañias</h2>
+      <h3>{{$titu}}</h3>
   </div>
 
   <table class="display" cellspacing="0" width="527" border="0">
       <thead >
           <tr>
               <td><strong>ID</strong></td>
-              <td><strong>Cliente</strong></td>
-              <td><strong>Proveedor</strong></td>
-              <td><strong>Fecha</strong></td>
-              <td><strong>Estado</strong></td>
-              <td><strong>Total</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Estado / Pais</strong></td>
+              <td><strong>Representante</strong></td>
+              <td><strong>Correo</strong></td>
+              <td><strong>Tipo</strong></td>
           </tr>
       </thead>
       <tbody>
 
          <?php  $i=0;?>
-        @if(!$invoice->isEmpty())
+      @if(!empty($company))
 
-         @foreach($invoice as $key => $value)
+         @foreach($company as $key => $value)
            <?php  $i++;?>
            <tr >
 
               <td>{{ $value->id }}</td>
                 <td>{{ $value->cliente }}</td>
-               <td>{{$value->prove  }}</td>
-
-               <td>{{ date_format(date_create( $value->fecha), 'm/d/Y')   }}</td>
-               <td>{{ $inv->estados($value->estado) }}</td>
-               <td>$ {{ $value->total }}</td>
+               <td>{{ $value->estado }} / {{ $value->pais }}</td>
+               <td>{{ $value->representante }}</td>
+               <td> {{ $value->correo }}</td>
+                <td>{{ $compa->tipos($value->tipo) }}</td>
           </tr>
         @endforeach
-      @else
+     @endif
+      @if($i==0)
         <tr>
           <td colspan="6" align="center">No se encontraron registros</td>
         </tr>

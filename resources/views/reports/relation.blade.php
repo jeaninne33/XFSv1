@@ -5,7 +5,7 @@
 
   <!-- if there are creation errors, they will show here -->
 
-  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='relation'; servicios=[{{json_encode($servicios)}}];">
+  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='relation'; servicios={{json_encode($servicios)}};">
     <h2>Reporte de la Relación entre el Estimado y la Factura </h2>
     <div class="pull-right">
              <a class="btn btn-primary" href="{{ route('reports') }}"> Atrás</a>

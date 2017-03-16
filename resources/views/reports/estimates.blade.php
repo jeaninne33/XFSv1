@@ -5,8 +5,8 @@
 
   <!-- if there are creation errors, they will show here -->
 
-  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='invoice'">
-    <h2>Reporte de Facturas de XFS </h2>
+  <div ng-controller="ReportsCtrl" class="col-sm-12 no-float no-padding" ng-init="tipo='estimate'">
+    <h2>Reporte de Estimados de XFS </h2>
     <div class="pull-right">
              <a class="btn btn-primary" href="{{ route('reports') }}"> Atrás</a>
     </div>
@@ -30,8 +30,8 @@
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6 ">
-          [[Form::label('Estado de la Factura') ]]
-          [[ Form::select('estado', array(''=>'Seleccione','1'=>'No pagado','2'=>'Pagado','3'=>'Pago Vencido'), null,['id' => 'estado','class' => 'selector full-width' ,'ng-model'=>'reporte.estado']) ]]
+          [[Form::label('Estado del Estimado') ]]
+          [[ Form::select('estado', array(''=>'Seleccione','Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['id' => 'estado','class' => 'selector full-width' ,'ng-model'=>'reporte.estado']) ]]
         </div>
     </div>
 

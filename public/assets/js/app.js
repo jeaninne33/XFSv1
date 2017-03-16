@@ -397,32 +397,35 @@ app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
   $scope.show_error =  false;
   $scope.message =  false;
   $scope.report = null;
+  $scope.paises = [];
   $scope.relacion =  function($event){
   //  alert($scope.tipo);
     var url=$scope.tipo;
     var errors={};
     var band=true;
      $event.preventDefault();
-     if ( $scope.reporte.desde==null ||$scope.reporte.hasta==null){
-       errors['campos']= ["Error! Los campos con (*) son Obligatorios"];
-       band=false;
-     }else{
-       var hoy=new Date();
-       var desde=new Date($scope.reporte.desde);
-       var hasta=new Date($scope.reporte.hasta);
-       if(desde>hoy){
-          band=false;
-          errors['desde']= ["La Fecha Desde no puede ser mayor a la Fecha Actual"];
-       }
-       if(hasta<desde){
-          band=false;
-          errors['hasta']= ["La Fecha Hasta no puede ser mayor a la Fecha Desde"];
-       }
-       if(hasta>hoy){
-         band=false;
-         errors['hastam']= ["La Fecha Hasta no puede ser mayor a la Fecha Actual"];
-       }
-     }//fin si
+     if(url!="company"){
+         if ( $scope.reporte.desde==null ||$scope.reporte.hasta==null){
+           errors['campos']= ["Error! Los campos con (*) son Obligatorios"];
+           band=false;
+         }else{
+           var hoy=new Date();
+           var desde=new Date($scope.reporte.desde);
+           var hasta=new Date($scope.reporte.hasta);
+           if(desde>hoy){
+              band=false;
+              errors['desde']= ["La Fecha Desde no puede ser mayor a la Fecha Actual"];
+           }
+           if(hasta<desde){
+              band=false;
+              errors['hasta']= ["La Fecha Hasta no puede ser mayor a la Fecha Desde"];
+           }
+           if(hasta>hoy){
+             band=false;
+             errors['hastam']= ["La Fecha Hasta no puede ser mayor a la Fecha Actual"];
+           }
+         }//fin si
+       }//fin si no es company
     // alert(errors.length != null);
      if(!band){
        $scope.show_error =  true;

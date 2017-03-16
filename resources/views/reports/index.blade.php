@@ -7,14 +7,15 @@
   </p>   <br />
    <div class="row block">
        <div class="col-sm-6 col-md-3">
-           <a href="{{ route('relacion') }}">
+           <a href="{{ route('company')  }}">
                <div class="fact blue">
                    <div class="numbers counters-box">
                        <dl>
                            <dt class="display-counter" data-value="3200">{{--$companys--}}</dt>
-                           <dd>Relación entre el Estimado y la Factura</dd>
+                            <br/>
+                           <dd>Reporte de Compañias</dd>
                        </dl>
-                       <i class="icon soap-icon-bag"></i>
+                       <i class="icon soap-icon-hotel-1"></i>
                    </div>
                    <div class="description">
                        <i class="icon soap-icon-longarrow-right"></i>
@@ -42,18 +43,19 @@
            </a>
        </div>
        <div class="col-sm-6 col-md-3">
-           <a href="{{ route('estimates.index') }}">
+           <a href="{{ route('estimate') }}">
                <div class="fact red">
                    <div class="numbers counters-box">
                        <dl>
                            <dt class="display-counter" data-value="3250">{{--$estimates--}}</dt>
-                           <dd>Estimados</dd>
+                           <br/>
+                           <dd> Reportes de Estimados</dd>
                        </dl>
                        <i class="icon soap-icon-card"></i>
                    </div>
                    <div class="description">
                        <i class="icon soap-icon-longarrow-right"></i>
-                       <span>Ver Estimados</span>
+                       <span>Ver Reporte</span>
                    </div>
                </div>
            </a>
@@ -65,7 +67,7 @@
                        <dl>
                            <dt class="display-counter" data-value="1570">{{--$invoices--}}</dt>
                            <br/>
-                           <dd>     Reportes Facturas</dd>
+                           <dd>     Reportes de Facturas</dd>
                        </dl>
                        <i class="icon soap-icon-stories"></i>
                    </div>
@@ -77,7 +79,28 @@
            </a>
        </div>
    </div>
-
+   <div class="row block">
+     <div class="col-sm-6 col-md-3">
+     </div>
+   <div class="col-sm-7 col-md-5">
+       <a href="{{ route('relacion') }}">
+           <div class="fact blue">
+               <div class="numbers counters-box">
+                   <dl>
+                       <dt class="display-counter" data-value="3200">{{--$companys--}}</dt>
+                       <br/>
+                       <dd>Relación entre el Estimado y la Factura</dd>
+                   </dl>
+                   <i class="icon soap-icon-bag"></i>
+               </div>
+               <div class="description">
+                   <i class="icon soap-icon-longarrow-right"></i>
+                   <span>Ver Reporte</span>
+               </div>
+           </div>
+       </a>
+   </div>
+   </div>
    <hr>
 </div>
 @endsection

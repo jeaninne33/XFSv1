@@ -9,36 +9,27 @@
 <body>
     <div class="header">
       <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
-      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
-    </div>
-    <div class="panel panel-primary11">
-      <div class="panel-body" >
-         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/invoice.png" >
-      </div>
+      <img style=" margin-top:-85px; margin-left:795px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
     </div>
 
 
+{{-- var_dump($datos_e[0]->nombre)--}}
 <div class="contenido" >
   <div class="cintillo">
-      <span class="texto-i">
-
-      </span>
-      <span class="texto-d">
-
-      </span>
-      <img style="position: relative; height:130px;width:100%;" src="assets/images/pdf/cintillo.png" >
-
+    <h2>Reporte de Relación entre el Estimado y la Factura, desde {{date_format(date_create( $desde), 'm/d/Y')}} hasta {{date_format(date_create( $hasta), 'm/d/Y')}}</h2>
+        <h3>{{$titu}}</h3>
   </div>
 
-  <table class="display" cellspacing="0" width="527" border="0">
+  <table class="display" cellspacing="0" width="99.3%" border="0">
       <thead >
           <tr>
               <td><strong>Id Est.</strong></td>
-              <td><strong>Fecha Fac.</strong></td>
+              <td><strong>Fecha Fact.</strong></td>
               <td><strong>Matricula</strong></td>
               <td><strong>FBO</strong></td>
               <td><strong>Compañia</strong></td>
               <td><strong>Proveedor</strong></td>
+              <td><strong>Servicio</strong></td>
               <td><strong>Cantidad Est.</strong></td>
               <td><strong>Precio BasF</strong></td>
               <td><strong>Costo BasF</strong></td>
@@ -50,36 +41,83 @@
       </thead>
       <tbody>
 
-      </tbody>
-      <tfoot>
-        <tr>
-          <td ></td>
-          <td ></td>
-        </tr>
-        <tr>
-          <td colspan="5" ></td>
-          <td >SUBTOTAL: </td><td> $ {{-- $invoice[0]->subtotal --}}</td>
-        </tr>
+        <?php  $j=0;?>
+       @if(!empty($report))
+          @foreach($report as $key => $val)
+            <?php  $k=0;?>
+              <?php  $i=0;?>
+              <?php  $cant_e=count($datos_e);?>
+              @foreach($datos_in as $key => $value)
+              <?php  $i++;?>
+              <tr >
 
-        <tr>
-          <td colspan="5" ></td>
-          <td >DESCUENTO: </td><td> $ {{-- $invoice[0]->total_descuento --}}</td>
-        </tr>
-        <tr style="background-color: #A9A9A9;">
-          <td colspan="5" background-color></td>
-          <td ><strong>TOTAL: </strong></td><td> <strong>$ {{-- $invoice[0]->total --}}</strong></td>
-        </tr>
+                 <td>{{ $val->id_estimate }}</td>
+                   <td>{{ date_format(date_create( $val->fecha ), 'm/d/Y')}}</td>
+                  <td>{{$val->matricula  }}</td>
+                  <td>{{  $val->fbo }}</td>
+                  <td>{{ $val->cliente}}</td>
+                  <td>{{ $val->prove }}</td>
+                  <td>{{$value->nombre}}</td>
+                  <td>
+                    {{var_dump(($cant_e<=$k++) )}}
+                    <br/>
+                    {{var_dump(($cant_e) )}}
+                      <br/>
+                      {{var_dump(($k++) )}}
+                      <br/>
+                      {{var_dump(($k) )}}
+                        <br/>
+                    @if(($cant_e<=$k++) && ($k==($i--)))
+                          {{$datos_e[$k]->cant_basf}}
+                    @else
+                        0
+                    @endif
+
+
+                  </td>
+                  <td>
+                      {{--$datos_in[$j]->precio_basf--}}
+                  </td>
+                  <td></td>
+                  <td>{{$value->cant_xfs}}</td>
+                  <td>${{$value->precio_xfs}}</td>
+                  <td>${{$value->costo_xfs}}</td>
+                  <td></td>
+
+             </tr>
+               <?php  $k++;?>
+           @endforeach
+      @endforeach
+    @else
+      <tr>
+        <td colspan="13" align="center">No se encontraron registros</td>
+      </tr>
+    @endif
+    </tbody>
+    <tfoot>
+      <tr bgcolor="#A9A9A9">
+        <td colspan="7">TOTAL</td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      </tr>
+      <tr>
+        <td colspan="13" align="left"><strong>Total Resultados: {{$i}}</strong></td>
+      </tr>
       </tfoot>
   </table>
       <div class="otro">
+        <p><strong>Fecha: {{$date}} - Hora: {{date('h:i:s a')}}</strong></p>
         </div>
       <div class="foot">
- <img style="height:100%;width:100%;" src="assets/images/pdf/invoice base.png" >
       </div>
 </div>
 
     <div class="pie">
-     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="assets/images/pdf/REDES.png" >
-    </div>
+       </div>
   </body>
 </html>
