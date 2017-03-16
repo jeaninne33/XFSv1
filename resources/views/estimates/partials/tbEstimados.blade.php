@@ -18,32 +18,35 @@
              </tr>
       </tfoot>
       <tbody>
-      @foreach($date as $key => $value)
+        @if(!empty($date))
+          @foreach($date as $key => $value)
 
-          <tr >
-              <td>{{ $value->servicioid }}</td>
-              <td>{{ $value->nbservicio }}</td>
-              <td>{{ $value->descripcion }}</td>
-              <td>{{ $value->cantidad }}</td>
-              <td>{{ $value->precio }}</td>
-              <td>{{ $value->subtotal }}</td>
-              <td>{{ $value->recarga }}</td>
-              <td>{{ $value->total }}</td>
+              <tr >
+                  <td>{{ $value->servicioid }}</td>
+                  <td>{{ $value->nbservicio }}</td>
+                  <td>{{ $value->descripcion }}</td>
+                  <td>{{ $value->cantidad }}</td>
+                  <td>{{ $value->precio }}</td>
+                  <td>{{ $value->subtotal }}</td>
+                  <td>{{ $value->recarga }}</td>
+                  <td>{{ $value->total }}</td>
 
-              <!-- we will also add show, edit, and delete buttons -->
-              <td>
-                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                {{-- <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('estimates/' . $value->id) }}"></a> --}}
+                  <!-- we will also add show, edit, and delete buttons -->
+                  <td>
+                      <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+                    {{-- <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('estimates/' . $value->id) }}"></a> --}}
 
-                   <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn-edit glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
+                       <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+                    <a class="btn-edit glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="#"></a>
 
-                  <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn-delete" title="Eliminar"href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                      <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+                    <a class="btn-delete" title="Eliminar"href="#"><span class="glyphicon glyphicon-trash"></span></a>
 
-              </td>
-          </tr>
-      @endforeach
+                  </td>
+              </tr>
+          @endforeach
+        @endif
+
       </tbody>
   </table>
   {{-- <input type="text" name="estimado[]" id="estimado"/> --}}

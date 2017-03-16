@@ -11,6 +11,7 @@ use XFS\date_estimates;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class EstimatesController extends Controller
 {
     /**
@@ -63,8 +64,9 @@ class EstimatesController extends Controller
      $indicador=0;
      $servicios=Servicio::Lists('nombre','id');
      $servicios->prepend('Seleccione Servicio');
-     $visible="none";
-      return view('estimates.create',compact('visible','estimates','servicios','indicador'));
+     $date="";
+     //$visible="none";
+      return view('estimates.create',compact('date','estimates','servicios','indicador'));
 
     }
     // public function cliente($id)
@@ -155,8 +157,8 @@ class EstimatesController extends Controller
       // }
       $mjs='El estimado se Agrego Correctamente';
       if ($request->ajax()) {
-        return $mjs;
-        return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
+         return response()->json($mjs);
+        //return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
       }
 
     }
@@ -201,6 +203,7 @@ class EstimatesController extends Controller
         cantidad_fuel,
         localidad,
         a.id as avion_id,
+        a.tipo,
         matricula,
         total
         FROM estimates e
@@ -250,7 +253,13 @@ class EstimatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $estimates=Estimate::findOrFail($id);
+      $estimates = new Estimate;
+      $date_estimates= new date_estimates;
+      $descuento=0;
+      $subtotal=0;
+      $total=0;
+      $ganancia=0;
+      $dataE=$request->input('Estimado');
 
       $estimates->company_id=$request->input('company_id');
       $estimates->prove_id=$request->input('prove_id');
@@ -267,8 +276,27 @@ class EstimatesController extends Controller
       $estimates->tipo_cama=$request->input('tipo_cama');
       $estimates->tipo_hab=$request->input('tipo_hab');
       $estimates->tipo_estrellas=$request->input('tipo_estrellas');
-
+      $estimates->categoria=$request->input('tipoCategoria');
+      $estimates->descuento=$request->input('descuento');
+      $estimates->total_descuento=$request->input('totalDescuento');
+      $estimates->ganancia=$request->input('gananciatotal');
+      $estimates->subtotal=$request->input('subtotal');
+      $estimates->total=$request->input('total');
       $estimates->save();
+
+      foreach ($dataE as $i => $datos) {
+        $dateEstimates = date_estimates::create(array(
+          'servicio_id' => $datos['ID'],
+          'cantidad' => $datos['Cantidad'],
+          'precio'=> $datos['Precio'],
+          'subtotal'=>$datos['Subtotal'],
+          'recarga'=>$datos['Ganancia'],
+          'total'=>$datos['Total'],
+          'estimate_id'=>$estimates->id,
+          'descuento'=>$request->input('descuento'),
+          'total_recarga'=>$request->input('gananciatotal')
+        ));
+      }
       return redirect()->route('estimates.index')->with('success','Estimado Modificado con Exito');
     }
 
@@ -281,5 +309,26 @@ class EstimatesController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function FuelRelease(Request $request)
+    {
+       //$data = $this->getData();
+       $data=$request->all();
+       $date = date('Y-m-d');
+       $fuel_release = "1";
+       $view =  \View::make('estimates.pdf.fuel-release', compact('data', 'date', 'fuel_release'))->render();
+       $pdf = \App::make('dompdf.wrapper');
+       $pdf->loadHTML($view);
+       return $pdf->stream('invoice');
+    }
+    public function getData($id)
+    {
+      $data =  [
+         'quantity'      => '1' ,
+         'description'   => 'some ramdom text',
+         'price'   => '500',
+         'total'     => '500'
+     ];
+     return $data;
     }
 }

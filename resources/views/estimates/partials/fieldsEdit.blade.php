@@ -26,6 +26,9 @@
           <div class="correo" style="display:none">
           @include('Mail.mail')
          </div>
+         <div class="fuelrelease" style="display:none">
+         @include('estimates.partials.Fuel-releasefields')
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -116,7 +119,7 @@
           <div class="celular" style="display:none;" >
 
             [[Form::label('celular', 'Celular') ]]
-            [[ Form::text('celular', $estimtes[0]->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
+            [[ Form::text('celular', $estimates[0]->celular, ['id'=>'celular','class' => 'input-text full-width' ]) ]]
 
           </div>
           <div class="correo" style="display:none;" >

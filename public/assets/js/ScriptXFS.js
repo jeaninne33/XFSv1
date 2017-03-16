@@ -470,17 +470,26 @@ function modal(a){
   if (a==1) {
       $('#titulo').html('Listado de Clientes');
       $('.correo').css('display','none');
+      $('.fuelrelease').css('display','none');
       $('.cliente').css('display','block');
   }
   else if (a==0) {
     $('#titulo').html('Listado de Proveedores');
+    $('.fuelrelease').css('display','none');
     $('.correo').css('display','none');
     $('.cliente').css('display','block');
   }
-  else {
+  else if (a==2) {
     $('#titulo').html('Correo');
+    $('.fuelrelease').css('display','none');
     $('.cliente').css('display','none');
     $('.correo').css('display','block');
+  }
+  else {
+    $('#titulo').html('Fuel Release');
+    $('.cliente').css('display','none');
+    $('.correo').css('display','none');
+    $('.fuelrelease').css('display','block');
   }
 
 }
@@ -504,6 +513,51 @@ function enviarCorreo(){
     }
   });
 
+}
+function fuelRelease(){
+  var table = $('#example1').DataTable();
+  var idEstimado=$('#id').val();
+  var ref=$('#ref').val();
+  var to=$('#to').val();
+  var from=$('#from').val();
+  var fecha_soli=$('#fecha_s').val();
+  var releaseRef=$('#releaseRef').val();
+  var codeAirport=$('#codeAirport').val();
+  var supplier=$('#supplier').val();
+  var fbo=$('#FBO1').val();
+  var handling=$('#handling').val();
+//  var fbo=$('#nbFBO').val();
+  var intoPlane=$('#intoPlane').val();
+  var phone=$('#phone').val();
+  var aircraft=$('#aircraft').val();
+  var operator=$('#operator').val();
+  var type=$('#type').val();
+  var fightNumber=$('#fightNumber').val();
+  var eta=$('#eta').val();
+  var etd=$('#etd').val();
+  var fp=$('#fp').val();
+  var quantity=$('#quantity').val();
+  var token =$('#token').val();
+  var Estimado = new Array();
+//  var tipo,ruta;
+//  var metodo=$('#metodo').val();
+  $.ajax({
+    type:'GET',
+    url:'/fuel-release/',
+    dataType:'json',
+    headers: {'X-CSRF-TOKEN': token},
+    data:{id:idEstimado,ref:ref,to:to,from:from,
+      fecha_soli:fecha_soli,releaseRef:releaseRef,
+    codeAirport:codeAirport,supplier:supplier,fbo:fbo,intoPlane:intoPlane,
+  phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
+eta:eta,etd:etd,fp:fp,quantity:quantity},
+    success:function(mensaje){
+      alert(mensaje);
+    },
+    erro:function(ex){
+      alert('Failed to retrieve states.' + ex);
+    }
+  });
 }
     /*$('#pais_id').on('change',function(e){
         //alert($('#pais_id').val());

@@ -142,7 +142,7 @@ return [
         'Laracasts\Flash\FlashServiceProvider',
         'Mitul\Generator\GeneratorServiceProvider',
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        PhpConsole\Laravel\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
