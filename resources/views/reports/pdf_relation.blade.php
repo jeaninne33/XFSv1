@@ -41,52 +41,110 @@
       </thead>
       <tbody>
 
-        <?php  $j=0;?>
+        <?php   $i=0;?>
        @if(!empty($report))
+         <?php  $acum_cant_b=0;?>
+         <?php  $acum_precio_b=0;?>
+         <?php  $acum_precio_x=0;?>
+         <?php  $acum_cant_x=0;?>
+          <?php $acum_costo_b=0;?>
+         <?php  $acum_costo_x=0;?>
+         <?php  $acum_dif=0;?>
           @foreach($report as $key => $val)
-            <?php  $k=0;?>
-              <?php  $i=0;?>
-              <?php  $cant_e=count($datos_e);?>
-              @foreach($datos_in as $key => $value)
-              <?php  $i++;?>
-              <tr >
+            <?php
+              $k=0;
+              $id_e=$val->id_estimate;
+              $id_in=$val->id_invoice;
+              $datos_e=DB::select(DB::raw(
+              "SELECT
+               subtotal_recarga as precio_basf,
+                cantidad as cant_basf,
+                total as costo_basf,
+                servicio_id,
+                nombre
+               from dates_estimates,servicios
+               where estimate_id='$id_e' and servicios.id=servicio_id;"));
+               $cant_e=count($datos_e);
+              $datos_in=DB::select(DB::raw(
+              "SELECT
+               subtotal_recarga as precio_xfs,
+                cantidad as cant_xfs,
+                total as costo_xfs,
+                servicio_id,
+                nombre
+               from dates_invoices,servicios
+               where invoice_id='$id_in' and servicios.id=servicio_id $servicio;"));//'datos_in','datos_e'?>
 
-                 <td>{{ $val->id_estimate }}</td>
-                   <td>{{ date_format(date_create( $val->fecha ), 'm/d/Y')}}</td>
-                  <td>{{$val->matricula  }}</td>
-                  <td>{{  $val->fbo }}</td>
-                  <td>{{ $val->cliente}}</td>
-                  <td>{{ $val->prove }}</td>
-                  <td>{{$value->nombre}}</td>
-                  <td>
-                    {{var_dump(($cant_e<=$k++) )}}
-                    <br/>
-                    {{var_dump(($cant_e) )}}
-                      <br/>
-                      {{var_dump(($k++) )}}
-                      <br/>
-                      {{var_dump(($k) )}}
-                        <br/>
-                    @if(($cant_e<=$k++) && ($k==($i--)))
-                          {{$datos_e[$k]->cant_basf}}
-                    @else
+          @if(!empty($datos_in))
+             @foreach($datos_in as $key => $value)
+             <?php  $i++;?>
+             <?php  $costo_b=0;?>
+             <tr >
+                <td>{{ $val->id_estimate }}</td>
+                  <td>{{ date_format(date_create( $val->fecha ), 'm/d/Y')}}</td>
+                 <td>{{$val->matricula  }}</td>
+                 <td>{{ $val->fbo }}</td>
+                 <td>{{ $val->cliente}}</td>
+                 <td>{{ $val->prove }}</td>
+                 <td>{{$value->nombre}}</td>
+                 <td>
+                   @if($i<=$cant_e && !empty($datos_e))
+                       @if($datos_e[$k]->servicio_id==$value->servicio_id)
+                         {{$datos_e[$k]->cant_basf}}
+                         <?php  $acum_cant_b+=$datos_e[$k]->cant_basf;?>
+                       @else
+                          0
+                       @endif
+                   @else
+                         0
+                   @endif
+                 </td>
+                 <td>
+                   @if($i<=$cant_e && !empty($datos_e))
+                     @if($datos_e[$k]->servicio_id==$value->servicio_id)
+                         $ {{$datos_e[$k]->precio_basf}}
+                      <?php  $acum_precio_b+=$datos_e[$k]->precio_basf;?>
+                     @else
                         0
-                    @endif
+                     @endif
+                   @else
+                         0
+                   @endif
+                 </td>
+                 <td>
+                   @if($i<=$cant_e && !empty($datos_e))
+                     @if($datos_e[$k]->servicio_id==$value->servicio_id)
+                       $ {{$datos_e[$k]->costo_basf}}
+                         <?php  $acum_costo_b+=$datos_e[$k]->costo_basf;?>
+                           <?php  $costo_b=$datos_e[$k]->costo_basf;?>
+                     @else
+                        0
+                     @endif
+                   @else
+                         0
+                   @endif
+                 </td>
+                 <td>{{$value->cant_xfs}}
+                     <?php  $acum_cant_x+=$value->cant_xfs;?>
+                 </td>
+                 <td>$ {{$value->precio_xfs}}
+                   <?php  $acum_precio_x+=$value->precio_xfs;?>
+                 </td>
+                 <td>$ {{$value->costo_xfs}}
+                   <?php  $acum_costo_x+=$value->costo_xfs;?>
+                 </td>
+                 <td>$ {{$costo_b-($value->costo_xfs)}}
+                      <?php  $acum_dif+=$costo_b-($value->costo_xfs);?>
+                 </td>
 
-
-                  </td>
-                  <td>
-                      {{--$datos_in[$j]->precio_basf--}}
-                  </td>
-                  <td></td>
-                  <td>{{$value->cant_xfs}}</td>
-                  <td>${{$value->precio_xfs}}</td>
-                  <td>${{$value->costo_xfs}}</td>
-                  <td></td>
-
-             </tr>
-               <?php  $k++;?>
-           @endforeach
+            </tr>
+              <?php  $k++;?>
+          @endforeach
+        @else
+          <tr>
+            <td colspan="13" align="center">No se encontraron registros</td>
+          </tr>
+       @endif
       @endforeach
     @else
       <tr>
@@ -95,16 +153,18 @@
     @endif
     </tbody>
     <tfoot>
-      <tr bgcolor="#A9A9A9">
-        <td colspan="7">TOTAL</td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      </tr>
+      @if(!empty($datos_in))
+          <tr bgcolor="#A9A9A9">
+            <td colspan="7">TOTAL</td>
+          <td >{{ $acum_cant_b}}</td>
+          <td >$ {{$acum_precio_b}}</td>
+          <td >$ {{$acum_costo_b}}</td>
+          <td >{{$acum_cant_x}}</td>
+          <td >$ {{$acum_precio_x}}</td>
+          <td >$ {{$acum_costo_x}}</td>
+          <td >$ {{$acum_dif}}</td>
+          </tr>
+      @endif
       <tr>
         <td colspan="13" align="left"><strong>Total Resultados: {{$i}}</strong></td>
       </tr>

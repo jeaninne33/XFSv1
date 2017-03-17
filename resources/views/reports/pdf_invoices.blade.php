@@ -36,7 +36,9 @@
       </thead>
       <tbody>
 
-         <?php  $i=0;?>
+         <?php  $i=0;
+         $acum_total=0;
+         ?>
         @if(!$invoice->isEmpty())
 
          @foreach($invoice as $key => $value)
@@ -49,7 +51,8 @@
 
                <td>{{ date_format(date_create( $value->fecha), 'm/d/Y')   }}</td>
                <td>{{ $inv->estados($value->estado) }}</td>
-               <td>$ {{ $value->total }}</td>
+               <td>$ {{ $value->total }}
+               <?php $acum_total+=$value->total; ?></td>
           </tr>
         @endforeach
       @else
@@ -59,6 +62,12 @@
       @endif
       </tbody>
       <tfoot>
+          @if(!$invoice->isEmpty())
+            <tr bgcolor="#A9A9A9">
+              <td colspan="5" align="right" >TOTAL</td>
+              <td  >$ {{$acum_total}}</td>
+            </tr>
+          @endif
         <tr>
           <td colspan="6"></td>
         </tr>

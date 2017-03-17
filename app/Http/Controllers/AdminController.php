@@ -72,7 +72,6 @@ class AdminController extends Controller
              $titu="Filtrado por el  servicio: ".$ser->nombre;
            }else{
               $servicio="";
-
            }
            $consulta="SELECT
            e.id as id_invoice,
@@ -92,30 +91,7 @@ class AdminController extends Controller
            where $fechas";
 
           $report=DB::select(DB::raw($consulta));
-
-          $id_e=$report[0]->id_estimate;
-          $id_in=$report[0]->id_invoice;
-          //acuerdfate estos datos los debes consultar en la vista ojhoooo
-          $datos_e=DB::select(DB::raw(
-          "SELECT
-           subtotal_recarga as precio_basf,
-            cantidad as cant_basf,
-            total as costo_basf,
-            servicio_id,
-            nombre
-           from dates_estimates,servicios
-           where estimate_id='$id_e' and servicios.id=servicio_id;"));
-          $datos_in=DB::select(DB::raw(
-          "SELECT
-           subtotal_recarga as precio_xfs,
-            cantidad as cant_xfs,
-            total as costo_xfs,
-            servicio_id,
-            nombre
-           from dates_invoices,servicios
-           where invoice_id='$id_in' and servicios.id=servicio_id $servicio;"));
-
-          $view =  \View::make('reports.pdf_relation', compact('report','desde','hasta','titu','date','datos_in','datos_e'))->render();
+          $view =  \View::make('reports.pdf_relation', compact('report','desde','hasta','titu','date','servicio'))->render();
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view)->setPaper('a4', 'landscape');
           return base64_encode($pdf->stream('report'));
@@ -130,7 +106,8 @@ class AdminController extends Controller
      */
      public function reports_invoice()
      {
-        return  view('reports.invoice');
+         $cliente = Company::select('id', 'nombre')->where('tipo', 'client')->orWhere('tipo', 'cp')->get();
+          return  view('reports.invoice', compact('cliente' ));
      }
      public function reports_company()
      {
@@ -140,7 +117,8 @@ class AdminController extends Controller
      }
      public function reports_estimate()
      {
-        return  view('reports.estimates');
+       $cliente = Company::select('id', 'nombre')->where('tipo', 'client')->orWhere('tipo', 'cp')->get();
+        return  view('reports.estimates', compact('cliente' ));
      }
 
 
@@ -174,7 +152,16 @@ class AdminController extends Controller
              }else{
                 $estado="";
              }
-             $invoice = $this->getinvoice($fechas, $estado);
+             if(isset($data["company_id"]) && !empty($data["company_id"]) )
+             {
+               $compa=$data['company_id'];
+               $company="and e.company_id='$compa'";
+               $cli=Company::find($compa);
+               $titu.="- Del Cliente: ".$cli->nombre;
+             }else{
+                $company="";
+             }
+             $invoice = $this->getinvoice($fechas, $estado, $company);
              date_default_timezone_set('America/Caracas');
              $date = date('m/d/Y');
 
@@ -205,7 +192,16 @@ class AdminController extends Controller
              }else{
                 $estado="";
              }
-             $estimate = $this->getestimate($fechas, $estado);
+             if(isset($data["company_id"]) && !empty($data["company_id"]) )
+             {
+               $compa=$data['company_id'];
+               $company="and e.company_id='$compa'";
+               $cli=Company::find($compa);
+               $titu.="- Del Cliente: ".$cli->nombre;
+             }else{
+                $company="";
+             }
+             $estimate = $this->getestimate($fechas, $estado, $company);
             // dd($estimate);
              date_default_timezone_set('America/Caracas');
              $date = date('m/d/Y');
@@ -254,7 +250,7 @@ class AdminController extends Controller
          $pdf->loadHTML($view);
          return base64_encode($pdf->stream('company'));
      }
-     public function getinvoice($fechas, $estado)
+     public function getinvoice($fechas, $estado, $company)
      {
        $invoice=DB::select(
        DB::raw("SELECT
@@ -285,10 +281,10 @@ class AdminController extends Controller
        FROM invoices e
        INNER JOIN companys c ON c.id=e.company_id
        INNER JOIN companys f ON f.id=e.prove_id
-       where $fechas $estado;" ));
+       where $fechas $estado $company;" ));
          return collect($invoice);
      }
-     public function getestimate($fechas, $estado)
+     public function getestimate($fechas, $estado, $company)
      {
        $estimate=DB::select(
        DB::raw("SELECT
@@ -315,7 +311,7 @@ class AdminController extends Controller
        FROM estimates e
        INNER JOIN companys c ON c.id=e.company_id
        INNER JOIN companys f ON f.id=e.prove_id
-       where $fechas $estado;" ));
+       where $fechas $estado $company;" ));
          return collect($estimate);
      }
 

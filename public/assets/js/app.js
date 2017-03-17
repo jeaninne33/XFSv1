@@ -393,6 +393,7 @@ app.controller("editInvoiceCtrl",['$scope','$http',function($scope, $http){
 ////////////////
 app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
   $scope.servicios = {};
+  $scope.clientes = {};
   $scope.reporte = {};
   $scope.show_error =  false;
   $scope.message =  false;

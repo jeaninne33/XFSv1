@@ -42,8 +42,8 @@ class ServicioController extends Controller
     public function create()
     {
 
-      $categorias=Categoria::Lists('nombre','id');
-      $categorias->prepend(' --- Seleccione un Servicio --- ');
+      $categorias = Categoria::Lists('nombre','id');
+      $categorias->prepend('Seleccione ');
       return view('servicios.create',compact('categorias'));
     }
 
