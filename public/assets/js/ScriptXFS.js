@@ -126,9 +126,11 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
           gananciatotal:gananciatotal,
           total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
         success: function (estimado) {
-          $('#mensaje').toggleClass('alert alert-success');
-          $('#mensaje').html(estimado);
-          console.log(estimado);
+          //window.location.href ="{{ route('index') }}";
+          window.location.replace('/estimates/'+estimado);
+        //  $('#mensaje').toggleClass('alert alert-success');
+        //  $('#mensaje').html(estimado);
+      //    console.log(estimado);
           //  window.location()
         //   location.href ="/estimates/index";
                 //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });

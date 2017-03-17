@@ -125,6 +125,6 @@ Route::group(['middleware' => 'auth'], function()
   Route::resource ('contratos','ContratoController');
   Route::get('invoices/create/{invoices}', [ 'as'=>'invoices.create','uses' => 'InvoiceController@create']);
   Route::get('invoices_pdf/{invoices}', [ 'as'=>'invoices.pdf','uses' => 'InvoiceController@print_invoice']);
-  Route::get('fuel-release', [ 'as'=>'fuel-release.pdf','uses' => 'EstimatesController@FuelRelease']);
+  Route::get('fuel-release', [ 'as'=>'estimate','uses' => 'EstimatesController@FuelRelease']);
   Route::post('avion/{avion}', [ 'as'=>'avion.destroy','uses' => 'CompanyController@avion_destroy']);
 });
