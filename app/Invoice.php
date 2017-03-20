@@ -80,7 +80,7 @@ class Invoice extends Model
         if( (isset($datos["fecha_vencimiento"])) && ( (date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha"]), 'Y-m-d')))){
          $error["fecha_vencimiento"]=["La Fecha de Vencimiento no puede ser menor a la Fecha de la Factura "];
         }
-        if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))<(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
+        if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))>(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
         $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
         }
       }

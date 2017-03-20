@@ -9,9 +9,9 @@
 
       <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
       <div class="pull-right col-sm-5">
-        <a id="invoices" class="btn btn-primary soap-icon-card" href="#"> Invoice</a>
+        <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'+$estimates[0]->id)}}"> Invoice</a>
         <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
-        <a class="btn btn-primary soap-icon-list" href="#">Imprimir</a>
+        <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimates[0]->id)}}" target="_blank">Imprimir</a>
         <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
       </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>

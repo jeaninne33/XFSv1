@@ -127,7 +127,7 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
           total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
         success: function (estimado) {
           //window.location.href ="{{ route('index') }}";
-          window.location.replace('/estimates/'+estimado);
+          window.location.replace('/estimates/'+estimado+'/'+1);
         //  $('#mensaje').toggleClass('alert alert-success');
         //  $('#mensaje').html(estimado);
       //    console.log(estimado);
@@ -544,7 +544,7 @@ function fuelRelease(){
 //  var tipo,ruta;
 //  var metodo=$('#metodo').val();
   $.ajax({
-    type:'GET',
+    type:'POST',
     url:'/fuel-release/',
     dataType:'json',
     headers: {'X-CSRF-TOKEN': token},

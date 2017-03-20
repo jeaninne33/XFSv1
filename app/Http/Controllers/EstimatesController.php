@@ -172,8 +172,9 @@ class EstimatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$indicador=null)
     {
+
       $estimates=DB::select(
       DB::raw("SELECT
       e.id,
@@ -221,9 +222,13 @@ class EstimatesController extends Controller
         FROM dates_estimates de
         INNER JOIN servicios s ON s.id=de.servicio_id
         WHERE estimate_id=$idEstimates "));
-
+      if ($indicador==1) {
+        return view('estimates.show',compact('date','estimates'))->with('success','Estimado Agregado con Exito');
+      }else {
+        return view ('estimates.show',compact('date'))->with('estimates',$estimates);
+      }
       // $date=date_estimates::where('estimate_id',$estimates->id)->get();
-      return view ('estimates.show',compact('date'))->with('estimates',$estimates);
+
     }
 
     /**
@@ -263,17 +268,7 @@ class EstimatesController extends Controller
         INNER JOIN companys cp ON cp.id=e.prove_id
         INNER JOIN aviones a ON a.company_id=c.id
         WHERE e.id=$id"));
-        // $cliente = DB::table('companys')
-        //             //->join()
-        //             ->select('nombre as nombreC','id as company_id','celular','telefono','correo')
-        //
-        //             ->where('id', $estimates->prove_id)
-        //             ->first();
-        // $proveedor = DB::table('companys')
-        //             ->select('nombre as nombreP','id as prove_id','celular','telefono')
-        //             ->where('id', $estimates->company_id)
-        //             ->first();
-        // dd($estimates[0]->id);
+
        $idEstimates=$estimates[0]->id;
         $indicador=0;
         $servicios=Servicio::Lists('nombre','id');
@@ -362,7 +357,7 @@ class EstimatesController extends Controller
     {
         //
     }
-    public function FuelRelease(Request $request)
+    public function fuelrelease(Request $request)
     {
        //$data = $this->getData();
        $data=$request->all();
@@ -382,5 +377,63 @@ class EstimatesController extends Controller
          'total'     => '500'
      ];
      return $data;
+    }
+    public function printestimate($id)
+    {
+      $estimates=DB::select(
+      DB::raw("SELECT
+      e.id,
+      c.id as company_id,
+      c.nombre AS nombrec,
+      cp.id AS prove_id,
+      cp.nombre AS nombrep,
+      c.representante,
+      c.direccion,
+      estado,
+      fecha_soli,
+      ganancia,
+      resumen,
+      metodo_segui,
+      c.telefono,
+      c.celular,
+      c.correo,
+      proximo_seguimiento,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      a.id as avion_id,
+      a.tipo,
+      matricula,
+      total,
+      subtotal,
+      total_descuento
+      FROM estimates e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys cp ON cp.id=e.prove_id
+      INNER JOIN aviones a ON a.company_id=c.id
+      WHERE e.id=$id"));
+
+     $idEstimates=$estimates[0]->id;
+
+      $data=DB::select(
+      DB::raw("SELECT
+        s.id AS servicioid,
+        s.nombre AS nbservicio,
+        s.descripcion,
+        cantidad,
+        precio,
+        subtotal,
+        recarga,
+        total
+        FROM dates_estimates de
+        INNER JOIN servicios s ON s.id=de.servicio_id
+        WHERE estimate_id=$idEstimates "));
+      //$data=$request->all();
+      $date = date('Y-m-d');
+      $fuel_release = "1";
+      $view =  \View::make('estimates.estimate_pdf', compact('data', 'date', 'estimates'))->render();
+      $pdf = \App::make('dompdf.wrapper');
+      $pdf->loadHTML($view);
+      return $pdf->stream('estimate');
     }
 }
