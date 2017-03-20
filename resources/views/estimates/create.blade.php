@@ -29,7 +29,7 @@
 <!-- if there are creation errors, they will show here -->
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-[[ Form::open(['route'=>'estimates.store', 'method'=> 'POST']) ]]
+[[ Form::open(['route'=>'estimates.index']) ]]
 
   @include('estimates.partials.fields')
 [[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]

@@ -157,10 +157,13 @@ class EstimatesController extends Controller
       // }
       $mjs='El estimado se Agrego Correctamente';
       if ($request->ajax()) {
-         return response()->json($mjs);
-        //return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
+        return response()->json($estimates->id);
+        // return response()->json([
+        //                 'redirect' => 'estimates.index',
+        //                 'result' => $mjs
+        //     ]);
       }
-
+          //return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
     }
 
     /**
@@ -171,7 +174,56 @@ class EstimatesController extends Controller
      */
     public function show($id)
     {
-        //
+      $estimates=DB::select(
+      DB::raw("SELECT
+      e.id,
+      c.id as company_id,
+      c.nombre AS nombrec,
+      cp.id AS prove_id,
+      cp.nombre AS nombrep,
+      estado,
+      fecha_soli,
+      ganancia,
+      resumen,
+      metodo_segui,
+      c.telefono,
+      c.celular,
+      c.correo,
+      proximo_seguimiento,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      a.id as avion_id,
+      a.tipo,
+      matricula,
+      total,
+      subtotal,
+      descuento,
+      total_descuento,
+      e.categoria
+      FROM estimates e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys cp ON cp.id=e.prove_id
+      INNER JOIN aviones a ON a.company_id=c.id
+      WHERE e.id=$id"));
+
+     $idEstimates=$estimates[0]->id;
+      $date=DB::select(
+      DB::raw("SELECT
+        s.id AS servicioid,
+        s.nombre AS nbservicio,
+        s.descripcion,
+        cantidad,
+        precio,
+        subtotal,
+        recarga,
+        total
+        FROM dates_estimates de
+        INNER JOIN servicios s ON s.id=de.servicio_id
+        WHERE estimate_id=$idEstimates "));
+
+      // $date=date_estimates::where('estimate_id',$estimates->id)->get();
+      return view ('estimates.show',compact('date'))->with('estimates',$estimates);
     }
 
     /**
