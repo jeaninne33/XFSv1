@@ -42,4 +42,13 @@ class User extends Model implements AuthenticatableContract,
         $this->attributes['password']=bcrypt($value);
       }
     }
+    public function tipo($tipo) {
+      if($type=='admin'){
+        return 'Administrador';
+      }else if($type=='contador'){
+          return 'Contador';
+      }else if($type=='despacho'){
+            return 'Despacho';
+      }
+    }//fin metodp
 }

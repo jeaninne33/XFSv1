@@ -11,6 +11,8 @@ use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+use XFS\Http\Requests;
 
 class AuthController extends Controller
 {

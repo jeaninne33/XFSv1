@@ -42,9 +42,7 @@ class AdminController extends Controller
      */
      public function index_reports()
      {
-         //  return view('principal',compact('companys'));
           return  view('reports.index');
-       //  return view('companys.index');
      }
      public function reports_relacion()
      {
@@ -120,7 +118,6 @@ class AdminController extends Controller
        $cliente = Company::select('id', 'nombre')->where('tipo', 'client')->orWhere('tipo', 'cp')->get();
         return  view('reports.estimates', compact('cliente' ));
      }
-
 
      public function pdf_servicios()
      {
