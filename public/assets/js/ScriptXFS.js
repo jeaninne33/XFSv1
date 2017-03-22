@@ -554,7 +554,8 @@ function fuelRelease(){
   phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
 eta:eta,etd:etd,fp:fp,quantity:quantity},
     success:function(mensaje){
-      alert(mensaje);
+      //alert(mensaje);
+      window.open('{{URL::to("/estimates/fuelrelease_pdf")}}', '_blank');
     },
     erro:function(ex){
       alert('Failed to retrieve states.' + ex);

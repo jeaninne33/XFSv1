@@ -117,7 +117,8 @@ Route::group(['middleware' => 'auth'], function()
   Route::get('company', [  'as' => 'company','uses' => 'AdminController@reports_company'  ]);
   Route::post('company', [  'as' => 'company','uses' => 'AdminController@pdf_company'  ]);
   Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
-  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
+  Route::get('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
+  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
   Route::resource('invoices', 'InvoiceController');
   Route::resource('companys', 'CompanyController');
   Route::resource ('estimates','EstimatesController');

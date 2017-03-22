@@ -357,25 +357,42 @@ class EstimatesController extends Controller
     {
         //
     }
-    public function fuelrelease(Request $request)
+    public function postfuelrelease(Request $request)
     {
-       //$data = $this->getData();
-       $data=$request->all();
+      $estimates=$request->all();
+     // dd($data);
+      $data = $this->getData($estimates['id']);
+      return redirect()->action('EstimatesController@fuelrelease', ['estimates','data']);
+    }
+    public function fuelrelease($estimates,$data)
+    {
+
        $date = date('Y-m-d');
-       $fuel_release = "1";
-       $view =  \View::make('estimates.pdf.fuel-release', compact('data', 'date', 'fuel_release'))->render();
+       //$fuel_release = "1";
+       $view =  \View::make('estimates.fuelrelease_pdf', compact('data', 'date', 'estimates'))->render();
        $pdf = \App::make('dompdf.wrapper');
        $pdf->loadHTML($view);
-       return $pdf->stream('invoice');
+       return $pdf->download('fuelrelease');
+      //  if ($request->ajax()) {
+      //    return response()->json($pdf);
+       //
+      //  }
     }
     public function getData($id)
     {
-      $data =  [
-         'quantity'      => '1' ,
-         'description'   => 'some ramdom text',
-         'price'   => '500',
-         'total'     => '500'
-     ];
+      $data=DB::select(
+      DB::raw("SELECT
+        s.id AS servicioid,
+        s.nombre AS nbservicio,
+        s.descripcion,
+        cantidad,
+        precio,
+        subtotal,
+        recarga,
+        total
+        FROM dates_estimates de
+        INNER JOIN servicios s ON s.id=de.servicio_id
+        WHERE estimate_id=$id "));
      return $data;
     }
     public function printestimate($id)
@@ -435,5 +452,6 @@ class EstimatesController extends Controller
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
       return $pdf->stream('estimate');
+
     }
 }
