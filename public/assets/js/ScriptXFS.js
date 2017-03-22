@@ -126,9 +126,11 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
           gananciatotal:gananciatotal,
           total:total,subtotal:subtotal,tipoCategoria:tipoCategoria},
         success: function (estimado) {
-          $('#mensaje').toggleClass('alert alert-success');
-          $('#mensaje').html(estimado);
-          console.log(estimado);
+          //window.location.href ="{{ route('index') }}";
+          window.location.replace('/estimates/'+estimado+'/'+1);
+        //  $('#mensaje').toggleClass('alert alert-success');
+        //  $('#mensaje').html(estimado);
+      //    console.log(estimado);
           //  window.location()
         //   location.href ="/estimates/index";
                 //Recargar el plugin para que tenga la funcionalidad del componente$("#idMunicipio").select({ placeholder: "Selecciona un Municipio", width: "20%" });
@@ -542,7 +544,7 @@ function fuelRelease(){
 //  var tipo,ruta;
 //  var metodo=$('#metodo').val();
   $.ajax({
-    type:'GET',
+    type:'POST',
     url:'/fuel-release/',
     dataType:'json',
     headers: {'X-CSRF-TOKEN': token},
@@ -552,7 +554,8 @@ function fuelRelease(){
   phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
 eta:eta,etd:etd,fp:fp,quantity:quantity},
     success:function(mensaje){
-      alert(mensaje);
+      //alert(mensaje);
+      window.open('{{URL::to("/estimates/fuelrelease_pdf")}}', '_blank');
     },
     erro:function(ex){
       alert('Failed to retrieve states.' + ex);

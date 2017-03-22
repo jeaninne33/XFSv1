@@ -3,7 +3,7 @@
   <li class="active"><a data-toggle="tab" href="#home">Datos Generales</a></li>
   <li><a data-toggle="tab" href="#fbo">FBO</a></li>
   <li><a data-toggle="tab" href="#imagen">Imagen</a></li>
-  <li><a data-toggle="tab" href="#estimados">Estimados</a></li>
+  <li><a data-toggle="tab" href="#estimados">Estimado</a></li>
   {{-- <li><a data-toggle="tab" href="#menu3">Aviones</a></li> --}}
   {{-- <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li> --}}
 </ul>
@@ -57,7 +57,7 @@
           [[Form::label('Cliente', 'Cliente *') ]]
           @if ($indicador==0)
             [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
-            {{-- [[Form::text('company_id',null,['id'=>'company_id','hidden'])]] --}}
+            [[Form::text('company_id',null,['id'=>'company_id','hidden'])]]
           @else
             [[Form::text('nombreC', $cliente->nombreC, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
             {{-- [[Form::text('company_id',$cliente->company_id,['id'=>'company_id','hidden'])]] --}}

@@ -92,5 +92,5 @@
         </div>
     </div>
     <div class="row">
-        <button type="button" name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</button>
+        <a name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</a>
     </div>

@@ -15,12 +15,12 @@
 <div class="pull-right">
   <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
 </div>
-<div class="pull-right col-sm-5">
+{{-- <div class="pull-right col-sm-5">
   <a id="invoices" class="btn btn-primary soap-icon-card" href="#"> Invoice</a>
   <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
   <a class="btn btn-primary soap-icon-list" href="#">Imprimir</a>
   <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
-</div>
+</div> --}}
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
 <br/>
@@ -29,7 +29,7 @@
 <!-- if there are creation errors, they will show here -->
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-[[ Form::open(['route'=>'estimates.store', 'method'=> 'POST']) ]]
+[[ Form::open(['route'=>'estimates.index']) ]]
 
   @include('estimates.partials.fields')
 [[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]
