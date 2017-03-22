@@ -46,10 +46,9 @@ class AdminController extends Controller
      }
      public function reports_relacion()
      {
-         //  return view('principal',compact('companys'));
           $servicios = Servicio::select('id', 'nombre')->get();
           return  view('reports.relation', compact('servicios'));
-       //  return view('companys.index');
+
      }
      public function generate_relacion(Request $request)
      { $error= array();

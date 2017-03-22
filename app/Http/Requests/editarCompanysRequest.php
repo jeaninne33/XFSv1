@@ -8,6 +8,7 @@ use Iluminate\Routing\Route;
 
 class editarCompanysRequest extends Request
 {
+
   public function _construc(Route $route){
         $this->route=$route;
       //var_dump(($this->route->getParameter('companys')));

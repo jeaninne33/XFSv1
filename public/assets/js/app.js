@@ -456,3 +456,64 @@ app.controller("ReportsCtrl",['$scope','$http',function($scope, $http){
   };
 
 }]);//fin controller EditCompanyCtrlInvoiceCtrl
+
+////////////////
+app.controller("UsersCtrl",['$scope','$http',function($scope, $http){
+  $scope.user = {};
+  $scope.show_error =  false;
+  $scope.message =  false;
+  $scope.pass =  function($event){
+    var pass=$scope.user.password;
+    var fortaleza=null;
+    if (pass!=null) {
+           if (pass.length > 8) {
+               fortaleza= 'Fuerte';
+           } else if (pass.length > 3) {
+               fortaleza = 'Media';
+           } else {
+               fortaleza = 'Debil';
+           }
+           $scope.strength=fortaleza;
+       }
+  };
+
+  $scope.enviar =  function($event){
+     $event.preventDefault();
+     var url=$scope.tipo;
+     var user=$scope.user;
+      user["_token"] =  $("input[name=_token]").val();
+      $http.post('/'+url, user)
+      .then(
+      function(response){// success callback
+        $scope.show_error =  false;
+        $scope.message = "El Usuario se ha Creado Exitosamente";
+       },
+      function(response){// failure callback
+         $scope.message =  false;//ocultamos el div del mensaje bien
+          var errors = response.data;
+          $scope.show_error =  true;//mostramos el div del mensaje error
+          $scope.message_error =  errors;//
+       }
+     );//fin then
+  };
+  $scope.editar =  function($event){
+     $event.preventDefault();
+     var url=$scope.tipo;
+     var user=$scope.user;
+      user["_token"] =  $("input[name=_token]").val();
+      $http.put('/'+url+'/'+$scope.user.id, user)
+      .then(
+      function(response){// success callback
+        $scope.show_error =  false;
+        $scope.message = "El Usuario se ha Creado Exitosamente";
+       },
+      function(response){// failure callback
+         $scope.message =  false;//ocultamos el div del mensaje bien
+          var errors = response.data;
+          $scope.show_error =  true;//mostramos el div del mensaje error
+          $scope.message_error =  errors;//
+       }
+     );//fin then
+  };
+
+}]);//fin controller EditCompanyCtrlInvoiceCtrl

@@ -11,8 +11,7 @@ use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\Request;
-use XFS\Http\Requests;
+
 
 class AuthController extends Controller
 {
@@ -29,9 +28,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-
     //entre comillas la ruta a la que deseas redireccionar
     //protected $redirectTo = '/';
+
     public function showLogin()
    {
        // Verificamos si hay sesión activa
@@ -78,7 +77,6 @@ class AuthController extends Controller
     {
         $this->middleware('guest', ['except' => 'getLogout']);
     }
-
     /**
      * Get a validator for an incoming registration request.
      *

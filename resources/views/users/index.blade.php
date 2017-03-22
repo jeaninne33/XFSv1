@@ -7,19 +7,14 @@
 @endsection
 @section('contenido')
 <div ng-controller="indexCompany">
-<p><h2 ><i class=" soap-icon-hotel-1 circle"></i> <strong>Usuarios de XFS</strong></h2>
+<p><h2 ><i class="soap-icon-user circle"></i> <strong>Usuarios de XFS</strong></h2>
   <p><h2 > <strong>Listado de Usuarios</strong></h2></p>
- <!--[[ Form::label('tipo', 'Filtrar por Tipo de Relacion: ')]]
-    <select ng-change="filter_table()" ng-model="relacion" ng-options="filtro as filtro.nombre for filtro in filtros track by filtro.id" >
-       <option value="">--Elige opcion--</option>
-     </select>
-<p><h2 > <strong>Listado de @{{ relacion.nombre }}</strong></h2></p>-->
 </p>
   <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
     <p>
-      <a class="btn btn-info" href="{{URL::to('companys/create')}}" role="button">
+      <a class="btn btn-info" href="{{URL::to('users/create')}}" role="button">
         Nuevo Usuario
       </a>
     </p>

@@ -37,10 +37,6 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $companys =  Company::with('pais')->get();
-      /*  $tip="todos";
-        $companys2=Company::where('tipo','client')->get();
-        $companys3=Company::where('tipo','prove')->get();
-        $companys4=Company::where('tipo','cp')->get();*/
         return view('companys.index',compact('companys'));
     }
 

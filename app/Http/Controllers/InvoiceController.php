@@ -216,6 +216,28 @@ class InvoiceController extends Controller
      */
     public function destroy($id, Request $request)
     {
+      // abort(500);
+       $invo=Invoice::findOrFail($id);
+       $mensaje='La Factura ID: <b>'.$invo->id.'</b> fue eliminada Exitosamente';
+       if (!is_null($invo)) {
+
+          DB::beginTransaction();
+          try {
+           $invo->datos()->delete();
+           $invo->delete();
+
+          } catch (Exception $e) {
+            DB::rollback();
+            $mensaje[]=[$e->getMessage()];
+         }
+         // Hacemos los cambios permanentes ya que no han habido errores
+        DB::commit();
+         if($request->ajax()){
+             return $mensaje;
+         }
+          return redirect()->route('invoice.index')
+                ->with('success', $mensaje);
+      }
     }
     public function print_invoice($id)
     {

@@ -21,26 +21,26 @@
 <div class="contenido" >
   <div class="cintillo">
       <span class="texto-i">
-        <strong>Codigo Cliente: </strong> {{$invoice[0]->company_id}}
+        <strong>Customer Code: </strong> {{$invoice[0]->company_id}}
         <br/>
-        <strong>Cliente: </strong> {{$invoice[0]->cliente}}
+        <strong>Customer: </strong> {{$invoice[0]->cliente}}
         <br/>
         <strong>Email: </strong> {{$invoice[0]->correo}}
         <br/>
-        <strong>Representante: </strong> {{$invoice[0]->representante}}
+        <strong>Representative: </strong> {{$invoice[0]->representante}}
         <br/>
-        <strong>Dirección: </strong> {{$invoice[0]->representante}}
+        <strong>Addres Customer: </strong> {{$invoice[0]->representante}}
       </span>
       <span class="texto-d">
-        <strong>Número de Factura:</strong> {{$invoice[0]->id}}
+        <strong>Invoice Number:</strong> {{$invoice[0]->id}}
         <br/>
-        <strong>Fecha Emisión: </strong> {{date_format(date_create( $invoice[0]->fecha), 'm/d/Y') }}
+        <strong>Invoice Date: </strong> {{date_format(date_create( $invoice[0]->fecha), 'm/d/Y') }}
         <br/>
         <strong>FBO: </strong> {{$invoice[0]->fbo}}
         <br/>
-        <strong>Codigo Areopuerto: </strong> {{$invoice[0]->localidad}}
+        <strong>Airport Code: </strong> {{$invoice[0]->localidad}}
         <br/>
-        <strong>Placa: </strong> {{$invoice[0]->matricula}}
+        <strong>Tail #: </strong> {{$invoice[0]->matricula}}
       </span>
       <img style="position: relative; height:130px;width:100%;" src="assets/images/pdf/cintillo.png" >
 
@@ -49,13 +49,13 @@
   <table class="display" cellspacing="0" width="527" border="0">
       <thead >
           <tr>
-              <td><strong>Servicio</strong></td>
-              <td><strong>Descripcion</strong></td>
-              <td><strong>Fecha del Servicio</strong></td>
-              <td><strong>Cantidad</strong></td>
+              <td><strong>Services</strong></td>
+              <td><strong>Description</strong></td>
+              <td><strong>Date of Services</strong></td>
+              <td><strong>Qty</strong></td>
               <td><strong>x</strong></td>
-              <td><strong>Precio</strong></td>
-              <td><strong>Monto</strong></td>
+              <td><strong>Rate</strong></td>
+              <td><strong>Amount</strong></td>
           </tr>
       </thead>
       <tbody>
@@ -85,7 +85,7 @@
 
         <tr>
           <td colspan="5" ></td>
-          <td >DESCUENTO: </td><td> $ {{ $invoice[0]->total_descuento }}</td>
+          <td >DISCOUNT: </td><td> $ {{ $invoice[0]->total_descuento }}</td>
         </tr>
         <tr style="background-color: #A9A9A9;">
           <td colspan="5" background-color></td>
@@ -94,8 +94,8 @@
       </tfoot>
   </table>
       <div class="otro">
-        <p><strong>Resumen de la Factura: </strong>{{$invoice[0]->resumen}}</p>
-        <p><strong>Fecha de Vencimeinto: </strong>{{date_format(date_create( $invoice[0]->fecha_vencimiento), 'm/d/Y')}}</p>
+        <p><strong>Sumary: </strong>{{$invoice[0]->resumen}}</p>
+        <p><strong>Due Date: </strong>{{date_format(date_create( $invoice[0]->fecha_vencimiento), 'm/d/Y')}}</p>
       </div>
       <div class="foot">
  <img style="height:100%;width:100%;" src="assets/images/pdf/invoice base.png" >

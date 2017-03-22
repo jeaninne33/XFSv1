@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'type'];
+    protected $fillable = ['name', 'email', 'password', 'type','remember_token' ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -42,7 +42,7 @@ class User extends Model implements AuthenticatableContract,
         $this->attributes['password']=bcrypt($value);
       }
     }
-    public function tipo($tipo) {
+    public function tipo($type) {
       if($type=='admin'){
         return 'Administrador';
       }else if($type=='contador'){

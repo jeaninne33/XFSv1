@@ -15,11 +15,11 @@
   <div class="" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
-    <p>
-      <a class="btn btn-info" href="{{URL::to('invoices/create/3')}}" role="button">
+  <!--<p>
+      <a class="btn btn-info" href="{{--URL::to('invoices/create/3')--}}" role="button">
         Nueva factura
       </a>
-    </p>
+    </p>-->
 
     <div class="col-sms-12 col-sm-12"  >
 
@@ -28,7 +28,7 @@
       </div>
 
 
-[[Form::open(['route' => ['companys.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
+[[Form::open(['route' => ['invoices.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]
 </div>
