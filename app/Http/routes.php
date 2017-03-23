@@ -96,7 +96,7 @@ Route::get('/clientes/{id}',function($id){
  //Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
-Route::resource('mail','MailController');
+
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
 Route::group(['middleware' => 'auth'], function()
@@ -117,8 +117,10 @@ Route::group(['middleware' => 'auth'], function()
   Route::get('company', [  'as' => 'company','uses' => 'AdminController@reports_company'  ]);
   Route::post('company', [  'as' => 'company','uses' => 'AdminController@pdf_company'  ]);
   Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
-  Route::get('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
-  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
+  Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
+//  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
+  Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
+  Route::resource('mail','MailController');
   Route::resource('invoices', 'InvoiceController');
   Route::resource('users', 'UserController');
   Route::resource('companys', 'CompanyController');

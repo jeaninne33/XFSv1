@@ -5,6 +5,7 @@ namespace XFS\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use Redirect;
+use Mail;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
 
@@ -36,6 +37,23 @@ class MailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function send(Request $request)
+    {
+      //dd($request);
+      $data=$request->all();
+      Mail::send('Mail.mail',$data,function($mjs)use($request)
+      {
+        $mjs->to('josmer@xflightsupport.com');
+        $mjs->subject($request->subject);
+        //$mjs->body($request->body);
+      });
+      //Session:flash('success','Correo Enviado');
+      $mensaje="Correo Enviado";
+
+      return response()->json($mensaje);
+    }
+
     public function store(Request $request)
     {
         Mail::send('estimates.create',$request->all(),function($mjs){
