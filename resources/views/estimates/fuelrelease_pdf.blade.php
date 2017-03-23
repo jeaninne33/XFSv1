@@ -21,18 +21,18 @@
 <div class="contenido" >
   <div class="cintillo">
       <span class="texto-i">
-        <strong>To: </strong> {{$estimates['to']}}
+        <strong>To: </strong> {{$estimates[0]->nombrec}}
         <br/>
-        <strong>From: </strong> {{$estimates['from']}}
+        <strong>From: </strong> {{$from}}
         <br/>
-        <strong>Request Date: </strong> {{$estimates['fecha_soli']}}
+        <strong>Request Date: </strong> {{$estimates[0]->fecha_soli}}
         <br/>
-        <strong>Release Ref#: </strong> {{$estimates['releaseRef']}}
+        <strong>Release Ref#: </strong> {{$releaseRef}}
         <br/>
-        <strong>Ref Info#: </strong> {{$estimates['ref']}}
+        <strong>Ref Info#: </strong> {{$ref}}
       </span>
       <span class="texto-d">
-        <strong>Número de Estimado:</strong> {{$estimates['id']}}
+        <strong>Número de Estimado:</strong> {{$estimates[0]->id}}
         {{-- <br/>
         <strong>Fecha Emisión: </strong> {{date_format(date_create( $estimates[0]->fecha_soli), 'm/d/Y') }}
         <br/>

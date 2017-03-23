@@ -497,13 +497,13 @@ function modal(a){
 }
 
 function enviarCorreo(){
-  var email=$('#email').val();
+  var email=$('#mail').val();
   var subject=$('#subject').val();
   var body=$('#body').val();
   var token =$('#token').val();
   $.ajax({
     type:'POST',
-    url:'/mail/store',
+    url:'/send/',
     dataType:'json',
     headers: {'X-CSRF-TOKEN': token},
     data:{email:email,subject:subject,body:body},
@@ -543,19 +543,25 @@ function fuelRelease(){
   var Estimado = new Array();
 //  var tipo,ruta;
 //  var metodo=$('#metodo').val();
+//window.open("{{URL::route('/fuel-release/'"+idEstimado+"'/'"+ref+"'/'"+releaseRef+"'/'"+handling+"'/'"+intoPlane+"'/'"+phone+"'/'"+operator+"'/'"+fightNumber+"'/'"+eta+"'/'"+etd+"'/'"+fp+"'/')}}", '_blank');
   $.ajax({
-    type:'POST',
-    url:'/fuel-release/',
+    type:'GET',
+    url:'/fuel-release/'+idEstimado+'/'+ref+'/'+releaseRef+'/'+handling+'/'+intoPlane+'/'+phone+'/'+operator+'/'+fightNumber+'/'+eta+'/'+etd+'/'+fp,
     dataType:'json',
     headers: {'X-CSRF-TOKEN': token},
-    data:{id:idEstimado,ref:ref,to:to,from:from,
-      fecha_soli:fecha_soli,releaseRef:releaseRef,
-    codeAirport:codeAirport,supplier:supplier,fbo:fbo,intoPlane:intoPlane,
-  phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
-eta:eta,etd:etd,fp:fp,quantity:quantity},
-    success:function(mensaje){
+//     data:{id:idEstimado,ref:ref,to:to,from:from,
+//       fecha_soli:fecha_soli,releaseRef:releaseRef,
+//     codeAirport:codeAirport,supplier:supplier,fbo:fbo,intoPlane:intoPlane,
+//   phone:phone,aircraft:aircraft,operator:operator,type:type,fightNumber:fightNumber,
+// eta:eta,etd:etd,fp:fp,quantity:quantity},
+    success:function(data){
       //alert(mensaje);
-      window.open('{{URL::to("/estimates/fuelrelease_pdf")}}', '_blank');
+      var blob=new Blob([data]);
+      var link=document.createElement('a');
+      link.href=window.URL.createObjectURL(blob);
+      link.download="Prueba.pdf";
+      link.click();
+    //  window.open('{{route("estimates.fuelrelease_pdf")}}', '_blank');
     },
     erro:function(ex){
       alert('Failed to retrieve states.' + ex);

@@ -96,7 +96,7 @@ Route::get('/clientes/{id}',function($id){
  //Route::get('estimates/cliente','EstimatesController@cliente');
  Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 
-Route::resource('mail','MailController');
+
 // Route::get('estimate','EstimatesController@cliente');
 /*Rutas privadas solo para usuarios autenticados*/
 Route::group(['middleware' => 'auth'], function()
@@ -113,6 +113,32 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource ('estimates','EstimatesController');
     //rutas solo admin
     Route::resource('users', 'UserController');
+
+
+  Route::get('relation', [  'as' => 'relacion','uses' => 'AdminController@reports_relacion'  ]);
+  Route::post('relation', [ 'as'=>'relacion','uses' => 'AdminController@generate_relacion']);
+  Route::get('invoice', [  'as' => 'invoice','uses' => 'AdminController@reports_invoice'  ]);
+  Route::post('invoice', [  'as' => 'invoice','uses' => 'AdminController@pdf_invoice'  ]);
+  Route::get('estimate', [  'as' => 'estimate','uses' => 'AdminController@reports_estimate'  ]);
+  Route::post('estimate', [  'as' => 'estimate','uses' => 'AdminController@pdf_estimate'  ]);
+  Route::get('servicios_pdf', [ 'as'=>'servicios.pdf','uses' => 'AdminController@pdf_servicios']);
+  Route::get('company', [  'as' => 'company','uses' => 'AdminController@reports_company'  ]);
+  Route::post('company', [  'as' => 'company','uses' => 'AdminController@pdf_company'  ]);
+  Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
+  Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
+//  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
+  Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
+  Route::resource('mail','MailController');
+  Route::resource('invoices', 'InvoiceController');
+  Route::resource('users', 'UserController');
+  Route::resource('companys', 'CompanyController');
+  Route::resource ('estimates','EstimatesController');
+  Route::resource ('invoices','InvoiceController');
+  Route::resource('servicios', 'ServicioController');
+  Route::resource ('categoria', 'CategoriaController');
+  Route::resource ('contratos','ContratoController');
+  Route::get('invoices/create/{invoices}', [ 'as'=>'invoices.create','uses' => 'InvoiceController@create']);
+  Route::get('invoices_pdf/{invoices}', [ 'as'=>'invoices.pdf','uses' => 'InvoiceController@print_invoice']);
 
 
 });

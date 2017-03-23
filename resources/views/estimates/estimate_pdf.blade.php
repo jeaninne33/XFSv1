@@ -13,7 +13,7 @@
     </div>
     <div class="panel panel-primary11">
       <div class="panel-body" >
-         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/invoice.png" >
+         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/ESTIMATE.png" >
       </div>
     </div>
 

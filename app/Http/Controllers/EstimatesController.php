@@ -357,26 +357,44 @@ class EstimatesController extends Controller
     {
         //
     }
-    public function postfuelrelease(Request $request)
+    // public function postfuelrelease(Request $request)
+    // {
+    //   $estimates=$request->all();
+    //  // dd($data);
+    //   $data = $this->getData($estimates['id']);
+    //   return redirect()->action('EstimatesController@fuelrelease', ['estimates','data']);
+    // }
+    public function fuelrelease(Request $request,$id,$ref,$releaseRef,$handling,$intoPlane,$phone,$operator,$fightNumber,$eta,$etd,$fp)
     {
-      $estimates=$request->all();
-     // dd($data);
-      $data = $this->getData($estimates['id']);
-      return redirect()->action('EstimatesController@fuelrelease', ['estimates','data']);
-    }
-    public function fuelrelease($estimates,$data)
-    {
-
+      $estimates=DB::select(
+      DB::raw("SELECT
+      e.id,
+      c.nombre AS nombrec,
+      cp.nombre AS nombrep,
+      c.representante,
+      c.direccion,
+      fecha_soli,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      a.tipo,
+      matricula
+      FROM estimates e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys cp ON cp.id=e.prove_id
+      INNER JOIN aviones a ON a.company_id=c.id
+      WHERE e.id=$id"));
+      $from="X Flight Support";
        $date = date('Y-m-d');
        //$fuel_release = "1";
-       $view =  \View::make('estimates.fuelrelease_pdf', compact('data', 'date', 'estimates'))->render();
+       $view =  \View::make('estimates.fuelrelease_pdf', compact('data','from','ref','releaseRef','handling','intoPlane','phone','operator','fightNumber','eta','etd','fp','estimates'))->render();
        $pdf = \App::make('dompdf.wrapper');
        $pdf->loadHTML($view);
-       return $pdf->download('fuelrelease');
-      //  if ($request->ajax()) {
-      //    return response()->json($pdf);
-       //
-      //  }
+       $pdf->stream('fuelrelease');
+       if ($request->ajax()) {
+         return response()->json($pdf);
+
+       }
     }
     public function getData($id)
     {
