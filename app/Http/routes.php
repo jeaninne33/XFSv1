@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function()
 //  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
   Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
   Route::post('adjuntar', 'MailController@store');
+  Route::get('fuelreleases/{id}','EstimatesController@fuelreleaseview');
   Route::resource('mail','MailController');
   Route::resource('invoices', 'InvoiceController');
   Route::resource('users', 'UserController');

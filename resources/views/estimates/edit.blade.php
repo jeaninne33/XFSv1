@@ -12,7 +12,7 @@
       <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
       <div class="pull-right col-sm-5">
         <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'+$estimates[0]->id)}}"> Invoice</a>
-        <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
+        <button type="submit" class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</button>
         <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimates[0]->id)}}" target="_blank">Imprimir</a>
         <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
       </div>
