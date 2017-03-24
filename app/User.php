@@ -42,6 +42,7 @@ class User extends Model implements AuthenticatableContract,
         $this->attributes['password']=bcrypt($value);
       }
     }
+
     public function tipo($type) {
       if($type=='admin'){
         return 'Administrador';

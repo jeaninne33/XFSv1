@@ -3,7 +3,8 @@
 @endsection
 @section('contenido')
    <div id="dashboard" class="tab-pane fade in active">
-      <h1 class="no-margin skin-color">¡Bienvenido <strong> {{ strtoupper(Auth::user()->name) }} </strong>!</h1>
+      <h1 class="no-margin skin-color">¡Bienvenid@ <strong> {{ strtoupper(Auth::user()->name) }} </strong>!</h1>
+      <p><h3 ><i class="soap-icon-user circle"></i> Nivel de Usuario: <strong> {{$user->tipo(Auth::user()->type)}}</strong> </h3>
         <p><h2 ><i class=" soap-icon-plane"></i> <strong>Intranet de Xfligth Support </strong> <i class=" soap-icon-plane-right"></i></h2>
     </p>
       <br />
@@ -77,11 +78,7 @@
               </a>
           </div>
       </div>
-      <div class="notification-area">
-          <div class="info-box block">
 
-          </div>
-      </div>
       <hr>
   </div>
 

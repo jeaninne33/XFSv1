@@ -14,6 +14,7 @@ use XFS\Date_invoice;
 use XFS\date_estimates;
 use XFS\Pais;
 use XFS\Avion;
+use XFS\User;
 use Illuminate\Support\Facades\Session;
 use DB;
 use DateTime;
@@ -30,8 +31,9 @@ class AdminController extends Controller
           $servicios = Servicio::all()->count();
           $estimates = Estimate::all()->count();
           $invoices = Invoice::all()->count();
+          $user=New User;
         //  return view('principal',compact('companys'));
-         return  view('principal',compact('servicios','estimates','companys','invoices'));
+         return  view('principal',compact('servicios','estimates','companys','invoices','user'));
       //  return view('companys.index');
     }
 

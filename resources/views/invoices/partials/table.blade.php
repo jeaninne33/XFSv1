@@ -24,10 +24,9 @@
                 <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('invoices/' . $value->id.'/edit') }}"></a>
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
                <a class="glyphicon glyphicon-save"  target="_blank" title="Descargar PDF" aria-hidden="true" href="{{ URL::to('invoices_pdf/' . $value->id) }}"></a>
-
-                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+            @if (Auth::user()->type=='admin')
                <a class="btn-delete" title="Eliminar" aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
-
+             @endif
              </td>
         </tr>
       @endforeach

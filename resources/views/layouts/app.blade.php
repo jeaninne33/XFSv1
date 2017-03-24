@@ -46,22 +46,16 @@
   <header id="header" class="navbar-static-top">
     <div style="background-image:url({{ asset("assets/images/header.png") }}); position: fixed;" class="topnav hidden-xs">
         <div class="container">
-
-
-              <img src="{{ asset('assets/images/LOGO XFS.png')}}"/>
-
-
-
+              <img src="{{ asset('assets/images/LOGO XFS_white.png')}}" width="180" height="28"/>
             <ul class="quick-menu pull-right">
               <li class="ribbon">
-
-
                   @if (!Auth::guest())
                         <a href="#">Bienvenido Usuario: {{ Auth::user()->name }}</a>
                         <ul class="menu mini uppercase">
-
-                            <li><a href="#">Perfil</a></li>
-                            <li><a href="#">Configuración</a></li>
+                            <li><a href="{{ URL::to('perfil/'.Auth::user()->id)}}">Perfil</a></li>
+                          @if (Auth::user()->type=='admin')
+                            <li><a href="{{route('users.index')}}">Configuración Usuarios</a></li>
+                          @endif
                             <li><a href="{{route('auth/logout')}}">SignOut</a></li>
                         </ul>
                   @endif
@@ -77,17 +71,19 @@
               <div class="tab-container full-width-style arrow-left dashboard">
                   <ul class="tabs">
                       <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="#"><i class="soap-icon-address circle"></i>Inicio</a></li>
+                    @if (Auth::user()->type!='despacho')
                       <li id="m2" class=""><a class="menu" id="2" data-toggle="tab" href="#"><i class="soap-icon-hotel-1 circle"></i>Compañias</a></li>
                       <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="#"><i class="soap-icon-fueltank circle"></i>Servicios</a></li>
+                    @endif
                       <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="#"><i class="soap-icon-card circle"></i>Estimados</a></li>
+                    @if (Auth::user()->type!='despacho')
                       <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="#"><i class="soap-icon-stories circle"></i>Facturas</a></li>
                       <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="#"><i class="soap-icon-list circle"></i>Reportes</a></li>
+                  @endif
                   </ul>
                   <div class="tab-content">
-                    <div id="contenido" class="tab-pane fade in active">
-                   <!-- angular templating -->
-                   <!-- this is where content will be injected -->
-                   <div ng-view></div>
+                    <div id="contenido" class="tab-pane fade in active" style=" min-height: 500px;">
+
                         	@yield('contenido')
 
                     </div>
@@ -118,12 +114,10 @@
            }else if (id==3) {
               window.location.href ="{{ route('servicios.index') }}";
            }else if (id==4) {
-            //  alert('31');
             window.location.href ="{{ route('estimates.index') }}";
            }else if (id==5) {
               window.location.href ="{{ route('invoices.index') }}";
-           }else  {
-         //  alert('>41');
+           }else if (id==6) {
             window.location.href ="{{ route('reports') }}";
            }//fin si
       });

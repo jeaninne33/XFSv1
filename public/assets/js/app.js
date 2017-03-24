@@ -462,6 +462,7 @@ app.controller("UsersCtrl",['$scope','$http',function($scope, $http){
   $scope.user = {};
   $scope.show_error =  false;
   $scope.message =  false;
+
   $scope.pass =  function($event){
     var pass=$scope.user.password;
     var fortaleza=null;
@@ -470,10 +471,14 @@ app.controller("UsersCtrl",['$scope','$http',function($scope, $http){
                fortaleza= 'Fuerte';
            } else if (pass.length > 3) {
                fortaleza = 'Media';
+          } else if (pass.length <= 0) {
+                 fortaleza = null;
            } else {
                fortaleza = 'Debil';
            }
            $scope.strength=fortaleza;
+       }else{
+          $scope.strength=null;
        }
   };
 
@@ -498,14 +503,28 @@ app.controller("UsersCtrl",['$scope','$http',function($scope, $http){
   };
   $scope.editar =  function($event){
      $event.preventDefault();
-     var url=$scope.tipo;
      var user=$scope.user;
+     var tipo=$scope.tipo;
+     var msj=null;
+     if(tipo=='perfil'){
+         msj = "El Perfil de su Usuario se ha Actualizado Exitosamente";
+     }else{
+         msj = "El Usuario se ha Actualizado Exitosamente";
+     }
+
       user["_token"] =  $("input[name=_token]").val();
-      $http.put('/'+url+'/'+$scope.user.id, user)
+      user["tipo"]=tipo;
+      $http.put('/users/'+$scope.user.id, user)
       .then(
       function(response){// success callback
-        $scope.show_error =  false;
-        $scope.message = "El Usuario se ha Creado Exitosamente";
+          if(response.data.message=="bien")  {
+            $scope.show_error =  false;
+            $scope.message = msj;
+         }else{//sin no bien
+           $scope.show_error =  true;
+           $scope.message =  false;//ocultamos el div del mensaje bien
+           $scope.message_error =  response.data.error;
+         }
        },
       function(response){// failure callback
          $scope.message =  false;//ocultamos el div del mensaje bien
