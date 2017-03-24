@@ -11,7 +11,8 @@ use XFS\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Input;
-
+use Illuminate\Http\Requests;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -42,23 +43,33 @@ class AuthController extends Controller
        // Si no hay sesión activa mostramos el formulario
        return view('login');
    }
-    public function postLogin()
+    public function postLogin(Request $request)
     {
-      $data = [
-            'email' => Input::get('email'),
-            'password' => Input::get('password')
-        ];
-
-        // Verificamos los datos
-        if (Auth::attempt($data, Input::get('remember'))) // Como segundo parámetro pasámos el checkbox para sabes si queremos recordar la contraseña
-        {
-            // Si nuestros datos son correctos mostramos la página de inicio
-            return Redirect::intended('/principal');
-        }
-        Session::flash('flash_message', 'Correo Electronico o Contraseña no Son validos!');
+      $data=$request->all();
+      $band=true;
+      $error= array();
+      if(!isset($data["email"]) || !isset($data["password"]) ){
+        $band=false;
+        $error['campos'] =['Debe introducir el correo y la contraseña!'];
+      }else{
+        $datas = [
+              'email' => $data["email"],
+              'password' => $data["password"]
+          ];
+            // Verificamos los datos
+          if (!Auth::attempt($datas, Input::get('remember'))) // Como segundo parámetro pasámos el checkbox para sabes si queremos recordar la contraseña
+          {
+          // Si nuestros datos no son correctos
+            $band=false;
+            $error['message'] =['El Correo Electrónico o la Contraseña son invalidos!'];
+          }
+      }
+      if(!$band){
+        return response()->json($error,401);
+      }
+        //Session::flash('flash_message', '');
         // Si los datos no son los correctos volvemos al login y mostramos un error
-        return Redirect::back();
-
+        //return Redirect::back();
     }
     public function logOut()
     {

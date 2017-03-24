@@ -36,6 +36,42 @@ class Invoice extends Model
             return 'Pago Vencido';
       }
     }//fin metodp
+    public function information_invoice($fecha1, $fecha2, $op,&$inv) {
+      $interval=date_diff($fecha1,$fecha2);
+      $dias= $interval->format('%R%a');
+      $d="";
+      if($op=='1'){
+        //return 'No pagado';
+        $val1="Vencio";
+        $val2="Vence";
+      }else{
+        $val1="Pagado";
+        $val2="Pago";
+      }
+      //  dd($estado);
+     if($dias>1){//si aun no se ha vencido
+        $d="Vence en ".$interval->format('%a Días');
+        $estado=1;
+     }else  if( $dias<-1){//si tiene mas de un día de vencida
+        //$interval=date_diff($fecha_venci, $date);
+       $d=$val1." hace ".$interval->format('%a Días');
+       $estado=3;
+      }else if($dias==1){//si se vence mañana
+        $d=$val2." Mañana";
+        $estado=1;
+      //  dd("mañana ");
+      }else if($dias==-1){//si se vencio ayer
+         $d=$val1." Ayer";
+         $estado=3;
+      }
+      if($op=='2'){
+        $estado=2;
+      }
+       $inv->estado=$estado;
+    //  dd($inv->estado);
+      return $d;
+
+    }//fin metodp
     public function validate_float($num) {
       $patron="/^0[.]{0,1}[0-9]{0,2}$/";
     //  /^\d{1,2}(\.\d{1,2})?$/ patron con 2 entreros y dos decimales

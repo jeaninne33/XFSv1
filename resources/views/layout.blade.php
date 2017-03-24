@@ -64,19 +64,19 @@
                             </ul>
                         </li>
                     </ul>
-
                     <ul class="quick-menu pull-right">
                       <li class="ribbon">
                         @if (Auth::guest())
-                            <li><a href="{{route('auth/login')}}">INICIO DE SESIÓN</a></li>
+                            <li><a href="{{route('login')}}">INICIO DE SESIÓN</a></li>
                         @else
-                                <a href="#">{{ Auth::user()->name }}</a>
-                                <ul class="menu mini uppercase">
-
-                                    <li><a href="#">Perfil</a></li>
-                                    <li><a href="#">Configuración</a></li>
-                                    <li><a href="{{route('auth/logout')}}">SignOut</a></li>
-                                </ul>
+                          <a href="#">Bienvenido Usuario: {{ Auth::user()->name }}</a>
+                          <ul class="menu mini uppercase">
+                              <li><a href="{{ URL::to('perfil/'.Auth::user()->id)}}">Perfil</a></li>
+                            @if (Auth::user()->type=='admin')
+                              <li><a href="{{route('users.index')}}">Configuración Usuarios</a></li>
+                            @endif
+                              <li><a href="{{route('logout')}}">SignOut</a></li>
+                          </ul>
                           @endif
 
                       </li>

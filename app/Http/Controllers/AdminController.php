@@ -25,8 +25,33 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function Update_info_invoice()
+     {
+       date_default_timezone_set('America/Caracas');
+       $date = new DateTime(date('Y-m-d'));
+       $invoice=Invoice::all();
+       foreach( $invoice as $indice =>$inv ){
+         //$estado=$inv->estados($inv->estado);
+         if(!empty($inv->fecha_pago)){
+           $fecha_pago=new DateTime($inv->fecha_pago);
+           $d=$inv->information_invoice($date, $fecha_pago,'2',$inv);
+         }else {
+           # code..."2017-03-23"
+            $fecha_venci=new DateTime($inv->fecha_vencimiento);
+            $d=$inv->information_invoice($date, $fecha_venci,'1',$inv);
+         }
+           $estado=$inv->estados($inv->estado);
+           $info=$estado." ($d)";
+           $inv->informacion=  $info;
+           $inv->save();
+
+       }
+
+     }
+
     public function index(Request $request)
     {
+          $this->Update_info_invoice();
           $companys = Company::all()->count();//orderBy('id','DESC');
           $servicios = Servicio::all()->count();
           $estimates = Estimate::all()->count();

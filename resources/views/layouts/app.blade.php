@@ -56,7 +56,7 @@
                           @if (Auth::user()->type=='admin')
                             <li><a href="{{route('users.index')}}">Configuración Usuarios</a></li>
                           @endif
-                            <li><a href="{{route('auth/logout')}}">SignOut</a></li>
+                            <li><a href="{{route('logout')}}">SignOut</a></li>
                         </ul>
                   @endif
 

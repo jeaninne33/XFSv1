@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
+<!--[if gt IE 9]><!-->  <html ng-app="XHR"> <!--<![endif]-->
 <head>
     <!-- Page Title -->
     <title>XFlightSupport</title>
-
     <!-- Meta Tags -->
     <meta charset="utf-8">
-    <meta name="keywords" content="Flight Support, Handling, Ground Handling, Flight, Jet fuel , Flight permits, Private Aviation,
-    Charter, Aviation, Fuel, fbo, aircraft, fuel card, xflight support, Soporte de vuelo, Servicio aéreo, Volar, Combustible,
-    Permiso de vuelos, Aviación privada, Aviación, Combustible, abastecimiento de combustible, Venezuela, Isla de Margarita,
-    Nueva Esparta, jet privado, jet, apoyo en tierra, aeronave" />
-    <meta name="description" lang="es" content="En XFlightSupport nos dedicamos a ofrecer soluciones aéreas y prestar servicios de calidad para la aviación en general;
-    especializados en el suministro de combustible, seguridad, alojamiento, traslados, permiso de vuelo y sobre vuelo, planificación, soporte de navegación,
-    tramites de impuesto y servicios meteorológicos">
-    <meta name="author" content="XFS">
     <meta name="generator" content="HTML,BOOTSTRAP,JAVASCRIPT,JQUERY" />
     <!--<meta name="robots" content=""-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
+	  <link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
 
     <!-- Theme Styles -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -46,39 +37,40 @@
         <header id="header" class="navbar-static-top">
             <a href="#mobile-menu-01" data-toggle="collapse" class="mobile-menu-toggle blue-bg">Mobile Menu Toggle</a>
             <div class="container">
-                <h1 class="logo">
-
-                </h1>
             </div>
-
         </header>
         <section id="content">
             <div class="container">
                 <div id="main">
                     <div class="welcome-text box" style="">INICIO DE SESIÓN</div>
-                    @if(Session::has('flash_message'))
+                    {{-- @if(Session::has('flash_message'))
                       <div class="alert alert-danger">
                         <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
                           {{Session::get('flash_message')}}
                       </div>
 
-                    @endif
+                    @endif --}}
+                      <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block">
+
+                        </div>
+                     {{--  --}}
                     {{-- <p class="white-color block" style="font-size: 1.5em;">Please login to your account.</p> --}}
-                    <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block">
-                        <form class="login-form" method="POST" action="{{route('login')}}">
+                    <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block" ng-controller="LoginCtrl" ng-submit='enviar($event)' >
+                        @include('errors.message')
+                        <form class="login-form" method="POST" action="{{route('login')}}" >
                           	<input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
-                                <input name="email" type="email" class="input-text input-large full-width" placeholder="Correo Electronico">
+                                <input ng-model='login.email' name="email" type="email" class="input-text input-large full-width" placeholder="Correo Electronico">
                             </div>
                             <div class="form-group">
-                                <input name="password" type="password" class="input-text input-large full-width" placeholder="Contraseña">
+                                <input ng-model='login.password' name="password" type="password" class="input-text input-large full-width" placeholder="Contraseña">
                             </div>
                             <div class="form-group">
                                 <label class="checkbox">
-                                    <input name="remember" type="checkbox">Recordar Datos
+                                    <input  name="remember" type="checkbox">Recordar Datos
                                 </label>
                             </div>
-                            <button type="submit" class="btn-large full-width blue-bg">INICIAR</button>
+                            <button type="submit" class="btn-large full-width blue-bg">INICIAR SESION</button>
                         </form>
                     </div>
                 </div>
@@ -96,6 +88,12 @@
         </footer>
 
     </div>
+    <!-- Javascript -->
+    <script type="text/javascript" src="{{ asset("assets/js/jquery-1.11.1.min.js") }}"></script>
 
+    <script type="text/javascript" src="{{ asset("assets/js/jquery-ui.1.10.4.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/bootstrap.min.js") }}"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    [[ Html::script('assets/js/app.js') ]]
 </body>
 </html>

@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('contenido')
-<div ng-controller="EditCompanyCtrl" class="col-sm-12 no-float no-padding" ng-init="invoice={{json_encode($invoice)}}; data_invoices={{json_encode($items)}}">
+  <?php
+  //   $fecha=new DateTime($invoice->fecha);
+  //   $invoice->fecha=$fecha->format('Y-m-d\TH:i:s.u');
+  //   var_dump($invoice->fecha);
+  // //  $invoice->fecha=$fecha;
+  //   $fecha_v=new DateTime($invoice->fecha_vencimiento);
+  //   $invoice->fecha_vencimiento=$fecha_v->format(DateTime::ISO8601);
+  //   $fecha_p=new DateTime($invoice->fecha_pago);
+  //   $invoice->fecha_pago=$fecha_p->format(DateTime::ISO8601);
+  //  var_dump(  $invoice->fecha_vencimiento);
+   ?>
+<div ng-controller="EditInvoiceCtrl" class="col-sm-12 no-float no-padding" ng-init="invoice={{json_encode($invoice)}};  data_invoices={{json_encode($items)}};">
       <h2>Editar Factura Número<strong> @{{ $invoice.id }}</strong></h2>
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Atrás</a>

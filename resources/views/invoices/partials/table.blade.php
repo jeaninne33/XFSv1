@@ -4,7 +4,7 @@
             <td>ID</td>
             <td>Cliente</td>
             <td>Fecha</td>
-            <td>Estado</td>
+            <td>Información</td>
             <td>Monto</td>
             <td>Aciones</td>
         </tr>
@@ -16,8 +16,8 @@
             <td>{{ $value->id }}</td>
              <td>{{ $value->company->nombre }}</td>
              <td>{{ $value->fecha }}</td>
-             <td>{{ $value->estados($value->estado) }}</td>
-             <td>{{ $value->total }}</td>
+             <td>{{ $value->informacion }}</td>
+             <td>$ {{ $value->total }}</td>
 
              <!-- we will also add show, edit, and delete buttons -->
              <td>

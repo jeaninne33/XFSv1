@@ -355,27 +355,20 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 }]);//fin controller companys
 
 ////////////////
-app.controller("editInvoiceCtrl",['$scope','$http',function($scope, $http){
-  $scope.invoice.fecha= new Date($scope.invoice.fecha);
-  $scope.invoice.fecha_vencimiento= new Date($scope.invoice.vencimiento);
-  $scope.invoice.fecha_pago= new Date($scope.invoice.fecha_pago);
+app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
+  $scope.invoice = {};
+  // var fecha=new Date($scope.invoice.fecha);
+  // var f_v=new Date($scope.invoice.vencimiento);
+  // var f_p=new Date($scope.invoice.fecha_pago);
+  // $scope.invoice.fecha= fecha;
+  // $scope.invoice.fecha_vencimiento= f_v;
+  // $scope.invoice.fecha_pago= f_p;
+  alert($scope.invoice.fecha);
   $scope.avion = [];
   $scope.servicios = {};
   $scope.data_invoices = [];
-  $scope.estados=[
-     {id:"1",
-       nombre:"No pagado"
-     },
-     {  id:"2",
-       nombre:"Pagado"
-     },
-     { id:"3",
-       nombre:"Pago Vencido"
-     }
-   ];
    //$scope.invoice.estado =$scope.estados[0];
    //alert(  $('#estado').val());
-
 //$("#estado option[value="+ 1 +"]").attr("selected",true)
    $scope.metodos=[
       {nombre:"Cheque"
@@ -529,6 +522,34 @@ app.controller("UsersCtrl",['$scope','$http',function($scope, $http){
       function(response){// failure callback
          $scope.message =  false;//ocultamos el div del mensaje bien
           var errors = response.data;
+          $scope.show_error =  true;//mostramos el div del mensaje error
+          $scope.message_error =  errors;//
+       }
+     );//fin then
+  };
+
+}]);//fin controller EditCompanyCtrlInvoiceCtrl
+
+////////////////
+app.controller("LoginCtrl",['$scope','$http',function($scope, $http){
+  $scope.login={};
+  $scope.show_error =  false;
+  $scope.message =  false;
+  $scope.enviar =  function($event){
+    //  alert('holaa');
+     $event.preventDefault();
+     var login=$scope.login;
+      login["_token"] =  $("input[name=_token]").val();
+      $http.post('login', login)
+      .then(
+      function(response){// success callback
+        $scope.show_error =  false;
+        window.location.href = "/principal";//lo redireccionamos a la principal de usuarios
+       },
+      function(response){// failure callback
+         $scope.message =  false;//ocultamos el div del mensaje bien
+          var errors = response.data;
+          //alert(errors);
           $scope.show_error =  true;//mostramos el div del mensaje error
           $scope.message_error =  errors;//
        }

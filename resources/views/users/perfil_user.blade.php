@@ -10,12 +10,26 @@
 
 
 @section('contenido')
+@if(Auth::user()->id!=$user->id)
+  <div class="pull-right">
+           <a class="btn btn-primary" href="{{   URL::previous() }}"> Atrás</a>
+       </div>
+   <br/><br/>
+  <div class='alert alert-danger alert-dismissable'>
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
+        <p><strong><h4 > ¡No tienes acceso  a esta información! </h4></strong></p>
+  </div>
+
+@else
+
+
 <div class="col-sm-12 no-float no-padding" ng-controller="UsersCtrl" ng-init="tipo='perfil';  user={{json_encode($user)}};" >
   <h2><i class="soap-icon-user"></i> Perfil de Usuario: <strong>@{{ user.name }}</strong></h2>
 
     <p><h4 > Nivel de Usuario: <strong> {{$user->tipo(Auth::user()->type)}}</strong> </h4>
   <div class="pull-right">
-           <a class="btn btn-primary" href="{{ route('users.index') }}"> Atrás</a>
+           <a class="btn btn-primary" href="{{ route('principal') }}"> Atrás</a>
        </div>
        <p style="color:rgb(235, 160, 162)">Los Campos con (*) son Obligatorios!</p>
 
@@ -38,7 +52,7 @@
       </div>
 
     </div>
-  
+
     <hr>
      <p style="color:rgb(235, 160, 162)">Si desea Actualizar la Contraseña debe LLenar todos los campos!</p>
 
@@ -70,4 +84,5 @@
     [[ Form::submit('Actualizar Perfil Usuario', array('class' => 'btn btn-primary')) ]]
     [[ Form::close() ]]
 </div>
+@endif
 @endsection
