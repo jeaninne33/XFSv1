@@ -180,10 +180,11 @@ app.controller("EditCompanyCtrl", function($scope , $http){
 
 ///////////INVOICES CONTROLLER
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
-
+  //alert(typeof $scope.invoice.fecha_pag);
    $scope.invoice = {
      fecha:new Date()
    };
+   //
    $scope.avion = [];
    $scope.servicios = {};
    $scope.data_invoices = [];
@@ -198,11 +199,18 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         nombre:"Pago Vencido"
       }
     ];
-    //$scope.invoice.estado =$scope.estados[0];
+
+    $scope.estado = function(){//Cambiar el estado de la factura
+      var fecha_p= $scope.invoice.fecha_pago;
+      if(fecha_p!=null){
+         $scope.invoice.estado ="2";
+      }
+
+    };
     //alert(  $('#estado').val());
 
 //$("#estado option[value="+ 1 +"]").attr("selected",true);
-  $('#estado option:contains("No pagado")').attr('selected','selected');
+//  $('#estado option:contains("No pagado")').attr('selected','selected');
     $scope.metodos=[
        {nombre:"Cheque"
        },
@@ -220,6 +228,7 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         $scope.invoice.total=sub;
         $scope.invoice.ganancia=$scope.ganancia();
    };
+
    $scope.search_descrip = function(obj, key, value){//delete item factura specific
          for (var i = 0; i < $scope.servicios.length; i++) {
             if (obj[i][key] === value) {
@@ -276,8 +285,10 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
    };
 
    $scope.total = function(){//sum the total amount
+     //alert('aja');
      var subtotal=parseFloat($scope.invoice.subtotal);
      var desc=parseFloat($scope.invoice.descuento);
+     //alert(desc);
      var total_des=0;
      var total=0;
      if(subtotal!=null && desc!=null && desc!=0 && !isNaN(desc)){
@@ -285,6 +296,9 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         total=parseFloat((subtotal-total_des).toFixed(2));
         $scope.invoice.total_descuento=total_des;
         $scope.invoice.total=total;
+     }else{
+       $scope.invoice.total_descuento=total_des;
+       $scope.invoice.total=subtotal;
      }
    };
 
@@ -357,19 +371,29 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
 ////////////////
 app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
   $scope.invoice = {};
-  // var fecha=new Date($scope.invoice.fecha);
-  // var f_v=new Date($scope.invoice.vencimiento);
-  // var f_p=new Date($scope.invoice.fecha_pago);
-  // $scope.invoice.fecha= fecha;
-  // $scope.invoice.fecha_vencimiento= f_v;
-  // $scope.invoice.fecha_pago= f_p;
-  alert($scope.invoice.fecha);
+
+    //var fecha=$filter('date')($scope.invoice.fecha, "yyyy-MM-dd");
+    var f_v=new Date($scope.invoice.vencimiento);
+    var f_p=new Date($scope.invoice.fecha_pago);
+    //alert(fecha);
+
+  $scope.invoice.fecha= fecha;
+  $scope.invoice.fecha_vencimiento= f_v;
+  $scope.invoice.fecha_pago= f_p;
+
+  $scope.estados=[
+     {id:"1",
+       nombre:"No pagado"
+     },
+     {  id:"2",
+       nombre:"Pagado"
+     },
+     { id:"3",
+       nombre:"Pago Vencido"
+     }
+   ];
   $scope.avion = [];
   $scope.servicios = {};
-  $scope.data_invoices = [];
-   //$scope.invoice.estado =$scope.estados[0];
-   //alert(  $('#estado').val());
-//$("#estado option[value="+ 1 +"]").attr("selected",true)
    $scope.metodos=[
       {nombre:"Cheque"
       },
@@ -380,6 +404,50 @@ app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
      { nombre:"Transferencia Bancaria"
      }
     ];
+    $scope.plazo= function () {
+      if($scope.invoice.fecha!=null && $scope.invoice.plazo!=null){
+        var fecha= new Date($scope.invoice.fecha);
+        var plazo=$scope.invoice.plazo;
+
+        var f_venci;
+        if(plazo=="1"){
+          $scope.invoice.fecha_vencimiento=fecha;
+        }else if(plazo=="2"){
+          $scope.invoice.fecha_vencimiento=null;
+        }else{
+          var dias=parseInt(plazo);
+           f_venci=new Date(fecha.setDate(fecha.getDate() + dias));
+           $scope.invoice.fecha_vencimiento=f_venci;
+        }
+      }
+    };
+    $scope.edit =  function($event){
+    //  alert('entre');
+        $event.preventDefault();
+        var invoice =  $scope.invoice;
+        invoice["_token"] =  $("input[name=_token]").val();
+        var url='/invoices/'+$scope.invoice.id;
+        alert(url);
+        $http.put(url, invoice)
+        .then(
+        function(response){// success callback
+           if(response.data.message=="bien")  {
+             $scope.message = "Factura Actualizada Exitosamente";
+             $scope.show_error =  false;
+          }else{//sin no bien
+            $scope.show_error =  true;
+            $scope.message =  false;//ocultamos el div del mensaje bien
+            $scope.message_error =  response.data.error;
+          }
+        },
+        function(response){// failure callback
+           $scope.message =  false;//ocultamos el div del mensaje bien
+            var errors = response.data;
+            $scope.show_error =  true;//mostramos el div del mensaje error
+            $scope.message_error =  errors;//
+        }
+       );//fin then
+   };//fin save
 }]);//fin controller EditCompanyCtrlInvoiceCtrl
 ///////////////////reportes
 

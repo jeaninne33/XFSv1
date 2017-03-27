@@ -70,15 +70,15 @@
           <div id="main">
               <div class="tab-container full-width-style arrow-left dashboard">
                   <ul class="tabs">
-                      <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="#"><i class="soap-icon-address circle"></i>Inicio</a></li>
+                      <li id="m1" class=""><a class="menu" id="1" data-toggle="tab" href="{{ route('principal') }}"><i class="soap-icon-address circle"></i>Inicio</a></li>
                     @if (Auth::user()->type!='despacho')
-                      <li id="m2" class=""><a class="menu" id="2" data-toggle="tab" href="#"><i class="soap-icon-hotel-1 circle"></i>Compañias</a></li>
-                      <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="#"><i class="soap-icon-fueltank circle"></i>Servicios</a></li>
+                      <li id="m2" class=""><a class="menu" id="2" data-toggle="tab" href="{{ route('companys.index') }}"><i class="soap-icon-hotel-1 circle"></i>Compañias</a></li>
+                      <li id="m3" class=""><a class="menu" id="3"data-toggle="tab" href="{{ route('servicios.index') }}"><i class="soap-icon-fueltank circle"></i>Servicios</a></li>
                     @endif
-                      <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="#"><i class="soap-icon-card circle"></i>Estimados</a></li>
+                      <li id="m4" class=""><a class="menu" id="4" data-toggle="tab" href="{{ route('estimates.index') }}"><i class="soap-icon-card circle"></i>Estimados</a></li>
                     @if (Auth::user()->type!='despacho')
-                      <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="#"><i class="soap-icon-stories circle"></i>Facturas</a></li>
-                      <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="#"><i class="soap-icon-list circle"></i>Reportes</a></li>
+                      <li id="m5" class=""><a class="menu" id="5" data-toggle="tab" href="{{ route('invoices.index') }}"><i class="soap-icon-stories circle"></i>Facturas</a></li>
+                      <li id="m6" class=""><a class="menu" id="6"data-toggle="tab" href="{{ route('reports') }}"><i class="soap-icon-list circle"></i>Reportes</a></li>
                   @endif
                   </ul>
                   <div class="tab-content">
@@ -108,7 +108,7 @@
             console.log(e);
             var id=$(this).attr("id");
            if (id==1){  // alert('10');
-           window.location.href ="{{ route('principal') }}";
+             window.location.href ="{{ route('principal') }}";
            }else if (id==2){
              window.location.href ="{{ route('companys.index') }}";
            }else if (id==3) {

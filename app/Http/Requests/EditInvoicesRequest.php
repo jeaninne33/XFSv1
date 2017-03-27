@@ -5,13 +5,9 @@ namespace XFS\Http\Requests;
 use XFS\Http\Requests\Request;
 use Iluminate\Routing\Route;
 
-class CrearInvoicesRequest extends Request
+class EditInvoicesRequest extends Request
 {
 
-  public function _construc(){
-      $fecha=date("Y-m-d");
-      //var_dump(($this->route->getParameter('companys')));
-  }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,11 +33,6 @@ class CrearInvoicesRequest extends Request
             'resumen'=> 'max:500',
             'fbo'=> 'required|max:150',
             'categoria'=> 'required|numeric',
-            'descuento'=> 'required|numeric',
-            'ganancia'=> 'required|numeric',
-            'subtotal'=> 'required|numeric',
-            'total'=> 'required|numeric',
-            'prove_id'=> 'required',
             'company_id'=> 'required',
             'estimate_id'=> 'required',
             'avion_id'=> 'required',

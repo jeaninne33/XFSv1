@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
 use DB;
+use DateTime;
+use Date;
 use XFS\Http\Requests\CrearInvoicesRequest;
+use XFS\Http\Requests\EditInvoicesRequest;
 
 class InvoiceController extends Controller
 {
@@ -82,6 +85,7 @@ class InvoiceController extends Controller
         $invoice->estimate_id=$estimate[0]->id;
         $invoice->company_id=$estimate[0]->company_id;
         $invoice->prove_id=$estimate[0]->prove_id;
+        $invoice->estado='1';
 
           $datos=DB::select(
           DB::raw("SELECT
@@ -113,17 +117,41 @@ class InvoiceController extends Controller
     *
     * @return Response
     */
-
+    public function info_invoice($fecha_pago,$fecha_vencimiento,&$invoice)
+    {
+      $date = new DateTime(date('Y-m-d'));
+      //$estado=$inv->estados($inv->estado);
+      if(!empty($fecha_pago)){
+        $fecha_pago=new DateTime($fecha_pago);
+        $d=$invoice->information_invoice($date, $fecha_pago,'2',$invoice);
+      }else {
+      # code..."2017-03-23"
+       $fecha_venci=new DateTime($fecha_vencimiento);
+       $d=$invoice->information_invoice($date, $fecha_venci,'1',$invoice);
+      }
+      $estado=$invoice->estados($invoice->estado);
+      $info=$estado." ($d)";
+      $invoice->informacion=  $info;
+    //  dd($invoice->informacion);
+    }
     //Request $request
    public function store(CrearInvoicesRequest $request)
    {
      $data  = $request->all();
 
      $band=true;
+     $fecha_vencimiento=$data["fecha_vencimiento"];
+     if(isset($data["fecha_pago"])){
+       $data["estado"]="2";
+       $fecha_pago=$data["fecha_pago"];
+     }else{
+        $data["estado"]="1";
+        $fecha_pago="";
+     }
      $items=$data["data_invoices"];
-  //   var_dump($items[0]);
+    // dd($data["estado"]);
      $error= array();
-     $error=Invoice::validate_dates($data);
+     $error=Invoice::validate_dates($data,1);
      if(!empty($error)){
        $band=false;
      }else{
@@ -145,6 +173,10 @@ class InvoiceController extends Controller
       DB::beginTransaction();
       try {
          $invoice=Invoice::create($data);
+         //agregamos la info de la factura
+         $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
+         $invoice->save();
+         ///////////
           if($datos){
             foreach( $items as $indice =>$datos_invoices ){
              $item=New Date_invoice;
@@ -189,14 +221,16 @@ class InvoiceController extends Controller
     {
       $invoice = Invoice::findOrFail($id);
       $items =Date_invoice::where('invoice_id' , $id)->get();
-      $estimate=Company::findOrFail($invoice->company_id);
       $items =collect( $items);
       $servicios = Servicio::select('id', 'nombre','descripcion')->get();
-
+      $aviones=Avion::findOrFail($invoice->avion_id);
+      $avion= array();
+      $avion['id']=$invoice->avion_id;
+      $avion['nombre']=$aviones->matricula;
     //var_dump($invoice);
       // load the view and pass the nerds
       // show the view and pass the nerd to it
-       return view('invoices.edit', compact('invoice','items','estimate','servicios'));
+       return view('invoices.edit', compact('invoice','items','servicios','avion'));
     }
     /**
      * Update the specified resource in storage.
@@ -205,8 +239,20 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(editarCompanysRequest $request, $id)
+    public function update(EditInvoicesRequest $request, $id)
     {
+        //$data= $request->all();
+        $invoice = Invoice::findOrFail($id);
+        $error=Invoice::validate_dates($request->all(),2);
+        if(!empty($error)){
+            $result=['message' => 'mal','error'=> $error];
+        }else{
+          $invoice->fill($request->all());
+          $invoice->save();
+          $result=['message' => 'bien', 'error'=> $error];
+        }
+        return response()->json($result);
+
     }
     /**
      * Remove the specified resource from storage.

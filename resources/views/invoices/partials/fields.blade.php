@@ -49,7 +49,8 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado Factura') ]]
-          [[ Form::select('estado',  array('' => 'Seleccione'), null, ['id' => 'estado', 'ng-options' =>"estado.id as estado.nombre for estado in estados",'ng-model'=>'invoice.estado','class' => 'input-text full-width' ]) ]]
+          [[ Form::select('estado',  array('' => 'Seleccione'), '1', ['id' => 'estado', 'ng-options' =>"estado.id as estado.nombre for estado in estados",'ng-model'=>'invoice.estado','class' => 'input-text full-width', 'disabled']) ]]
+
         </div>
 
     </div>
@@ -60,7 +61,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha_pago', 'Fecha de Pago ') ]]
-          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago' ]) ]]
+          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago','ng-change'=>'estado()' ]) ]]
         </div>
     </div>
     <div class="row form-group">

@@ -24,6 +24,7 @@
         </div>
       </div>
 
+
 [[Form::open(['route' => ['users.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]

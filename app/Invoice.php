@@ -100,14 +100,14 @@ class Invoice extends Model
        //alert($scope.data_invoices[index].cantidad);
     }
 
-    public static function validate_dates($datos) {
+    public static function validate_dates($datos,$opc) {
       $fecha=date("Y-m-d");
     //  dd(date_format(new DateTime($datos["fecha"]), 'Y-m-d')<$fecha);
       $error= array();
        $valid_duplicate=Invoice::where('estimate_id' , $datos["estimate_id"])->count();
       if((isset($datos["estimate_id"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
       }
-      if((isset($datos["fecha"])) && (!empty($valid_duplicate))){
+      if((isset($datos["fecha"])) && (!empty($valid_duplicate) && $opc==1)){
         $error["duplicate"]=["Registro Duplicado! Ya existe la factura para el estimado Numero: ".$datos["estimate_id"]];
       }else{
         if((isset($datos["fecha"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
@@ -117,7 +117,7 @@ class Invoice extends Model
          $error["fecha_vencimiento"]=["La Fecha de Vencimiento no puede ser menor a la Fecha de la Factura "];
         }
         if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))>(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
-        $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
+          $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
         }
       }
       return $error;
