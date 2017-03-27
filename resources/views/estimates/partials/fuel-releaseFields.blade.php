@@ -1,9 +1,13 @@
 <input type="hidden" name="_token" id="token" value="{{csrf_token()}}"/>
-    <h1 class="text-center">Data of Fuel Release</h1>
+<div class="pull-right">
+  <a class="btn btn-primary" href="{{ URL::to('estimates/'.$estimates[0]->id.'/edit') }}"> Atrás</a>
+</div>
+<h1 class="text-center">Data of Fuel Release</h1>
 <div class="row">
     <div class="pull-right">
        {{-- [[ Form::label('id', 'Estimate Number:$estimates[0]->id')]] --}}
        <label>Estimate Number: {{$estimates[0]->id}}</label>
+       [[Form::hidden('id',$estimates[0]->id, ['id'=>'id','class' => 'input-text full-width'])]]
     </div>
 </div>
     <div class="row form-group">
@@ -11,6 +15,7 @@
            [[ Form::label('id', 'Ref Info #')]]
            [[Form::text('ref',null, ['id'=>'ref','class' => 'input-text full-width'])]]
         </div>
+
         <div class="col-sms-6 col-sm-4">
           [[Form::label('to', 'To') ]]
           [[Form::text('to', $estimates[0]->nombrec, ['id'=>'to','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
@@ -92,5 +97,6 @@
         </div>
     </div>
     <div class="row">
-        <a name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</a>
+      {{-- [[ Form::submit('Generar Fuel Release', array('class' => 'btn btn-primary')) ]] --}}
+      <a name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</a>
     </div>

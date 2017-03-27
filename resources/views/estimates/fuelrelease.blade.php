@@ -21,12 +21,12 @@
 <br/>
 <!-- if there are creation errors, they will show here -->
 @include('errors.errors')
-{{-- <div class="col-sm-12 no-float no-padding">
-   [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]] --}}
+<div class="col-sm-12 no-float no-padding">
+   [[ Form::open(['route'=>'fuel-release', 'method'=> 'POST']) ]]
     @include('estimates.partials.fuel-releaseFields')
-  {{-- [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
+ {{-- [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]] --}}
   [[ Form::close() ]]
-</div> --}}
+</div>
 
 @endsection
 @section('scripts')
