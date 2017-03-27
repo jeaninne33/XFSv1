@@ -9,24 +9,24 @@
 @endsection
 @section('contenido')
 
-      <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
+      {{-- <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
       <div class="pull-right col-sm-5">
         <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'+$estimates[0]->id)}}"> Invoice</a>
-        <button type="submit" class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</button>
+        <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
         <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimates[0]->id)}}" target="_blank">Imprimir</a>
         <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
-      </div>
-<p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
+      </div> --}}
+
 
 <br/>
 <!-- if there are creation errors, they will show here -->
 @include('errors.errors')
-<div class="col-sm-12 no-float no-padding">
-   [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]]
-    @include('estimates.partials.fieldsEdit')
-  [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
+{{-- <div class="col-sm-12 no-float no-padding">
+   [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]] --}}
+    @include('estimates.partials.fuel-releaseFields')
+  {{-- [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
   [[ Form::close() ]]
-</div>
+</div> --}}
 
 @endsection
 @section('scripts')
@@ -39,11 +39,11 @@
 <script src="{{asset("assets/js/sistemalaravel.js")}}"></script>
 
 <script>
-function activareditor(){
-  $("#contenido_mail").wysihtml5();
-};
+// function activareditor(){
+//   $("#contenido_mail").wysihtml5();
+// };
 
-activareditor();
+//activareditor();
 
    $('#example').dataTable();
    $('#example1').dataTable();

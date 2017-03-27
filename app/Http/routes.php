@@ -97,6 +97,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('principal', ['as' => 'principal',  'uses' => 'AdminController@index']);
     Route::resource('mail','MailController');
     Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
+    Route::post('adjuntar', 'MailController@store');
+    Route::get('fuelreleases/{id}','EstimatesController@fuelreleaseview');
+    Route::resource('mail','MailController');
     Route::get('perfil/{user}', [  'as' => 'perfil','uses' => 'UserController@perfil_user'  ]);
     Route::resource ('contratos','ContratoController');
 });

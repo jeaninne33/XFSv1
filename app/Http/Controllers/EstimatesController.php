@@ -364,6 +364,28 @@ class EstimatesController extends Controller
     //   $data = $this->getData($estimates['id']);
     //   return redirect()->action('EstimatesController@fuelrelease', ['estimates','data']);
     // }
+    public function fuelreleaseview($id)
+    {
+      $estimates=DB::select(
+      DB::raw("SELECT
+      e.id,
+      c.nombre AS nombrec,
+      cp.nombre AS nombrep,
+      c.representante,
+      c.direccion,
+      fecha_soli,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      a.tipo,
+      matricula
+      FROM estimates e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys cp ON cp.id=e.prove_id
+      INNER JOIN aviones a ON a.company_id=c.id
+      WHERE e.id=$id"));
+        return view('estimates.fuelrelease',compact('estimates'));
+    }
     public function fuelrelease(Request $request,$id,$ref,$releaseRef,$handling,$intoPlane,$phone,$operator,$fightNumber,$eta,$etd,$fp)
     {
       $estimates=DB::select(
