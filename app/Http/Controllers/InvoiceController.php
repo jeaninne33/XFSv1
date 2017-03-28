@@ -119,6 +119,7 @@ class InvoiceController extends Controller
     */
     public function info_invoice($fecha_pago,$fecha_vencimiento,&$invoice)
     {
+      date_default_timezone_set('America/Caracas');
       $date = new DateTime(date('Y-m-d'));
       //$estado=$inv->estados($inv->estado);
       if(!empty($fecha_pago)){
@@ -131,6 +132,7 @@ class InvoiceController extends Controller
       }
       $estado=$invoice->estados($invoice->estado);
       $info=$estado." ($d)";
+      //dd($info);
       $invoice->informacion=  $info;
     //  dd($invoice->informacion);
     }
@@ -204,11 +206,12 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
-        $invoice = Invoice::findOrFail($id);
-        // load the view and pass the nerds
-        // show the view and pass the nerd to it
-         return view('invoices.show', compact('invoice'));
+      ///Invoice:::with('company', 'proveedor'.'avion')->where('id',$id)->get()
+        //Invoice::findOrFail($id)  $i = XFS\Invoice::findOrFail($id)->with('company')->get();
+        $invoice =Invoice::findOrFail($id);
+        $items =Date_invoice::with('servicio')->where('invoice_id' , $id)->get();
+        $items =collect( $items);
+         return view('invoices.show', compact('invoice','items'));
     }
 
     /**
@@ -219,17 +222,15 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-      $invoice = Invoice::findOrFail($id);
+      //$invoice = Invoice::with('avion')->with('company')->where('id',$id)->get();
+      $invoice=Invoice::findOrFail($id);
       $items =Date_invoice::where('invoice_id' , $id)->get();
       $items =collect( $items);
       $servicios = Servicio::select('id', 'nombre','descripcion')->get();
-      $aviones=Avion::findOrFail($invoice->avion_id);
       $avion= array();
-      $avion['id']=$invoice->avion_id;
-      $avion['nombre']=$aviones->matricula;
-    //var_dump($invoice);
-      // load the view and pass the nerds
-      // show the view and pass the nerd to it
+      $avion['id']=$invoice->avion->id;
+      $avion['nombre']=$invoice->avion->matricula;
+
        return view('invoices.edit', compact('invoice','items','servicios','avion'));
     }
     /**
@@ -241,13 +242,24 @@ class InvoiceController extends Controller
      */
     public function update(EditInvoicesRequest $request, $id)
     {
-        //$data= $request->all();
+
+        $data= $request->all();
         $invoice = Invoice::findOrFail($id);
         $error=Invoice::validate_dates($request->all(),2);
+        if(isset($data["fecha_pago"])){
+          $data["estado"]="2";
+          $fecha_pago=$data["fecha_pago"];
+        }else{
+           $data["estado"]="1";
+           $fecha_pago="";
+        }
+        $fecha_vencimiento=$data["fecha_vencimiento"];
         if(!empty($error)){
             $result=['message' => 'mal','error'=> $error];
         }else{
           $invoice->fill($request->all());
+          $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
+
           $invoice->save();
           $result=['message' => 'bien', 'error'=> $error];
         }

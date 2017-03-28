@@ -54,17 +54,17 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('metodo_pago', 'Método de Pago') ]]
-          [[ Form::select('metodo_pago', array('' => 'Seleccione'), null, ['id' => 'metodo_pago','ng-options'=>"metodo.nombre for metodo in metodos track by metodo.nombre",'class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.metodo_pago'  ]) ]]
+          [[ Form::select('metodo_pago', array('' => 'Seleccione'), null, ['id' => 'metodo_pago','ng-options'=>"metodo.nombre as  metodo.nombre for metodo in metodos",'class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.metodo_pago'  ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha_pago', 'Fecha de Pago ') ]]
-          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago' ]) ]]
+        [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago','ng-change'=>'estado()' ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-12 col-sm-12">
           [[Form::label('Resumen', 'Resumen') ]]
-          [[ Form::text('resumen', null, ['readonly','class' => 'input-text full-width','ng-model'=>'invoice.resumen' ]) ]]  </div>
+          [[ Form::text('resumen', null, ['class' => 'input-text full-width','ng-model'=>'invoice.resumen' ]) ]]  </div>
     </div>
 
   </div>

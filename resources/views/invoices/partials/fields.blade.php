@@ -57,7 +57,7 @@
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('metodo_pago', 'Método de Pago') ]]
-          [[ Form::select('metodo_pago', array('' => 'Seleccione'), null, ['id' => 'metodo_pago','ng-options'=>"metodo.nombre for metodo in metodos track by metodo.nombre",'class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.metodo_pago'  ]) ]]
+          [[ Form::select('metodo_pago', array('' => 'Seleccione'), null, ['id' => 'metodo_pago','ng-options'=>"metodo.nombre as  metodo.nombre for metodo in metodos",'class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.metodo_pago'  ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha_pago', 'Fecha de Pago ') ]]
