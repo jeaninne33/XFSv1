@@ -42,14 +42,14 @@ class MailController extends Controller
     public function send(Request $request)
     {
       //dd($request['formData']);
-       dd($request->email('email'));
+      // dd($request->email('email'));
     //   $d=$request->destinatario('destinatario');
       // dd($d);
 
         $pathToFile="";
         $containfile=false;
         if($request->hasFile('file') ){
-          dd($file->getClientOriginalName());
+//          dd($file->getClientOriginalName());
            $containfile=true;
            $file = $request->file('file');
            $nombre=$file->getClientOriginalName();
@@ -63,7 +63,7 @@ class MailController extends Controller
     //    dd($destinatario);
 
         $data = array('contenido' => $contenido);
-        $r= Mail::send('Mail.mail', $data, function ($message) use ($asunto,$destinatario,  $containfile,$pathToFile) {
+        $r= Mail::send('Mail.mensaje', $data, function ($message) use ($asunto,$destinatario,  $containfile,$pathToFile) {
           //  $message->from('plusispruebas@gmail.com', 'plusis');
             $message->to($destinatario)->subject($asunto);
            if($containfile){

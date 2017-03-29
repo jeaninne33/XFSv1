@@ -146,7 +146,7 @@ $('#send').on("click",function(e){
             // Form data
             //datos del formulario
           //  data: {email:email,subject:subject,body:body,file:file},
-            data:formData,
+            data:datos,
             //necesario para subir archivos via ajax
             cache: false,
             contentType: false,
@@ -160,12 +160,9 @@ $('#send').on("click",function(e){
               $("#"+divresul+"").html(data);
             //  $("#fotografia_usuario").attr('src', $("#fotografia_usuario").attr('src') + '?' + Math.random() );
             $('#mensaje').css('display','block');
-            $('#validar').html('Correo Enviado Correctamente');
-                 if(rs ){
-                         $('#'+nombreform+'').trigger("reset");
+            $('#validar').html('Correo Enviado Correctamente');               
+            $('#f_enviar_correo').trigger("reset");
 
-                         //mostrarseccion(seccion_sel);
-                        }
             },
             //si ha ocurrido un error
             error: function(data){
