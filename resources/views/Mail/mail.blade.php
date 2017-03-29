@@ -5,9 +5,6 @@
 <div class="row">
      <div class="col-md-12">
      <form  id="f_enviar_correo" name="f_enviar_correo"  action="enviar_correo"  class="formarchivo" enctype="multipart/form-data" >
-
-    
-
            <div class="box box-primary">
              <div class="box-header with-border">
                {{-- <h3 class="box-title">Crear Nuevo Correo</h3> --}}
@@ -35,9 +32,6 @@
 
                  </div>
                </div>
-
-
-
              </div><!-- /.box-body -->
              <div class="box-footer">
                <div class="pull-right">
