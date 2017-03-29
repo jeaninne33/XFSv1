@@ -9,8 +9,8 @@
 </div>
 <div class="pull-right col-sm-6">
   @if ($estimates[0]->metodo_segui=="Aceptado")
-    <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
-    <button class="btn btn-primary soap-icon-stories" value="3" onclick="modal(this.value)" href="#" data-toggle="modal" data-target="#clientes">Fuel Release</button>
+      <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
+      <a class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</a>
   @endif
   <a class="btn btn-primary soap-icon-list" target="_blank" href="{{URL::to('printestimates/'.$estimates[0]->id)}}">Imprimir</a>
   <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
