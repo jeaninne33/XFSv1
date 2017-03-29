@@ -32,7 +32,7 @@
 [[ Form::open(['route'=>'estimates.index']) ]]
 
   @include('estimates.partials.fields')
-[[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates()')) ]]
+[[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates('save')')) ]]
 [[ Form::close() ]]
 </div>
 @endsection

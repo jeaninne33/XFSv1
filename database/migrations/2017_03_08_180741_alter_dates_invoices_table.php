@@ -17,7 +17,7 @@ class AlterDatesInvoicesTable extends Migration
               $table->dropForeign('dates_invoices_categoria_id_foreign');
               $table->dropColumn('categoria_id');
               $table->dropColumn('total_recarga');
-              $table->double('subtotal_recarga', 10, 2);
+        //      $table->double('subtotal_recarga', 10, 2);
         });
     }
 

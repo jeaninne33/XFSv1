@@ -117,6 +117,7 @@
             </tr>
           @endforeach
        @endif
+       
        <tr>
          <td colspan="7">Subtotal: {{$estimates[0]->subtotal}}</td>
        </tr>

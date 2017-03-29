@@ -19,17 +19,17 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"><label id="titulo"></label></h4>
         </div>
-        <div class="modal-body">
+       <div class="modal-body">
           <div class="cliente" style="display:none">
             @include('estimates.partials.tbClientes')
           </div>
           <div class="correo" style="display:none">
           @include('Mail.mail')
          </div>
-         <div class="fuelrelease" style="display:none">
+          <div class="fuelrelease" style="display:none">
          @include('estimates.partials.Fuel-releasefields')
         </div>
-        </div>
+        </div> 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
@@ -92,8 +92,8 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('ganancia', 'Ganancia *') ]]
-          [[ Form::text('ganancia', $estimates[0]->ganancia, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
-          <input type="text" id="tCategoria" hidden="hidden"/>
+          [[ Form::text('ganancia', $categoria, ['id'=>'ganancia','class' => 'input-text full-width','readonly' ]) ]]
+          <input type="text" id="tCategoria" value="{{$estimates[0]->categoria}}" hidden="hidden"/>
         </div>
     </div>
     <div class="row form-group">
@@ -160,7 +160,7 @@
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]
-          [[ Form::select('avion_id', array('Seleccione Avion'), null,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
+          [[ Form::select('avion_id',$avion,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
 
     </div>

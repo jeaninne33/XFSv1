@@ -1,6 +1,7 @@
 
-function saveEstimates(){
+function saveEstimates(tipo){
     var table = $('#example1').DataTable();
+    var id=$('#id').val();
     var company_id=$('#company_id').val();
     var prove_id=$('#prove_id').val();
     var estado=$('#estado').val();
@@ -28,7 +29,7 @@ function saveEstimates(){
     var gananciatotal=$('#gananciatotal').val().replace('$','');
     var token =$('#token').val();
     var Estimado = new Array();
-
+    var url,type;
     var ID,Servicio,Descripcion,Cantidad,Precio,Subtotal,Ganancia,Total;
 //se recorre la tabla fila por fila y se inserta en un objeto json y se pasa por POST con ajax al controlador
 table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
@@ -96,22 +97,30 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
          mjs += "Registro de Aeronave - "
          ok = false;
      }
-     if (tipoCategoria=="") {
-         mjs += "Ganancia - "
-         ok = false;
-     }
+    //  if (tipoCategoria=="") {
+    //      mjs += "Ganancia - "
+    //      ok = false;
+    //  }
      if (ok == false) {
       // $('#mensaje').toggleClass('alert alert-danger');
         $('#mensaje').css('display','block');
         $('#validar').html(' '+mjs+' ');
          //document.getElementById('error').innerHTML = mjs;
      }
+  
 //  $("#mensaje").css("display", "block");
     else if (ok==true) {
-
+    
+     if (tipo=="save") {
+         url="/estimates";
+         type="POST";
+     }else{
+         url='/estimates/'+id;
+         type="PUT";
+     }
       $.ajax({
-        type: 'POST',
-        url:'/estimates',
+        type: type,
+        url:url,
         dataType:'json',
         headers: {'X-CSRF-TOKEN': token},
       //  data:{DatosEstimado:DatosEstimado,Estimado:Estimado,descuento:descuento,gananciatotal},

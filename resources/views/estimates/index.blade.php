@@ -6,11 +6,12 @@
 
 @endsection
 @section('contenido')
-<div class="row">
-<div class="col-md-11 col-md-offset-1">
-  <div class="panel panel-default">
 
-  <div class="panel-heading">Listado de Estimados</div>
+    <p><h2 ><i class="soap-icon-card circle"></i> <strong>Estimados</strong></h2>
+     <p><h2 > <strong>Listado de Estimados</strong></h2></p></p>
+ 
+
+
 
   <div class="alert alert" id="mensaje" style="display: none;">
   </div>
@@ -24,10 +25,10 @@
 
     @include('estimates.partials.table')
 
-   </div>
-  </div>
-</div>
-</div>
+
+ 
+
+
 [[Form::open(['route' => ['estimates.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]

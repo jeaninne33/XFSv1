@@ -240,6 +240,7 @@ class EstimatesController extends Controller
     public function edit($id)
     {
         //$estimates=Estimate::findOrFail($id);
+        $categoria=0;
         $estimates=DB::select(
         DB::raw("SELECT
         e.id,
@@ -262,17 +263,37 @@ class EstimatesController extends Controller
         a.id as avion_id,
         a.tipo,
         matricula,
-        total
+        total,
+        e.categoria
         FROM estimates e
         INNER JOIN companys c ON c.id=e.company_id
         INNER JOIN companys cp ON cp.id=e.prove_id
         INNER JOIN aviones a ON a.company_id=c.id
         WHERE e.id=$id"));
-
-       $idEstimates=$estimates[0]->id;
+        switch ($estimates[0]->categoria) {
+          case "0":
+                $categoria='0%';
+                break;
+              case "1":
+                $categoria='20%';
+                break;
+              case "2":
+                $categoria='25%';
+                break;
+              case "3":
+                $categoria='30%';
+                break;
+        }
+        $idEstimates=$estimates[0]->id;
         $indicador=0;
-        $servicios=Servicio::Lists('nombre','id');
-        $servicios->prepend('Seleccione Servicio');
+       
+        $servicios=Servicio::select('nombre','id')->get();
+       
+        $avion=DB::table('aviones')
+        ->select(['nombre','id'])
+        ->where('company_id','=',$estimates[0]->company_id)
+        ->get();
+       // $aviones->prepend($avion['nombre',]);
         $date=DB::select(
         DB::raw("SELECT
           s.id AS servicioid,
@@ -288,7 +309,7 @@ class EstimatesController extends Controller
           WHERE estimate_id=$idEstimates "));
           $visible="block";
         // $date=date_estimates::where('estimate_id',$estimates->id)->get();
-        return view ('estimates.edit',compact('date','servicios','indicador','visible'))->with('estimates',$estimates);
+        return view ('estimates.edit',compact('date','servicios','indicador','visible','categoria','avion'))->with('estimates',$estimates);
     }
 
     /**
