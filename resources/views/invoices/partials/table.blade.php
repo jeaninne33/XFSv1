@@ -21,7 +21,9 @@
 
              <!-- we will also add show, edit, and delete buttons -->
              <td>
-                <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('invoices/' . $value->id.'/edit') }}"></a>
+               <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('invoices/' . $value->id) }}"></a>
+                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+               <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="{{ URL::to('invoices/'. $value->id .'/edit') }}"></a>
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
                <a class="glyphicon glyphicon-save"  target="_blank" title="Descargar PDF" aria-hidden="true" href="{{ URL::to('invoices_pdf/' . $value->id) }}"></a>
             @if (Auth::user()->type=='admin')

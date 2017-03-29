@@ -199,16 +199,13 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
         nombre:"Pago Vencido"
       }
     ];
-
     $scope.estado = function(){//Cambiar el estado de la factura
       var fecha_p= $scope.invoice.fecha_pago;
       if(fecha_p!=null){
          $scope.invoice.estado ="2";
       }
-
     };
     //alert(  $('#estado').val());
-
 //$("#estado option[value="+ 1 +"]").attr("selected",true);
 //  $('#estado option:contains("No pagado")').attr('selected','selected');
     $scope.metodos=[
@@ -316,7 +313,6 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
           $scope.data_invoices[index].recarga=ganancia;
           $scope.data_invoices[index].total=total;
           $scope.data_invoices[index].subtotal_recarga=subtotal_recarga;
-          //  alert(typeof(totall));
           var subtotal=$scope.subtotal();
           $scope.invoice.subtotal=subtotal;
           $scope.invoice.total=subtotal;
@@ -404,11 +400,64 @@ app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
      { nombre:"Transferencia Bancaria"
      }
     ];
+    // Función para calcular los días transcurridos entre dos fechas
+    $scope.restaFechas = function(f1,f2)
+    {
+      var aFecha1 = f1.split('-');
+      var aFecha2 = f2.split('-');
+      var nuevafecha1= new Date(aFecha1);
+      var nuevafecha2= new Date(aFecha2);
+      var Dif= nuevafecha2.getTime() - nuevafecha1.getTime();
+      var dias= Math.floor(Dif/(1000*24*60*60));
+      return dias;
+    }
+    $scope.info_invoice = function(dias,op)
+    {
+      var d="";
+      var estado=null;
+      var val1,val2;
+      var info;
+      if(op=='1'){
+        //return 'No pagado';
+        val1="Vencio";
+        val2="Vence";
+      }else{
+        val1="Pagado";
+        val2="Pago";
+      }
+      if(dias>1){//si aun no se ha vencido
+         d="Vence en "+dias+" días";
+      }else if(dias==0){//si se vencio ayer
+          d=val2+" Hoy";
+      }else  if( dias<-1){//si tiene mas de un día de vencida
+        dia=dias.toString();
+        dia=dia.replace('-', '');
+        d=val1+" hace "+dia+" días";
+       }else if(dias==1){//si se vence mañana
+         d=val2+" Mañana";
+       }else if(dias==-1){//si se vencio ayer
+          d=val1+" Ayer";
+       }
+      return d;
+    }
+    $scope.estado = function(){//Cambiar el estado de la factura
+      var fecha_p= $scope.invoice.fecha_pago;
+      if(fecha_p!=null && fecha_p!=""){
+         $scope.invoice.estado ="2";
+         var date=new Date();
+         var d="";
+         fecha_p=new Date(fecha_p);
+          fecha_pago=fecha_p.getFullYear()+"-"+(fecha_p.getMonth()+1)+"-"+fecha_p.getDate();
+         var fecha=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+         var dias=$scope.restaFechas(fecha.toString(), fecha_pago.toString());
+        var info="Pagado ("+$scope.info_invoice(dias,2)+")";
+         $scope.invoice.informacion=info;
+      }
+    };
     $scope.plazo= function () {
       if($scope.invoice.fecha!=null && $scope.invoice.plazo!=null){
         var fecha= new Date($scope.invoice.fecha);
         var plazo=$scope.invoice.plazo;
-
         var f_venci;
         if(plazo=="1"){
           $scope.invoice.fecha_vencimiento=fecha;
@@ -427,7 +476,6 @@ app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
         var invoice =  $scope.invoice;
         invoice["_token"] =  $("input[name=_token]").val();
         var url='/invoices/'+$scope.invoice.id;
-        alert(url);
         $http.put(url, invoice)
         .then(
         function(response){// success callback

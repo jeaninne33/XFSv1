@@ -39,6 +39,7 @@ class Invoice extends Model
     public function information_invoice($fecha1, $fecha2, $op,&$inv) {
       $interval=date_diff($fecha1,$fecha2);
       $dias= $interval->format('%R%a');
+      //dd($dias);
       $d="";
       if($op=='1'){
         //return 'No pagado';
@@ -52,6 +53,9 @@ class Invoice extends Model
      if($dias>1){//si aun no se ha vencido
         $d="Vence en ".$interval->format('%a Días');
         $estado=1;
+    }else if($dias==0){//si se vence mañana
+        $d=$val2." Hoy";
+        $estado=1;
      }else  if( $dias<-1){//si tiene mas de un día de vencida
         //$interval=date_diff($fecha_venci, $date);
        $d=$val1." hace ".$interval->format('%a Días');
@@ -59,10 +63,10 @@ class Invoice extends Model
       }else if($dias==1){//si se vence mañana
         $d=$val2." Mañana";
         $estado=1;
-      //  dd("mañana ");
       }else if($dias==-1){//si se vencio ayer
          $d=$val1." Ayer";
          $estado=3;
+        // dd($d);
       }
       if($op=='2'){
         $estado=2;
@@ -116,8 +120,11 @@ class Invoice extends Model
         if( (isset($datos["fecha_vencimiento"])) && ( (date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha"]), 'Y-m-d')))){
          $error["fecha_vencimiento"]=["La Fecha de Vencimiento no puede ser menor a la Fecha de la Factura "];
         }
-        if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))>(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
-          $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
+        // if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))>(date_format(new DateTime($datos["fecha_vencimiento"]), 'Y-m-d')))){
+        //   $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha de Vencimiento"];
+        // }
+        if((isset($datos["fecha_pago"])) && ((date_format(new DateTime($datos["fecha_pago"]), 'Y-m-d'))>$fecha)){
+          $error["fecha_pago"]=["La Fecha de Pago no puede ser mayor a la Fecha Actual"];
         }
       }
       return $error;

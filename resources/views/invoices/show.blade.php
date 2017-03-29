@@ -2,155 +2,156 @@
 
 @section('contenido')
 
-<h1>Mostrando la Factura <strong> {{ $invoice->id }}</strong></h1>
+<h1>Mostrando la Factura Número: <strong> {{ $invoice->id }}</strong></h1>
 <div class="pull-right">
-         <a class="btn btn-primary" href="{{ route('companys.index') }}"> Atrás</a>
+         <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Atrás</a>
      </div>
      <br/>
      <ul class="nav nav-tabs">
-       <li class="active"><a data-toggle="tab" href="#home">Datos de la Compañia</a></li>
-       <li><a data-toggle="tab" href="#menu1">Datos de Operaciones</a></li>
-       <li><a data-toggle="tab" href="#menu2">Datos Administrativos</a></li>
-       <li><a data-toggle="tab" href="#menu3">Aviones</a></li>
-       <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li>
+       <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
+       <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
+       <li><a data-toggle="tab" href="#menu2">Datos de la Compañia</a></li>
      </ul>
 
      <div class="tab-content">
        <div id="home" class="tab-pane fade in active">
-         <h3>Datos Generales</h3>
+         <h3>Datos Generales de la Factura</h3>
          <br/>
          <h5>
            <table border="0" style="with:600px;" class="table table-condensed">
              <tr>
-               <td><strong>id:</strong> {{ $companys->id }}<br></td>
-               <td><strong</strong> {{ $companys->website }}<br></td>
+                <td><strong>Número Factura:</strong> {{ $invoice->id }}<br></td>
+               <td><strong>Número del Estimado:</strong> {{ $invoice->estimate_id }}<br></td>
              </tr>
              <tr>
              <tr>
-               <td><strong>Nombre de la Compañia:</strong> {{ $companys->nombre }}<br></td>
-               <td><strong>Website:</strong> {{ $companys->website }}<br></td>
+               <td><strong>FBO:</strong> {{ $invoice->fbo }}<br></td>
+               <td><strong>Localidad:</strong> {{ $invoice->localidad }}<br></td>
              </tr>
              <tr>
-               <td><strong>Dirección:</strong> {{ $companys->direccion }}</td>
-               <td><strong>Direccion de factura:</strong> {{ $companys->direccion_cuenta }}</td>
+               <td><strong>Fecha de la Factura:</strong> {{date_format(date_create( $invoice->fecha), 'm/d/Y') }}</td>
+               <td><strong>Fecha de Vencimiento:</strong> {{date_format(date_create( $invoice->fecha_vencimiento), 'm/d/Y') }}</td>
              </tr>
               <tr>
-               <td><strong>Representante:</strong> {{ $companys->representante }}<br></td>
-               <td><strong>Certificación:</strong> {{ $companys->certificacion }}<br></td>
+               <td><strong>Plazos:</strong> {{ $invoice->plazo }}<br></td>
+               <td><strong>Matricula del Avion:</strong> {{ $invoice->avion->matricula }}<br></td>
              </tr>
              <tr>
-               <td><strong>Pais:</strong> {{ $companys->pais->nombre }}</td>
-               <td><strong>Estado:</strong> {{ $companys->estado->nombre }}</td>
+               <td><strong>Estado Factura:</strong> {{ $invoice->estados($invoice->estado) }}</td>
+               <td><strong>Información:</strong> {{ $invoice->informacion }}</td>
+             </tr>
+             <tr>
+                <td><strong>Método de Pago:</strong> {{ $invoice->metodo_pago }}</td>
+               <td><strong>Fecha de Pago:</strong>@if(!empty($invoice->fecha_pago)) {{ date_format(date_create($invoice->fecha_pago), 'm/d/Y')}} @endif</td>
+
              </tr>
                <tr>
-               <td><strong>Codigo Postal:</strong> {{ $companys->codigop }}</td>
-               <td><strong>Ciudad:</strong> {{ $companys->ciudad }}</td>
+               <td colspan="2"><strong>Resumen:</strong> {{ $invoice->resumen }}</td>
              </tr>
-                  <tr>
-               <td><strong>Tipo de Relación:</strong> {{ $companys->relacion }}</td>
-               <td><strong></strong> </td>
-             </tr>
+
           </table>
        </h5>
       </div>
         <div id="menu1" class="tab-pane fade">
-          <h3>Datos de Operaciones</h3>
-         <br/>
-         <h5>
-           <table border="0" style="with:600px;" class="table table-condensed">
-             <tr>
-               <td><strong>Correo:</strong> {{ $companys->correo }}<br></td>
-
-             </tr>
-             <tr>
-               <td><strong>Teléfono:</strong> {{ $companys->telefono_admin }}<br></td>
-             </tr>
+          <h3>Items de la Factura
+            <small>
+                         Datos de la factura.
+                </small>
+          </h3>
+          <table border="0" style="with:900px;" class="table table-hover">
+            <thead>
               <tr>
-               <td><strong>Celular:</strong> {{ $companys->celular }}<br></td>
+                <th>Servicio</th>
+                <th>Descripción</th>
+                <th>Fecha del Servicio</th>
+                <th>Cantidad </th>
+                <th>$Precio </th>
+                <th>$Subtotal</th>
+                <th>$Ganancia</th>
+                <th>$Total</th>
+              </tr>
+            </thead>
+            <tbody>
+          @if(!empty($items))
+             @foreach($items as $key => $value)
+            <tr>
+              <td>
+              {{  $value->servicio->nombre}}
+              </td>
+              <td>
+                {{  $value->descripcion}}
+              </td>
+              <td>
+                {{date_format(date_create( $value->fecha_servicio), 'm/d/Y') }}
+              </td>
+              <td>
+               {{  $value->cantidad}}
 
-             </tr>
-          </table>
-          </h5>
+              </td>
+              <td>
+                $ {{  $value->precio}}
+
+              </td>
+              <td>
+                $ {{  $value->subtotal}}
+
+              </td>
+              <td>
+               $ {{  $value->recarga}}
+              </td>
+              <td>
+               $ {{  $value->total}}
+              </td>
+            </tr>
+              @endforeach
+          @endif
+            <tfoot>
+              <tr>
+                <td colspan="9"><!--<span class="help-block" ng-show="!form1.$pristine && !form1.precio.$valid"><p style="color:rgb(235, 160, 162)">  Precio Invalido! Debe introducir un decimal con 2 caracteres ej: 5.23 (Solo admite el .)</p>
+              </span>--></td>
+              </tr>
+            </tfoot>
+              </tbody>
+            </table>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 pull-right" style="text-align:right;">
+                 <h4>Subtotal: $ {{$invoice->subtotal}}
+                     <br/>Descuento: % {{$invoice->descuento}}
+                  <br/>Total Descuento: $ {{$invoice->total_descuento}}
+                  </h4>
+               </div>
+            </div>
+            <div class="col-sm-6 col-md-8 pull-right" style="text-align:right;">
+                  <h2><span style="color: green;">Total Ganancia: $ {{$invoice->ganancia}}</span>        -    <span style="color: rgb(21, 28, 116);">Total: $ {{$invoice->total}}</span>  <h2>
+               </div>
+
+            <br/>
         </div>
         <div id="menu2" class="tab-pane fade">
-          <h3>Datos Administrativos</h3>
-         <br/>
-         <h5>
-           <table border="0" style="with:600px;" class="table table-condensed">
-             <tr>
-               <td><strong>Persona de Contacto:</strong> {{ $companys->contacto_admin }}<br></td>
-
-             </tr>
-             <tr>
-               <td><strong>Correo:</strong> {{ $companys->correo_admin }}<br></td>
-             </tr>
-              <tr>
-               <td><strong>Teléfono:</strong> {{ $companys->telefono }}<br></td>
-
-             </tr>
-          </table>
-          </h5>
-          <h3>Información de Transferencias Bancarias</h3>
-         <br/>
-         <h5>
-           <table border="0" style="with:600px;" class="table table-condensed">
-             <tr>
-               <td><strong>Banco:</strong> {{ $companys->banco }}<br></td>
-
-             </tr>
-             <tr>
-               <td><strong>Cuenta:</strong> {{ $companys->cuenta }}<br></td>
-             </tr>
-              <tr>
-               <td><strong>ABA:</strong> {{ $companys->aba }}<br></td>
-
-             </tr>
-             <tr>
-              <td><strong>Dirección:</strong> {{ $companys->direccion_cuenta }}<br></td>
-
-            </tr>
-          </table>
-          </h5>
-        </div>
-        <div id="menu3" class="tab-pane fade">
-          <h3><p>
-          Aviones <small>
-                    Se muestran los datos de los Aviones
-              </small></p>
-          </h3>
-          <br/>
+          <h3>Datos del Cliente</h3>
           <h5>
 
-          @foreach( $companys->aviones as $indice =>$air )
-          <table border="0" style="with:600px;" class="table table-condensed">
-            <tr>  <p><strong>Datos del Avión #  {{$indice+1}}<strong><p/></tr>
-            <tr>
-              <td><strong>Tipo de Avión:</strong> {{ $air->tipo }}<br></td>
-              <td><strong>Nombre:</strong> {{ $air->nombre }}<br></td>
-              <td><strong>Modelo:</strong> {{ $air->modelo }}<br></td>
-            </tr>
-            <tr>
-              <td><strong>Fabricante:</strong> {{ $air->fabricante }}<br></td>
-              <td><strong>Matricula:</strong> {{ $air->matricula }}<br></td>
-              <td><strong>Licencia 1:</strong> {{ $air->licencia }}<br></td>
-            </tr>
-            <tr>
-              <td><strong>Licencia 2:</strong> {{ $air->licencia }}<br></td>
-              <td><strong>Registro:</strong> {{ $air->registro }}<br></td>
-              <td><strong>Piloto 1:</strong> {{ $air->piloto1 }}<br></td>
-            </tr>
-            <tr>
-              <td><strong>Piloto 2:</strong> {{ $air->piloto2 }}<br></td>
-              <td><strong>Certificado:</strong> {{ $air->certificado }}<br></td>
-              <td><strong>Seguro:</strong> {{ $air->seguro }}<br></td>
-            </tr>
-          </table><br/>
-          @endforeach
 
-            </h5>
+          <table border="0" style="with:600px;" class="table">
+            <tr>
+              <td colspan="2"><strong>Número: </strong> {{ $invoice->company->id}}<br></td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $invoice->company->nombre}}<br></td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>Direccion de factura: </strong>{{ $invoice->company->direccion_cuenta}} </td>
+            </tr>
+            <tr>
+             <td colspan="2"><strong>Teléfono: </strong>{{ $invoice->company->telefono_admin}}<br></td>
+           </tr>
+             <tr>
+              <td colspan="2"><strong>Ganacia %: </strong>{{  $invoice->categoria($invoice->company->categoria)}}<br></td>
+            </tr>
+            </table>
+           </h5>
         </div>
-        <div id="menu4" class="tab-pane fade">
-        </div>
+
  </div>
 
 @endsection
