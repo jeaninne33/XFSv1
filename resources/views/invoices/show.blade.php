@@ -6,7 +6,11 @@
 <div class="pull-right">
          <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Atrás</a>
      </div>
-     <br/>
+     <div class="pull-right col-sm-6">
+       <a class="btn btn-primary soap-icon-list" target="_blank" href="{{ URL::to('invoices_pdf/' . $invoice->id) }}"> Imprimir</a>
+       <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes"> Enviar Correo</button>
+     </div>
+     <br/><br/>
      <ul class="nav nav-tabs">
        <li class="active"><a data-toggle="tab" href="#home">Datos de la Factura</a></li>
        <li><a data-toggle="tab" href="#menu1">Items de la Factura</a></li>
@@ -30,11 +34,12 @@
              </tr>
              <tr>
                <td><strong>Fecha de la Factura:</strong> {{date_format(date_create( $invoice->fecha), 'm/d/Y') }}</td>
-               <td><strong>Fecha de Vencimiento:</strong> {{date_format(date_create( $invoice->fecha_vencimiento), 'm/d/Y') }}</td>
+                <td><strong>Matricula del Avion:</strong> {{ $invoice->avion->matricula }}<br></td>
              </tr>
               <tr>
-               <td><strong>Plazos:</strong> {{ $invoice->plazo }}<br></td>
-               <td><strong>Matricula del Avion:</strong> {{ $invoice->avion->matricula }}<br></td>
+               <td><strong>Plazos:</strong> {{ $invoice->plazo($invoice->plazo) }}<br></td>
+                <td><strong>Fecha de Vencimiento:</strong> {{date_format(date_create( $invoice->fecha_vencimiento), 'm/d/Y') }}</td>
+
              </tr>
              <tr>
                <td><strong>Estado Factura:</strong> {{ $invoice->estados($invoice->estado) }}</td>

@@ -1,24 +1,7 @@
 @extends('layouts.app')
 
 @section('contenido')
-  <?php
-  //   $fecha=date( $invoice->fecha);
-  //   $invoice->fecha=null;
-  // //  $fecha=date_format($fecha,"Y-m-d");
-  //    //$invoice->fecha=$fecha->format(DateTime::ISO8601);
-  //   //var_dump($invoice->fecha); DateTime($invoice->fecha);
-  // // //  $invoice->fecha=$fecha;
-  //   $fecha_v=new DateTime($invoice->fecha_vencimiento);
-  //   //$fecha_v=date_format($fecha_v,"Y-m-d");
-  //   $invoice->fecha_vencimiento=null;
-  //   var_dump($fecha);
-  //   $invoice->fecha_vencimiento=$fecha_v->format(DateTime::ISO8601);
-  //   $fecha_p=new DateTime($invoice->fecha_pago);
-  //   $invoice->fecha_pago=$fecha_p->format(DateTime::ISO8601);
-  //var_dump($invoice->fecha);
-  //  var_dump($fecha);
-  //
-   ?>
+
    <?php //$avion = array('id'=>$estimate[0]->avion_id, 'nombre'=> $estimate[0]->matricula);?>
 
 <div ng-controller="EditInvoiceCtrl" class="col-sm-12 no-float no-padding"  ng-init="invoice={{json_encode($invoice)}}; invoice.plazo='{{ $invoice->plazo}}';  avion=[{{json_encode($avion)}}]; data_invoices={{json_encode($items)}}; servicios={{json_encode($servicios)}};">

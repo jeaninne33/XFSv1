@@ -14,18 +14,18 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fbo', 'FBO *') ]]
-          [[ Form::text('fbo', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
+          [[ Form::text('fbo', null, ['readonly','class' => 'input-text full-width' ,'ng-model'=>'invoice.fbo']) ]]
         </div>
     </div>
     <div class="row form-group">
 
         <div class="col-sms-6 col-sm-6">
           [[Form::label('Localidad', 'Localidad *') ]]
-          [[ Form::text('localidad', null, ['class' => 'input-text full-width' ,'ng-model'=>'invoice.localidad']) ]]
+          [[ Form::text('localidad', null, ['readonly','class' => 'input-text full-width' ,'ng-model'=>'invoice.localidad']) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de la Factura *') ]]
-          [[ Form::date('fecha', null, ['format-date','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
+          [[ Form::date('fecha', null, ['readonly','format-date','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
         </div>
 
     </div>
@@ -33,17 +33,17 @@
 
         <div class="col-sms-6 col-sm-6">
           [[Form::label('plazos', 'Plazos de Pago *') ]]
-          [[ Form::select('plazo', config('plazo.plazo'), null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.plazo',' ng-change'=>'plazo()'  ]) ]]
+          [[ Form::select('plazo', config('plazo.plazo'), null, ['disabled','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.plazo',' ng-change'=>'plazo()'  ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de Vencimiento *') ]]
-          [[ Form::date('fecha_vencimiento', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
+          [[ Form::date('fecha_vencimiento', null, ['readonly','class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
         </div>
     </div>
     <div class="row form-group">
         <div class="col-sms-6 col-sm-6">
           [[Form::label('avion_id', 'Matricula del Avion') ]]
-          [[ Form::select('avion_id',  array('' => 'Seleccione'), $invoice->avion_id, ['ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
+          [[ Form::select('avion_id',  array('' => 'Seleccione'), $invoice->avion_id, ['disabled','ng-options'=>"air.id as air.nombre for air in avion",'ng-model'=>'invoice.avion_id','id'=>'avion_id','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('estado', 'Estado Factura') ]]

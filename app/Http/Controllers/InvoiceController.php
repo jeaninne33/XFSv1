@@ -12,6 +12,8 @@ use XFS\Servicio;
 use XFS\Invoice;
 use XFS\Date_invoice;
 use XFS\Pais;
+use XFS\Audit;
+use XFS\User;
 use XFS\Avion;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +35,9 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
       $invoices =  invoice::with('company')->get();
-      return view('invoices.index', compact('invoices'));
+       $audit=Audit::with('user')->get();
+  //  $audit="";
+      return view('invoices.index', compact('invoices','audit'));
     }
     /**
      * Show the form for creating a new resource.
@@ -175,9 +179,14 @@ class InvoiceController extends Controller
       DB::beginTransaction();
       try {
          $invoice=Invoice::create($data);
+
+         //dd($invoice->id);
          //agregamos la info de la factura
          $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
          $invoice->save();
+         /////datos para la auditoria
+         $audit=Invoice::audit_invoice($invoice->id,"Insertar","Factura","invoices");
+         $audit->save();
          ///////////
           if($datos){
             foreach( $items as $indice =>$datos_invoices ){
@@ -257,11 +266,22 @@ class InvoiceController extends Controller
         if(!empty($error)){
             $result=['message' => 'mal','error'=> $error];
         }else{
-          $invoice->fill($request->all());
-          $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
-
-          $invoice->save();
-          $result=['message' => 'bien', 'error'=> $error];
+          DB::beginTransaction();
+          try {
+              $invoice->fill($request->all());
+              $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
+              $invoice->save();
+              /////datos para la auditoria
+              $audit=Invoice::audit_invoice($id,"Editar","Factura","invoices");
+              $audit->save();
+              ///////
+          } catch (Exception $e) {
+             DB::rollback();
+             $error[]=[$e->getMessage()];
+          }
+          // Hacemos los cambios permanentes ya que no han habido errores
+          DB::commit();
+              $result=['message' => 'bien', 'error'=> $error];
         }
         return response()->json($result);
 
@@ -276,13 +296,22 @@ class InvoiceController extends Controller
     {
       // abort(500);
        $invo=Invoice::findOrFail($id);
-       $mensaje='La Factura ID: <b>'.$invo->id.'</b> fue eliminada Exitosamente';
+       $mensaje='La Factura ID: <b>'.$invo->id.'</b> fue Anulada Exitosamente';
        if (!is_null($invo)) {
 
           DB::beginTransaction();
           try {
-           $invo->datos()->delete();
-           $invo->delete();
+            $date = new DateTime(date('Y-m-d'));
+          // $invo->datos()->delete();
+           //$invo->delete();
+           $invo->informacion="Anulada (Fecha de Anulación:  ".date_format(date_create($invo->fecha_anulacion), 'm/d/Y').")";
+           $invo->estado="4";
+           $invo->fecha_anulacion=$date;
+           $invo->save();
+            /////datos para la auditoria
+           $audit=Invoice::audit_invoice($id,"Anulada","Factura","invoices");
+           $audit->save();
+           ///////
 
           } catch (Exception $e) {
             DB::rollback();
@@ -303,8 +332,10 @@ class InvoiceController extends Controller
         $date = date('Y-m-d');
 
         $items =Date_invoice::where('invoice_id' , $id)->get();
+
+        $invo=new Invoice;
         //var_dump($items);
-        $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items'))->render();
+        $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items','invo'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice');
@@ -320,7 +351,9 @@ class InvoiceController extends Controller
       e.fecha,
       e.fecha_vencimiento,
       e.fecha_pago,
+      e.fecha_anulacion,
       e.resumen,
+      e.informacion,
       e.estado,
       e.localidad,
       e.company_id,

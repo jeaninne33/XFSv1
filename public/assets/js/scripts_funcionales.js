@@ -202,3 +202,38 @@ $(document).on('click', '.btn-delete',function (e) {
        });
    }
 });
+$(document).on('click', '.btn-anular',function (e) {
+
+   e.preventDefault();//evita que se envie el formulario
+   var row=$(this).parents('tr');
+   var id=row.data('id');
+  //alert(id);
+   if (confirm("¿Esta Seguro que desea anular la factura?") == true) {
+       var form =$('#form-delete');
+       var url=form.attr('action').replace(':COM_ID',id);
+       var data=form.serialize();
+       $("#mensaje").css("display", "block");
+
+       var msj='<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+       $.post(url, data, function(result){
+         $('#mensaje').addClass('alert alert alert-success alert-dismissable');//cambiar la clase
+           msj+=result;
+          $('#mensaje').html(msj);
+           setTimeout("location.reload()",5000);
+       }).fail(function(){
+           $('#mensaje').addClass('alert alert alert-danger alert-dismissable');
+            msj+="Error. El registro no fue anulado";
+            $('#mensaje').html(msj);
+         //alert('La compañia no fue eliminada');
+          $('#example').find('.'+id).show();
+       });
+   }
+});
+$(document).on('click', '#histo',function (e) {
+  $(".tabla").css("display", "none");
+  $(".historial").css("display", "block");
+});
+$(document).on('click', '#volver',function (e) {
+  $(".tabla").css("display", "block");
+  $(".historial").css("display", "none");
+});

@@ -5,6 +5,8 @@ namespace XFS;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use DateTime;
+use XFS\Audit;
+use Auth;
 class Invoice extends Model
 {
     //
@@ -12,7 +14,7 @@ class Invoice extends Model
     // protected $fillable = ['nombre', 'pais_id'];
     protected $fillable=['id','fecha','plazo',
 'fecha_vencimiento','localidad','resumen','fbo','categoria','descuento','ganancia','subtotal',
-'total','prove_id','company_id','estimate_id','avion_id', 'informacion','estado','metodo_pago','fecha_pago', 'total_descuento'];
+'total','prove_id','company_id','estimate_id','avion_id', 'informacion','estado','metodo_pago','fecha_pago', 'total_descuento','fecha_anulacion'];
 
     public function company() {
 		  return $this->belongsTo('XFS\Company','company_id','id');
@@ -34,6 +36,23 @@ class Invoice extends Model
           return 'Pagado';
       }else if($estado=='3'){
             return 'Pago Vencido';
+      }else if($estado=='4'){
+                return 'Anulada';
+      }
+
+
+    }//fin metodp
+    public function estadosEN($estado, $fecha) {
+      if($estado=='1'){
+        return 'Un paid';
+      }else if($estado=='2'){
+          $fecha1= date_format(date_create( $fecha), 'm/d/Y');
+          return 'Paid (Date of Paid:'.$fecha1.')';
+      }else if($estado=='3'){
+            return 'Unpaid Overdue';
+      }else if($estado=='4'){
+          $fecha1= date_format(date_create( $fecha), 'm/d/Y');
+          return 'Annulled (Date of Annulment: '.$fecha1.')';
       }
     }//fin metodp
     public function information_invoice($fecha1, $fecha2, $op,&$inv) {
@@ -76,6 +95,24 @@ class Invoice extends Model
       return $d;
 
     }//fin metodp
+    public function plazo($val){
+      if($val=='1'){
+        $a= 'Vencimiento a la recepción';
+      } else   if($val=='2'){
+        $a= 'Fecha especificada';
+      } else   if($val==15){
+        $a= '15 días';
+      } else   if($val==30){
+        $a= '30 días';
+      } else   if($val==45){
+        $a= '45 días';
+      } else   if($val==60){
+          $a= '60 días';
+      } else   if($val==90){
+          $a= '90 días';
+      }
+      return $a;
+    }
     public function validate_float($num) {
       $patron="/^0[.]{0,1}[0-9]{0,2}$/";
     //  /^\d{1,2}(\.\d{1,2})?$/ patron con 2 entreros y dos decimales
@@ -177,6 +214,16 @@ class Invoice extends Model
         $item->total=$dato['total'];
         $item->descuento=0.0;
         return $item;
+    }//fin metodo añadir avion
+
+    public static function audit_invoice($id_tabla,$instruccion,$nombre,$tabla) {
+        $audit=New Audit;
+        $audit->tabla=$tabla;
+        $audit->nombre_tabla=$nombre;
+        $audit->id_tabla=$id_tabla;
+        $audit->instruccion=$instruccion;
+        $audit->user_id=Auth::user()->id;
+        return $audit;
     }//fin metodo añadir avion
 
 }//fin clase

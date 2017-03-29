@@ -94,6 +94,14 @@
       </tfoot>
   </table>
       <div class="otro">
+        <?php
+        if($invoice[0]->estado=='2'){
+          $fecha=$invoice[0]->fecha_pago;
+        }else if($invoice[0]->estado=='4'){
+          $fecha=$invoice[0]->fecha_anulacion;
+        }
+        ?>
+        <p><strong>Information: </strong>{{$invo->estadosEN($invoice[0]->estado , $fecha)}}</p>
         <p><strong>Sumary: </strong>{{$invoice[0]->resumen}}</p>
         <p><strong>Due Date: </strong>{{date_format(date_create( $invoice[0]->fecha_vencimiento), 'm/d/Y')}}</p>
       </div>

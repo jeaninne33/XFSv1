@@ -32,7 +32,9 @@ class AdminController extends Controller
        $invoice=Invoice::all();
        foreach( $invoice as $indice =>$inv ){
          //$estado=$inv->estados($inv->estado);
-         if(!empty($inv->fecha_pago)){
+         if(($inv->estado=="4")){
+          $d="Fecha de Anulación:  ".date_format(date_create($inv->fecha_anulacion), 'm/d/Y');
+         }else if(!empty($inv->fecha_pago)){
            $fecha_pago=new DateTime($inv->fecha_pago);
            $d=$inv->information_invoice($date, $fecha_pago,'2',$inv);
          }else {
