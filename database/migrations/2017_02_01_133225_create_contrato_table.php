@@ -18,9 +18,6 @@ class CreateContratoTable extends Migration
           $table->integer('company_id')->unsigned();
           $table->foreign('company_id')->references('id')
           ->on('companys')->onDelete('cascade');
-          $table->integer('aviones_id')->unsigned();
-          $table->foreign('aviones_id')->references('id')
-          ->on('aviones')->onDelete('cascade');
           $table->dateTime('fecha');
           $table->integer('nroOficina');
           $table->string('oficina',100);
@@ -28,8 +25,6 @@ class CreateContratoTable extends Migration
           $table->string('porcentaje',15);
           $table->integer('dias');
           $table->timestamps();
-
-
 
         });
     }
@@ -41,6 +36,6 @@ class CreateContratoTable extends Migration
      */
     public function down()
     {
-       Schema::drop('contrato');
+       Schema::dropIfExists('contrato');
     }
 }

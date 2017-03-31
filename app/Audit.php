@@ -28,7 +28,7 @@ class Audit extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['tabla', 'nombre_tabla', 'id_tabla', 'instruccion','user_id' ];
+    protected $fillable = ['tabla', 'nombre_tabla', 'id_tabla', 'instruccion','user_id','resumen' ];
 
     /**
      * The attributes excluded from the model's JSON form.

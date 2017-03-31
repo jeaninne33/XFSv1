@@ -213,6 +213,7 @@ class Invoice extends Model
         $item->subtotal=$dato['subtotal'];
         $item->subtotal_recarga=$dato['subtotal_recarga'];
         $item->total=$dato['total'];
+        $item->date_estimate_id=$dato['date_estimate_id'];
         $item->descuento=0.0;
         return $item;
     }//fin metodo añadir avion

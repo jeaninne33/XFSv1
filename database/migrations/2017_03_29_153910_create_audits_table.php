@@ -18,6 +18,7 @@ class CreateAuditsTable extends Migration
             $table->string('nombre_tabla',70);
             $table->integer('id_tabla');
             $table->string('instruccion',70);
+            $table->string('resumen',70)->nullable();
             $table->integer('user_id')->unsigned();
           	$table->foreign('user_id')
                 ->references('id')->on('users')
@@ -33,6 +34,6 @@ class CreateAuditsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('audits');
+        Schema::dropIfExists('audits');
     }
 }

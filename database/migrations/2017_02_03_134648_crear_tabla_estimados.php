@@ -17,7 +17,6 @@ class CrearTablaEstimados extends Migration
             $table->string('fbo',150);
             $table->date('fecha_soli');
             $table->string('localidad',150);
-            $table->string('resumen',500);
             $table->string('metodo_segui',150);
             $table->string('info_segui',150);
             $table->enum('estado',['Pendiente','Aceptado', 'Rechazado','Cancelado']);
@@ -29,15 +28,17 @@ class CrearTablaEstimados extends Migration
             $table->string('tipo_estrellas')->nullable();
             $table->string('imagen');
             $table->double('categoria', 2, 2);
-            $table->double('descuento', 2, 2);
+            $table->double('descuento', 2, 2)->default(0);
+            $table->double('total_descuento', 10, 2)->default(0);
             $table->double('ganancia', 10, 2);
             $table->double('subtotal', 10, 2);
             $table->double('total', 10, 2);
             $table->integer('prove_id');
             $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companys');
+            $table->foreign('company_id')->references('id')->on('companys')->onDelete('cascade');
             $table->integer('avion_id')->unsigned();
-            $table->foreign('avion_id')->references('id')->on('aviones');
+            $table->foreign('avion_id')->references('id')->on('aviones')->onDelete('cascade');
+            $table->string('resumen',500)->nullable();
             $table->timestamps();
         });
 
@@ -49,10 +50,9 @@ class CrearTablaEstimados extends Migration
             $table->double('recarga', 10, 2);
             $table->double('subtotal', 10, 2);
             $table->double('subtotal_recarga', 10, 2);
-            $table->double('total_recarga', 10, 2);
             $table->double('total', 10, 2);
             $table->integer('estimate_id')->unsigned();
-            $table->foreign('estimate_id')->references('id')->on('estimates');
+            $table->foreign('estimate_id')->references('id')->on('estimates')->onDelete('cascade');;
             $table->integer('servicio_id')->unsigned();
             $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
@@ -66,7 +66,7 @@ class CrearTablaEstimados extends Migration
      */
     public function down()
     {
-        Schema::drop('estimates');
-        Schema::drop('dates_estimates');
+        Schema::dropIfExists('estimates');
+        Schema::dropIfExists('dates_estimates');
     }
 }

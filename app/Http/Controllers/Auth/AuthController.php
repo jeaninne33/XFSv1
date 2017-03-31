@@ -41,10 +41,11 @@ class AuthController extends Controller
              return Redirect::intended('/principal');
        }
        // Si no hay sesión activa mostramos el formulario
-       return view('login');
+
    }
     public function postLogin(Request $request)
     {
+
       $data=$request->all();
       $band=true;
       $error= array();
@@ -65,6 +66,7 @@ class AuthController extends Controller
           }
       }
       if(!$band){
+
         return response()->json($error,401);
       }
         //Session::flash('flash_message', '');

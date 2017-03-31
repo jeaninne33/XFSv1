@@ -32,7 +32,7 @@
              </tr>
              <tr>
                <td><strong>Dirección:</strong> {{ $companys->direccion }}</td>
-               <td><strong>Direccion de factura:</strong> {{ $companys->direccion_cuenta }}</td>
+               <td><strong>Direccion de factura:</strong> {{ $companys->direccion_factura }}</td>
              </tr>
               <tr>
                <td><strong>Representante:</strong> {{ $companys->representante }}<br></td>

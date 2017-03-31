@@ -56,7 +56,7 @@ class InvoiceController extends Controller
         e.prove_id,
         e.avion_id,
         c.nombre,
-        c.direccion_cuenta,
+        c.direccion,
         c.telefono_admin,
         c.categoria,
         e.estado,
@@ -91,6 +91,7 @@ class InvoiceController extends Controller
         $invoice->estado='1';
         $datos=DB::select(
         DB::raw("SELECT
+        a.id as date_estimate_id,
         a.cantidad,
         a.precio,
         a.recarga,
@@ -358,7 +359,7 @@ class InvoiceController extends Controller
       e.prove_id,
       e.avion_id,
       c.nombre as cliente,
-      c.direccion_cuenta,
+      c.direccion,
       c.telefono_admin,
       c.categoria,
       c.representante,

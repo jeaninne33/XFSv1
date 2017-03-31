@@ -652,7 +652,7 @@ app.controller("LoginCtrl",['$scope','$http',function($scope, $http){
   $scope.show_error =  false;
   $scope.message =  false;
   $scope.enviar =  function($event){
-    //  alert('holaa');
+   // alert('holaa');
      $event.preventDefault();
      var login=$scope.login;
       login["_token"] =  $("input[name=_token]").val();

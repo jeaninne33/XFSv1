@@ -72,9 +72,9 @@ Route::get('/clientes/{id}',function($id){
 });
 
 //Authentication routes...
- //Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
+Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
 Route::get('login', ['as' => 'login','uses'=> 'Auth\AuthController@getLogin']);
-Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::post('login', ['as' =>'login', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
 // Route::get('estimate','EstimatesController@cliente');

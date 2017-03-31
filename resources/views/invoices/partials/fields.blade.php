@@ -165,7 +165,7 @@
         <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $estimate[0]->nombre}}<br></td>
       </tr>
       <tr>
-        <td colspan="2"><strong>Direccion de factura: </strong>{{ $estimate[0]->direccion_cuenta}} </td>
+        <td colspan="2"><strong>Dirección: </strong>{{ $estimate[0]->direccion}} </td>
       </tr>
       <tr>
        <td colspan="2"><strong>Teléfono: </strong>{{ $estimate[0]->telefono_admin}}<br></td>
