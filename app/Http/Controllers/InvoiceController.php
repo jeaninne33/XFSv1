@@ -73,7 +73,6 @@ class InvoiceController extends Controller
         INNER JOIN companys f ON f.id=e.prove_id
         INNER JOIN aviones d ON d.id=e.avion_id
         where e.id='$id'" ));
-
         $estimate =collect( $estimates);
         $invoice= new Invoice;
         $invoice->localidad = $estimate[0]->localidad;
@@ -90,25 +89,24 @@ class InvoiceController extends Controller
         $invoice->company_id=$estimate[0]->company_id;
         $invoice->prove_id=$estimate[0]->prove_id;
         $invoice->estado='1';
-
-          $datos=DB::select(
-          DB::raw("SELECT
-          a.cantidad,
-          a.precio,
-          a.recarga,
-          a.subtotal,
-          a.subtotal_recarga,
-          a.total,
-          a.servicio_id,
-          b.descripcion
-          FROM dates_estimates a
-          INNER JOIN servicios b on a.servicio_id=b.id
-          where estimate_id='$id'" ));
-          $datos_estimado =collect( $datos);
-          $servicios = Servicio::select('id', 'nombre','descripcion')->get();
-        //  gettype($estimate);
-          return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
-      }
+        $datos=DB::select(
+        DB::raw("SELECT
+        a.cantidad,
+        a.precio,
+        a.recarga,
+        a.subtotal,
+        a.subtotal_recarga,
+        a.total,
+        a.servicio_id,
+        b.descripcion
+        FROM dates_estimates a
+        INNER JOIN servicios b on a.servicio_id=b.id
+        where estimate_id='$id'" ));
+        $datos_estimado =collect( $datos);
+        $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+      //  gettype($estimate);
+        return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
+    }
     /**
      * Store a newly created resource in storage.
      *

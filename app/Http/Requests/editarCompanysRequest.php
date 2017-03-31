@@ -59,4 +59,14 @@ class editarCompanysRequest extends Request
 
         ];
     }
+    public function messages()
+  {
+    return [
+        'pais_id.required'=> 'El campo Pais es obligatorio',
+        'codigop.max' => 'El campo Codigo Postal tiene un maximo de 7 caracteres',
+        'tipo_prove.in'=> 'El campo Tipo de Provedor no corresponde a las opciones',
+        'direccion_cuenta.required'=> 'El campo Direccion de Factura es obligatorio',
+        'direccion_cuenta.max'=> 'El campo Direccion de Factura tiene un maximo de 500 caracteres',
+    ];
+ }
 }

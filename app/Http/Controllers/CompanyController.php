@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use XFS\Http\Requests\CrearCompanysRequest;
 use XFS\Http\Requests\editarCompanysRequest;
 use XFS\Company;
+use XFS\Estimate;
+use XFS\Invoice;
 use XFS\Pais;
 use XFS\Avion;
 use Illuminate\Support\Facades\Validator;
@@ -199,12 +201,22 @@ class CompanyController extends Controller
     {
        // abort(500);
         $comp=Company::findOrFail($id);
-        $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
         if (!is_null($comp)) {
-            $comp->delete();
-            if($request->ajax()){
-                return $mensaje;
-            }
+          $Estimate=Estimate::where('company_id',$id)->count();
+          $invoice=Invoice::where('company_id',$id)->count();
+          if($Estimate>0 || $invoice>0){
+              $cod=401;
+              $mensaje='No se puede eliminar la compañia <b>'.$comp->nombre.'</b> puesto que posee un historial de operaciones con la empresa';
+          }else{
+              $mensaje='La compañia <b>'.$comp->nombre.'</b> fue eliminada Exitosamente';
+              $cod=200;
+              $comp->aviones()->delete();
+              $comp->delete();
+
+          }
+          if($request->ajax()){
+            return $mensaje;
+          }
            return redirect()->route('companys.index')
                  ->with('success', $mensaje);
        }

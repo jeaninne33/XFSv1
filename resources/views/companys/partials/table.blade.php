@@ -25,8 +25,7 @@
              <td>
                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
                <a class="glyphicon glyphicon-zoom-in" title="Mostrar" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
-               <a class="glyphicon glyphicon-zoom-in" title="Contrato" aria-hidden="true" href="{{ URL::to('companys/' . $value->id) }}"></a>
-                  <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+                      <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
                <a class="glyphicon glyphicon-pencil" title="Editar" aria-hidden="true" href="{{ URL::to('companys/'. $value->id .'/edit') }}"></a>
                  <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
              @if (Auth::user()->type=='admin')

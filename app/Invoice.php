@@ -46,7 +46,7 @@ class Invoice extends Model
       if($estado=='1'){
         return 'Un paid';
       }else if($estado=='2'){
-          $fecha1= date_format(date_create( $fecha), 'm/d/Y');
+          $fecha= date_format(date_create( $fecha), 'm/d/Y');
           return 'Paid (Date of Paid:'.$fecha1.')';
       }else if($estado=='3'){
             return 'Unpaid Overdue';
@@ -144,12 +144,13 @@ class Invoice extends Model
     public static function validate_dates($datos,$opc) {
       $fecha=date("Y-m-d");
     //  dd(date_format(new DateTime($datos["fecha"]), 'Y-m-d')<$fecha);
+    //>>> $valid_duplicate=XFS\Invoice::where('estimate_id','3')->where('estado','<>','4')->get()
       $error= array();
-       $valid_duplicate=Invoice::where('estimate_id' , $datos["estimate_id"])->count();
+       $valid_duplicate=Invoice::where('estimate_id' , $datos["estimate_id"])->where('estado','<>','4')->count();
       if((isset($datos["estimate_id"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
       }
       if((isset($datos["fecha"])) && (!empty($valid_duplicate) && $opc==1)){
-        $error["duplicate"]=["Registro Duplicado! Ya existe la factura para el estimado Numero: ".$datos["estimate_id"]];
+        $error["duplicate"]=["Registro Duplicado! Ya existe una factura Activa para el estimado Numero: ".$datos["estimate_id"]];
       }else{
         if((isset($datos["fecha"])) && ((date_format(new DateTime($datos["fecha"]), 'Y-m-d'))>$fecha)){
           $error["fecha"]=["La Fecha de la Factura no puede ser mayor a la fecha actual"];

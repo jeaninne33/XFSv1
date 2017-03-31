@@ -193,10 +193,12 @@ $(document).on('click', '.btn-delete',function (e) {
           $('#mensaje').html(msj);
            $('#example').find('.'+id).fadeOut();
            //row.fadeOut();
-       }).fail(function(){
+       }).fail(function(result){
            $('#mensaje').addClass('alert alert alert-danger alert-dismissable');
-            msj+="Error. El registro no fue eliminado";
+            msj+="Error. El registro no fue eliminado <br/>";
+            msj+=result;
             $('#mensaje').html(msj);
+
          //alert('La compañia no fue eliminada');
           $('#example').find('.'+id).show();
        });
@@ -222,7 +224,8 @@ $(document).on('click', '.btn-anular',function (e) {
            setTimeout("location.reload()",5000);
        }).fail(function(){
            $('#mensaje').addClass('alert alert alert-danger alert-dismissable');
-            msj+="Error. El registro no fue anulado";
+            msj+="Error. El registro no fue anulado ";
+
             $('#mensaje').html(msj);
          //alert('La compañia no fue eliminada');
           $('#example').find('.'+id).show();

@@ -156,8 +156,8 @@
          </div>
          <div class="col-sms-6 col-sm-6">
 
-           [[Form::label('direccion_cuenta', 'Dirección') ]]
-           [[ Form::text('direccion_cuenta', null, ['class' => 'input-text full-width' ,'ng-model'=>'company.direccion_cuenta']) ]]
+           [[Form::label('direccion', 'Dirección') ]]
+           [[ Form::text('direccion1', null, ['class' => 'input-text full-width' ,'ng-model'=>'company.direccion1']) ]]
 
          </div>
      </div>
