@@ -10,41 +10,37 @@
 <!-- Trigger the modal with a button -->
 
 <input type="hidden" name="_token" id="token" value="{{csrf_token()}}"/>
-<!-- Modal -->
-<div id="clientes" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><label id="titulo"></label></h4>
-        </div>
-        <div class="modal-body">
-           <div class="cliente" style="display:none">
-              @include('estimates.partials.tbClientes')
-           </div>
-           <div class="correo" style="display:none">
-              @include('Mail.mail')
-           </div>
-           <div class="fuelrelease" style="display:none">
-              @include('estimates.partials.fuel-releaseFields')
-           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        </div>
-    </div>
 
-  </div>
-</div>
-<!--Modal-->
 <div class="tab-content">
 
 
-  {{-- <div id="menu4" class="tab-pane fade " style="display:none">
-    <h3>Menu 2</h3>
-    <p>Some content in menu 2.</p>
-  </div> --}}
+  <div id="imagen" class="tab-pane fade">
+    <h3>Imagen Estimado</h3>
+      <div class="btn btn-default btn-file">
+          <i class="fa fa-paperclip"></i> Adjuntar Archivo
+          <input type="file"  id="fileIMG" name="fileIMG" class="imagen_archivo" >
+      </div>
+          <p class="help-block"  >Max. 20MB</p>
+                   <!-- cargador empresa -->
+      <div style="display: none;" id="cargador_empresa" align="center">
+          <br>
+        <label style="color:#FFF; background-color:#ABB6BA; text-align:center">&nbsp;&nbsp;&nbsp;Espere... &nbsp;&nbsp;&nbsp;</label>
+
+        <img src="{{asset("assets/images/icon/cargando.gif")}}" align="middle" alt="cargador"> &nbsp;<label style="color:#ABB6BA">Realizando tarea solicitada ...</label>
+
+        <br>
+       
+        <hr style="color:#003" width="50%">
+        <br>
+      </div>
+      <div id="texto_notificacion1">
+
+      </div>
+      <div id="mostrarIMG">
+      
+      </div>
+
+  </div>
   <div id="home" class="tab-pane fade  in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">

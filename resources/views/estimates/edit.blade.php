@@ -16,11 +16,16 @@
       <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
       </div>
-      <div class="pull-right col-md-5">
-        <a style="display:none; with:50px;" id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
-        <a style="display:none" id=fuel_release class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</a>
+      <div class="pull-right col-md-4">
+   
         <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimates[0]->id)}}" target="_blank">Imprimir</a>
         <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button>
+      </div>
+      <div class="pull-right col-md-3">
+         <span style="display:none" id="botones">
+        <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
+        <a id="fuel_release" class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</a>
+      </span>
       </div>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>
 
@@ -58,12 +63,13 @@ activareditor();
   // $('#invoices').css("display","none");
    $('#estado').on('change',function(){
      if ($('#estado').val()=='Aceptado') {
-         $('#invoices').css("display","block");
-         $('#fuel_release').css("display","block");
+        // $('#invoices').css("display","block");
+         //$('#fuel_release').css("display","block");
+         $('#botones').css('display','block');
      }
      else {
-       $('#invoices').css("display","none");
-       $('#fuel_release').css("display","none");
+       //$('#invoices').css("display","none");
+       ///$('#fuel_release').css("display","none");
      }
    });
   $('.btn-delete').click(function(e){

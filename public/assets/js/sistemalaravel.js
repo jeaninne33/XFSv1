@@ -316,3 +316,58 @@ $(document).on("change",".email_archivo",function(e){
 
 
 })
+
+$(document).on("change",".imagen_archivo",function(e){
+
+    var miurl="/adjuntar-img/";
+   // var fileup=$("#file").val();
+    var divresul="texto_notificacion1";
+    var token =$('#token').val();
+    var data = new FormData();
+    data.append('file', $('#fileIMG')[0].files[0] );
+
+
+
+    console.log(data);
+
+
+  // $.ajaxSetup({
+  //       headers: {
+  //           'X-CSRF-TOKEN': $('#_token').val()
+  //       }
+  //   });
+
+
+     $.ajax({
+            url: miurl,
+            type: 'POST',
+            headers: {'X-CSRF-TOKEN': token},
+            // Form data
+            //datos del formulario
+            data: data,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+            //mientras enviamos el archivo
+            beforeSend: function(){
+              $("#"+divresul+"").html($("#cargador_empresa").html());
+            },
+            //una vez finalizado correctamente
+            success: function(data){
+              var codigo='<div class="mailbox-attachment-info"><a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i>'+ data.nombre +'</a><span class="mailbox-attachment-size"> </span></div>';
+              var image='<img src="'+data.imagen+'" alt="'+data.nombre+'"/>';
+              $("#"+divresul+"").html(codigo);
+              $('#mostrarIMG').html(image);
+
+            },
+            //si ha ocurrido un error
+            error: function(data){
+               $("#"+divresul+"").html(data);
+
+            }
+        });
+
+
+
+})
