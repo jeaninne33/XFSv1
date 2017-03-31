@@ -99,6 +99,8 @@
           $fecha=$invoice[0]->fecha_pago;
         }else if($invoice[0]->estado=='4'){
           $fecha=$invoice[0]->fecha_anulacion;
+        }else{
+          $fecha=null;
         }
         ?>
         <p><strong>Information: </strong>{{$invo->estadosEN($invoice[0]->estado , $fecha)}}</p>

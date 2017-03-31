@@ -22,6 +22,7 @@ use Illuminate\Routing\Route;
 use DB;
 use DateTime;
 use Date;
+use Mail;
 use XFS\Http\Requests\CrearInvoicesRequest;
 use XFS\Http\Requests\EditInvoicesRequest;
 
@@ -326,58 +327,76 @@ class InvoiceController extends Controller
       }
     }
     public function print_invoice($id)
-    {
-        $invoice = $this->getDatainvoice($id);
-        $date = date('Y-m-d');
+     {
+       $a = $this->create_invoice_pdf($id);
+        return $a;
+     }
+     public function send_invoice(Request $request)
+      {
+        $data=$request->all();
+        $a = $this->create_invoice_pdf($data['id']);
+        $user=Company::findOrFail($data['company_id']);
+        Mail::send('Mail.mensaje', ['user' => $user], function ($m) use ($user) {
+           $m->from('jeaninne33@gmail.com', 'Your Application');
 
-        $items =Date_invoice::where('invoice_id' , $id)->get();
+           $m->to($user->correo, $user->nombre)->subject('Your Reminder!');
+       });
+      //  dd($request);
+      }
 
-        $invo=new Invoice;
-        //var_dump($items);
-        $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items','invo'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
-    }
+     public function create_invoice_pdf($id)
+      {
+          $invoice = $this->getDatainvoice($id);
+          $date = date('Y-m-d');
 
-    public function getDatainvoice($id)
-    {
-      $invoice=DB::select(
-      DB::raw("SELECT
-      e.id,
-      e.fbo,
-      e.plazo,
-      e.fecha,
-      e.fecha_vencimiento,
-      e.fecha_pago,
-      e.fecha_anulacion,
-      e.resumen,
-      e.informacion,
-      e.estado,
-      e.localidad,
-      e.company_id,
-      e.prove_id,
-      e.avion_id,
-      c.nombre as cliente,
-      c.direccion,
-      c.telefono_admin,
-      c.categoria,
-      c.representante,
-      c.correo,
-      e.estado,
-      e.subtotal,
-      e.ganancia,
-      e.descuento,
-      e.total,
-      e.total_descuento,
-      d.matricula,
-      f.nombre as prove
-      FROM invoices e
-      INNER JOIN companys c ON c.id=e.company_id
-      INNER JOIN companys f ON f.id=e.prove_id
-      INNER JOIN aviones d ON d.id=e.avion_id
-      where e.id='$id'" ));
-        return collect($invoice);
-    }
+          $items =Date_invoice::where('invoice_id' , $id)->get();
+
+          $invo=new Invoice;
+          //var_dump($items);
+          $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items','invo'))->render();
+          $pdf = \App::make('dompdf.wrapper');
+          $pdf->loadHTML($view);
+          return $pdf->stream('invoice');
+      }
+
+     public function getDatainvoice($id)
+     {
+       $invoice=DB::select(
+       DB::raw("SELECT
+       e.id,
+       e.fbo,
+       e.plazo,
+       e.fecha,
+       e.fecha_vencimiento,
+       e.fecha_pago,
+       e.fecha_anulacion,
+       e.resumen,
+       e.informacion,
+       e.estado,
+       e.localidad,
+       e.company_id,
+       e.prove_id,
+       e.avion_id,
+       c.nombre as cliente,
+       c.direccion,
+       c.telefono_admin,
+       c.categoria,
+       c.representante,
+       c.correo,
+       e.estado,
+       e.subtotal,
+       e.ganancia,
+       e.descuento,
+       e.total,
+       e.total_descuento,
+       d.matricula,
+       f.nombre as prove
+       FROM invoices e
+       INNER JOIN companys c ON c.id=e.company_id
+       INNER JOIN companys f ON f.id=e.prove_id
+       INNER JOIN aviones d ON d.id=e.avion_id
+       where e.id='$id'" ));
+         return collect($invoice);
+     }
 
 }

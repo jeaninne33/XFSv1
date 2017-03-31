@@ -25,7 +25,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de la Factura *') ]]
-          [[ Form::date('fecha', null, ['readonly','format-date','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
+          [[ Form::text('fecha', null, ['readonly','format-date','class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
         </div>
 
     </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de Vencimiento *') ]]
-          [[ Form::date('fecha_vencimiento', null, ['readonly','class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
+          [[ Form::text('fecha_vencimiento', null, ['readonly','class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
         </div>
     </div>
     <div class="row form-group">
