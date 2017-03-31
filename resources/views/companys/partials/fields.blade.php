@@ -26,8 +26,8 @@
           [[ Form::text('direccion', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.direccion' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-6">
-          [[Form::label('direccion_cuenta', 'Direccion de factura *') ]]
-          [[ Form::text('direccion_cuenta', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.direccion_cuenta'  ]) ]]
+          [[Form::label('direccion_factura', 'Direccion de factura *') ]]
+          [[ Form::text('direccion_factura', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'company.direccion_factura'  ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -156,8 +156,8 @@
          </div>
          <div class="col-sms-6 col-sm-6">
 
-           [[Form::label('direccion', 'Dirección') ]]
-           [[ Form::text('direccion1', null, ['class' => 'input-text full-width' ,'ng-model'=>'company.direccion1']) ]]
+           [[Form::label('direccion', 'Dirección Cuenta') ]]
+           [[ Form::text('direccion_cuenta', null, ['class' => 'input-text full-width' ,'ng-model'=>'company.direccion_cuenta']) ]]
 
          </div>
      </div>

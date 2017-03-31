@@ -37,7 +37,7 @@ class CreateCategoriasServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categorias');
-        Schema::drop('servicios');
+        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('servicios');
     }
 }

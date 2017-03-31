@@ -29,7 +29,7 @@
         <br/>
         <strong>Representative: </strong> {{$invoice[0]->representante}}
         <br/>
-        <strong>Addres Customer: </strong> {{$invoice[0]->representante}}
+        <strong>Addres Customer: </strong> {{$invoice[0]->direccion}}
       </span>
       <span class="texto-d">
         <strong>Invoice Number:</strong> {{$invoice[0]->id}}

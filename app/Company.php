@@ -10,7 +10,7 @@ class Company extends Eloquent
       *
       * @var array
       */
-     protected $fillable = ['nombre', 'correo','cargo', 'direccion','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','categoria','servicio_disp','contacto_admin'];
+     protected $fillable = ['nombre', 'correo','cargo', 'direccion','website','tipo','estado_id','representante','ciudad','pais_id','codigop','telefono','telefono_admin','certificacion','banco','aba','cuenta','direccion_cuenta','direccion_factura','categoria','servicio_disp','contacto_admin'];
 
      public function aviones() {
 		     return $this->hasMany('XFS\Avion', 'company_id', 'id');
@@ -19,7 +19,7 @@ class Company extends Eloquent
      public function servicios() {
         return $this->belongsToMany('XFS\Servicio', 'company_id', 'id')->withPivot('precio')->withTimestamps();
    }
-   
+
     public function pais() {
         return $this->hasOne('XFS\Pais','id','pais_id');
     }

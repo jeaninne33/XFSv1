@@ -23,6 +23,9 @@ class CreateAvionesTable extends Migration
           	$table->string('piloto2', 200)->nullable();
           	$table->string('certificado', 50)->unique()->nullable();
           	$table->string('seguro', 200)->nullable();
+            $table->string('nombre',50)->nullable();
+            $table->string('modelo',50)->nullable();
+            $table->string('fabricante',50)->nullable();
           	$table->integer('company_id')->unsigned();
           	$table->foreign('company_id')
                 ->references('id')->on('companys')
@@ -38,6 +41,6 @@ class CreateAvionesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('aviones');
+        Schema::dropIfExists('aviones');
     }
 }

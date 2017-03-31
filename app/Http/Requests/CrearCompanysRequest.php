@@ -29,7 +29,8 @@ class CrearCompanysRequest extends Request
         return [
             'nombre'       => 'required|unique:companys,nombre|max:100',
             'correo' => 'required|email|unique:companys,correo|max:100',
-            'direccion'      => 'max:500',
+            'direccion'      => 'required|max:500',
+            'direccion_factura'=> 'required|max:500',
             'website'=> 'max:50',
             'representante'=> 'required|max:100',
             'pais_id'=> 'required',
@@ -44,7 +45,7 @@ class CrearCompanysRequest extends Request
             'telefono_admin'=> 'required|numeric|min:6',
             'banco'=> 'max:50',
             'cuenta'=> 'max:50',
-            'direccion_cuenta'=> 'required|max:500',
+            'direccion_cuenta'=> 'max:500',
             'aba'=> 'max:50',
             'tipo'=> 'required|in:client,prove,cp',
             'cargo'=> 'required|max:50',
@@ -58,10 +59,12 @@ class CrearCompanysRequest extends Request
   {
     return [
         'pais_id.required'=> 'El campo Pais es obligatorio',
+        'telefono_admin.required'=> 'El campo Teléfono de los Datos Operacionales es obligatorio',
         'codigop.max' => 'El campo Codigo Postal tiene un maximo de 7 caracteres',
         'tipo_prove.in'=> 'El campo Tipo de Provedor no corresponde a las opciones',
-        'direccion_cuenta.required'=> 'El campo Direccion de Factura es obligatorio',
-        'direccion_cuenta.max'=> 'El campo Direccion de Factura tiene un maximo de 500 caracteres',
+        'direccion_cuenta.max'=> 'El campo Direccion Cuenta tiene un maximo de 500 caracteres',
+        'direccion_factura.required'=> 'El campo Direccion de Factura es obligatorio',
+        'direccion_factura.max'=> 'El campo Direccion de Factura tiene un maximo de 500 caracteres',
     ];
  }
 }

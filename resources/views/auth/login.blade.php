@@ -43,6 +43,7 @@
             <div class="container">
                 <div id="main">
                     <div class="welcome-text box" style="">INICIO DE SESIÓN</div>
+                    {{-- {{Hash::make('123456')}} --}}
                     {{-- @if(Session::has('flash_message'))
                       <div class="alert alert-danger">
                         <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>

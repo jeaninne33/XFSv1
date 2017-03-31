@@ -145,7 +145,7 @@
               <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $invoice->company->nombre}}<br></td>
             </tr>
             <tr>
-              <td colspan="2"><strong>Direccion de factura: </strong>{{ $invoice->company->direccion_cuenta}} </td>
+              <td colspan="2"><strong>Dirección: </strong>{{ $invoice->company->direccion}} </td>
             </tr>
             <tr>
              <td colspan="2"><strong>Teléfono: </strong>{{ $invoice->company->telefono_admin}}<br></td>
