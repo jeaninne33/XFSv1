@@ -8,13 +8,15 @@
 {{-- <link rel="stylesheet" href="{{asset("assets/css/bootstrap-table.css")}}"> --}}
 @endsection
 @section('contenido')
-
+  <div id="mensaje" style="display:none" class="alert alert-danger alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! </strong><label id='validar'></label><strong>Campos Requeridos!</strong>
+  </div>
       <h2>Editar Estimado <strong> {{$estimates[0]->id}} </strong></h2>
       <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
       </div>
       <div class="pull-right col-md-5">
-
         <a style="display:none; with:50px;" id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
         <a style="display:none" id=fuel_release class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}">Fuel Release</a>
         <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimates[0]->id)}}" target="_blank">Imprimir</a>
@@ -28,7 +30,8 @@
 <div class="col-sm-12 no-float no-padding">
    [[Form::model($estimates, array('route' => array('estimates.update', $estimates[0]->id), 'method' => 'PUT'))]]
     @include('estimates.partials.fieldsEdit')
-  [[ Form::submit('Editar Estimado', array('class' => 'btn btn-primary')) ]]
+    <button type="button" class="btn btn-primary" onclick="saveEstimates('update')">Editar Estimado</button>
+  {{--[[ Form::button('Editar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates('update')')) ]]--}}
   [[ Form::close() ]]
 </div>
 

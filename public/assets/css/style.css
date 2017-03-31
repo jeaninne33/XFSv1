@@ -1996,6 +1996,35 @@ button.btn-extra.yellow > i:after, input[type="button"].button.btn-extra.yellow 
 button.btn-extra.yellow > span em, input[type="button"].button.btn-extra.yellow > span em, a.button.btn-extra.yellow > span em {
   color: #fdb714;
 }
+.btn.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn.btn-file > input[type='file'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.btn-default {
+  background-color: #f4f4f4;
+  color: #444;
+  border-color: #ddd;
+}
+.btn-default:hover,
+.btn-default:active,
+.btn-default.hover {
+  background-color: #e7e7e7;
+}
 
 .icon-check {
   position: relative;

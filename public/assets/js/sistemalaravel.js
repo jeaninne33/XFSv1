@@ -159,10 +159,10 @@ $('#send').on("click",function(e){
             success: function(data){
               $("#"+divresul+"").html(data);
             //  $("#fotografia_usuario").attr('src', $("#fotografia_usuario").attr('src') + '?' + Math.random() );
-            $('#mensaje').css('display','block');
+          //  $('#mensaje').css('display','block');
             $('#validar').html('Correo Enviado Correctamente');               
-            $('#f_enviar_correo').trigger("reset");
-
+            //$('#f_enviar_correo')[0].reset();
+            document.getElementById("f_enviar_correo").reset();
             },
             //si ha ocurrido un error
             error: function(data){
