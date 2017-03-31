@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use XFS\Estimate;
 use XFS\Company;
 use XFS\Avion;
+use Storage;
 use XFS\Servicio;
 use XFS\date_estimates;
 use XFS\Http\Requests;
@@ -287,7 +288,7 @@ class EstimatesController extends Controller
         $idEstimates=$estimates[0]->id;
         $indicador=0;
        
-        $servicios=Servicio::select('nombre','id')->get();
+        $servicios=Servicio::Lists('nombre','id');
        
         $avion=DB::table('aviones')
         ->select(['nombre','id'])
@@ -407,27 +408,10 @@ class EstimatesController extends Controller
       WHERE e.id=$id"));
         return view('estimates.fuelrelease',compact('estimates'));
     }
-    public function fuelrelease(Request $request)
+ 
+    public function postfuelrelease(Request $request)
     {
       $estimates=$request->all();
-      // $estimates=DB::select(
-      // DB::raw("SELECT
-      // e.id,
-      // c.nombre AS nombrec,
-      // cp.nombre AS nombrep,
-      // c.representante,
-      // c.direccion,
-      // fecha_soli,
-      // fbo,
-      // cantidad_fuel,
-      // localidad,
-      // a.tipo,
-      // matricula
-      // FROM estimates e
-      // INNER JOIN companys c ON c.id=e.company_id
-      // INNER JOIN companys cp ON cp.id=e.prove_id
-      // INNER JOIN aviones a ON a.company_id=c.id
-      // WHERE e.id=$id"));
       $from="X Flight Support";
        $date = date('Y-m-d');
        //$fuel_release = "1";
@@ -515,5 +499,30 @@ class EstimatesController extends Controller
       $pdf->loadHTML($view);
       return $pdf->stream('estimate');
 
+    }
+    public function adjuntarimg(Request $request)
+    {
+            if($request->hasFile('file') ){
+
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $nombre=$file->getClientOriginalName();
+            $r= Storage::disk('local')->put($nombre,  \File::get($file));
+
+             $pathToFile= storage_path('app') ."/". $nombre;
+             }
+             else{
+
+                return "no";
+             }
+
+            if($r){
+                $data=['nombre'=>$nombre,'imagen'=>$pathToFile];
+                return $data;
+            }
+            else
+            {
+                return "error vuelva a intentarlo";
+            }
     }
 }
