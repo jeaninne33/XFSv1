@@ -8,22 +8,19 @@
             <td>Estado</td>
             <td>Fecha</td>
             <td>Total</td>
-            <td>Resumen</td>
             <td>Aciones</td>
         </tr>
     </thead>
     <tbody>
     @foreach($estimates as $key => $value)
-    
+
         <tr data-id="{{$value->id}}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>
             <td>{{ $value->proveedor }}</td>
             <td>{{ $value->estado }}</td>
-            <td>{{ $value->fecha_soli }}</td>
-            <td>{{ $value->total }}</td>
-            <td>{{ $value->resumen }}</td>
-
+            <td>{{ date_format(date_create(  $value->fecha_soli), 'm/d/Y') }}</td>
+            <td>$ {{ $value->total }}</td>
             <!-- we will also add show, edit, and delete buttons -->
             <td>
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->

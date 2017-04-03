@@ -107,10 +107,10 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
         $('#validar').html(' '+mjs+' ');
          //document.getElementById('error').innerHTML = mjs;
      }
-  
+
 //  $("#mensaje").css("display", "block");
     else if (ok==true) {
-    
+
      if (tipo=="save") {
          url="/estimates";
          type="POST";
@@ -157,7 +157,7 @@ table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
 }
 
 function ajaxRenderSection(id) {
-  var table = $('#example').DataTable();
+  var table = $('#example3').DataTable();
     table.clear();
         $.ajax({
             type: 'GET',
@@ -165,33 +165,28 @@ function ajaxRenderSection(id) {
             dataType: 'json',
             success: function (data) {
               //  $('#datos').empty();
-              var categoria;
+              var tipo=null;
+              var fila=null;
 
-                $.each(data, function(index, value){
+          $.each(data, function(index, value){
               /* Vamos agregando a nuestra tabla las filas necesarias */
-            switch (value.categoria) {
-              case "0":
-                categoria='PostPago';
+            switch (value.tipo) {
+              case "client":
+                tipo='Cliente';
                 break;
-              case "1":
-                categoria='Prepago';
+              case "prove":
+                tipo='Proveedor';
                 break;
-              case "2":
-                categoria='De 1 a 15 días de crédito';
-                break;
-              case "3":
-                categoria='De 16 a 30 días de crédito'
+              case "cp":
+                tipo='Cliente/Proveedor';
                 break;
             }
               table.row.add( [
-                  value.id,
-                  value.nombre,
-                  value.pais,
-                  value.celular,
-                  value.telefono,
-                  value.correo,
-                  value.tipo,
-                  categoria
+                value.id,
+                value.nombre,
+                value.pais,
+                value.correo,
+                 tipo
               ] ).draw( false );
           });
             },
@@ -206,13 +201,15 @@ function ajaxRenderSection(id) {
         });
     }
     //doble click tabla de cliente y proveedores para cargar en los intut del formulario
-    $('#example > tbody').on('dblclick', '>tr', function () {
-       var tab=$('#example').DataTable();
+    $('#example3 > tbody').on('dblclick', '>tr', function () {
+       var tab=$('#example3').DataTable();
+
        var datos = tab.row( this ).data();
        var categoria=datos[7];
        var tCategoria;
        var porcentaje;
-          if (datos[6]=='client') {
+          alert(datos[4]);
+          if (datos[4]=='Cliente') {
             //trae el el listado de aviones de ese cliente mas su matricula
             $.get('/listAvion/'+datos[0], function(data){
                 console.log(data);
@@ -272,13 +269,7 @@ function ajaxRenderSection(id) {
               $('#clientes').modal('toggle');
 
     });
-        // $("td").click(function(event) {
-        //    var row = $(this).attr("data-row");
-        //    var col = $(this).attr("data-col");
-        // alert(row+col);
-        //  };
-        //FIN DOBLE CLICK
-//tabla estimados
+
 function addRows(){
   var estimates=[];
   var table = $('#example1').DataTable();

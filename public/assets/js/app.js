@@ -178,6 +178,156 @@ app.controller("EditCompanyCtrl", function($scope , $http){
 
 });//EditCompanyCtrl
 
+///////////ESTIMATES CONTROLLER
+app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
+  //alert(typeof $scope.invoice.fecha_pag);
+//  alert('bien');
+   $scope.estimate = {
+     total:0,
+     ganancia:0
+   };
+   //
+   $scope.data_estimates = [];
+
+   $scope.delete = function(index){//delete item factura specific
+        $scope.data_estimates.splice(index, 1);
+        var sub=$scope.subtotal();
+        $scope.estimate.subtotal=sub;
+        $scope.estimate.total=sub;
+        $scope.estimate.ganancia=$scope.ganancia();
+   };
+
+   $scope.search_descrip = function(obj, key, value){//delete item factura specific
+         for (var i = 0; i < $scope.servicios.length; i++) {
+            if (obj[i][key] === value) {
+                return obj[i].descripcion;
+            }
+        }//fin para
+      return null;
+   };
+   $scope.inicializar = function(index){//
+       var servicio_id=$scope.data_estimates[index].servicio_id;
+       var descripcion=$scope.search_descrip($scope.servicios,'id', servicio_id);
+        $scope.data_estimates[index].cantidad=1;
+        $scope.data_estimates[index].precio=0.00;
+        $scope.data_estimates[index].subtotal=0.00;
+        $scope.data_estimates[index].total=0.00;
+        $scope.data_estimates[index].recarga=0.00;
+        $scope.data_estimates[index].subtotal_recarga=0.00;
+        $scope.data_estimates[index].descripcion=descripcion;
+      //alert($scope.data_invoices[index].cantidad);
+   };
+   $scope.categoria = function(a){//
+     //alert(a);
+     if(a=='0'){
+       return 0.00;
+     }else if(a=='1'){
+         return 0.20;
+     }else if(a=='2'){
+           return 0.25;
+     }else if(a=='3'){
+          return 0.30;
+     }
+      //alert($scope.data_invoices[index].cantidad);
+   };
+   $scope.subtotal = function(){//sum the total amount
+     var obj=$scope.data_estimates;
+     var acum=0;
+         for (var i = 0; i < $scope.data_estimates.length; i++) {
+            if (obj[i]['subtotal'] != null) {
+                acum=parseFloat((acum+parseFloat(obj[i].total)).toFixed(2));
+            }
+        }//fin para
+      return acum;
+   };
+
+   $scope.ganancia = function(){//sum the total amount
+     var obj=$scope.data_estimates;
+     var acum=0;
+         for (var i = 0; i < $scope.data_estimates.length; i++) {
+            if (obj[i]['recarga'] != null) {
+                acum=parseFloat((acum+parseFloat(obj[i].recarga)).toFixed(2));
+            }
+        }//fin para
+      return acum;
+   };
+
+   $scope.total = function(){//sum the total amount
+     //alert('aja');
+     var subtotal=parseFloat($scope.estimate.subtotal);
+     var desc=parseFloat($scope.estimate.descuento);
+     //alert(desc);
+     var total_des=0;
+     var total=0;
+     if(subtotal!=null && desc!=null && desc!=0 && !isNaN(desc)){
+        total_des=parseFloat((subtotal*desc).toFixed(2));
+        total=parseFloat((subtotal-total_des).toFixed(2));
+        $scope.estimate.total_descuento=total_des;
+        $scope.estimate.total=total;
+     }else{
+       $scope.estimate.total_descuento=total_des;
+       $scope.estimate.total=subtotal;
+     }
+   };
+
+   $scope.calcular = function(index){//calculate operations aritmetics
+     var precio=parseFloat($scope.data_estimates[index].precio);
+     var cantidad=parseInt($scope.data_estimates[index].cantidad);
+       var errors={};
+     if(precio!=0  && precio!=null && !isNaN(precio) && !isNaN(cantidad)){
+          var categoria=$scope.categoria($scope.estimate.categoria);
+          if(categoria==null){
+            $scope.show_error =  true;
+            $scope.message =  false;//ocultamos el div del mensaje bien
+            errors['campos']= ["Error! Debe Seleccionar el cliente para poder agregar los Items del Estimado"];
+            $scope.message_error =  errors;
+          }else{
+            $scope.show_error =  false;
+            $scope.message =  false;//ocultamos el div del mensaje bien
+            var subtotal=parseFloat((cantidad*precio).toFixed(2));//bien
+            var ganancia=parseFloat((categoria*subtotal).toFixed(2));//si es numero
+            var total=parseFloat((ganancia+subtotal).toFixed(2));
+            var recarga=parseFloat((categoria*precio).toFixed(2));
+            var subtotal_recarga=parseFloat((precio+recarga).toFixed(2));
+            $scope.data_estimates[index].subtotal=subtotal;
+            $scope.data_estimates[index].recarga=ganancia;
+            $scope.data_estimates[index].total=total;
+            $scope.data_estimates[index].subtotal_recarga=subtotal_recarga;
+            var subtotal=$scope.subtotal();
+            $scope.invoice.subtotal=subtotal;
+            $scope.invoice.total=subtotal;
+            $scope.invoice.ganancia=$scope.ganancia();
+          }
+
+     }
+   };
+
+   $scope.save =  function($event){
+       $event.preventDefault();
+       var invoice =  $scope.invoice;
+       invoice["_token"] =  $("input[name=_token]").val();
+       invoice.data_estimates  =  $scope.data_estimates;
+       $http.post('/invoices', invoice)
+       .then(
+       function(response){// success callback
+          if(response.data.message=="bien")  {
+            $scope.message = "Factura Agregada Exitosamente";
+             $scope.show_error =  false;
+         }else{//sin no bien
+           $scope.show_error =  true;
+           $scope.message =  false;//ocultamos el div del mensaje bien
+           $scope.message_error =  response.data.error;
+         }
+       },
+       function(response){// failure callback
+          $scope.message =  false;//ocultamos el div del mensaje bien
+           var errors = response.data;
+           $scope.show_error =  true;//mostramos el div del mensaje error
+           $scope.message_error =  errors;//
+       }
+      );//fin then
+     };//fin save
+}]);//fin controller companys
 ///////////INVOICES CONTROLLER
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
   //alert(typeof $scope.invoice.fecha_pag);
@@ -362,8 +512,9 @@ app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){
        }
       );//fin then
      };//fin save
-}]);//fin controller companys
+}]);//fin controller estimate
 
+////////////////
 ////////////////
 app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
   $scope.invoice = {};
@@ -507,7 +658,7 @@ app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
        .then(
        function(response){// success callback
           if(response.data.message=="bien")  {
-            $scope.message = "Factura Actualizada Exitosamente";
+            $scope.message = "Su correo ha Sido enviado Exitosamente ";
             $scope.show_error =  false;
          }else{//sin no bien
            $scope.show_error =  true;

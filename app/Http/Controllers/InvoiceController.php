@@ -341,9 +341,9 @@ class InvoiceController extends Controller
         $error=array();
           try {
             Mail::send('Mail.mensaje', ['user' => $user], function ($m) use ($user) {
-            $m->from('jeaninne33@gmail.com', 'Your Application');
+           // $m->from('jeaninne33@gmail.com', 'Your Application');
               //$user->correo $user->nombre
-            $m->to('jeaninne@xflightsupport.com','jea' )->subject('Your Reminder!');
+            $m->to('jeaninne33@gmail.com','jeaninne' )->subject('Your Reminder prueba Outlook!');
             });
          } catch (Exception $e) {
             DB::rollback();

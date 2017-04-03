@@ -22,13 +22,6 @@ class EstimatesController extends Controller
      */
     public function index()
     {
-      //$estimates=Estimate::all();
-      //$cliente=DB::table('company')($estimates->company_id)->get();
-    //  $proveedor=Company::find($estimates->prove_id)->get();
-      // $proveedor = DB::table('estimates')
-      // ->join('companys', 'companys.id', '=', 'estimates.company_id')
-      // ->select('estimates.id','companys.nombre','estimates.estado',
-      // 'fecha_soli','total','resumen',DB::raw(''));
       $estimates=DB::select(
       DB::raw("SELECT
         e.id,
@@ -41,13 +34,7 @@ class EstimatesController extends Controller
         FROM estimates e
         INNER JOIN companys c ON c.id=e.company_id
         INNER JOIN companys cp ON cp.id=e.prove_id ") );
-      // $estimates = DB::table('estimates')
-      //     ->join('companys', 'companys.id', '=', 'estimates.company_id')
-      //     ->join('companys','companys.id','=','estimates.prove_id')
-      //     ->select(DB::raw("e.id, c.nombre,cp.nombre as proveedor, estado,
-      //     fecha_soli,total,resumen"))
-      //     // ->union($proveedor)
-      //     ->get();
+
       return view ('estimates.index')->with('estimates',$estimates);
     }
 
@@ -62,23 +49,16 @@ class EstimatesController extends Controller
       //$avion=Avion::Lists('tipo','id');
     //  $companys=Company::all();
     //  $indicador=1;
+     $servicios = Servicio::select('id', 'nombre','descripcion')->get();
      $indicador=0;
-     $servicios=Servicio::Lists('nombre','id');
-     $servicios->prepend('Seleccione Servicio');
+    // $servicios=Servicio::Lists('nombre','id');
+    // $servicios->prepend('Seleccione Servicio');
      $date="";
      //$visible="none";
       return view('estimates.create',compact('date','estimates','servicios','indicador'));
 
     }
-    // public function cliente($id)
-    // {
-    //   //$companys=Company::all();
-    //    $view = View::make('estimates.create')->with('companys',$companys);
-    //    if($request->ajax()){
-    //        $sections = $view->renderSections();
-    //        return Response::json($sections['tbCliente']);
-    //    }else return $view;
-    // }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -131,38 +111,11 @@ class EstimatesController extends Controller
           'total_recarga'=>$request->input('gananciatotal')
         ));
       }
-      // for ($i=0; $i < sizeof($dataE) ; $i++) {
-      //     $date_estimates->servicio_id=$dataE[$i]['ID'];
-      //     $date_estimates->cantidad=$dataE[$i]['Cantidad'];
-      //     $date_estimates->precio=$dataE[$i]['Precio'];
-      //     $date_estimates->subtotal=$dataE[$i]['Subtotal'];
-      //     $date_estimates->recarga=$dataE[$i]['Ganancia'];
-      //     $date_estimates->total=$dataE[$i]['Total'];
-      //     $date_estimates->estimate_id=$estimates->id;
-      //     $date_estimates->descuento=$request->input('descuento');
-      //     $date_estimates->total_recarga=$request->input('gananciatotal');
-      //     $date_estimates->save();
-      // }
 
-      // foreach ($dataE as $i => $datos) {
-      //   $date_estimates->servicio_id=$datos['ID'];
-      //   $date_estimates->cantidad=$datos['Cantidad'];
-      //   $date_estimates->precio=$datos['Precio'];
-      //   $date_estimates->subtotal=$datos['Subtotal'];
-      //   $date_estimates->recarga=$datos['Ganancia'];
-      //   $date_estimates->total=$datos['Total'];
-      //   $date_estimates->estimate_id=$estimates->id;
-      //   $date_estimates->descuento=$request->input('descuento');
-      //   $date_estimates->total_recarga=$request->input('gananciatotal');
-      //   $date_estimates->save();
-      // }
       $mjs='El estimado se Agrego Correctamente';
       if ($request->ajax()) {
         return response()->json($estimates->id);
-        // return response()->json([
-        //                 'redirect' => 'estimates.index',
-        //                 'result' => $mjs
-        //     ]);
+
       }
           //return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
     }
@@ -184,8 +137,13 @@ class EstimatesController extends Controller
       cp.id AS prove_id,
       cp.nombre AS nombrep,
       estado,
+      num_habitacion,
+      tipo_cama,
+      tipo_hab,
+      tipo_estrellas,
       fecha_soli,
       ganancia,
+      e.categoria,
       resumen,
       metodo_segui,
       c.telefono,
@@ -287,9 +245,9 @@ class EstimatesController extends Controller
         }
         $idEstimates=$estimates[0]->id;
         $indicador=0;
-       
+
         $servicios=Servicio::Lists('nombre','id');
-       
+
         $avion=DB::table('aviones')
         ->select(['nombre','id'])
         ->where('company_id','=',$estimates[0]->company_id)
@@ -408,7 +366,7 @@ class EstimatesController extends Controller
       WHERE e.id=$id"));
         return view('estimates.fuelrelease',compact('estimates'));
     }
- 
+
     public function postfuelrelease(Request $request)
     {
       $estimates=$request->all();
@@ -486,7 +444,7 @@ class EstimatesController extends Controller
         cantidad,
         precio,
         subtotal,
-        recarga,
+        subtotal_recarga,
         total
         FROM dates_estimates de
         INNER JOIN servicios s ON s.id=de.servicio_id
