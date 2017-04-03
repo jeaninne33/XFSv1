@@ -14,7 +14,7 @@
     }
 
     .body{
-     background-color: #ECECEC;	
+     background-color: #ECECEC;
     }
 
 
@@ -29,13 +29,13 @@
 
    </style>
 
-</head> 
+</head>
 
 <body class="body">
 
 <div class="titulo" > <h1>Prueba de Correo XFS</h1></div>
 <hr>
-<div class=".div_contenido" > <?= $contenido;   ?></div>
-	
+<div class=".div_contenido" >sfsafsafaf <?//= $contenido;   ?></div>
+
 </body>
 </html>

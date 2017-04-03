@@ -496,6 +496,34 @@ app.controller("EditInvoiceCtrl",['$scope','$http',function($scope, $http){
         }
        );//fin then
    };//fin save
+   $scope.send =  function($event){
+    //  alert('entre');
+       $event.preventDefault();
+       var invoice =  $scope.invoice;
+       invoice["_token"] =  $("input[name=_token]").val();
+       var url='/invoices/'+$scope.invoice.id;
+       alert(invoice["_token"]);
+       $http.post('/send_invoice', invoice)
+       .then(
+       function(response){// success callback
+          if(response.data.message=="bien")  {
+            $scope.message = "Factura Actualizada Exitosamente";
+            $scope.show_error =  false;
+         }else{//sin no bien
+           $scope.show_error =  true;
+           $scope.message =  false;//ocultamos el div del mensaje bien
+           $scope.message_error =  response.data.error;
+         }
+       },
+       function(response){// failure callback
+          $scope.message =  false;//ocultamos el div del mensaje bien
+           var errors = response.data;
+           $scope.show_error =  true;//mostramos el div del mensaje error
+           $scope.message_error =  errors;//
+       }
+      );//fin then
+  };//fin save
+
 }]);//fin controller EditCompanyCtrlInvoiceCtrl
 ///////////////////reportes
 

@@ -326,9 +326,36 @@ class InvoiceController extends Controller
       }
     }
     public function print_invoice($id)
+
     {
-        $invoice = $this->getDatainvoice($id);
-        $date = date('Y-m-d');
+       $a = $this->create_invoice_pdf($id);
+        return $a;
+     }
+    public function send_invoice(Request $request)
+      {
+        $data=$request->all();
+        $a = $this->create_invoice_pdf($data['id']);
+        $user=Company::findOrFail($data['company_id']);
+        $error=array();
+          try {
+            Mail::send('Mail.mensaje', ['user' => $user], function ($m) use ($user) {
+            $m->from('jeaninne33@gmail.com', 'Your Application');
+              //$user->correo $user->nombre
+            $m->to('jeaninne@xflightsupport.com','jea' )->subject('Your Reminder!');
+            });
+         } catch (Exception $e) {
+            DB::rollback();
+            $error[]=[$e->getMessage()];
+         }
+           $result=['message' => 'bien', 'error'=> $error];
+           return response()->json($result);
+      //  dd($request);
+      }
+
+     public function create_invoice_pdf($id)
+      {
+          $invoice = $this->getDatainvoice($id);
+          $date = date('Y-m-d');
 
         $items =Date_invoice::where('invoice_id' , $id)->get();
 
