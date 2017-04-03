@@ -97,6 +97,6 @@
         </div>
     </div>
     <div class="row">
-      {{-- [[ Form::submit('Generar Fuel Release', array('class' => 'btn btn-primary')) ]] --}}
-      <a name="btnFR" id="btnFR" onclick="fuelRelease()" class="btn btn-primary">Generar Fuel Release</a>
+      [[ Form::submit('Generar Fuel Release', array('class' => 'btn btn-primary')) ]]
+      {{--<a name="btnFR" id="btnFR" class="btn btn-primary">Generar Fuel Release</a> --}}
     </div>

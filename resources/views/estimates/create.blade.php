@@ -32,7 +32,8 @@
 [[ Form::open(['route'=>'estimates.index']) ]]
 
   @include('estimates.partials.fields')
-[[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates('save')')) ]]
+  <button type="button" class="btn btn-primary" onclick="saveEstimates('save')">Agregar Estimado</button>
+{{--[[ Form::button('Agregar Estimado', array('class' => 'btn btn-primary','onclick'=>'saveEstimates('save')')) ]]--}}
 [[ Form::close() ]]
 </div>
 @endsection
@@ -42,6 +43,7 @@
 {{-- <script type="text/javascript" src="{{asset("assets/js/bootstrap-table.js")}}"></script> --}}
 <script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
+<script src="{{asset("assets/js/sistemalaravel.js")}}"></script>
 
 
 <script>

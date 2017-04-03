@@ -49,7 +49,8 @@ class AuthController extends Controller
       $data=$request->all();
       $band=true;
       $error= array();
-      if(!isset($data["email"]) || !isset($data["password"]) ){
+      //dd((!isset($data["email"]) && empty($data["email"]));
+      if( !isset($data["email"]) || !isset($data["password"]) || (isset($data["email"]) && empty($data["email"]))  || (isset($data["password"]) && empty($data["password"])) ){
         $band=false;
         $error['campos'] =['Debe introducir el correo y la contraseña!'];
       }else{

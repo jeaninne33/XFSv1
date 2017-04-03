@@ -160,7 +160,13 @@
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]
-          [[ Form::select('avion_id',$avion,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
+          @foreach($avion as $aviones)
+            <select  class="selector full-width" name="avion_id" id="avion_id">
+            <option value="{{ $aviones->id }}"> {{$aviones->nombre}}</option>
+            </select>
+              
+           @endforeach
+          {{--[[ Form::select('avion_id',$avion[0]->nombre,null,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]] --}}
         </div>
 
     </div>
