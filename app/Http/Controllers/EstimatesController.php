@@ -2,15 +2,19 @@
 
 namespace XFS\Http\Controllers;
 
+use Illuminate\Http\Requests;
+use XFS\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use XFS\Http\Requests\CrearEstimateRequest;
 use XFS\Estimate;
 use XFS\Company;
 use XFS\Avion;
+use XFS\Invoice;
 use Storage;
 use XFS\Servicio;
 use XFS\date_estimates;
-use XFS\Http\Requests;
-use XFS\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 class EstimatesController extends Controller
@@ -46,16 +50,8 @@ class EstimatesController extends Controller
     public function create()
     {
       $estimates=Estimate::all();
-      //$avion=Avion::Lists('tipo','id');
-    //  $companys=Company::all();
-    //  $indicador=1;
-     $servicios = Servicio::select('id', 'nombre','descripcion')->get();
-     $indicador=0;
-    // $servicios=Servicio::Lists('nombre','id');
-    // $servicios->prepend('Seleccione Servicio');
-     $date="";
-     //$visible="none";
-      return view('estimates.create',compact('date','estimates','servicios','indicador'));
+      $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+      return view('estimates.create',compact('servicios'));
 
     }
 
@@ -65,59 +61,56 @@ class EstimatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CrearEstimateRequest $request)
     {
+      $data  = $request->all();
+    //  dd($data)
+      $band=true;
+      $data['imagen']="joijuiohi";
+    //  dd($band);
+      $error= array();
+      $items=$data["data_estimates"];
       $estimates = new Estimate;
-      $date_estimates= new date_estimates;
-      $descuento=0;
-      $subtotal=0;
-      $total=0;
-      $ganancia=0;
-      $dataE=$request->input('Estimado');
-
-      $estimates->company_id=$request->input('company_id');
-      $estimates->prove_id=$request->input('prove_id');
-      $estimates->estado=$request->input('estado');
-      $estimates->resumen=$request->input('resumen');
-      $estimates->metodo_segui=$request->input('metodo');
-      $estimates->fecha_soli=$request->input('fecha_soli');
-      $estimates->proximo_seguimiento=$request->input('proximo_seguimiento');
-      $estimates->fbo=$request->input('fbo');
-      $estimates->cantidad_fuel=$request->input('cantidad_fuel');
-      $estimates->localidad=$request->input('localidad');
-      $estimates->avion_id=$request->input('avion_id');
-      $estimates->num_habitacion=$request->input('num_habitacion');
-      $estimates->tipo_cama=$request->input('tipo_cama');
-      $estimates->tipo_hab=$request->input('tipo_hab');
-      $estimates->tipo_estrellas=$request->input('tipo_estrellas');
-      $estimates->categoria=$request->input('tipoCategoria');
-      $estimates->descuento=$request->input('descuento');
-      $estimates->total_descuento=$request->input('totalDescuento');
-      $estimates->ganancia=$request->input('gananciatotal');
-      $estimates->subtotal=$request->input('subtotal');
-      $estimates->total=$request->input('total');
-      $estimates->save();
-
-      foreach ($dataE as $i => $datos) {
-        $dateEstimates = date_estimates::create(array(
-          'servicio_id' => $datos['ID'],
-          'cantidad' => $datos['Cantidad'],
-          'precio'=> $datos['Precio'],
-          'subtotal'=>$datos['Subtotal'],
-          'recarga'=>$datos['Ganancia'],
-          'total'=>$datos['Total'],
-          'estimate_id'=>$estimates->id,
-          'descuento'=>$request->input('descuento'),
-          'total_recarga'=>$request->input('gananciatotal')
-        ));
-      }
-
-      $mjs='El estimado se Agrego Correctamente';
-      if ($request->ajax()) {
-        return response()->json($estimates->id);
-
-      }
-          //return redirect()->route('estimates.index')->with('success','Estimado Agredo con Exito');
+      $error=Estimate::validate_dates($data,1);
+          if(!empty($error)){
+            $band=false;
+          }else{
+            if(!empty($items)){
+                $error=Estimate::validate_items($items);
+                if(!empty($error)){
+                    $band=false;
+                    $error=array('pestaña'=>["Error en los Items de la Factura"])+$error;
+                }else{
+                  $datos=true;
+                }
+           }else{
+             $error['Items']=['Debe Agregar los Items del Estimado'];
+             $band=false;
+           }//fin si hay aviones
+          }
+          if($band){
+            DB::beginTransaction();
+            try {
+               $estimate=Estimate::create($data);
+               ///////////
+                if($datos){
+                  foreach( $items as $indice =>$datos_estimates ){
+                   $item=New date_estimates;
+                   $item=Estimate::obj_item($datos_estimates, $item);
+                   $estimate->date_estimates()->save($item);
+                 }//fin para
+               }//fin si hay aviones
+               } catch (Exception $e) {
+                  DB::rollback();
+                  $error[]=[$e->getMessage()];
+               }
+               // Hacemos los cambios permanentes ya que no han habido errores
+               DB::commit();
+               $result=['message' => 'bien', 'error'=> $error];
+          }else{
+            $result=['message' => 'mal','error'=> $error];
+          }//fin si band
+          return response()->json($result);
     }
 
     /**
@@ -146,6 +139,7 @@ class EstimatesController extends Controller
       e.categoria,
       resumen,
       metodo_segui,
+      info_segui,
       c.telefono,
       c.celular,
       c.correo,

@@ -27,7 +27,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de la Factura *') ]]
-          [[ Form::date('fecha', null, ['class' => 'input-text full-width',  'required' => 'required','ng-model'=>'invoice.fecha',' ng-change'=>'plazo()' ]) ]]
+          [[ Form::date('fecha', null, ['id'=>'fecha','class' => 'input-text full-width','ng-model'=>'invoice.fecha','placeholder'=>'dd/mm/yyyy',' ng-change'=>'plazo()' ]) ]]
         </div>
 
     </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha', 'Fecha de Vencimiento *') ]]
-          [[ Form::date('fecha_vencimiento', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
+          [[ Form::date('fecha_vencimiento', null, ['id'=>'fecha_vencimiento','class' => 'input-text full-width' ,'placeholder'=>'dd/mm/yyyy','ng-model'=>'invoice.fecha_vencimiento' ]) ]]
         </div>
     </div>
     <div class="row form-group">
@@ -61,7 +61,7 @@
         </div>
         <div class="col-sms-6 col-sm-6">
           [[Form::label('fecha_pago', 'Fecha de Pago ') ]]
-          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'required' => 'required','ng-model'=>'invoice.fecha_pago','ng-change'=>'estado()' ]) ]]
+          [[ Form::date('fecha_pago', null, ['class' => 'input-text full-width' , 'ng-model'=>'invoice.fecha_pago','ng-change'=>'estado()' ]) ]]
         </div>
     </div>
     <div class="row form-group">

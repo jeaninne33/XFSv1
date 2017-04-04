@@ -120,6 +120,7 @@ app.controller("EditCompanyCtrl", function($scope , $http){
       return true;
     }
   };
+
   $scope.airplanesdelete  = function () {
     var largo=$scope.airplanes.length;
     var nombre=$scope.airplanes[largo-1].tipo;
@@ -184,10 +185,17 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
 //  alert('bien');
    $scope.estimate = {
      total:0,
-     ganancia:0
+     ganancia:0,
+     descuento:0,
+     subtotal:0
    };
    //
    $scope.data_estimates = [];
+   $scope.aviones={};
+   $scope.airs=[];
+   $scope.categorias=null;
+   $scope.proveedor=null;
+   $scope.cliente=null;
 
    $scope.delete = function(index){//delete item factura specific
         $scope.data_estimates.splice(index, 1);
@@ -217,6 +225,118 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
         $scope.data_estimates[index].descripcion=descripcion;
       //alert($scope.data_invoices[index].cantidad);
    };
+   $scope.cargar_tabla= function ($id) {
+     var table = $('#example3').DataTable();
+     table.clear();
+     if ($id==1) {
+         $('#titulo').html('Listado de Clientes');
+         $('.cliente').css('display','block');
+     }else if ($id==0) {
+       $('#titulo').html('Listado de Proveedores');
+       $('.cliente').css('display','block');
+     }
+     $http.get('/clientes/'+$id).then(
+
+       function(resp){
+         if ($id==1) {
+            $scope.tipo=1;
+            $scope.companys=resp.data;
+         }else{
+            $scope.tipo=0;
+            $scope.providers=resp.data;
+         }
+         var tipo=null;
+         angular.forEach(resp.data, function(value, key){
+             /* Vamos agregando a nuestra tabla las filas necesarias */
+           switch (value.tipo) {
+             case "client":
+               tipo='Cliente';
+               break;
+             case "prove":
+               tipo='Proveedor';
+               break;
+             case "cp":
+               tipo='Cliente/Proveedor';
+               break;
+           }
+             table.row.add( [
+               value.id,
+               value.nombre,
+               value.pais,
+               value.correo,
+                tipo
+             ] ).draw( false );
+             //alert(tipo);
+         });
+
+         //alert(resp);
+       },
+       function (){
+       }
+     );
+   };
+   $('#example3 > tbody').on('dblclick', '>tr', function () {
+      var tab=$('#example3').DataTable();
+    //  alert('aja');
+       var datos = tab.row( this ).data();
+      //  var categoria=datos[7];
+      var id=datos[0];
+      var obj;
+      if ($scope.tipo==1) {
+         obj=$scope.companys;
+         $http.get('/listAvion/'+id).then(
+           function(resp){
+             $scope.aviones  =  resp.data;
+           },
+           function (){
+           }
+         );
+      }else{
+         obj=$scope.providers;
+      }
+       angular.forEach(obj, function(value, key){
+          //  alert(value.id==id);
+            if(value.id==id){
+              if ($scope.tipo==1) {
+                 $scope.estimate.company_id=id;
+                 $scope.cliente=value.nombre;
+                 $scope.estimate.categoria=value.categoria;
+                 $scope.categorias=  $scope.categoria_show(value.categoria);
+                 $scope.telefono=value.telefono;
+                 $scope.correo=value.correo;
+                 $scope.celular=value.celular;
+               }else{
+                $scope.estimate.prove_id=id;
+                $scope.proveedor=value.nombre;
+               }
+            //
+            }
+        });
+         $('#clientes').modal('toggle');
+   });
+   $scope.metodoSegui= function(){
+      var meto=$scope.estimate.metodo_segui;
+    //  alert(meto);
+      if(meto=='Telefono'){
+        $scope.estimate.info_segui= $scope.telefono;
+      }else if(meto=='Correo'){
+          $scope.estimate.info_segui= $scope.correo;
+      }else if(meto=='Celular'){
+          $scope.estimate.info_segui= $scope.celular;
+      }
+   };
+   $scope.matri = function(){
+      var avion_id=$scope.estimate.avion_id;
+      if(avion_id==null){
+          $scope.matricula=null;
+      }else{
+      angular.forEach($scope.aviones, function(value, key){
+          if(value.id==avion_id){
+            $scope.matricula=value.matricula;
+          }
+      });
+    }
+   };
    $scope.categoria = function(a){//
      //alert(a);
      if(a=='0'){
@@ -227,6 +347,19 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
            return 0.25;
      }else if(a=='3'){
           return 0.30;
+     }
+      //alert($scope.data_invoices[index].cantidad);
+   };
+   $scope.categoria_show = function(a){//
+     //alert(a);
+     if(a=='0'){
+       return '0 %';
+     }else if(a=='1'){
+         return '20 %';
+     }else if(a=='2'){
+           return '25 %';
+     }else if(a=='3'){
+          return '30 %';
      }
       //alert($scope.data_invoices[index].cantidad);
    };
@@ -294,9 +427,9 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
             $scope.data_estimates[index].total=total;
             $scope.data_estimates[index].subtotal_recarga=subtotal_recarga;
             var subtotal=$scope.subtotal();
-            $scope.invoice.subtotal=subtotal;
-            $scope.invoice.total=subtotal;
-            $scope.invoice.ganancia=$scope.ganancia();
+            $scope.estimate.subtotal=subtotal;
+            $scope.estimate.total=subtotal;
+            $scope.estimate.ganancia=$scope.ganancia();
           }
 
      }
@@ -304,14 +437,14 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
 
    $scope.save =  function($event){
        $event.preventDefault();
-       var invoice =  $scope.invoice;
-       invoice["_token"] =  $("input[name=_token]").val();
-       invoice.data_estimates  =  $scope.data_estimates;
-       $http.post('/invoices', invoice)
+       var estimate =  $scope.estimate;
+       estimate["_token"] =  $("input[name=_token]").val();
+       estimate.data_estimates  =  $scope.data_estimates;
+       $http.post('/estimates', estimate)
        .then(
        function(response){// success callback
           if(response.data.message=="bien")  {
-            $scope.message = "Factura Agregada Exitosamente";
+            $scope.message = "Estimado Agregado Exitosamente";
              $scope.show_error =  false;
          }else{//sin no bien
            $scope.show_error =  true;

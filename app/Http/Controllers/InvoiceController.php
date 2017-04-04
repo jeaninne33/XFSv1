@@ -144,7 +144,6 @@ class InvoiceController extends Controller
    public function store(CrearInvoicesRequest $request)
    {
      $data  = $request->all();
-
      $band=true;
      $fecha_vencimiento=$data["fecha_vencimiento"];
      if(isset($data["fecha_pago"])){

@@ -24,6 +24,10 @@
 </div>
 @endsection
 @section('scripts')
+  <script>
+    $('#m2').removeClass('');
+    $('#m2').addClass('active');
+  </script>
 
 [[ Html::script('assets/js/scripts_funcionales.js') ]]
 

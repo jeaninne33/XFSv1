@@ -8,8 +8,6 @@
   {{-- <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li> --}}
 </ul>
 <!-- Trigger the modal with a button -->
-
-<input type="hidden" name="_token" id="token" value="{{csrf_token()}}"/>
 <!-- Modal -->
  <div id="clientes" class="modal fade" role="dialog">
    <div class="modal-dialog modal-lg">
@@ -39,8 +37,9 @@
   <div id="imagen" class="tab-pane fade">
     <h3>Imagen Estimado</h3>
       <div class="btn btn-default btn-file">
-          <i class="fa fa-paperclip"></i> Adjuntar Archivo
-          <input type="file"  id="fileIMG" name="fileIMG" class="imagen_archivo" >
+          <i class="fa fa-paperclip"></i> Imagen de la Captura del Estimado
+          <input ng-model="estimate.imagen" type="file"  id="fileIMG" name="fileIMG" class="imagen_archivo" >
+
       </div>
           <p class="help-block"  >Max. 20MB</p>
                    <!-- cargador empresa -->
@@ -66,77 +65,50 @@
   <div id="home" class="tab-pane fade  in active">
     <h3>Datos Generales</h3>
     <div class="row form-group">
-        {{-- <div id="NroEstimado" style="display:{{$visible}}" class="col-sms-6 col-sm-3">
-           [[ Form::label('id', 'Numero de Estimado *')]]
-           [[Form::text('id', $estimates->id, ['class' => 'input-text full-width','readonly' ])]]
-
-        </div> --}}
-        <div class="col-sms-6 col-sm-4">
+      <div class="col-sms-6 col-sm-5">
           [[Form::label('Cliente', 'Cliente *') ]]
-          @if ($indicador==0)
-            [[Form::text('nombreC', null, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
-
-          @else
-            [[Form::text('nombreC', $cliente->nombreC, ['id'=>'nombreC','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
-            {{-- [[Form::text('company_id',$cliente->company_id,['id'=>'company_id','hidden'])]] --}}
-          @endif
+           [[Form::text('nombreC', null, ['id'=>'nombreC','ng-model'=>'cliente','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
             [[Form::text('company_id',null,['id'=>'company_id','hidden','ng-model'=>'estimate.company_id'])]]
-
-        </div>
-        <div class="col-sms-6 col-sm-2">
-          <br/>
-          <button type="button" value="1" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
-        </div>
-    </div>
-
-    <div class="row form-group">
-        <div class="col-sms-6 col-sm-4">
-          [[Form::label('Proveedor', 'Proveedor *') ]]
-          @if ($indicador==0)
-            [[Form::text('nombreP',null, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required', 'readonly' ]) ]]
-
-          @else
-            [[Form::text('nombreP', $proveedor->nombreP, ['id'=>'nombreP','class' => 'input-text full-width',  'required' => 'required' ]) ]]
-            {{-- [[Form::text('prove_id',$proveedor->prove_id,['id'=>'prove_id','hidden'])]] --}}
-          @endif
-            [[Form::text('prove_id',null,['id'=>'prove_id','hidden','ng-model'=>'estimate.prove_id'])]]
 
         </div>
         <div class="col-sms-6 col-sm-1">
           <br/>
-          <button type="button"  value="0" onclick="ajaxRenderSection(this.value),modal(this.value)" name="btnCliente" id="btnCliente" class=" btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+          <button type="button" value="1" ng-click="cargar_tabla(1)"  name="btnCliente" id="btnCliente" class="btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
         </div>
-        <div class="col-sms-6 col-sm-6">
-          [[Form::label('Estado', 'Estado *') ]]
+        <div class="col-sms-6 col-sm-5">
+          [[Form::label('Proveedor', 'Proveedor *') ]]
+          [[Form::text('nombreP',null, ['id'=>'nombreP','ng-model'=>'proveedor','class' => 'input-text full-width',  'required' => 'required', 'readonly' ]) ]]
+          [[Form::text('prove_id',null,['id'=>'prove_id','hidden','ng-model'=>'estimate.prove_id'])]]
 
-          [[ Form::select('estado', array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['ng-model'=>'estimate.estado','id' => 'estado','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
+        <div class="col-sms-6 col-sm-1">
+          <br/>
+          <button type="button"  value="0" ng-click="cargar_tabla(0)"  name="btnCliente" id="btnCliente" class=" btn btn-primary glyphicon glyphicon-pencil" data-toggle="modal" data-target="#clientes"></button>
+        </div>
+
     </div>
+
     <div class="row form-group">
-        <div class="col-sms-6 col-sm-3">
-          [[Form::label('fecha', 'Fecha Solicitada *') ]]
+      <div class="col-sms-6 col-sm-6">
+        [[Form::label('Estado', 'Estado *') ]]
+
+        [[ Form::select('estado', array('Pendiente'=>'Pendiente','Aceptado'=>'Aceptado','Rechazado'=>'Rechazado','Cancelado'=>'Cancelado'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.estado','id' => 'estado','class' => 'selector full-width',  'required' => 'required']) ]]
+      </div>
+        <div class="col-sms-6 col-sm-6">
+          [[Form::label('fecha', 'Fecha de Solicitud *') ]]
           [[Form::date('fecha_soli',null,['ng-model'=>'estimate.fecha_soli','id'=>'fecha_soli','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
         </div>
-        <div class="col-sms-6 col-sm-4">
-          [[Form::label('ganancia', 'Ganancia *') ]]
-          [[ Form::text('categoria', null, ['ng-model'=>'estimate.categoria','id'=>'categoria','class' => 'input-text full-width','readonly' ]) ]]
-          <input type="text" id="tCategoria" hidden="hidden"/>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sms-12 col-sm-12">
-          [[Form::label('resumen', 'Resumen') ]]
-          [[ Form::text('resumen', null, ['ng-model'=>'estimate.resumen','id'=>'resumen','class' => 'input-text full-width' ]) ]]
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-sms-6 col-sm-4">
-          [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
-          [[ Form::select('metodo', array('Telefono'=>'Telefono','Celular'=>'Celular','Correo'=>'Correo'), null,['ng-model'=>'estimate.metodo','id' => 'metodo','class' => 'selector full-width',  'required' => 'required','onChange'=>'metodoSeguimiento()']) ]]
-        </div>
-        <div class="col-sms-6 col-sm-4">
 
-              {{-- [[Form::label('telefono', 'Telefono') ]] --}}
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sms-6 col-sm-6">
+          [[Form::label('metodo', 'Metodo de Seguimiento *') ]]
+          [[ Form::select('metodo', array('Telefono'=>'Teléfono','Celular'=>'Celular','Correo'=>'Correo'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.metodo_segui','id' => 'metodo','class' => 'selector full-width',  'required' => 'required',' ng-change'=>'metodoSegui()']) ]]
+        </div>
+        <div class="col-sms-6 col-sm-6">
+
+              [[Form::label('telefono', 'Información de Seguimiento *') ]]
               [[ Form::text('info_segui', null, ['ng-model'=>'estimate.info_segui','id'=>'telefono','class' => 'input-text full-width' ]) ]]
 
           </div>
@@ -144,11 +116,21 @@
         </div>
 
     <div class="row form-group">
-          <div class="col-sms-6 col-sm-3">
-            [[Form::label('fecha', 'Fecha Seguimiento *') ]]
+          <div class="col-sms-6 col-sm-6">
+            [[Form::label('fecha', 'Fecha Proximo Seguimiento *') ]]
             [[Form::date('proximo_seguimiento',null,['ng-model'=>'estimate.proximo_seguimiento','id'=>'proximo_seguimiento','class'=>'input-text full-width','placeholder'=>'dd/mm/yyyy'])]]
+        </div>
+        <div class="col-sms-6 col-sm-6">
+          [[Form::label('ganancia', 'Porcentaje de Ganancia %') ]]
+          [[ Form::text('categoria', null, ['ng-model'=>'categorias','id'=>'categoria','class' => 'input-text full-width','readonly' ]) ]]
+          [[ Form::hidden('categoria2', null, ['ng-model'=>'estimate.categoria','id'=>'categoria','class' => 'input-text full-width','readonly' ]) ]]
 
-
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sms-12 col-sm-12">
+          [[Form::label('resumen', 'Resumen') ]]
+          [[ Form::text('resumen', null, ['ng-model'=>'estimate.resumen','id'=>'resumen','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
 </div>
@@ -167,40 +149,40 @@
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
-        [[Form::label('Codigo Aeropuerto *') ]]
+        [[Form::label('Localidad *') ]]
         [[ Form::text('localidad', null, ['ng-model'=>'estimate.localidad','id'=>'localidad','class' => 'input-text full-width' ]) ]]
       </div>
         <div class="col-sms-6 col-sm-6">
           [[ Form::label('tipo', 'Tipo de Aeronave *')]]
-          [[ Form::select('avion_id', array('Seleccione Avion'), null,['id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
+          [[ Form::select('avion_id', array('Seleccione Avion'), null,[' ng-change'=>'matri()','placeholder'=>'Seleccione','ng-model'=>'estimate.avion_id','ng-options'=>"avion.id as avion.tipo for avion in aviones",'id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
 
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Matricula del Avión: *') ]]
-        [[ Form::text('matricula', null, ['ng-model'=>'estimate.avion_id','readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
+        [[ Form::text('matricula', null, ['ng-model'=>'matricula', 'readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
       </div>
     </div>
     <h3>Datos de Congierge</h3>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Cantidad de Habitaciones ') ]]
-        [[ Form::select('num_habitacion', array(0=>'Seleccione','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['id' => 'num_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
+        [[ Form::select('num_habitacion', array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.num_habitacion','id' => 'num_habitacion','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
       <div class="col-sms-6 col-sm-6">
         [[Form::label('Tipo de Habitación ') ]]
-        [[ Form::select('tipo_hab', array(0=>'Seleccione','Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['id' => 'tipo_hab','class' => 'selector full-width',  'required' => 'required'])]]
+        [[ Form::select('tipo_hab', array('Sencilla'=>'Sencilla','Doble'=>'Doble','Triple'=>'Triple','Suite'=>'Suite','Presidencial'=>'Presidencial'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.tipo_hab','id' => 'tipo_hab','class' => 'selector full-width',  'required' => 'required'])]]
       </div>
     </div>
     <div class="row form-group">
     <div class="col-sms-6 col-sm-6">
       [[Form::label('Tipo de Cama') ]]
-      [[ Form::select('tipo_cama', array(0=>'Seleccione','Individual'=>'Individual','Matrimonial'=>'Matrimonial','King Size'=>'King Size','Queen Size'=>'Queen Size'), null,['id' => 'tipo_cama','class' => 'selector full-width',  'required' => 'required']) ]]
+      [[ Form::select('tipo_cama', array('Individual'=>'Individual','Matrimonial'=>'Matrimonial','King Size'=>'King Size','Queen Size'=>'Queen Size'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.tipo_cama','id' => 'tipo_cama','class' => 'selector full-width',  'required' => 'required']) ]]
     </div>
     <div class="col-sms-6 col-sm-6">
       [[Form::label('Numero de Estrellas ') ]]
-      [[ Form::select('tipo_estrellas', array(0=>'Seleccione','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['id' => 'tipo_estrellas','class' => 'selector full-width',  'required' => 'required'])]]
+      [[ Form::select('tipo_estrellas', array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5'), null,['placeholder'=>'Seleccione','ng-model'=>'estimate.tipo_estrellas','id' => 'tipo_estrellas','class' => 'selector full-width',  'required' => 'required'])]]
     </div>
   </div>
 </div>
@@ -263,9 +245,9 @@
 
      <div class="row">
          <div class="col-sm-6 col-md-4 pull-right" style="text-align:right;">
-          Subtotal: $[[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly' ,'ng-model'=>'invoice.subtotal']) ]]
-              <br/>Descuento: %[[ Form::text('descuento', null, ['ng-pattern'=>'/^[0-9]+(\.[0-9]{1,2})?$/','step'=>"0.01", 'id'=>'descuento','class' => 'input-text' , 'required' => 'required','placeholder'=>'0.00%','ng-model'=>'invoice.descuento',' ng-change'=>'total()']) ]]
-           <br/>Total Descuento: $ [[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'invoice.total_descuento']) ]]
+          Subtotal: $[[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly' ,'ng-model'=>'estimate.subtotal']) ]]
+              <br/>Descuento: %[[ Form::text('descuento', null, ['ng-pattern'=>'/^[0-9]+(\.[0-9]{1,2})?$/','step'=>"0.01", 'id'=>'descuento','class' => 'input-text' , 'required' => 'required','placeholder'=>'0.00%','ng-model'=>'estimate.descuento',' ng-change'=>'total()']) ]]
+           <br/>Total Descuento: $ [[ Form::text('subtotal', null, ['id'=>'subtotal','class' => 'input-text' , 'required' => 'required','placeholder'=>'$0.00', 'readonly','ng-model'=>'estimate.total_descuento']) ]]
         </div>
 
         <div class=" col-sm-6 col-md-4 pull-left">
@@ -273,8 +255,8 @@
        </div>
      </div>
      <div class="col-sm-6 col-md-8 pull-right" style="text-align:right;">
-         [[ Form::hidden('total', null, ['id'=>'total','class' => 'input-text full-width' ,'ng-model'=>'invoice.total']) ]]
-         [[ Form::hidden('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width' ,'ng-model'=>'invoice.ganancia']) ]]
+         [[ Form::hidden('total', null, ['id'=>'total','class' => 'input-text full-width' ,'ng-model'=>'estimate.total']) ]]
+         [[ Form::hidden('ganancia', null, ['id'=>'ganancia','class' => 'input-text full-width' ,'ng-model'=>'estimate.ganancia']) ]]
        <h2><span style="color: green;">Total Ganancia: $ @{{estimate.ganancia}}</span>        -    <span style="color: rgb(21, 28, 116);">Total: $ @{{estimate.total}}</span>  <h2>
         </div>
 

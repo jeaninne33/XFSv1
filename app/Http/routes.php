@@ -64,7 +64,7 @@ Route::get('/clientes/{id}',function($id){
     $companys = DB::table('companys')
     ->join('paises', 'companys.pais_id', '=', 'paises.id')
     ->select('companys.id', 'companys.nombre',
-    'paises.nombre as pais','celular','telefono',
+    'paises.nombre as pais','celular','telefono_admin as telefono',
     'correo','tipo','categoria')
     ->where('tipo',$tipo)
     ->get();

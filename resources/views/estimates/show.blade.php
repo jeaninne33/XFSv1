@@ -9,6 +9,7 @@
 </div>
 <div class="pull-right col-sm-6">
   @if ($estimates[0]->metodo_segui=="Aceptado")
+  
       <a id="invoices" class="btn btn-primary soap-icon-card" href="{{URL::to('invoices/create/'.$estimates[0]->id)}}"> Invoice</a>
       <a class="btn btn-primary soap-icon-stories"  href="{{URL::to('fuelreleases/'.$estimates[0]->id)}}"> Fuel Release</a>
   @endif
@@ -45,15 +46,17 @@
                <td><strong>Fecha de Solicitud:</strong> {{ date_format(date_create($estimates[0]->fecha_soli), 'm/d/Y') }}</td>
              </tr>
               <tr>
-               <td><strong>Ganancia: %</strong> {{ $estimates[0]->categoria }}<br></td>
+
                <td><strong>Metodo de Seguimiento:</strong> {{ $estimates[0]->metodo_segui }}<br></td>
+               <td><strong>Información de Seguimiento: </strong>{{ $estimates[0]->info_segui }}</td>
+             </tr>
+
+               <tr><td><strong>Ganancia: %</strong> {{ $estimates[0]->categoria }}<br></td>
+               <td><strong>Fecha de Seguimiento:</strong> {{date_format(date_create($estimates[0]->proximo_seguimiento), 'm/d/Y')  }}</td>
+
              </tr>
              <tr>
                <td colspan="2"><strong>Resumen: </strong> {{ $estimates[0]->resumen }}</td>
-             </tr>
-               <tr>
-               <td colspan="2"><strong>Fecha de Seguimiento:</strong> {{ $estimates[0]->proximo_seguimiento }}</td>
-
              </tr>
              <tr>
               <td colspan="2"></td>
@@ -114,7 +117,7 @@
 
         </div>
  <div id="menu3" class="tab-pane fade">
-   <h3></h3>
+
    <h3>Items del Estimado
      <small>
                   Datos del Estimado
