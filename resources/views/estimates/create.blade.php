@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
 @endsection
 @section('contenido')
-  <div  ng-controller="EstimateCtrl" class="col-sm-12 no-float no-padding" ng-init=" servicios={{json_encode($servicios)}}; ">
+  <div  ng-controller="EstimateCtrl" class="col-sm-12 no-float no-padding" ng-init=" servicios={{json_encode($servicios)}};  ">
 <h2>Agregar Estimados</h2>
 <div class="pull-right">
   <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
@@ -17,7 +17,7 @@
 <!-- if there are creation errors, they will show here -->
   @include('errors.message')
 
-[[ Form::open(['route'=>'estimates.store', 'name'=>'form1','method'=> 'POST', 'novalidate']) ]]
+[[ Form::open(['route'=>'estimates.store', 'name'=>'form1','method'=> 'POST', 'novalidate', 'enctype'=>'multipart/form-data']) ]]
 
   @include('estimates.partials.fields')
   [[ Form::submit('Agregar Estimado', array('id'=>'registro','class' => 'btn btn-primary','ng-click'=>'save($event)')) ]]

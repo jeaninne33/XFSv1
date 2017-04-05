@@ -180,7 +180,7 @@ app.controller("EditCompanyCtrl", function($scope , $http){
 });//EditCompanyCtrl
 
 ///////////ESTIMATES CONTROLLER
-app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
+app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $http,$timeout){
   //alert(typeof $scope.invoice.fecha_pag);
 //  alert('bien');
    $scope.estimate = {
@@ -188,6 +188,7 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
      ganancia:0,
      descuento:0,
      subtotal:0
+
    };
    //
    $scope.data_estimates = [];
@@ -196,13 +197,50 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
    $scope.categorias=null;
    $scope.proveedor=null;
    $scope.cliente=null;
+   $scope.matricula=null;
 
+   $scope.actualizar=function(opc){
+     var sub=$scope.subtotal();
+     $scope.estimate.subtotal=sub;
+     $scope.estimate.ganancia=$scope.ganancia();
+     $scope.total();
+     data["_token"] =  $("input[name=_token]").val();
+     data['ganancia']=$scope.estimate.ganancia;
+     data['subtotal']=sub;
+     data['total']=$scope.estimate.total;
+     data['estimate_id']=$scope.estimate.id;
+     return data;
+    }
    $scope.delete = function(index){//delete item factura specific
-        $scope.data_estimates.splice(index, 1);
-        var sub=$scope.subtotal();
-        $scope.estimate.subtotal=sub;
-        $scope.estimate.total=sub;
-        $scope.estimate.ganancia=$scope.ganancia();
+      var largo=$scope.data_estimates.length;
+    //  var nombre=$scope.data_estimates[index].tipo;
+      var id_data=$scope.data_estimates[index].id;
+     if(largo>0 && id_data!=null){
+       if (confirm("¿Esta Seguro que desea Eliminar el Item #: "+(index+1)+" de la base de Datos?") === true) {
+         data={}
+         $scope.data_estimates.splice(index, 1);
+         data= $scope.actualizar(1);
+         $http.post('/item/'+id_data, data)
+         .then(
+         function(response){// success callback
+            $scope.message = response.data.message;
+            $scope.show_error =  false;
+        },
+         function(response){// failure callback
+            $scope.message =  false;//ocultamos el div del mensaje bien
+             var errors = response.data;
+             $scope.show_error =  true;//mostramos el div del mensaje error
+             $scope.message_error =  errors;//
+         }
+       );//fin then
+      }//fin si es un avion de BD
+     }else{
+         $scope.data_estimates.splice(index, 1);
+         var sub=$scope.subtotal();
+         $scope.estimate.subtotal=sub;
+         $scope.total();
+         $scope.estimate.ganancia=$scope.ganancia();
+     }
    };
 
    $scope.search_descrip = function(obj, key, value){//delete item factura specific
@@ -236,7 +274,6 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
        $('.cliente').css('display','block');
      }
      $http.get('/clientes/'+$id).then(
-
        function(resp){
          if ($id==1) {
             $scope.tipo=1;
@@ -277,9 +314,7 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
    };
    $('#example3 > tbody').on('dblclick', '>tr', function () {
       var tab=$('#example3').DataTable();
-    //  alert('aja');
-       var datos = tab.row( this ).data();
-      //  var categoria=datos[7];
+      var datos = tab.row( this ).data();
       var id=datos[0];
       var obj;
       if ($scope.tipo==1) {
@@ -298,13 +333,25 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
           //  alert(value.id==id);
             if(value.id==id){
               if ($scope.tipo==1) {
-                 $scope.estimate.company_id=id;
-                 $scope.cliente=value.nombre;
-                 $scope.estimate.categoria=value.categoria;
-                 $scope.categorias=  $scope.categoria_show(value.categoria);
-                 $scope.telefono=value.telefono;
-                 $scope.correo=value.correo;
-                 $scope.celular=value.celular;
+                alert(($scope.estimate.company_id!=value.id));
+                if($scope.estimate.company_id!=value.id){
+                  $scope.estimate = {
+                    total:0,
+                    ganancia:0,
+                    descuento:0,
+                    subtotal:0,
+                    prove_id: $scope.estimate.prove_id
+                  };
+                  $scope.estimate.company_id=id;
+                  $scope.cliente=value.nombre;
+                  $scope.estimate.categoria=value.categoria;
+                  $scope.categorias=  $scope.categoria_show(value.categoria);
+                  $scope.telefono=value.telefono;
+                  $scope.correo=value.correo;
+                  $scope.celular=value.celular;
+                  $scope.data_estimates.length = 0;
+                  $scope.data_estimates = []
+               }
                }else{
                 $scope.estimate.prove_id=id;
                 $scope.proveedor=value.nombre;
@@ -446,6 +493,9 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
           if(response.data.message=="bien")  {
             $scope.message = "Estimado Agregado Exitosamente";
              $scope.show_error =  false;
+             $timeout(function () {
+                window.location.href = "/estimates/"+$scope.estimate.id;
+             }, 2000);
          }else{//sin no bien
            $scope.show_error =  true;
            $scope.message =  false;//ocultamos el div del mensaje bien
@@ -460,6 +510,56 @@ app.controller("EstimateCtrl",['$scope','$http',function($scope, $http){
        }
       );//fin then
      };//fin save
+     $scope.edit =  function($event){
+         $event.preventDefault();
+         var estimate =  $scope.estimate;
+         estimate["_token"] =  $("input[name=_token]").val();
+         estimate.data_estimates  =  $scope.data_estimates;
+         $http.put('/estimates/'+$scope.estimate.id, estimate)
+         .then(
+         function(response){// success callback
+            if(response.data.message=="bien")  {
+              $scope.message = "Estimado Actualizado Exitosamente";
+               $scope.show_error =  false;
+               $timeout(function () {
+                  window.location.href = "/estimates/"+$scope.estimate.id;
+               }, 2000);
+           }else{//sin no bien
+             $scope.show_error =  true;
+             $scope.message =  false;//ocultamos el div del mensaje bien
+             $scope.message_error =  response.data.error;
+           }
+         },
+         function(response){// failure callback
+            $scope.message =  false;//ocultamos el div del mensaje bien
+             var errors = response.data;
+             $scope.show_error =  true;//mostramos el div del mensaje error
+             $scope.message_error =  errors;//
+         }
+        );//fin then
+       };//fin save
+     //para subir la imagen
+    //  $scope.thumbnail = {
+    //     dataUrl: '/adjuntar-img'
+    // };
+    //  $scope.fileReaderSupported = window.FileReader != null;
+    //  $scope.photoChanged = function(files){
+    //      if (files != null) {
+    //          var file = files[0];
+    //      if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
+    //          $timeout(function() {
+    //              var fileReader = new FileReader();
+    //              fileReader.readAsDataURL(file);
+    //              fileReader.onload = function(e) {
+    //                  $timeout(function(){
+    // $scope.thumbnail.dataUrl = e.target.result;
+    //                  });
+    //              }
+    //          });
+    //      }
+    //  }
+     //};
+     ////
 }]);//fin controller companys
 ///////////INVOICES CONTROLLER
 app.controller("InvoiceCtrl",['$scope','$http',function($scope, $http){

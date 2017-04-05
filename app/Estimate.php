@@ -56,7 +56,6 @@ class Estimate extends Model
         if( (isset($datos["proximo_seguimiento"])) && ( (date_format(new DateTime($datos["proximo_seguimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha_soli"]), 'Y-m-d')))){
          $error["fecha_vencimiento"]=["La Fecha del Proximo Seguimiento no puede ser menor a la de Solicitud"];
         }
-
       }
       return $error;
     }
@@ -99,4 +98,18 @@ class Estimate extends Model
         $item->descuento=0.0;
         return $item;
     }//fin metodo añadir avion
+
+    public static function categoria($a) {
+      //alert(a);
+      if($a=='0'){
+        return '0%';
+      }else if($a=='1'){
+          return '20 %';
+      }else if($a=='2'){
+            return '25 %';
+      }else if($a=='3'){
+           return '30 %';
+      }
+       //alert($scope.data_invoices[index].cantidad);
+    }
 }//fin clase

@@ -38,8 +38,9 @@
     <h3>Imagen Estimado</h3>
       <div class="btn btn-default btn-file">
           <i class="fa fa-paperclip"></i> Imagen de la Captura del Estimado
-          <input ng-model="estimate.imagen" type="file"  id="fileIMG" name="fileIMG" class="imagen_archivo" >
-
+          <input ng-model="estimate.imagen" type="file"  id="imagen" name="imagen" class="imagen_archivo" >
+          {{-- <input type="file" name="file" onchange="angular.element(this).scope().photoChanged(this.files)" />
+        <img ng-src="@{{ thumbnail.dataUrl }}"/> --}}
       </div>
           <p class="help-block"  >Max. 20MB</p>
                    <!-- cargador empresa -->
@@ -53,9 +54,6 @@
 
         <hr style="color:#003" width="50%">
         <br>
-      </div>
-      <div id="texto_notificacion1">
-
       </div>
       <div id="mostrarIMG">
 
@@ -230,7 +228,7 @@
       </td>
       <td>
           [[ Form::hidden('subtotal_recarga', null, ['id'=>'subtotal_recarga','class' => 'input-text full-width' , 'required' => 'required','placeholder'=>'$0.00', 'ng-model'=>'dato.subtotal_recarga']) ]]
-         <a class="btn-delete" title="Eliminar"  ng-click="delete($index)"aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
+         <a class="btn-delete" title="Eliminar"  ng-click="delete($index)" aria-hidden="true"><i class="glyphicon glyphicon-trash"></i></a>
       </td>
 
     </tr>

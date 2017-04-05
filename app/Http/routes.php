@@ -90,8 +90,9 @@ Route::group(['middleware' => 'admin'], function()
       Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
       Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
       Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
-      Route::post('adjuntar-img',['as'=>'adjuntar-img', 'uses'=>'EstimatesController@adjuntarimg'] );
+      Route::get('adjuntar-img',['as'=>'adjuntar-img', 'uses'=>'EstimatesController@adjuntarimg'] );
       Route::resource ('estimates','EstimatesController');
+      Route::post('item/{item}', [ 'as'=>'item.destroy','uses' => 'EstimatesController@item_destroy']);
       Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
       Route::get('principal', ['as' => 'principal',  'uses' => 'AdminController@index']);
       Route::resource('mail','MailController');
