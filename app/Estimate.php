@@ -112,4 +112,15 @@ class Estimate extends Model
       }
        //alert($scope.data_invoices[index].cantidad);
     }
+    public function estadosEN($estado) {
+      if($estado=='Pendiente'){
+        return 'Pending';
+      }else if($estado=='Aceptado'){
+          return 'Accepted';
+      }else if($estado=='Rechazado'){
+            return 'Rejected';
+      }else if($estado=='Cancelado'){
+                return 'Canceled';
+      }
+    }
 }//fin clase

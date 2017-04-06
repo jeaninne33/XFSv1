@@ -24,6 +24,7 @@ class CreateFuelreleasesTable extends Migration
             $table->string('handling',70)->nullable();
             $table->string('cf_card',70);
             $table->string('into_plane',70);
+            $table->string('into_plane_phone',70)->nullable();
             $table->integer('qty');
             $table->integer('estimate_id')->unsigned();
             $table->foreign('estimate_id')->references('id')->on('estimates')->onDelete('cascade');

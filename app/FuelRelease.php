@@ -1,36 +1,37 @@
 <?php
-
 namespace XFS;
-use Illuminate\Database\Schema\Blueprint;
+
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Migrations\Migration;
-class FuelRelease extends Migration
+use Illuminate\Support\Facades\Validator;
+use DateTime;
+use XFS\Audit;
+use Auth;
+
+class FuelRelease extends Model
 {
-    public function up()
-    {
-        Schema::create('fuelrelease',function (Blueprint $table)
-        {
-                $table->increments('id');
-                $table->string('estimate_id')->unsigned();
-                $table->foreign('estimate_id')
-                    ->references('id')->on('estimates')
-                    ->onDelete('cascade');
-                $table->string('flight_purpose',70);
-                $table->string('operator',30);
-                $table->string('ref',30);
-                $table->string('phone',30);
-                $table->string('flight_number',30);
-                $table->date('eta',70);
-                $table->date('etd',70);
-                $table->string('handling',70);
-                $table->string('into_plane',70);
-                $table->string('cf_card',50);
-                
-                $table->timestamps();
-        });
-    }
-    public function down()
-    {
-        Schema::drop('fuelrelease');
-    }
+  protected $table = 'fuelreleases';
+ // protected $fillable = ['nombre', 'pais_id'];
+ protected $fillable=['id','flight_purpose','operator','release_ref',
+'ref','phone','flight_number','eta','etd','handling','into_plane','into_plane_phone','cf_card','estimate_id'];
+
+ public function estimate() {
+   return $this->belongsTo('XFS\Estimate','estimate_id','id');
+ }
+ public static function validate_dates($datos,$opc) {
+   $fecha=date("Y-m-d");
+   $error= array();
+
+     if((isset($datos["date"])) && ((date_format(new DateTime($datos["date"]), 'Y-m-d'))>$fecha)){
+       $error["date"]=["La Fecha Requested Date no puede ser mayor a la fecha actual"];
+     }
+    //  if((isset($datos["etd"])) && ((date_format(new DateTime($datos["date"]), 'Y-m-d'))>$fecha)){
+    //    $error["etd"]=["La Fecha de etd no puede ser mayor a la fecha actual"];
+    //  }
+    //  if( (isset($datos["etd"])) && ( (date_format(new DateTime($datos["proximo_seguimiento"]), 'Y-m-d'))< (date_format(new DateTime($datos["fecha_soli"]), 'Y-m-d')))){
+    //   $error["fecha_vencimiento"]=["La Fecha del Proximo Seguimiento no puede ser menor a la de Solicitud"];
+    //  }
+
+   return $error;
+ }
+
 }

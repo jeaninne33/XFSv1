@@ -4,7 +4,7 @@
 
 <h1>Mostrando la Factura Número: <strong> {{ $invoice->id }}</strong></h1>
 <div class="pull-right">
-         <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Atrás</a>
+         <a class="btn btn-primary" href="{{ URL::previous() }}"> Atrás</a>
      </div>
      <div class="pull-right col-sm-6">
        <a class="btn btn-primary soap-icon-list" target="_blank" href="{{ URL::to('invoices_pdf/' . $invoice->id) }}"> Imprimir</a>

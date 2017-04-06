@@ -6,7 +6,8 @@
 {{-- <link rel="stylesheet" href="{{asset("assets/css/bootstrap-table.css")}}"> cliente={{$estimates[0]->nombrep}}; proveedor={{$estimates[0]->nombrep}};--}}
 @endsection
 @section('contenido')
-<div  ng-controller="EstimateCtrl" class="col-sm-12 no-float no-padding" ng-init="matricula={{json_encode($matri)}}; proveedor={{json_encode($proveedor)}}; categorias={{json_encode($categoria)}}; cliente={{json_encode($cliente)}}; data_estimates={{json_encode($datos_estimado)}}; aviones={{$aviones}}; servicios={{json_encode($servicios)}}; estimate={{json_encode($estimate)}};">
+  {{-- {{var_dump($info)}} --}}
+<div  ng-controller="EstimateCtrl" class="col-sm-12 no-float no-padding" ng-init="info={{json_encode($info)}}; matricula={{json_encode($matri)}}; proveedor={{json_encode($proveedor)}}; categorias={{json_encode($categoria)}}; cliente={{json_encode($cliente)}}; data_estimates={{json_encode($datos_estimado)}}; aviones={{$aviones}}; servicios={{json_encode($servicios)}}; estimate={{json_encode($estimate)}};">
       <h2>Editando Estimado Número: <strong> {{$estimate->id}} </strong></h2>
       <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>

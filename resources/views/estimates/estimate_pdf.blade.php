@@ -93,6 +93,7 @@
       </tfoot>
   </table>
       <div class="otro">
+        <p><strong>Status: </strong>{{$esti->estadosEN($estimates[0]->estado) }}</p>
         <p><strong>Sumary: </strong>{{$estimates[0]->resumen}}</p>
         {{-- <p><strong>Fecha de Vencimeinto: </strong>{{date_format(date_create( $estimates[0]->fecha_vencimiento), 'm/d/Y')}}</p> --}}
       </div>

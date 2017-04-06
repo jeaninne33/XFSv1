@@ -198,6 +198,7 @@ app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $htt
    $scope.proveedor=null;
    $scope.cliente=null;
    $scope.matricula=null;
+   $scope.info=null;
 
    $scope.actualizar=function(opc){
      var sub=$scope.subtotal();
@@ -333,7 +334,7 @@ app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $htt
           //  alert(value.id==id);
             if(value.id==id){
               if ($scope.tipo==1) {
-                alert(($scope.estimate.company_id!=value.id));
+               // alert(($scope.estimate.company_id!=value.id));
                 if($scope.estimate.company_id!=value.id){
                   $scope.estimate = {
                     total:0,
@@ -346,9 +347,17 @@ app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $htt
                   $scope.cliente=value.nombre;
                   $scope.estimate.categoria=value.categoria;
                   $scope.categorias=  $scope.categoria_show(value.categoria);
-                  $scope.telefono=value.telefono;
-                  $scope.correo=value.correo;
-                  $scope.celular=value.celular;
+                  $scope.info=[
+                     {id:"Telefono",
+                       nombre:value.telefono
+                     },
+                     {  id:"Correo",
+                       nombre:value.correo
+                     },
+                     { id:"Celular",
+                       nombre:value.celular
+                     }
+                   ];
                   $scope.data_estimates.length = 0;
                   $scope.data_estimates = []
                }
@@ -363,13 +372,13 @@ app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $htt
    });
    $scope.metodoSegui= function(){
       var meto=$scope.estimate.metodo_segui;
-    //  alert(meto);
+    //  alert(meto);$scope.telefono;
       if(meto=='Telefono'){
-        $scope.estimate.info_segui= $scope.telefono;
+        $scope.estimate.info_segui= $scope.info[0].nombre;
       }else if(meto=='Correo'){
-          $scope.estimate.info_segui= $scope.correo;
+          $scope.estimate.info_segui= $scope.info[1].nombre;
       }else if(meto=='Celular'){
-          $scope.estimate.info_segui= $scope.celular;
+          $scope.estimate.info_segui= $scope.info[2].nombre;
       }
    };
    $scope.matri = function(){
@@ -494,7 +503,7 @@ app.controller("EstimateCtrl",['$scope','$http','$timeout',function($scope, $htt
             $scope.message = "Estimado Agregado Exitosamente";
              $scope.show_error =  false;
              $timeout(function () {
-                window.location.href = "/estimates/"+$scope.estimate.id;
+                window.location.href = "/estimates/"+response.data.id;
              }, 2000);
          }else{//sin no bien
            $scope.show_error =  true;
@@ -1085,3 +1094,36 @@ app.controller("LoginCtrl",['$scope','$http',function($scope, $http){
   };
 
 }]);//fin controller EditCompanyCtrlInvoiceCtrl
+
+////////////////
+app.controller("FuelreleaseCtrl",['$scope','$http','$timeout',function($scope, $http,$timeout){
+  //alert('aja');
+  $scope.estimate={};
+  $scope.fuel={};
+//  alert($scope.estimate[id]);
+  $scope.save =  function($event){
+   //  alert('entre');
+      $event.preventDefault();
+      var fuel =  $scope.fuel;
+      fuel["_token"] =  $("input[name=_token]").val();
+      $http.post('/fuelreleases', fuel)
+      .then(
+      function(response){// success callback
+         if(response.data.message=="bien")  {
+           $scope.message = "Su correo ha Sido enviado Exitosamente ";
+           $scope.show_error =  false;
+        }else{//sin no bien
+          $scope.show_error =  true;
+          $scope.message =  false;//ocultamos el div del mensaje bien
+          $scope.message_error =  response.data.error;
+        }
+      },
+      function(response){// failure callback
+         $scope.message =  false;//ocultamos el div del mensaje bien
+          var errors = response.data;
+          $scope.show_error =  true;//mostramos el div del mensaje error
+          $scope.message_error =  errors;//
+      }
+     );//fin then
+  };//fin save
+}]);//fin controller
