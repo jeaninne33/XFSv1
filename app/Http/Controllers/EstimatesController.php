@@ -42,7 +42,21 @@ class EstimatesController  extends Controller
         INNER JOIN companys c ON c.id=e.company_id
         INNER JOIN companys cp ON cp.id=e.prove_id ") );
 
-       return view ('estimates.index')->with('estimates',$estimates);
+        $fuel=DB::select(
+         DB::raw("SELECT
+         f.id, f.qty, f.flight_purpose, f.flight_number, f.operator, f.ref, f.cf_card, f.etd, f.eta, f.handling, f.into_plane, f.into_plane_phone, f.date,
+         e.id as estimate_id, e.fbo, e.localidad,
+         c.nombre AS cliente,
+         cp.nombre AS prove,
+         c.id as company_id,
+         a.tipo, a.matricula
+         FROM fuelreleases f
+         INNER JOIN estimates e ON f.estimate_id=e.id
+         INNER JOIN companys c ON c.id=e.company_id
+         INNER JOIN companys cp ON cp.id=e.prove_id
+         INNER JOIN aviones a ON a.company_id=c.id"));
+
+       return view ('estimates.index',compact('estimates','fuel'));
     }
 
     /**

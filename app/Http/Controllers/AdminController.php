@@ -46,7 +46,6 @@ class AdminController extends Controller
            $info=$estado." ($d)";
            $inv->informacion=  $info;
            $inv->save();
-
        }
 
      }
@@ -114,7 +113,7 @@ class AdminController extends Controller
            INNER JOIN companys f ON f.id=e.prove_id
            INNER JOIN estimates a ON a.id=e.estimate_id
            INNER JOIN aviones d ON a.avion_id=d.id
-           where $fechas";
+           where $fechas and e.estado<>'4'";
 
           $report=DB::select(DB::raw($consulta));
           $view =  \View::make('reports.pdf_relation', compact('report','desde','hasta','titu','date','servicio'))->render();

@@ -178,8 +178,6 @@ class InvoiceController extends Controller
       DB::beginTransaction();
       try {
          $invoice=Invoice::create($data);
-
-         //dd($invoice->id);
          //agregamos la info de la factura
          $this->info_invoice($fecha_pago,$fecha_vencimiento,$invoice);
          $invoice->save();
@@ -214,8 +212,6 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-      ///Invoice:::with('company', 'proveedor'.'avion')->where('id',$id)->get()
-        //Invoice::findOrFail($id)  $i = XFS\Invoice::findOrFail($id)->with('company')->get();
         $invoice =Invoice::findOrFail($id);
         $items =Date_invoice::with('servicio')->where('invoice_id' , $id)->get();
         $items =collect( $items);
@@ -238,7 +234,6 @@ class InvoiceController extends Controller
       $avion= array();
       $avion['id']=$invoice->avion->id;
       $avion['nombre']=$invoice->avion->matricula;
-
        return view('invoices.edit', compact('invoice','items','servicios','avion'));
     }
     /**

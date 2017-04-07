@@ -6,10 +6,13 @@
 
 @endsection
 @section('contenido')
-
+<div class="tabla">
     <p><h2 ><i class="soap-icon-card circle"></i> <strong>Estimados</strong></h2>
+      <div class="pull-right">
+               <a class="btn btn-primary" href="" id="fuelre"> Ver Listado de Fuel Release</a>
+      </div>
      <p><h2 > <strong>Listado de Estimados</strong></h2></p></p>
- 
+
 
 
 
@@ -26,66 +29,47 @@
     @include('estimates.partials.table')
 
 
- 
+
 
 
 [[Form::open(['route' => ['estimates.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 
 [[Form::close()]]
+</div>
+</div>
+<div class="fuel" style="display:none;">
+  <div class="pull-right">
+           <a class="btn btn-primary" href="" id="volver"> Atrás</a>
+       </div>
+       <br>
+    <p><h2 > <strong>Listado de Fuel Release</strong></h2></p>
+    <div class="panel-body">
 
+      <div class="col-sms-12 col-sm-12"  >
+
+            	  @include('fuelreleases.partials.table')
+          </div>
+        </div>
+</div>
 @endsection
 
 @section('scripts')
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
 <script>
   $('#example').dataTable();
-
-  $('.btn-delete').click(function(e){
-     e.preventDefault();//evita que se envie el formulario
-     $("#dialog-confirm").html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>¿Esta Seguro que desea Eliminar el Registro?</p>');
-     $( "#dialog-confirm" ).dialog({
-         resizable: false,
-         height: "auto",
-         width: 400,
-         modal: true,
-         buttons: {
-           "Aceptar": function() {
-             $( this ).dialog( "close" );
-             var row=$(this).parents('tr');
-             var id=row.data('id');
-             var form =$('#form-delete');
-             var url=form.attr('action').replace(':COM_ID',id);
-             var data=form.serialize();
-             $("#mensaje").css("display", "block");
-                $('#mensaje').toggleClass('alert alert alert-success');//cambiar la clase
-             $.post(url,data, function(result){
-                $('#mensaje').html(result);
-              // alert(result);
-               row.fadeOut();
-
-             }).fail(function(){
-                 $('#mensaje').toggleClass('alert alert alert-danger');
-
-                  $('#mensaje').html('La compañia no fue eliminada');
-               //alert('La compañia no fue eliminada');
-               row.show();
-             });
-           },
-           "Cancelar": function() {
-             $( this ).dialog( "close" );
-           }
-         }
-       });
-
-     //alert("ajaa");
-
-  });
-  // $('#compañia').click(function(){
-  //   location.href='companys';
-  // });
+    $('#example2').dataTable();
+    $('#m4').removeClass('');
+    $('#m4').addClass('active');
+    $(document).on('click', '#fuelre',function (e) {
+      $(".tabla").css("display", "none");
+      $(".fuel").css("display", "block");
+    });
+    $(document).on('click', '#volver',function (e) {
+      $(".tabla").css("display", "block");
+      $(".fuel").css("display", "none");
+    });
 </script>
 
 @endsection

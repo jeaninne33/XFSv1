@@ -7,10 +7,9 @@
            [[ Form::label('id', 'Ref Info # *')]]
            [[Form::text('ref',null, ['ng-model'=>'fuel.ref','id'=>'ref','class' => 'input-text full-width'])]]
         </div>
-
         <div class="col-sms-6 col-sm-4">
           [[Form::label('to', 'To') ]]
-          [[Form::text('to', null, ['ng-model'=>'estimate.nombrec','id'=>'to','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
+          [[Form::text('to', null, ['readonly','ng-model'=>'estimate.nombrec','id'=>'to','class' => 'input-text full-width','readonly', 'required' => 'required' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('from', 'from') ]]
@@ -37,7 +36,7 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('Supplier') ]]
-          [[Form::text('supplier', null, ['ng-model'=>'estimate.nombrep','id'=>'supplier','class' => 'input-text full-width' ]) ]]
+          [[Form::text('supplier', null, ['readonly','ng-model'=>'estimate.nombrep','id'=>'supplier','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-12 col-sm-4">
           [[Form::label('fbo', 'FBO')]]
@@ -57,7 +56,7 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('int', 'Aircraft Registrarion #') ]]
-          [[ Form::text('ar',null, ['ng-model'=>'estimate.matricula','id'=>'aircraft','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('ar',null, ['readonly','ng-model'=>'estimate.matricula','id'=>'aircraft','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('int', 'Operator') ]]
@@ -65,11 +64,11 @@
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('type', 'Aircraft Type') ]]
-          [[ Form::text('type', null, ['ng-model'=>'estimate.tipo','id'=>'type','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('type', null, ['readonly','ng-model'=>'estimate.tipo','id'=>'type','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('fn', 'Call Sign / Fight Number *') ]]
-          [[ Form::text('fight_number', null, ['ng-model'=>'fuel.fight_number','id'=>'fightNumber','class' => 'input-text full-width' ]) ]]
+          [[ Form::text('flight_number', null, ['ng-model'=>'fuel.flight_number','id'=>'fightNumber','class' => 'input-text full-width' ]) ]]
         </div>
         <div class="col-sms-6 col-sm-4">
           [[Form::label('eta', 'ETA *') ]]
@@ -88,4 +87,3 @@
           [[ Form::text('qty',  null, ['ng-model'=>'fuel.qty','id'=>'quantity','class' => 'input-text full-width' ]) ]]
         </div>
     </div>
-  

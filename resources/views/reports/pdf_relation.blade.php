@@ -23,7 +23,7 @@
   <table class="display" cellspacing="0" width="99.3%" border="0">
       <thead >
           <tr>
-              <td><strong>Id Est.</strong></td>
+              <td><strong>Id Est. / Id Inv.</strong></td>
               <td><strong>Fecha Fact.</strong></td>
               <td><strong>Matricula</strong></td>
               <td><strong>FBO</strong></td>
@@ -61,18 +61,19 @@
                 cantidad as cant_basf,
                 total as costo_basf,
                 servicio_id,
-                nombre
-               from dates_estimates,servicios
+                nombre,
+                dates_estimates.id
+               from dates_estimates, servicios
                where estimate_id='$id_e' and servicios.id=servicio_id;"));
                $cant_e=count($datos_e);
               $datos_in=DB::select(DB::raw(
               "SELECT
-               subtotal_recarga as precio_xfs,
+                subtotal_recarga as precio_xfs,
                 cantidad as cant_xfs,
                 total as costo_xfs,
                 servicio_id,
-                nombre
-               from dates_invoices,servicios
+                nombre, dates_invoices.id, date_estimate_id
+               from dates_invoices ,servicios
                where invoice_id='$id_in' and servicios.id=servicio_id $servicio;"));//'datos_in','datos_e'?>
 
           @if(!empty($datos_in))
@@ -80,7 +81,7 @@
              <?php  $i++;?>
              <?php  $costo_b=0;?>
              <tr >
-                <td>{{ $val->id_estimate }}</td>
+                <td>{{ $val->id_estimate }} / {{$val->id_invoice}}</td>
                   <td>{{ date_format(date_create( $val->fecha ), 'm/d/Y')}}</td>
                  <td>{{$val->matricula  }}</td>
                  <td>{{ $val->fbo }}</td>
@@ -88,40 +89,40 @@
                  <td>{{ $val->prove }}</td>
                  <td>{{$value->nombre}}</td>
                  <td>
-                   @if($i<=$cant_e && !empty($datos_e))
-                       @if($datos_e[$k]->servicio_id==$value->servicio_id)
-                         {{$datos_e[$k]->cant_basf}}
-                         <?php  $acum_cant_b+=$datos_e[$k]->cant_basf;?>
-                       @else
-                          0
+                @if(!empty($value->date_estimate_id))
+                  @foreach($datos_e as $key => $de)
+                     @if($de->id==$value->date_estimate_id)
+                        {{$de->cant_basf}}
+                         <?php  $acum_cant_b+=$de->cant_basf;?>
                        @endif
+                  @endforeach
+                @else
+                   0
+                @endif
+                 </td>
+                 <td>
+                   @if(!empty($value->date_estimate_id))
+                     @foreach($datos_e as $key => $de)
+                        @if($de->id==$value->date_estimate_id)
+                           $ {{$de->precio_basf}}
+                            <?php  $acum_precio_b+=$de->precio_basf;?>
+                          @endif
+                     @endforeach
                    @else
-                         0
+                      0
                    @endif
                  </td>
                  <td>
-                   @if($i<=$cant_e && !empty($datos_e))
-                     @if($datos_e[$k]->servicio_id==$value->servicio_id)
-                         $ {{$datos_e[$k]->precio_basf}}
-                      <?php  $acum_precio_b+=$datos_e[$k]->precio_basf;?>
-                     @else
-                        0
-                     @endif
+                   @if(!empty($value->date_estimate_id))
+                     @foreach($datos_e as $key => $de)
+                        @if($de->id==$value->date_estimate_id)
+                           $ {{$de->costo_basf}}
+                            <?php  $acum_costo_b+=$de->costo_basf;?>
+                            <?php  $costo_b=$de->costo_basf;?>
+                          @endif
+                     @endforeach
                    @else
-                         0
-                   @endif
-                 </td>
-                 <td>
-                   @if($i<=$cant_e && !empty($datos_e))
-                     @if($datos_e[$k]->servicio_id==$value->servicio_id)
-                       $ {{$datos_e[$k]->costo_basf}}
-                         <?php  $acum_costo_b+=$datos_e[$k]->costo_basf;?>
-                           <?php  $costo_b=$datos_e[$k]->costo_basf;?>
-                     @else
-                        0
-                     @endif
-                   @else
-                         0
+                      0
                    @endif
                  </td>
                  <td>{{$value->cant_xfs}}

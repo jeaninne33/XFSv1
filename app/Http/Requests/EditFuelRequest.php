@@ -5,7 +5,7 @@ namespace XFS\Http\Requests;
 use XFS\Http\Requests\Request;
 use Iluminate\Routing\Route;
 
-class CrearFuelRequest extends Request
+class EditFuelRequest extends Request
 {
 
 

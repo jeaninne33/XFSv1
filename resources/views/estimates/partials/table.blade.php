@@ -13,7 +13,6 @@
     </thead>
     <tbody>
     @foreach($estimates as $key => $value)
-
         <tr data-id="{{$value->id}}">
             <td>{{ $value->id }}</td>
             <td>{{ $value->nombre }}</td>

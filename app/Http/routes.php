@@ -21,7 +21,6 @@ Route::get('servicios',function(){
   return view('servicios');
 });
 
-
 Route::get('/state/{id}',function($id){
   $estados=Estado::where('pais_id',$id)->get();
   return Response::json($estados);
@@ -86,27 +85,22 @@ Route::group(['middleware' => 'admin'], function()
 /*Rutas privadas solo para usuarios autenticados*//////////////rutas para todos los usuarios
   Route::group(['middleware' => 'auth'], function()
   {
-
-      Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
-    //  Route::post('fuel-release', [ 'as'=>'fuel-release','uses' => 'EstimatesController@postfuelrelease']);
-      //rutas estimado
+     //rutas estimado
       Route::get('adjuntar-img',['as'=>'adjuntar-img', 'uses'=>'EstimatesController@adjuntarimg'] );
       Route::resource ('estimates','EstimatesController');
       Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
       Route::post('item/{item}', [ 'as'=>'item.destroy','uses' => 'EstimatesController@item_destroy']);
-      Route::get('fuel-release/{id}/{ref}/{releaseRef}/{handling}/{intoPlane}/{phone}/{operator}/{fightNumber}/{eta}/{etd}/{fp}', [ 'as'=>'fuel-release','uses' => 'EstimatesController@fuelrelease']);
       Route::get('principal', ['as' => 'principal',  'uses' => 'AdminController@index']);
       Route::resource('mail','MailController');
       Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
       Route::get('perfil/{user}', [  'as' => 'perfil','uses' => 'UserController@perfil_user'  ]);
       Route::resource ('contratos','ContratoController');
       Route::post('adjuntar', 'MailController@store');
-      // Route::get('fuelreleases/{id}','EstimatesController@fuelreleaseview');
       Route::resource ('fuelreleases','FuelreleaseController');
       Route::get('fuelreleases/create/{fuelreleases}', [ 'as'=>'fuelreleases.create','uses' => 'FuelreleaseController@create']);
+      Route::get('printfuelreleases/{fuelreleases}', [ 'as'=>'printfuelreleases.pdf','uses' => 'FuelreleaseController@print_fuel']);
       Route::resource('mail','MailController');
 });
-
   /////////////////////rutas admin y contador
  Route::group(['middleware' => 'admin_contador'], function()
  {
