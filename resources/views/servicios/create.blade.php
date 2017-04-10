@@ -12,7 +12,7 @@
      <br/>
   @include('errors.errors')
 <div class="col-sm-12 no-float no-padding">
-[[ Form::open(['route'=>'servicios.store', 'method'=> 'POST']) ]]
+[[ Form::open(['route'=>'servicios.store', 'method'=> 'POST','novalidate']) ]]
 @include('servicios.partials.fields')
 [[ Form::submit('Agregar Servicio', array('class' => 'btn btn-primary')) ]]
 [[ Form::close() ]]

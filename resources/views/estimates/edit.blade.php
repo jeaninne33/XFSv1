@@ -42,9 +42,7 @@
 <!-- datatable jquery -->
 
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-{{-- <script type="text/javascript" src="{{ asset("assets/js/ScriptXFS.js") }}"></script>
-<script src="{{asset("assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}"></script>
-<script src="{{asset("assets/js/sistemalaravel.js")}}"></script> --}}
+
 
 <script>
   $('#m4').removeClass('');

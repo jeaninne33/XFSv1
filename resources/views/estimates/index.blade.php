@@ -8,9 +8,11 @@
 @section('contenido')
 <div class="tabla">
     <p><h2 ><i class="soap-icon-card circle"></i> <strong>Estimados</strong></h2>
+    @if (Auth::user()->type!='despacho')
       <div class="pull-right">
                <a class="btn btn-primary" href="" id="fuelre"> Ver Listado de Fuel Release</a>
       </div>
+    @endif
      <p><h2 > <strong>Listado de Estimados</strong></h2></p></p>
 
 
@@ -27,10 +29,6 @@
     </p>
 
     @include('estimates.partials.table')
-
-
-
-
 
 [[Form::open(['route' => ['estimates.destroy', ':COM_ID'], 'method' => 'DELETE','id'=>'form-delete']) ]]
 

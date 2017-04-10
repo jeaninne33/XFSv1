@@ -46,7 +46,8 @@ return [
         'local' => [
             'driver' => 'local',
             //'root'   => storage_path('app'),
-            'root' => public_path('capture'),
+            'root' => public_path().'/capture',
+            //'root' => public_path('capture'),
         ],
 
         'ftp' => [

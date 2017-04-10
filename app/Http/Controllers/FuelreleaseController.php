@@ -98,10 +98,10 @@ class FuelreleaseController  extends Controller
      */
     public function edit($id)
     {
-      $fuel=$this->getData($id);
-      $estimate=$this->getDataEstimate($fuel[0]->estimate_id);
+      $fuel=FuelRelease::findOrFail($id);
+      $estimate=$this->getDataEstimate($fuel->estimate_id);
       $estimates=collect($estimate);
-      $fuel=collect($fuel);
+    //  $fuel=collect($fuel);
       return view('fuelreleases.edit',compact('estimates','fuel'));
     }
 

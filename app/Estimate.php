@@ -42,6 +42,20 @@ class Estimate extends Model
            }
         }
     }//fin metodp
+    public static function validate_file($file){
+        $error= array();
+      if($file['size']>=2000000){
+         $error["size"]=["El tamaño del archivo del estimado no puede ser superior a 2MB"];
+      }
+      if($file['type']!="application/pdf" && $file['type']!="image/jpeg" && $file['type']!="image/png" && $file['type']!="image/gif"){
+           $error["type"]=["Formato invalido en el Archivo del estimado! formatos permitidos: .png, .jpeg, .jpg y .pdf"];
+      }
+      return $error;
+    }
+    public static function name_file($file){
+
+    }
+
     public static function validate_dates($datos,$opc) {
       $fecha=date("Y-m-d");
       $error= array();

@@ -489,7 +489,11 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
 
         }
     };
-
+    $scope.fileSelect = function (files) {
+      var file = files[0];
+      $scope.estimate.imagen=file;
+    //  alert(console.dir($scope.estimate.imagen));
+    };
     $scope.save = function($event) {
         $event.preventDefault();
         var estimate = $scope.estimate;
@@ -733,6 +737,7 @@ app.controller("InvoiceCtrl", ['$scope', '$http', function($scope, $http) {
             }
         }
     };
+
     $scope.save = function($event) {
         $event.preventDefault();
         var invoice = $scope.invoice;
@@ -1105,7 +1110,18 @@ app.controller("LoginCtrl", ['$scope', '$http', function($scope, $http) {
 app.controller("FuelreleaseCtrl", ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
     //alert('aja');
     $scope.estimate = {};
-    $scope.fuel = {};
+    $scope.fuel = {
+      date:new Date
+    };
+    // var date= new Date($scope.fuel.date);
+    // var f_eta = new Date($scope.fuel.eta);
+    // var f_etd = new Date($scope.fuel.etd);
+    // //alert(fecha);
+    //
+    // $scope.fuel.date = date;
+    // $scope.fuel.eta = f_eta;
+    // $scope.fuel.etd = f_etd;
+
     $scope.save = function($event) {
         //  alert('entre');
         $event.preventDefault();
@@ -1163,3 +1179,18 @@ app.controller("FuelreleaseCtrl", ['$scope', '$http', '$timeout', function($scop
             ); //fin then
     }; //fin save
 }]); //fin controller
+app.directive('fileChange', function() {
+    return {
+     restrict: 'A',
+     scope: {
+       handler: '&'
+     },
+     link: function (scope, element) {
+      element.on('change', function (event) {
+        scope.$apply(function(){
+          scope.handler({files: event.target.files});
+        });
+      });
+     }
+    };
+});

@@ -82,12 +82,19 @@ class EstimatesController  extends Controller
       $data  = $request->all();
     //  dd($data)
       $band=true;
-      $data['imagen']="joijuiohi";
-    //  dd($band);
+      $imagen=$data['imagen'];
+      unset($data['imagen']);
+      //mt_rand(5, 5000); para crear un nombre aleatorio
+    // dd(var_dump($data));
+     $nombre = $imagen['name'];
+     $data['imagen']=$nombre;
+  //   dd(var_dump($data));
       $error= array();
       $items=$data["data_estimates"];
       $estimates = new Estimate;
-     $error=Estimate::validate_dates($data,1);
+      $error=Estimate::validate_dates($data,1);
+      $error+=Estimate::validate_file($imagen);
+
          if(!empty($error)){
            $band=false;
          }else{
@@ -109,6 +116,9 @@ class EstimatesController  extends Controller
            try {
               $estimate=Estimate::create($data);
               $id=$estimate->id;
+              dd($imagen);
+               //\Storage::disk('local')->put($nombre,  \File::get($imagen));
+
               ///////////
                if($datos){
                  foreach( $items as $indice =>$datos_estimates ){

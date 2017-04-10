@@ -43,7 +43,7 @@ class CrearEstimateRequest extends Request
           'tipo_hab'=> 'max:200',
           'tipo_cama'=> 'max:200',
           'tipo_estrellas'=> 'max:200',
-          // 'imagen'=> 'required|max:200',
+           'imagen'=> 'required|max:200',
           'categoria'=> 'required|numeric',
           'descuento'=> 'required|numeric',
           'ganancia'=> 'required|numeric',

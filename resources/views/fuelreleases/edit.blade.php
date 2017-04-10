@@ -3,11 +3,14 @@
 @endsection
 @section('contenido')
 
-
+<?php
+  $eta=date_format(date_create(  $fuel->eta), 'Y-m-d');
+  $etd=date_format(date_create(  $fuel->etd), 'Y-m-d');
+?>
 <br/>
 <!-- if there are creation errors, they will show here -->
 @include('errors.errors')
-<div class="col-sm-12 no-float no-padding" ng-controller="FuelreleaseCtrl" ng-init="estimate={{json_encode($estimates->last())}}; fuel={{json_encode($fuel->last())}};">
+<div class="col-sm-12 no-float no-padding" ng-controller="FuelreleaseCtrl" ng-init=" estimate={{json_encode($estimates->last())}}; fuel={{json_encode($fuel)}}; fuel.eta={{json_encode($eta)}}; fuel.etd={{json_encode($etd)}}; ">
   <h2>EDIT INFORMATION OF THE FUEL RELEASE
 
   </h2>

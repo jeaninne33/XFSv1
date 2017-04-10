@@ -2,7 +2,7 @@
 
   <li class="active"><a data-toggle="tab" href="#home">Datos Generales</a></li>
   <li><a data-toggle="tab" href="#fbo">Otros Datos</a></li>
-  <li><a data-toggle="tab" href="#imagen">Imagen de la Captura del Estimado</a></li>
+  <li><a data-toggle="tab" href="#imagen">Archivo del Estimado</a></li>
   <li><a data-toggle="tab" href="#estimados">Items del Estimado</a></li>
   {{-- <li><a data-toggle="tab" href="#menu3">Aviones</a></li> --}}
   {{-- <li><a data-toggle="tab" href="#menu4" style="display:none;">Servicios</a></li> --}}
@@ -35,13 +35,17 @@
  <!--Modal-->
 <div class="tab-content">
   <div id="imagen" class="tab-pane fade">
-    <h3>Imagen Estimado</h3>
-      <div class="btn btn-default btn-file">
+    <h3>Archivo del Estimado</h3>
+
+             <div class="col-md-8">
+               <input type="file" class="form-control" name="file" ng-model="estimate.imagen" id="imagen"  file-change handler="fileSelect(files)">
+             </div>
+      {{-- <div class="btn btn-default btn-file">
           <i class="fa fa-paperclip"></i> Imagen de la Captura del Estimado
           <input ng-model="estimate.imagen" type="file"  id="imagen" name="imagen" class="imagen_archivo" >
           {{-- <input type="file" name="file" onchange="angular.element(this).scope().photoChanged(this.files)" />
-        <img ng-src="@{{ thumbnail.dataUrl }}"/> --}}
-      </div>
+        <img ng-src="@{{ thumbnail.dataUrl }}"/>
+      </div> --}}
           <p class="help-block"  >Max. 20MB</p>
                    <!-- cargador empresa -->
       <div style="display: none;" id="cargador_empresa" align="center">
