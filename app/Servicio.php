@@ -7,10 +7,11 @@ class Servicio extends Model
 {
     protected $table = 'servicios';
 
-    protected $fillable=['id','nombre, descripcion','categoria_id'];
+    protected $fillable=['id','nombre, descripcion','precio','categoria_id'];
 
     public function categoria()
     {
       return $this->belongsTo('XFS\Categoria','categoria_id');
     }
+
 }

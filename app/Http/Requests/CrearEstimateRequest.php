@@ -8,7 +8,6 @@ use Iluminate\Routing\Route;
 class CrearEstimateRequest extends Request
 {
 
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -43,7 +42,7 @@ class CrearEstimateRequest extends Request
           'tipo_hab'=> 'max:200',
           'tipo_cama'=> 'max:200',
           'tipo_estrellas'=> 'max:200',
-           'imagen'=> 'required|max:200',
+           'imagen'=> 'required',
           'categoria'=> 'required|numeric',
           'descuento'=> 'required|numeric',
           'ganancia'=> 'required|numeric',
@@ -65,6 +64,7 @@ class CrearEstimateRequest extends Request
         'avion_id.required' => 'El campo Tipo de Areonave es Obligatorio',
         'cantidad_fuel.required' => 'El campo Cantidad aproximada de Combustible es Obligatorio',
         'cantidad_fuel.numeric'=>' El campo Cantidad aproximada de Combustible debe ser numérico.',
+        'imagen.required'=>' El Archivo del Estimado es Obligatorio.',
     ];
  }
 }

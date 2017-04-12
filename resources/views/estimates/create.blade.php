@@ -28,7 +28,6 @@
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->
 <script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-
 <script>
    $('#m4').removeClass('');
    $('#m4').addClass('active');

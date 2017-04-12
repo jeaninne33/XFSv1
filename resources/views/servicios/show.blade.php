@@ -18,6 +18,10 @@
            </tr>
            <tr>
 
+             <td><strong>Precio:</strong> $ {{$servicios->precio}}<br></td>
+           </tr>
+           <tr>
+
              <td><strong>Categoria:</strong> {{$servicios->categoria->nombre}}<br></td>
            </tr>
            <tr>

@@ -251,16 +251,22 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
         } //fin para
         return null;
     };
+    $scope.search_precio = function(obj, key, value) { //delete item factura specific
+        for (var i = 0; i < $scope.servicios.length; i++) {
+            if (obj[i][key] === value) {
+                return obj[i].precio;
+            }
+        } //fin para
+        return null;
+    };
     $scope.inicializar = function(index) { //
         var servicio_id = $scope.data_estimates[index].servicio_id;
         var descripcion = $scope.search_descrip($scope.servicios, 'id', servicio_id);
+        var precio=$scope.search_precio($scope.servicios, 'id', servicio_id);
         $scope.data_estimates[index].cantidad = 1;
-        $scope.data_estimates[index].precio = 0.00;
-        $scope.data_estimates[index].subtotal = 0.00;
-        $scope.data_estimates[index].total = 0.00;
-        $scope.data_estimates[index].recarga = 0.00;
-        $scope.data_estimates[index].subtotal_recarga = 0.00;
+        $scope.data_estimates[index].precio = precio;
         $scope.data_estimates[index].descripcion = descripcion;
+        $scope.calcular(index);
         //alert($scope.data_invoices[index].cantidad);
     };
     $scope.cargar_tabla = function($id) {
@@ -489,38 +495,52 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
 
         }
     };
-    $scope.fileSelect = function (files) {
-      var file = files[0];
-      $scope.estimate.imagen=file;
-    //  alert(console.dir($scope.estimate.imagen));
-    };
+    // $scope.fileSelect = function (files) {
+    //   var file = files[0];
+    //   $scope.estimate.imagen=file;
+    // //  alert(console.dir($scope.estimate.imagen));
+    // };
     $scope.save = function($event) {
         $event.preventDefault();
         var estimate = $scope.estimate;
         estimate["_token"] = $("input[name=_token]").val();
         estimate.data_estimates = $scope.data_estimates;
-        $http.post('/estimates', estimate)
-            .then(
-                function(response) { // success callback
-                    if (response.data.message == "bien") {
-                        $scope.message = "Estimado Agregado Exitosamente";
-                        $scope.show_error = false;
-                        $timeout(function() {
-                            window.location.href = "/estimates/" + response.data.id;
-                        }, 2000);
-                    } else { //sin no bien
-                        $scope.show_error = true;
-                        $scope.message = false; //ocultamos el div del mensaje bien
-                        $scope.message_error = response.data.error;
-                    }
-                },
-                function(response) { // failure callback
-                    $scope.message = false; //ocultamos el div del mensaje bien
-                    var errors = response.data;
-                    $scope.show_error = true; //mostramos el div del mensaje error
-                    $scope.message_error = errors; //
-                }
-            ); //fin then
+        var nombre=estimate.imagen;
+        estimate['file']=file;
+        //alert(nombre);
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('nombre', nombre);
+      $http.post('/estimates', estimate).then(
+        function(response) { // success callback
+                  if (response.data.message == "bien") {
+                      $scope.message = "Estimado Agregado Exitosamente";
+                      $scope.show_error = false;
+                      $http.post('/image', formData, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                      }
+                      ).then(
+                      function(response) {},
+                      function(response) { // failure callback
+                      }
+                      ); //fin then
+                      $timeout(function() {
+                          window.location.href = "/estimates/" + response.data.id;
+                      }, 2000);
+                  } else { //sin no bien
+                      $scope.show_error = true;
+                      $scope.message = false; //ocultamos el div del mensaje bien
+                      $scope.message_error = response.data.error;
+                  }
+              },
+              function(response) { // failure callback
+                  $scope.message = false; //ocultamos el div del mensaje bien
+                  var errors = response.data;
+                  $scope.show_error = true; //mostramos el div del mensaje error
+                  $scope.message_error = errors; //
+              }
+          ); //fin then
     }; //fin save
     $scope.edit = function($event) {
         $event.preventDefault();
@@ -550,29 +570,59 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                 }
             ); //fin then
     }; //fin save
-    //para subir la imagen
-    //  $scope.thumbnail = {
-    //     dataUrl: '/adjuntar-img'
-    // };
-    //  $scope.fileReaderSupported = window.FileReader != null;
-    //  $scope.photoChanged = function(files){
-    //      if (files != null) {
-    //          var file = files[0];
-    //      if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
-    //          $timeout(function() {
-    //              var fileReader = new FileReader();
-    //              fileReader.readAsDataURL(file);
-    //              fileReader.onload = function(e) {
-    //                  $timeout(function(){
-    // $scope.thumbnail.dataUrl = e.target.result;
-    //                  });
-    //              }
-    //          });
-    //      }
-    //  }
-    //};
-    ////
+
 }]); //fin controller companys
+///////////ServicesCtrl CONTROLLER
+app.controller("ServicesCtrl", ['$scope', '$http', function($scope, $http) {
+//  alert('ajaa');
+  $scope.service={};
+  $scope.categorys={};
+  $scope.save = function($event) {
+    //alert('ajaa');
+      $event.preventDefault();
+      var service = $scope.service;
+      service["_token"] = $("input[name=_token]").val();
+      $http.post('/servicios', service)
+          .then(
+              function(response) { // success callback
+                  $scope.show_error = false;
+                  $scope.message = "El servicio se ha creado Exitosamente";
+              },
+              function(response) { // failure callback
+                  $scope.message = false; //ocultamos el div del mensaje bien
+                  var errors = response.data;
+                  $scope.show_error = true; //mostramos el div del mensaje error
+                  $scope.message_error = errors; //
+              }
+          ); //fin then
+  };
+  $scope.edit = function($event) {
+      $event.preventDefault();
+      var service = $scope.service;
+      service["_token"] = $("input[name=_token]").val();
+    //  alert(service.id);
+      $http.put('/servicios/' + service.id, service)
+          .then(
+              function(response) { // success callback
+                  if (response.data.message == "bien") {
+                      $scope.show_error = false;
+                      $scope.message = "El servicio se ha Actualizado Exitosamente";
+                  } else { //sin no bien
+                      $scope.show_error = true;
+                      $scope.message = false; //ocultamos el div del mensaje bien
+                      $scope.message_error = response.data.error;
+                  }
+              },
+              function(response) { // failure callback
+                  $scope.message = false; //ocultamos el div del mensaje bien
+                  var errors = response.data;
+                  $scope.show_error = true; //mostramos el div del mensaje error
+                  $scope.message_error = errors; //
+              }
+          ); //fin then
+  };
+
+}]); //fin controller EditCompanyCtrlInvoiceCtrl
 ///////////INVOICES CONTROLLER
 app.controller("InvoiceCtrl", ['$scope', '$http', function($scope, $http) {
     //alert(typeof $scope.invoice.fecha_pag);
@@ -634,16 +684,22 @@ app.controller("InvoiceCtrl", ['$scope', '$http', function($scope, $http) {
         } //fin para
         return null;
     };
+    $scope.search_precio = function(obj, key, value) { //delete item factura specific
+        for (var i = 0; i < $scope.servicios.length; i++) {
+            if (obj[i][key] === value) {
+                return obj[i].precio;
+            }
+        } //fin para
+        return null;
+    };
     $scope.inicializar = function(index) { //
         var servicio_id = $scope.data_invoices[index].servicio_id;
         var descripcion = $scope.search_descrip($scope.servicios, 'id', servicio_id);
+        var precio=$scope.search_precio($scope.servicios, 'id', servicio_id);
         $scope.data_invoices[index].cantidad = 1;
-        $scope.data_invoices[index].precio = 0.00;
-        $scope.data_invoices[index].subtotal = 0.00;
-        $scope.data_invoices[index].total = 0.00;
-        $scope.data_invoices[index].recarga = 0.00;
-        $scope.data_invoices[index].subtotal_recarga = 0.00;
+        $scope.data_invoices[index].precio = precio;
         $scope.data_invoices[index].descripcion = descripcion;
+        $scope.calcular(index);
         //alert($scope.data_invoices[index].cantidad);
     };
     $scope.categoria = function(a) { //
@@ -1179,18 +1235,18 @@ app.controller("FuelreleaseCtrl", ['$scope', '$http', '$timeout', function($scop
             ); //fin then
     }; //fin save
 }]); //fin controller
-app.directive('fileChange', function() {
+
+app.directive('fileModel', ['$parse', function ($parse) {
     return {
-     restrict: 'A',
-     scope: {
-       handler: '&'
-     },
-     link: function (scope, element) {
-      element.on('change', function (event) {
-        scope.$apply(function(){
-          scope.handler({files: event.target.files});
-        });
-      });
-     }
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            element.bind('change', function(e){
+              $parse(attrs.fileModel).assign(scope, element[0].files[0]);
+              scope.estimate.imagen=element[0].files[0].name;
+               //alert(scope.estimate.imagen);
+            });
+        }
     };
-});
+}]);

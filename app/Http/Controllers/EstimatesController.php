@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use DateTime;
 
 class EstimatesController  extends Controller
 {
@@ -66,7 +67,7 @@ class EstimatesController  extends Controller
      */
     public function create()
     {
-        $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+        $servicios = Servicio::select('id', 'nombre','descripcion','precio')->get();
         return view('estimates.create',compact('servicios'));
 
     }
@@ -77,24 +78,31 @@ class EstimatesController  extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+     public function save_image(Request $request)
+     {
+       $data  = $request->all();
+       $imagen=$data['file'] ;
+       $nombre=$data['nombre'];
+       //  dd(var_dump($imagen))
+      // $band=true;
+      // dd(\File::get($imagen)
+        Storage::disk('local')->put($nombre,  \File::get($imagen));
+     }
+     //  dd($data);
     public function store(CrearEstimateRequest $request)
     {
       $data  = $request->all();
-    //  dd($data)
+      $imagen=$data['file'];
       $band=true;
-      $imagen=$data['imagen'];
-      unset($data['imagen']);
+    //  unset($data['imagen']);
       //mt_rand(5, 5000); para crear un nombre aleatorio
     // dd(var_dump($data));
-     $nombre = $imagen['name'];
-     $data['imagen']=$nombre;
-  //   dd(var_dump($data));
+      $nombre = $data['imagen'];
       $error= array();
       $items=$data["data_estimates"];
       $estimates = new Estimate;
-      $error=Estimate::validate_dates($data,1);
+      // dd(\File::get($imagen));
       $error+=Estimate::validate_file($imagen);
-
          if(!empty($error)){
            $band=false;
          }else{
@@ -116,9 +124,6 @@ class EstimatesController  extends Controller
            try {
               $estimate=Estimate::create($data);
               $id=$estimate->id;
-              dd($imagen);
-               //\Storage::disk('local')->put($nombre,  \File::get($imagen));
-
               ///////////
                if($datos){
                  foreach( $items as $indice =>$datos_estimates ){
@@ -300,7 +305,7 @@ class EstimatesController  extends Controller
      //  dd($estimates[0]->telefono);
        $info=array(0=>array('id'=>'Telefono', 'nombre'=>$estimates[0]->telefono), 1=>array('id'=>'Correo', 'nombre'=>$estimates[0]->correo),  2=>array('id'=>'Celular', 'nombre'=>$estimates[0]->celular));
 
-      $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+      $servicios = Servicio::select('id', 'nombre','descripcion','precio')->get();
 
        $aviones=Avion::where('company_id',$estimates[0]->company_id)->get();
       // $aviones->prepend($avion['nombre',]);

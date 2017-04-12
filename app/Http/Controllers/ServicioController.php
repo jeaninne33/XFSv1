@@ -38,7 +38,7 @@ class ServicioController extends Controller
     public function create()
     {
 
-      $categorias = Categoria::Lists('nombre','id');
+      $categorias = Categoria::select('id', 'nombre')->get();
       return view('servicios.create',compact('categorias'));
     }
 
@@ -50,12 +50,26 @@ class ServicioController extends Controller
      */
     public function store(createSevicesRequest $request)
     {
-
-     $servicio = Servicio::create($request->all());
-     $servicio->save();
+     //dd($request->all());
+     $data=$request->all();
+     unset($data['_token']);
+    //dd ( $data);
+     $error=array();
+    try {
+       $servicio= new Servicio;
+       $servicio->nombre=$data['nombre'];
+       $servicio->descripcion=$data['descripcion'];
+       $servicio->precio=$data['precio'];
+       $servicio->categoria_id=$data['categoria_id'];
+         $servicio->save();
+     } catch (Exception $e) {
+        DB::rollback();
+        $error[]=[$e->getMessage()];
+     }
      // Session::flash('message', 'Successfully created nerd!');
-      return redirect()->route('servicios.index')->with('success','Servicio Agregada Exitosamente');
-     //dd(Input::all());*/
+      //return redirect()->route('servicios.index')->with('success','Servicio Agregada Exitosamente');
+     $result=['message' => 'bien','error'=> $error];
+     return response()->json($result);
     }
 
     /**
@@ -79,7 +93,7 @@ class ServicioController extends Controller
     public function edit($id)
     {
       $servicios=Servicio::findOrFail($id);
-      $categorias=Categoria::Lists('nombre','id');
+      $categorias=Categoria::select('id', 'nombre')->get();//Categoria::Lists('nombre','id');
       return view('servicios.edit',compact('categorias'))->with('servicios', $servicios);
     }
 
@@ -92,12 +106,26 @@ class ServicioController extends Controller
      */
     public function update(EditSevicesRequest $request, $id)
     {
+      $data=$request->all();
+      unset($data['_token']);
+     //dd ( $data);
+      $error=array();
+     try {
+        $servicio = Servicio::findOrFail($id);
+        $servicio->nombre=$data['nombre'];
+        $servicio->descripcion=$data['descripcion'];
+        $servicio->precio=$data['precio'];
+        $servicio->categoria_id=$data['categoria_id'];
+          $servicio->save();
+      } catch (Exception $e) {
+         DB::rollback();
+         $error[]=[$e->getMessage()];
+      }
+      $result=['message' => 'bien','error'=> $error];
+      return response()->json($result);
 
-        $servicio = Servicio::find($id);
-        $servicio->fill($request->all());
-        $servicio->save();
-       return redirect()->route('servicios.index')
-                       ->with('success','Servicio Actualizado Exitosamente');
+      //  return redirect()->route('servicios.index')
+      //                  ->with('success','Servicio Actualizado Exitosamente');
     }
 
     /**

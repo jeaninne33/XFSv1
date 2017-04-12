@@ -90,13 +90,14 @@ Route::group(['middleware' => 'admin'], function()
       Route::resource ('estimates','EstimatesController');
       Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
       Route::post('item/{item}', [ 'as'=>'item.destroy','uses' => 'EstimatesController@item_destroy']);
+      Route::post('image', [ 'as'=>'image.store','uses' => 'EstimatesController@save_image']);
       Route::get('principal', ['as' => 'principal',  'uses' => 'AdminController@index']);
       Route::resource('mail','MailController');
       Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
       Route::get('perfil/{user}', [  'as' => 'perfil','uses' => 'UserController@perfil_user'  ]);
       Route::resource ('contratos','ContratoController');
       Route::post('adjuntar', 'MailController@store');
-        Route::resource('mail','MailController');
+      Route::resource('mail','MailController');
 });
   /////////////////////rutas admin y contador
  Route::group(['middleware' => 'admin_contador'], function()

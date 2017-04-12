@@ -30,12 +30,14 @@ class createSevicesRequest extends Request
         'nombre'       => 'required|unique:servicios,nombre|max:100',
         'descripcion' => 'required|max:500',
         'categoria_id'  => 'required',
+        'precio'  => 'required|numeric',
         ];
     }
     public function messages()
   {
     return [
         'categoria_id.required'=> 'El campo categoria es obligatorio',
+        'precio.required'  => 'El campo precio es obligatorio debe ser Numérico (Decimal con 2 caracteres (Solo admite el .)) ',
     ];
  }
 }

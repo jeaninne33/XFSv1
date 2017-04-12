@@ -37,15 +37,11 @@
   <div id="imagen" class="tab-pane fade">
     <h3>Archivo del Estimado</h3>
 
-             <div class="col-md-8">
-               <input type="file" class="form-control" name="file" ng-model="estimate.imagen" id="imagen"  file-change handler="fileSelect(files)">
+             <div class="col-md-9">
+               <input type="file" ng-model'=estimate.imagen' file-model="file" name="file" class="form-control"/>
+               {{-- <input type="file" class="form-control" name="file" ng-model="file" id="imagen"  file-change handler="fileSelect(files)"> --}}
              </div>
-      {{-- <div class="btn btn-default btn-file">
-          <i class="fa fa-paperclip"></i> Imagen de la Captura del Estimado
-          <input ng-model="estimate.imagen" type="file"  id="imagen" name="imagen" class="imagen_archivo" >
-          {{-- <input type="file" name="file" onchange="angular.element(this).scope().photoChanged(this.files)" />
-        <img ng-src="@{{ thumbnail.dataUrl }}"/>
-      </div> --}}
+
           <p class="help-block"  >Max. 20MB</p>
                    <!-- cargador empresa -->
       <div style="display: none;" id="cargador_empresa" align="center">

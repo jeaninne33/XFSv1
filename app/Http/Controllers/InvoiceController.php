@@ -105,7 +105,7 @@ class InvoiceController extends Controller
         INNER JOIN servicios b on a.servicio_id=b.id
         where estimate_id='$id'" ));
         $datos_estimado =collect( $datos);
-        $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+        $servicios = Servicio::select('id', 'nombre','descripcion','precio')->get();
       //  gettype($estimate);
         return view('invoices.create', compact('estimate','servicios'), compact('invoice'))->with('datos_estimado',$datos_estimado);
     }
@@ -230,7 +230,7 @@ class InvoiceController extends Controller
       $invoice=Invoice::findOrFail($id);
       $items =Date_invoice::where('invoice_id' , $id)->get();
       $items =collect( $items);
-      $servicios = Servicio::select('id', 'nombre','descripcion')->get();
+      $servicios = Servicio::select('id', 'nombre','descripcion','precio')->get();
       $avion= array();
       $avion['id']=$invoice->avion->id;
       $avion['nombre']=$invoice->avion->matricula;
