@@ -38,11 +38,11 @@
     <h3>Archivo del Estimado</h3>
 
              <div class="col-md-9">
-               <input type="file" ng-model'=estimate.imagen' file-model="file" name="file" class="form-control"/>
+               <input type="file" ng-model'=estimate.imagen' file-model="file" id="file" name="file" class="form-control"/>
                {{-- <input type="file" class="form-control" name="file" ng-model="file" id="imagen"  file-change handler="fileSelect(files)"> --}}
              </div>
 
-          <p class="help-block"  >Max. 20MB</p>
+          <p class="help-block"  >Max. 10MB</p>
                    <!-- cargador empresa -->
       <div style="display: none;" id="cargador_empresa" align="center">
           <br>

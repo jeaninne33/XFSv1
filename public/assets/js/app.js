@@ -369,6 +369,7 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                 } else {
                     $scope.estimate.prove_id = id;
                     $scope.proveedor = value.nombre;
+                    $scope.prueba = null;
                 }
                 //
             }
@@ -495,22 +496,18 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
 
         }
     };
-    // $scope.fileSelect = function (files) {
-    //   var file = files[0];
-    //   $scope.estimate.imagen=file;
-    // //  alert(console.dir($scope.estimate.imagen));
-    // };
+
     $scope.save = function($event) {
-        $event.preventDefault();
-        var estimate = $scope.estimate;
-        estimate["_token"] = $("input[name=_token]").val();
-        estimate.data_estimates = $scope.data_estimates;
-        var nombre=estimate.imagen;
-        estimate['file']=file;
-        //alert(nombre);
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('nombre', nombre);
+      $event.preventDefault();
+      var estimate = $scope.estimate;
+      estimate["_token"] = $("input[name=_token]").val();
+      estimate.data_estimates = $scope.data_estimates;
+      var file = $scope.file
+      var nombre=estimate.imagen;
+      var formData = new FormData();
+      estimate.file=file;
+      formData.append('file', file);
+      formData.append('nombre', nombre);
       $http.post('/estimates', estimate).then(
         function(response) { // success callback
                   if (response.data.message == "bien") {
@@ -523,6 +520,7 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                       ).then(
                       function(response) {},
                       function(response) { // failure callback
+
                       }
                       ); //fin then
                       $timeout(function() {
@@ -547,12 +545,30 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
         var estimate = $scope.estimate;
         estimate["_token"] = $("input[name=_token]").val();
         estimate.data_estimates = $scope.data_estimates;
+        var file = $scope.file
+        var nombre=estimate.imagen;
+        var formData = new FormData();
+        estimate.file=file;
+        formData.append('file', file);
+        formData.append('nombre', nombre);
         $http.put('/estimates/' + $scope.estimate.id, estimate)
             .then(
                 function(response) { // success callback
                     if (response.data.message == "bien") {
                         $scope.message = "Estimado Actualizado Exitosamente";
                         $scope.show_error = false;
+                        if(file!=undefined){
+                          $http.post('/image', formData, {
+                            transformRequest: angular.identity,
+                            headers: {'Content-Type': undefined}
+                          }
+                          ).then(
+                          function(response) {},
+                          function(response) { // failure callback
+
+                          }
+                          ); //fin then
+                        }
                         $timeout(function() {
                             window.location.href = "/estimates/" + $scope.estimate.id;
                         }, 2000);
@@ -1243,8 +1259,11 @@ app.directive('fileModel', ['$parse', function ($parse) {
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
             element.bind('change', function(e){
-              $parse(attrs.fileModel).assign(scope, element[0].files[0]);
-              scope.estimate.imagen=element[0].files[0].name;
+              scope.$apply(function(){
+                  modelSetter(scope, element[0].files[0]);
+                  scope.estimate.imagen=element[0].files[0].name;
+              });
+              //$parse(attrs.fileModel).assign(scope, element[0].files[0]);
                //alert(scope.estimate.imagen);
             });
         }

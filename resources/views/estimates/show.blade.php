@@ -27,13 +27,40 @@
      @endif
   @endif
 </div>
+<!-- Trigger the modal with a button -->
+<!-- Modal -->
+<?php $fe=date('m/d/Y');
+ $nombre="Estimate_".$fe.".pdf";
+ $correo=$estimates[0]->correo;
+ $url=URL::to('printestimates/'.$estimates[0]->id);?>
+ <div id="clientes" class="modal fade" role="dialog">
+   <div class="modal-dialog modal-lg">
+     <!-- Modal content-->
+     <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title"><label id="titulo"></label></h4>
+         </div>
+         <div class="modal-body">
+            <div class="correo" style="display:none">
+               @include('Mail.mail')
+           </div>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+         </div>
+    </div>
+
+  </div>
+ </div>
+ <!--Modal-->
      <br/>
      <br/>
      <br>
      <ul class="nav nav-tabs">
        <li class="active"><a data-toggle="tab" href="#home">Datos del Estimado</a></li>
        <li><a data-toggle="tab" href="#menu1">Otros Datos</a></li>
-       <li><a data-toggle="tab" href="#menu2">Imagen de la Captura del Estimado</a></li>
+       <li><a data-toggle="tab" href="#menu2">Archivo del Estimado</a></li>
        <li><a data-toggle="tab" href="#menu3">Items del Estimado</a></li>
 
      </ul>
@@ -123,8 +150,9 @@
           </h5>
         </div>
         <div id="menu2" class="tab-pane fade">
-          <h3>Imagen</h3>
+          <h3>Archivo del Estimado</h3>
          <br/>
+          <a class="glyphicon glyphicon-picture" title="Descargar Archivo" aria-hidden="true" href="{{ URL::to('capture/'.$estimates[0]->imagen) }}"> Descargar Archivo del Estimado</a>
 
         </div>
  <div id="menu3" class="tab-pane fade">
@@ -192,5 +220,11 @@
 <script>
 $('#m4').removeClass('');
 $('#m4').addClass('active');
+function modal(a){
+  $('#titulo').html('Enviando Estimado por Correo');
+  $('.fuelrelease').css('display','none');
+  $('.cliente').css('display','none');
+  $('.correo').css('display','block');
+  }
 </script>
 @endsection

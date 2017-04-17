@@ -15,9 +15,6 @@
     @endif
      <p><h2 > <strong>Listado de Estimados</strong></h2></p></p>
 
-
-
-
   <div class="alert alert" id="mensaje" style="display: none;">
   </div>
   <div class="panel-body">
@@ -50,7 +47,6 @@
         </div>
 </div>
 @endsection
-
 @section('scripts')
 <!--scripts necesarios en esta vista -->
 <!-- datatable jquery -->

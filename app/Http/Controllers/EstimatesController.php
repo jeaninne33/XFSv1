@@ -83,9 +83,7 @@ class EstimatesController  extends Controller
        $data  = $request->all();
        $imagen=$data['file'] ;
        $nombre=$data['nombre'];
-       //  dd(var_dump($imagen))
-      // $band=true;
-      // dd(\File::get($imagen)
+      // dd(var_dump($imagen));
         Storage::disk('local')->put($nombre,  \File::get($imagen));
      }
      //  dd($data);
@@ -94,14 +92,12 @@ class EstimatesController  extends Controller
       $data  = $request->all();
       $imagen=$data['file'];
       $band=true;
-    //  unset($data['imagen']);
-      //mt_rand(5, 5000); para crear un nombre aleatorio
-    // dd(var_dump($data));
       $nombre = $data['imagen'];
       $error= array();
       $items=$data["data_estimates"];
       $estimates = new Estimate;
       // dd(\File::get($imagen));
+      $error=Estimate::validate_dates($data,1);
       $error+=Estimate::validate_file($imagen);
          if(!empty($error)){
            $band=false;
@@ -162,6 +158,7 @@ class EstimatesController  extends Controller
        cp.id AS prove_id,
        cp.nombre AS nombrep,
        estado,
+       imagen,
        num_habitacion,
        tipo_cama,
        tipo_hab,
@@ -216,7 +213,7 @@ class EstimatesController  extends Controller
          s.nombre AS nbservicio,
          s.descripcion,
          cantidad,
-         precio,
+         de.precio,
          subtotal,
          recarga,
          total
@@ -315,7 +312,7 @@ class EstimatesController  extends Controller
          s.descripcion,
          de.id,
          cantidad,
-         precio,
+         de.precio,
          subtotal,
          subtotal_recarga,
          recarga,
@@ -475,7 +472,7 @@ class EstimatesController  extends Controller
          s.nombre AS nbservicio,
          s.descripcion,
          cantidad,
-         precio,
+         de.precio,
          subtotal,
          recarga,
          total
@@ -527,7 +524,7 @@ class EstimatesController  extends Controller
           s.nombre AS nbservicio,
           s.descripcion,
           cantidad,
-          precio,
+          de.precio,
           subtotal,
           subtotal_recarga,
           total

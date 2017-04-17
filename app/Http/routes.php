@@ -98,6 +98,17 @@ Route::group(['middleware' => 'admin'], function()
       Route::resource ('contratos','ContratoController');
       Route::post('adjuntar', 'MailController@store');
       Route::resource('mail','MailController');
+      Route::get('capture/{archivo}', function ($archivo) {
+           $public_path = public_path();
+           $url = $public_path.'/capture/'.$archivo;
+           //verificamos si el archivo existe y lo retornamos
+           if (Storage::exists($archivo))
+           {
+             return response()->download($url);
+           }
+           //si no se encuentra lanzamos un error 404.
+           abort(404);
+      });
 });
   /////////////////////rutas admin y contador
  Route::group(['middleware' => 'admin_contador'], function()
