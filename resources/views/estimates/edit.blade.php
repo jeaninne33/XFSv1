@@ -12,7 +12,7 @@
       <div class="pull-right">
         <a class="btn btn-primary" href="{{ route('estimates.index') }}"> Atrás</a>
       </div>
-      <div class="pull-right col-md-4">
+      <div class="pull-right col-md-2">
 
         <a class="btn btn-primary soap-icon-list" href="{{URL::to('printestimates/'.$estimate->id)}}" target="_blank">Imprimir</a>
         {{-- <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes">Enviar Correo</button> --}}

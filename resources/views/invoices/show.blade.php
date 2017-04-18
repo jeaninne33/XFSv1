@@ -1,14 +1,44 @@
 @extends('layouts.app')
 
 @section('contenido')
+  <?php $fe=date('m/d/Y');
+   $nombre="Invoice_".$fe.".pdf";
+   $correo=$invoice->company->correo;
+   $company=$invoice->company->nombre;
+   $url=URL::to('invoices_pdf/' . $invoice->id);
+   ?>
+   <div class="" ng-controller="EditInvoiceCtrl" ng-init="invoice.company={{json_encode($company)}}; invoice.id={{json_encode($invoice->id)}}; mail.to={{json_encode($correo)}}; mail.adjunto={{json_encode($nombre)}};">
+     @include('errors.message')
+      <!-- Trigger the modal with a button -->
+     <!-- Modal -->
+      <div id="clientes" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <!-- Modal content-->
+          <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><label id="titulo"></label></h4>
+              </div>
+              <div class="modal-body">
+                 <div class="correo" style="display:none">
+                    @include('Mail.mail')
+                </div>
+              </div>
+              <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+         </div>
 
+       </div>
+      </div>
+      <!--Modal-->
 <h1>Mostrando la Factura Número: <strong> {{ $invoice->id }}</strong></h1>
 <div class="pull-right">
          <a class="btn btn-primary" href="{{ URL::previous() }}"> Atrás</a>
      </div>
      <div class="pull-right col-sm-6">
        <a class="btn btn-primary soap-icon-list" target="_blank" href="{{ URL::to('invoices_pdf/' . $invoice->id) }}"> Imprimir</a>
-       <button id="email" value="2" onclick="modal(this.value)" class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes"> Enviar Correo</button>
+       <button id="email" value="2" ng-click='correo()' class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes"> Enviar Correo</button>
      </div>
      <br/><br/>
      <ul class="nav nav-tabs">
@@ -142,7 +172,7 @@
               <td colspan="2"><strong>Número: </strong> {{ $invoice->company->id}}<br></td>
             </tr>
             <tr>
-              <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $invoice->company->nombre}}<br></td>
+              <td colspan="2"><strong>Nombre de la Compañia: </strong>{{ $company }}<br></td>
             </tr>
             <tr>
               <td colspan="2"><strong>Dirección: </strong>{{ $invoice->company->direccion}} </td>
@@ -158,7 +188,7 @@
         </div>
 
  </div>
-
+</div>
 @endsection
 
 @section('scripts')

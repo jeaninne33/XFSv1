@@ -586,6 +586,53 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                 }
             ); //fin then
     }; //fin save
+    $scope.correo = function() {
+      $('#titulo').html('Enviando Estimado por Correo');
+      $('.fuelrelease').css('display','none');
+      $('.cliente').css('display','none');
+      $('.correo').css('display','block');
+      $scope.message = false;
+      $scope.show_error = false;
+    }
+    $scope.send = function($event) {
+        //  alert('entre');
+        $event.preventDefault();
+
+        if($scope.mail.asunto!=null && $scope.mail.contenido!=null){
+          var estimate = $scope.estimate;
+          estimate["_token"] = $("input[name=_token]").val();
+          estimate['tipo']='Estimate';
+
+          estimate['to'] = $scope.mail.to;
+
+          estimate['asunto']=$scope.mail.asunto;
+          estimate["contenido"]=$scope.mail.contenido;
+          estimate["adjunto"]=$scope.mail.adjunto;
+          $('#clientes').modal('toggle');
+        //alert(invoice["_token"]);
+        $http.post('/send', estimate)
+            .then(
+                function(response) { // success callback
+                    if (response.data.message == "bien") {
+                        $scope.message = "Su correo ha Sido enviado Exitosamente ";
+                        $scope.show_error = false;
+                    } else { //sin no bien
+                        $scope.show_error = true;
+                        $scope.message = false; //ocultamos el div del mensaje bien
+                        $scope.message_error = response.data.error;
+                    }
+                },
+                function(response) { // failure callback
+                    $scope.message = false; //ocultamos el div del mensaje bien
+                    var errors = response.data;
+                    $scope.show_error = true; //mostramos el div del mensaje error
+                    $scope.message_error = errors; //
+                }
+            ); //fin then
+          }else{
+            alert("Debe Ingresar el asunto y el contenido del correo");
+          }
+    }; //fin save
 
 }]); //fin controller companys
 ///////////ServicesCtrl CONTROLLER
@@ -843,13 +890,13 @@ app.controller("EditInvoiceCtrl", ['$scope', '$http', function($scope, $http) {
     $scope.invoice = {};
 
     //var fecha=$filter('date')($scope.invoice.fecha, "yyyy-MM-dd");
-    var f_v = new Date($scope.invoice.vencimiento);
-    var f_p = new Date($scope.invoice.fecha_pago);
-    //alert(fecha);
-
-    $scope.invoice.fecha = fecha;
-    $scope.invoice.fecha_vencimiento = f_v;
-    $scope.invoice.fecha_pago = f_p;
+    // var f_v = new Date($scope.invoice.vencimiento);
+    // var f_p = new Date($scope.invoice.fecha_pago);
+    // //alert(fecha);
+    //
+    // $scope.invoice.fecha = fecha;
+    // $scope.invoice.fecha_vencimiento = f_v;
+    // $scope.invoice.fecha_pago = f_p;
 
     $scope.estados = [{
             id: "1",
@@ -973,14 +1020,29 @@ app.controller("EditInvoiceCtrl", ['$scope', '$http', function($scope, $http) {
                 }
             ); //fin then
     }; //fin save
+    $scope.correo = function() {
+      $('#titulo').html('Enviando factura por Correo');
+      $('.fuelrelease').css('display','none');
+      $('.cliente').css('display','none');
+      $('.correo').css('display','block');
+      $scope.message = false;
+      $scope.show_error = false;
+    }
     $scope.send = function($event) {
         //  alert('entre');
         $event.preventDefault();
-        var invoice = $scope.invoice;
-        invoice["_token"] = $("input[name=_token]").val();
-        var url = '/invoices/' + $scope.invoice.id;
-        alert(invoice["_token"]);
-        $http.post('/send_invoice', invoice)
+
+        if($scope.mail.asunto!=null && $scope.mail.contenido!=null){
+          var invoice = $scope.invoice;
+          invoice["_token"] = $("input[name=_token]").val();
+          invoice['tipo']='Invoice';
+          invoice['to'] = $scope.mail.to;
+          invoice['asunto']=$scope.mail.asunto;
+          invoice["contenido"]=$scope.mail.contenido;
+          invoice["adjunto"]=$scope.mail.adjunto;
+          $('#clientes').modal('toggle');
+        //alert(invoice["_token"]);
+        $http.post('/send', invoice)
             .then(
                 function(response) { // success callback
                     if (response.data.message == "bien") {
@@ -999,6 +1061,9 @@ app.controller("EditInvoiceCtrl", ['$scope', '$http', function($scope, $http) {
                     $scope.message_error = errors; //
                 }
             ); //fin then
+          }else{
+            alert("Debe Ingresar el Asunto y el contenido del correo");
+          }
     }; //fin save
 
 }]); //fin controller EditCompanyCtrlInvoiceCtrl

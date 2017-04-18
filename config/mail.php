@@ -54,8 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'jeaninne33@gmail.com', 'name' => 'jeaninne'],
-
+    'from' => ['address' => 'coordination.xfs@gmail.com', 'name' => 'coordination Xflight Support'],
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
@@ -66,7 +65,6 @@ return [
     | transport layer security protocol should provide great security.
     |
     */
-
     'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*

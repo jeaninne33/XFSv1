@@ -9,9 +9,8 @@
       <div class="pull-right">
                <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Atrás</a>
       </div>
-      <div class="pull-right col-sm-6">
+      <div class="pull-right col-sm-2">
         <a class="btn btn-primary soap-icon-list" target="_blank" href="{{ URL::to('invoices_pdf/' . $invoice->id) }}"> Imprimir</a>
-        <button id="email" value="2" ng-click='send($event)' class="email btn btn-primary soap-icon-generalmessage" href="#" data-toggle="modal" data-target="#clientes"> Enviar Correo</button>
       </div>
     <p>Información de la Factura: <strong> @{{ invoice.informacion }}</strong></p>
 <p style="color:rgb(235, 160, 162)">Los campos con (*) son Obligatorios</p>

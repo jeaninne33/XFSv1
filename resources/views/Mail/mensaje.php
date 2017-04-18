@@ -7,8 +7,8 @@
 
    .titulo {
     color: #1e80b6;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 20px;
     padding-right: 20px;
     }
@@ -20,7 +20,7 @@
 
     .div_contenido{
     color: #1e80b6;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -33,9 +33,9 @@
 
 <body class="body">
 
-<div class="titulo" > <h1>Prueba de Correo XFS</h1></div>
+<div class="titulo" > <h1>Xflight Support. Información del <?= $tipo ?></h1></div>
 <hr>
-<div class=".div_contenido" >sfsafsafaf <?//= $contenido;   ?></div>
+<div class=".div_contenido" ><?= $contenido; ?></div>
 
 </body>
 </html>

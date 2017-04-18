@@ -9,6 +9,13 @@ use Mail;
 use Storage;
 use XFS\Http\Requests;
 use XFS\Http\Controllers\Controller;
+use XFS\Estimate;
+use XFS\date_estimates;
+use XFS\Invoice;
+use XFS\Date_invoice;
+use DateTime;
+use PDF;
+use DB;
 
 class MailController extends Controller
 {
@@ -41,91 +48,144 @@ class MailController extends Controller
 
     public function send(Request $request)
     {
-      //dd($request['formData']);
-      // dd($request->email('email'));
-    //   $d=$request->destinatario('destinatario');
-      // dd($d);
+      $data=$request->all();
+      $tipo=$data['tipo'];
+      $adjunto=$data['adjunto'];
+      if($tipo=='Invoice'){
 
-        $pathToFile="";
-        $containfile=false;
-        if($request->hasFile('file') ){
-//          dd($file->getClientOriginalName());
-           $containfile=true;
-           $file = $request->file('file');
-           $nombre=$file->getClientOriginalName();
-           $pathToFile= storage_path('app') ."/". $nombre;
-        }
+       $pdf = $this->getPDFinvoice($data['id']);
+      }else{
+       $pdf = $this->getPDFestimate($data['id']);
+      }
+    //  dd(var_dump($pdf));
 
+      $user=array('tipo'=>$tipo, 'to'=>$data['to'], 'contenido'=>$data['contenido'], 'company'=>$data['company'], 'asunto'=>$data['asunto'] );
 
-        $destinatario=$request->email;
-        $asunto=$request->subject;
-        $contenido=$request->body;
-    //    dd($destinatario);
+      $error=array();
+      //dd(var_dump($user));
+        try {
+          Mail::send('Mail.mensaje', $user, function ($m) use ($user , $pdf, $adjunto) {
 
-        $data = array('contenido' => $contenido);
-        $r= Mail::send('Mail.mensaje', $data, function ($message) use ($asunto,$destinatario,  $containfile,$pathToFile) {
-          //  $message->from('plusispruebas@gmail.com', 'plusis');
-            $message->to($destinatario)->subject($asunto);
-           if($containfile){
-            $message->attach($pathToFile);
-            }
+          $m->to($user['to'], $user['company'])->subject($user['asunto']);
+          $m->attachData($pdf->output(), $adjunto );
+        // $m->attachData(, "invoice.pdf");addStringAttachment
 
-        });
-
-        if($r){
-                 if($containfile){ Storage::disk('local')->delete($nombre); }
-                 $mjs="Correo Enviado Correctamente";
-                return response()->json($mjs);
-                  // view("mensajes.msj_correcto")->with("msj","Correo Enviado correctamente");
-        }
-        else
-        {
-          $mjs="Correo No Enviado";
-          return response()->json($mjs);
-             //eturn view("mensajes.msj_rechazado")->with("msj","hubo un error vuelva a intentarlo");
-        }
-
-
-
-      //dd($request);
-      // $data=$request->all();
-      // Mail::send('Mail.mail',$data,function($mjs)use($request)
-      // {
-      //   $mjs->to('josmer@xflightsupport.com');
-      //   $mjs->subject($request->subject);
-      //   //$mjs->body($request->body);
-      // });
-      // //Session:flash('success','Correo Enviado');
-      // $mensaje="Correo Enviado";
-      //
-      // return response()->json($mensaje);
+          });
+       } catch (Exception $e) {
+          DB::rollback();
+          $error[]=[$e->getMessage()];
+       }
+         $result=['message' => 'bien', 'error'=> $error];
+         return response()->json($result);
     }
 
-    public function store(Request $request)
+//
+    public function getPDFinvoice($id)
     {
-      if($request->hasFile('file') ){
-
-            $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
-            $nombre=$file->getClientOriginalName();
-            $r= Storage::disk('local')->put($nombre,  \File::get($file));
-
-
-             }
-             else{
-
-                return "no";
-             }
-
-            if($r){
-                return $nombre ;
-            }
-            else
-            {
-                return "error vuelva a intentarlo";
-            }
+      $invoice=DB::select(
+      DB::raw("SELECT
+      e.id,
+      e.fbo,
+      e.plazo,
+      e.fecha,
+      e.fecha_vencimiento,
+      e.fecha_pago,
+      e.fecha_anulacion,
+      e.resumen,
+      e.informacion,
+      e.estado,
+      e.localidad,
+      e.company_id,
+      e.prove_id,
+      e.avion_id,
+      c.nombre as cliente,
+      c.direccion,
+      c.telefono_admin,
+      c.categoria,
+      c.representante,
+      c.correo,
+      e.estado,
+      e.subtotal,
+      e.ganancia,
+      e.descuento,
+      e.total,
+      e.total_descuento,
+      d.matricula,
+      f.nombre as prove
+      FROM invoices e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys f ON f.id=e.prove_id
+      INNER JOIN aviones d ON d.id=e.avion_id
+      where e.id='$id'" ));
+      $date = date('Y-m-d');
+      $items =Date_invoice::where('invoice_id' , $id)->get();
+      $invo=new Invoice;
+    //  $view =  \View::make('invoices.invoice_pdf', compact('invoice', 'date', 'items','invo'))->render();
+      $pdf = \App::make('dompdf.wrapper');
+      $pdf->loadView( 'invoices.invoice_pdf', compact('invoice', 'date', 'items','invo'));
+      return $pdf;
 
     }
+    public function getPDFestimate($id)
+    {
+    $estimates=DB::select(
+      DB::raw("SELECT
+      e.id,
+      c.id as company_id,
+      c.nombre AS nombrec,
+      cp.id AS prove_id,
+      cp.nombre AS nombrep,
+      c.representante,
+      c.direccion,
+      estado,
+      fecha_soli,
+      ganancia,
+      resumen,
+      metodo_segui,
+      c.telefono,
+      c.celular,
+      c.correo,
+      proximo_seguimiento,
+      fbo,
+      cantidad_fuel,
+      localidad,
+      a.id as avion_id,
+      a.tipo,
+      matricula,
+      total,
+      subtotal,
+      total_descuento
+      FROM estimates e
+      INNER JOIN companys c ON c.id=e.company_id
+      INNER JOIN companys cp ON cp.id=e.prove_id
+      INNER JOIN aviones a ON a.company_id=c.id
+      WHERE e.id=$id"));
+      $idEstimates=$estimates[0]->id;
+
+       $data=DB::select(
+       DB::raw("SELECT
+         s.id AS servicioid,
+         s.nombre AS nbservicio,
+         s.descripcion,
+         cantidad,
+         de.precio,
+         subtotal,
+         subtotal_recarga,
+         total
+         FROM dates_estimates de
+         INNER JOIN servicios s ON s.id=de.servicio_id
+         WHERE estimate_id=$idEstimates "));
+         $date = date('Y-m-d');
+         $esti=new Estimate;
+         $date = date('Y-m-d');
+         $items =Date_invoice::where('invoice_id' , $id)->get();
+         $invo=new Invoice;
+      //   $view =  \View::make('estimates.estimate_pdf', compact('data', 'date', 'estimates','esti'))->render();
+         $pdf = \App::make('dompdf.wrapper');
+         $pdf->loadView('estimates.estimate_pdf', compact('data', 'date', 'estimates','esti'));
+        //   $pdf=PDF::loadView( $view);
+        return $pdf;
+   }
 
     /**
      * Display the specified resource.

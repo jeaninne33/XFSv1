@@ -1,19 +1,6 @@
 
 
 <div class="row">
-
-    <!-- cargador empresa -->
-      <div style="display: none;" id="cargador_empresa" align="center">
-          <br>
-        <label style="color:#FFF; background-color:#ABB6BA; text-align:center">&nbsp;&nbsp;&nbsp;Espere... &nbsp;&nbsp;&nbsp;</label>
-
-        <img src="{{asset("assets/images/icon/cargando.gif")}}" align="middle" alt="cargador"> &nbsp;<label style="color:#ABB6BA">Realizando tarea solicitada ...</label>
-
-        <br>
-
-        <hr style="color:#003" width="50%">
-        <br>
-      </div>
        <div id="mensaje" style="display:none" class="alert alert-success alert-dismissable fade in">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             </strong><label id='validar'></label>
@@ -28,14 +15,14 @@
 
                <div class="form-group">
                  Para:
-                 <input class="form-control" placeholder="Para:" id="destinatario" name="destinatario" value="{{$correo}}">
+                 <input class="form-control" placeholder="Para:" id="destinatario" name="destinatario" ng-model="mail.to">
                </div>
                <div class="form-group">
                  Asunto:
-                 <input class="form-control" placeholder="Asunto" id="asunto" name="asunto" >
+                 <input class="form-control" placeholder="Asunto" id="asunto" name="asunto" ng-model="mail.asunto">
                </div>
                <div class="form-group">
-                 <textarea id="contenido_mail"  name="contenido_mail" class="form-control" style="height: 200px" placeholder="escriba aquí..."></textarea>
+                 <textarea id="contenido_mail"  name="contenido_mail" ng-model="mail.contenido" class="form-control" style="height: 200px" placeholder="escriba aquí..."></textarea>
                </div>
                <div class="form-group">
                  <div class="btn btn-default btn-file">
@@ -48,7 +35,7 @@
              </div><!-- /.box-body -->
              <div class="box-footer">
                <div class="pull-right">
-                 <button type="button" id="send" class="btn btn-primary"><i class="fa fa-envelope-o"></i> ENVIAR</button>
+                 <button type="button" id="send" class="btn btn-primary" ng-click='send($event)'><i class="fa fa-envelope-o"></i> ENVIAR</button>
                </div>
             <br/>
              </div><!-- /.box-footer -->

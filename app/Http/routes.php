@@ -86,18 +86,16 @@ Route::group(['middleware' => 'admin'], function()
   Route::group(['middleware' => 'auth'], function()
   {
      //rutas estimado
-      Route::get('adjuntar-img',['as'=>'adjuntar-img', 'uses'=>'EstimatesController@adjuntarimg'] );
       Route::resource ('estimates','EstimatesController');
       Route::get('printestimates/{id}', [ 'as'=>'printestimates','uses' => 'EstimatesController@printestimate']);
       Route::post('item/{item}', [ 'as'=>'item.destroy','uses' => 'EstimatesController@item_destroy']);
       Route::post('image', [ 'as'=>'image.store','uses' => 'EstimatesController@save_image']);
       Route::get('principal', ['as' => 'principal',  'uses' => 'AdminController@index']);
-      Route::resource('mail','MailController');
       Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );
       Route::get('perfil/{user}', [  'as' => 'perfil','uses' => 'UserController@perfil_user'  ]);
       Route::resource ('contratos','ContratoController');
       Route::post('adjuntar', 'MailController@store');
-      Route::resource('mail','MailController');
+    //  Route::resource('mail','MailController');
       Route::get('capture/{archivo}', function ($archivo) {
            $public_path = public_path();
            $url = $public_path.'/capture/'.$archivo;

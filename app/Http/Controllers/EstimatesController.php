@@ -340,10 +340,14 @@ class EstimatesController  extends Controller
     {
       $data= $request->all();
       $estimate = Estimate::findOrFail($id);
+      $imagen=$data['file'];
+      $nombre_old= $estimate->imagen;
+      $nombre = $data['imagen'];
       $band=true;
       $error= array();
       $items=$data["data_estimates"];
-      $error=Estimate::validate_dates($request->all(),2);
+      $error=Estimate::validate_dates($data,2);
+      $error+=Estimate::validate_file($imagen);
       if(!empty($error)){
           $result=['message' => 'mal','error'=> $error];
       }else{
@@ -420,50 +424,8 @@ class EstimatesController  extends Controller
         }
          return response()->json($result);
      }
-    public function destroy($id)
-    {
-        //
-    }
 
-    public function fuelreleaseview($id)
-    {
-      $estimate=DB::select(
-       DB::raw("SELECT
-       e.id,
-       c.nombre AS nombrec,
-       cp.nombre AS nombrep,
-       c.representante,
-       c.direccion,
-       fecha_soli,
-       fbo,
-       cantidad_fuel,
-       localidad,
-       a.tipo,
-       matricula
-       FROM estimates e
-       INNER JOIN companys c ON c.id=e.company_id
-       INNER JOIN companys cp ON cp.id=e.prove_id
-       INNER JOIN aviones a ON a.company_id=c.id
-       WHERE e.id=$id"));
-       $estimates=collect($estimate);
-         return view('estimates.fuelrelease',compact('estimates'));
-    }
 
-    public function postfuelrelease(Request $request)
-    {
-      $estimates=$request->all();
-       $from="X Flight Support";
-        $date = date('Y-m-d');
-        //$fuel_release = "1";
-        $view =  \View::make('estimates.fuelrelease_pdf', compact('date','estimates'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-       return $pdf->stream('fuelrelease');
-       //  if ($request->ajax()) {
-       //    return response()->json($pdf);
-        //
-       //  }
-    }
     public function getData($id)
     {
       $data=DB::select(
@@ -539,29 +501,29 @@ class EstimatesController  extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream('estimate');
     }
-    public function adjuntarimg(Request $request)
-    {
-      if($request->hasFile('file') ){
-
-             $file = $request->file('file');
-             $extension = $file->getClientOriginalExtension();
-             $nombre=$file->getClientOriginalName();
-             $r= Storage::disk('local')->put($nombre,  \File::get($file));
-
-              $pathToFile= storage_path('app') ."/". $nombre;
-              }
-              else{
-
-                 return "no";
-              }
-
-             if($r){
-                 $data=['nombre'=>$nombre,'imagen'=>$pathToFile];
-                 return $data;
-             }
-             else
-             {
-                 return "error vuelva a intentarlo";
-             }
-    }
+    // public function adjuntarimg(Request $request)
+    // {
+    //   if($request->hasFile('file') ){
+    //
+    //          $file = $request->file('file');
+    //          $extension = $file->getClientOriginalExtension();
+    //          $nombre=$file->getClientOriginalName();
+    //          $r= Storage::disk('local')->put($nombre,  \File::get($file));
+    //
+    //           $pathToFile= storage_path('app') ."/". $nombre;
+    //           }
+    //           else{
+    //
+    //              return "no";
+    //           }
+    //
+    //          if($r){
+    //              $data=['nombre'=>$nombre,'imagen'=>$pathToFile];
+    //              return $data;
+    //          }
+    //          else
+    //          {
+    //              return "error vuelva a intentarlo";
+    //          }
+    // }
 }
