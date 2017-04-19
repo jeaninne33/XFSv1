@@ -23,7 +23,19 @@ return [
     | Here you may specify which of the database connections below you wish
     | to use as your default connection for all database work. Of course
     | you may use many connections at once using the Database library.
-    |
+    |pgsql
+            DB_CONNECTION=pgsql
+        DB_HOST=127.0.0.1
+        DB_DATABASE=xfs
+        DB_USERNAME=postgres
+        DB_PASSWORD=1234
+        mysql
+
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_DATABASE=xfs
+        DB_USERNAME=root
+        DB_PASSWORD=1234
     */
 
     'default' => env('DB_CONNECTION', 'pgsql'),

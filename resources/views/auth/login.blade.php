@@ -10,28 +10,26 @@
     <meta name="generator" content="HTML,BOOTSTRAP,JAVASCRIPT,JQUERY" />
     <!--<meta name="robots" content=""-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <link rel="shortcut icon" href="icoXFS.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="{{ asset("assets/icoXFS.ico") }}" type="image/x-icon">
 
     <!-- Theme Styles -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="{{ asset("assets/css/bootstrap.min.css") }}">
+      <link rel="stylesheet" href="{{ asset("assets/css/font-awesome.min.css") }}">
+      <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
-    <link id="main-style" rel="stylesheet" href="assets/css/style.css">
+     <!-- Main Style -->
+      <link id="main-style" rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
+     
 
-    <!-- Updated Styles -->
-    <link rel="stylesheet" href="assets/css/updates.css">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <!-- Responsive Styles -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <!--SWEETALERT-->
-    <!--<link href="sweetalert2/sweetalert2.css" rel="stylesheet" />-->
-    <link href="assets/dist/sweetalert.css" rel="stylesheet" />
+     <!-- Responsive Styles -->
+      <link rel="stylesheet" href="{{ asset("assets/css/responsive.css") }}">
+      <!-- Responsive Styles -->
+      <link rel="stylesheet" href="{{ asset("assets/css/updates.css") }}">
+      <!--SWEETALERT-->
+      <link href="{{ asset("assets/dist/sweetalert.css") }}" rel="stylesheet" />
 
 </head>
+{{--Hash::make('123456')--}}
 <body class="soap-login-page style3 body-blank">
     <div id="page-wrapper" class="wrapper-blank">
         <header id="header" class="navbar-static-top">
