@@ -259,11 +259,12 @@ class AdminController extends Controller
          }else{
            $pais="";
          }
+         //dd(var_dump($tipos));
          $company = DB::select(
          DB::raw("Select a.nombre as cliente, a.id, a.direccion_cuenta, a.representante, a.correo, a.tipo,
          b.nombre as pais, c.nombre as estado
          from companys a, paises b, estados c
-         where a.pais_id=b.id and c.pais_id=b.id $tipos $pais
+         where a.pais_id=b.id and c.pais_id=b.id  and a.estado_id=c.id $tipos $pais
          order by a.pais_id,tipo"));
          $company =(object) $company;
          //dd($company);

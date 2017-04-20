@@ -25,21 +25,7 @@ Route::get('/state/{id}',function($id){
   $estados=Estado::where('pais_id',$id)->get();
   return Response::json($estados);
 });
-/*Route::get('/comp/{tip}',function($tip){
-/*  if($tip=="todos"){
-   $companys =  Company::all();
- }else{
-   $companys=Company::where('tipo',$tip)->get();
 
-  //return Response::json($companys);
-    return view('companys.partials.table', compact('tip'));
-
-});*/
-
-/*Route::get('/table/{data}',function(){
-  $companys=json_decode(data);
-  return view('companys.partials.table', compact('companys'));
-});*/
 Route::get('/services/{id}',function($id){
   $servicio=Servicio::where('id',$id)->get();
   return Response::json($servicio);
@@ -55,18 +41,31 @@ Route::get('/listAvion/{id}',function($id){
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
     if ($id==1) {
-    $tipo='client';
+     $tipo="tipo='client'";
     }
     else {
-    $tipo='prove';
+     $tipo="tipo='prove' or tipo='cp'";
     }
-    $companys = DB::table('companys')
-    ->join('paises', 'companys.pais_id', '=', 'paises.id')
-    ->select('companys.id', 'companys.nombre',
-    'paises.nombre as pais','celular','telefono_admin as telefono',
-    'correo','tipo','categoria')
-    ->where('tipo',$tipo)
-    ->get();
+     $companys =DB::select(
+     DB::raw("SELECT
+       a.id,
+       a.nombre,
+       s.nombre as pais,
+       celular,
+       telefono_admin as telefono,
+       correo,
+       tipo,
+       categoria
+       FROM companys a
+       INNER JOIN paises s ON s.id=a.pais_id
+       WHERE $tipo "));
+      // DB::table('companys')
+    // ->join('paises', 'companys.pais_id', '=', 'paises.id')
+    // ->select('companys.id', 'companys.nombre',
+    // 'paises.nombre as pais','celular','telefono_admin as telefono',
+    // 'correo','tipo','categoria')
+    // ->where('tipo',$tipo)
+    // ->get();
     return Response::json($companys);
 });
 

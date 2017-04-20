@@ -26,6 +26,7 @@ class CreateCategoriasServiciosTable extends Migration
               $table->foreign('categoria_id')
                   ->references('id')->on('categorias')
                   ->onDelete('cascade');
+              $table->double('precio', 10, 2);
               $table->timestamps();
           });
     }

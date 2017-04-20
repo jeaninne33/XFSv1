@@ -289,6 +289,16 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                     $scope.providers = resp.data;
                 }
                 var tipo = null;
+            //    $("#yourtableid tr").remove();
+              //  alert();
+                // if(resp.data==null){
+                //   alert('nada');
+                // }angular.equals(resp.data, {})
+                if(jQuery.isEmptyObject( resp.data)){
+                  table.clear().draw();
+                //  $('#example3 tr:not(:first-child)').slice(1).remove();
+                 //  $('#example3 tbody').remove();
+                }else{
                 angular.forEach(resp.data, function(value, key) {
                     /* Vamos agregando a nuestra tabla las filas necesarias */
                     switch (value.tipo) {
@@ -311,7 +321,7 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                     ]).draw(false);
                     //alert(tipo);
                 });
-
+              }//fin si no es vacio
                 //alert(resp);
             },
             function() {}

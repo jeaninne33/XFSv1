@@ -259,6 +259,7 @@ class EstimatesController  extends Controller
        tipo_hab,
        tipo_cama,
        descuento,
+       imagen,
        total_descuento,
        a.id as avion_id,
        a.tipo,
@@ -297,6 +298,7 @@ class EstimatesController  extends Controller
       $estimate->tipo_estrellas=$estimates[0]->tipo_estrellas;
       $estimate->tipo_hab=$estimates[0]->tipo_hab;
       $estimate->tipo_cama=$estimates[0]->tipo_cama;
+      $estimate->imagen=$estimates[0]->imagen;
 
        $idEstimates=$estimates[0]->id;
      //  dd($estimates[0]->telefono);
@@ -340,14 +342,17 @@ class EstimatesController  extends Controller
     {
       $data= $request->all();
       $estimate = Estimate::findOrFail($id);
-      $imagen=$data['file'];
-      $nombre_old= $estimate->imagen;
       $nombre = $data['imagen'];
       $band=true;
       $error= array();
       $items=$data["data_estimates"];
       $error=Estimate::validate_dates($data,2);
-      $error+=Estimate::validate_file($imagen);
+      if(isset($data['file'])){
+        $imagen=$data['file'];
+        $nombre_old= $estimate->imagen;
+        $error+=Estimate::validate_file($imagen);
+      }
+
       if(!empty($error)){
           $result=['message' => 'mal','error'=> $error];
       }else{
