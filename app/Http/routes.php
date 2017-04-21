@@ -41,7 +41,7 @@ Route::get('/listAvion/{id}',function($id){
 //consulta para traer si son clientes o proveedores
 Route::get('/clientes/{id}',function($id){
     if ($id==1) {
-     $tipo="tipo='client'";
+     $tipo="tipo='client' or tipo='cp'";
     }
     else {
      $tipo="tipo='prove' or tipo='cp'";

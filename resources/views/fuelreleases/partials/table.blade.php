@@ -20,7 +20,6 @@
             <td>{{ $value->prove }}</td>
             <td>{{ $value->qty }}</td>
             <td>{{ $value->tipo }}</td>
-
             <!-- we will also add show, edit, and delete buttons -->
             <td>
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->

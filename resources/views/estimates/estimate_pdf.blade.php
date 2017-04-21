@@ -3,7 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Example 2</title>
-    <link rel="stylesheet" href="assets/css/print_pdf.css">
+    {{-- <link rel="stylesheet" href="{{ asset("assets/css/print_pdf.css") }}"> --}}
+      [[ Html::style('assets/css/print_pdf.css') ]]
+     {{-- <link rel="stylesheet" href="assets/css/print_pdf.css"> --}}
   </head>
 
 <body>
@@ -61,7 +63,7 @@
         @if(!empty($data))
          @foreach($data as $key => $value)
            <tr>
-             {{-- <td>{{ $value->servicioid }}</td> --}}
+             {{-- <td>{{ $values->servicioid }}</td> --}}
              <td>{{ $value->nbservicio }}</td>
              <td>{{ $value->descripcion }}</td>
              <td>{{ $value->cantidad }}</td>
