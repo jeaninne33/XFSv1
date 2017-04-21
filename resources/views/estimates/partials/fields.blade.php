@@ -148,14 +148,14 @@
         [[ Form::text('localidad', null, ['ng-model'=>'estimate.localidad','id'=>'localidad','class' => 'input-text full-width' ]) ]]
       </div>
         <div class="col-sms-6 col-sm-6">
-          [[ Form::label('tipo', 'Tipo de Aeronave *')]]
-          [[ Form::select('avion_id', array('Seleccione Avion'), null,[' ng-change'=>'matri()','placeholder'=>'Seleccione','ng-model'=>'estimate.avion_id','ng-options'=>"avion.id as avion.tipo for avion in aviones",'id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
+          [[ Form::label('tipo', 'Matricula de la Aeronave *')]]
+          [[ Form::select('avion_id', array('Seleccione'), null,[' ng-change'=>'matri()','placeholder'=>'Seleccione','ng-model'=>'estimate.avion_id','ng-options'=>"avion.id as avion.matricula for avion in aviones",'id' => 'avion_id','class' => 'selector full-width',  'required' => 'required']) ]]
         </div>
 
     </div>
     <div class="row form-group">
       <div class="col-sms-6 col-sm-6">
-        [[Form::label('Matricula del Avión: *') ]]
+        [[Form::label('Tipo de Aeronave: *') ]]
         [[ Form::text('matricula', null, ['ng-model'=>'matricula', 'readonly','id'=>'matricula','class' => 'input-text full-width' ]) ]]
       </div>
     </div>

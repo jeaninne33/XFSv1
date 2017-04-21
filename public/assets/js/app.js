@@ -289,15 +289,9 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
                     $scope.providers = resp.data;
                 }
                 var tipo = null;
-            //    $("#yourtableid tr").remove();
-              //  alert();
-                // if(resp.data==null){
-                //   alert('nada');
-                // }angular.equals(resp.data, {})
+
                 if(jQuery.isEmptyObject( resp.data)){
                   table.clear().draw();
-                //  $('#example3 tr:not(:first-child)').slice(1).remove();
-                 //  $('#example3 tbody').remove();
                 }else{
                 angular.forEach(resp.data, function(value, key) {
                     /* Vamos agregando a nuestra tabla las filas necesarias */
@@ -404,7 +398,7 @@ app.controller("EstimateCtrl", ['$scope', '$http', '$timeout', function($scope, 
         } else {
             angular.forEach($scope.aviones, function(value, key) {
                 if (value.id == avion_id) {
-                    $scope.matricula = value.matricula;
+                    $scope.matricula = value.tipo;
                 }
             });
         }

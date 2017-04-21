@@ -42,7 +42,7 @@ class editarCompanysRequest extends Request
           'ciudad'=> 'required|max:50',
           'codigop'=> 'max:7',
           'telefono'=> 'numeric|min:6',
-          'tipo_prove'=> 'in:Fuel/Handling,FBO/Handler,Broker,Supplier|required_if:tipo,prove',
+          'tipo_prove'=> 'in:Fuel/Handling,FBO/Handler,Broker,Supplier|required_if:tipo,prove,cp',
           'certificacion'=> 'max:100',
           'contacto_admin'=> 'max:100',
           'celular'=> 'min:6|max:12',
@@ -54,7 +54,7 @@ class editarCompanysRequest extends Request
           'aba'=> 'max:50',
           'tipo'=> 'required|in:client,prove,cp',
           'cargo'=> 'required|max:50',
-          'categoria'=> 'required_if:tipo,client',
+          'categoria'=> 'required_if:tipo,client,cp',
           'servicio_disp'=> 'max:100',
           'estado_id'=> 'required',
 
@@ -63,13 +63,17 @@ class editarCompanysRequest extends Request
     public function messages()
   {
     return [
-        'pais_id.required'=> 'El campo Pais es obligatorio',
-        'telefono_admin.required'=> 'El campo Teléfono de los Datos Operacionales es obligatorio',
-        'codigop.max' => 'El campo Codigo Postal tiene un maximo de 7 caracteres',
-        'tipo_prove.in'=> 'El campo Tipo de Provedor no corresponde a las opciones',
-        'direccion_cuenta.max'=> 'El campo Direccion Cuenta tiene un maximo de 500 caracteres',
-        'direccion_factura.required'=> 'El campo Direccion de Factura es obligatorio',
-        'direccion_factura.max'=> 'El campo Direccion de Factura tiene un maximo de 500 caracteres',
+      'pais_id.required'=> 'El campo Pais es obligatorio',
+      'telefono_admin.required'=> 'El campo Teléfono de los Datos Operacionales es obligatorio',
+      'telefono_admin.numeric'=> 'El campo Teléfono de los Datos Operacionales debe ser numérico',
+      'telefono_admin.min'=> 'El campo Teléfono de los Datos Operacionales debe tener almenos 6 digitos',
+      'codigop.max' => 'El campo Codigo Postal tiene un maximo de 7 caracteres',
+      'tipo_prove.in'=> 'El campo Tipo de Provedor no corresponde a las opciones',
+      'tipo_prove.required_if'=> 'El campo Tipo de Provedor es obligatorio cuando el Tipo de Relacion es proveedor o cliente/proveedor',
+      'categoria.required_if'=> 'El campo Categoria del Cliente es obligatorio cuando el Tipo de Relacion es Cliente o cliente/proveedor',
+      'direccion_cuenta.max'=> 'El campo Direccion Cuenta tiene un maximo de 500 caracteres',
+      'direccion_factura.required'=> 'El campo Direccion de Factura es obligatorio',
+      'direccion_factura.max'=> 'El campo Direccion de Factura tiene un maximo de 500 caracteres',
     ];
  }
 }

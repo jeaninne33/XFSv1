@@ -41,6 +41,24 @@
       $(".proveedor").css("display", "block");
       $(".avion").css("display", "block");
   }//fin si
+  $('#tipo').on('change',function(e){
+        console.log(e);
+        var tipo=e.target.value;
+         //alert(tipo);
+          if(  tipo=="prove"){
+             $(".cliente").css("display", "none");
+             $(".proveedor").css("display", "block");
+             $(".avion").css("display", "none");
+        }else if (tipo=="client") {
+              $(".cliente").css("display", "block");
+              $(".proveedor").css("display", "none");
+              $(".avion").css("display", "block");
+        }else{
+              $(".cliente").css("display", "block");
+              $(".proveedor").css("display", "block");
+              $(".avion").css("display", "block");
+          }//fin si
+      });
 </script>
 
 @endsection
