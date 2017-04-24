@@ -12448,8 +12448,8 @@ color:#9e9e9e;
   margin-top: 15px;
 }
 .soap-login-page.style3 #page-wrapper {
-  background: url("../images/loginbg.jpg") no-repeat center bottom #2680b3;
-  padding-bottom: 15%;
+  background: url("../images/loginbg.png") no-repeat center bottom #2680b3;
+  padding-bottom: 5%;
   position: relative;
 }
 .soap-login-page.style3 .welcome-text {
