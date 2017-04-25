@@ -8,7 +8,7 @@
             <td>Estado</td>
             <td>Fecha</td>
             <td>Total</td>
-            <td>Aciones</td>
+            <td>Acciones</td>
         </tr>
     </thead>
     <tbody>

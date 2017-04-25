@@ -8,7 +8,7 @@
             <td>Proveedor</td>
             <td>Galones</td>
             <td>Tipo Areonave</td>
-            <td>Aciones</td>
+            <td>Acciones</td>
         </tr>
     </thead>
     <tbody>

@@ -5,7 +5,7 @@
           <td>Nombre</td>
           <td>Correo</td>
           <td>Tipo</td>
-          <td>Aciones</td>
+          <td>Acciones</td>
       </tr>
   </thead>
   <tbody>

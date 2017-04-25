@@ -1,8 +1,8 @@
 @extends('layouts.app')
-
 @section('contenido')
-
-<?php $fe=date('m/d/Y');
+<?php
+ date_default_timezone_set('America/Caracas');
+$fe=date('m/d/Y');
  $nombre="Estimate_".$fe.".pdf";
  $correo=$estimates[0]->correo;
  $url=URL::to('printestimates/'.$estimates[0]->id);

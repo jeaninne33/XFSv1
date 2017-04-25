@@ -2,20 +2,19 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Example 2</title>
-    {{-- <link rel="stylesheet" href="{{ asset("assets/css/print_pdf.css") }}"> --}}
-      [[ Html::style('assets/css/print_pdf.css') ]]
-     {{-- <link rel="stylesheet" href="assets/css/print_pdf.css"> --}}
+    <title>Estimate PDF</title>
+    
+      <link rel="stylesheet" href="{{ asset("assets/css/print_pdf.css") }}">
   </head>
 
 <body>
     <div class="header">
-      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
-      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
+      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="{{ asset("assets/images/pdf/header.png") }}" >
+      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="{{ asset("assets/images/pdf/fecha_invoice.png") }}" >
     </div>
     <div class="panel panel-primary11">
       <div class="panel-body" >
-         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/ESTIMATE.png" >
+         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="{{ asset("assets/images/pdf/ESTIMATE.png") }}" >
       </div>
     </div>
 
@@ -44,7 +43,7 @@
         <br/>
         <strong>Tail #: </strong> {{$estimates[0]->matricula}}
       </span>
-      <img style="position: relative; height:130px;width:100%;" src="assets/images/pdf/cintillo.png" >
+      <img style="position: relative; height:130px;width:100%;" src="{{ asset("assets/images/pdf/cintillo.png") }}" >
 
   </div>
 
@@ -63,7 +62,7 @@
         @if(!empty($data))
          @foreach($data as $key => $value)
            <tr>
-             {{-- <td>{{ $values->servicioid }}</td> --}}
+             {{-- <td>{{ $value->servicioid }}</td> --}}
              <td>{{ $value->nbservicio }}</td>
              <td>{{ $value->descripcion }}</td>
              <td>{{ $value->cantidad }}</td>
@@ -100,12 +99,12 @@
         {{-- <p><strong>Fecha de Vencimeinto: </strong>{{date_format(date_create( $estimates[0]->fecha_vencimiento), 'm/d/Y')}}</p> --}}
       </div>
       <div class="foot">
- <img style="height:100%;width:100%;" src="assets/images/pdf/FUEL RELEASE BASE.png" >
+ <img style="height:100%;width:100%;" src="{{ asset("assets/images/pdf/FUEL_RELEASE_BASE.png") }}" >
       </div>
 </div>
 
     <div class="pie">
-     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="assets/images/pdf/REDES.png" >
+     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="{{ asset("assets/images/pdf/REDES.png") }}" >
     </div>
   </body>
 </html>

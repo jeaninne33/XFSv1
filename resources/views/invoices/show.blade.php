@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('contenido')
-  <?php $fe=date('m/d/Y');
+  <?php
+   date_default_timezone_set('America/Caracas');
+   $fe=date('m/d/Y');
    $nombre="Invoice_".$fe.".pdf";
    $correo=$invoice->company->correo;
    $company=$invoice->company->nombre;

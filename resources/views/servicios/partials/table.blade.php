@@ -5,7 +5,7 @@
             <td>Nombre</td>
             <td>Descripcion</td>
             <td>Categoria</td>
-            <td>Actions</td>
+            <td>Acciones</td>
         </tr>
     </thead>
     <tbody>

@@ -2,18 +2,19 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Estimado {{$fuel[0]->id}}</title>
-    <link rel="stylesheet" href="assets/css/print_pdf.css">
+    <title>FUEL RELEASE PDF</title>
+     <link rel="stylesheet" href="{{ asset("assets/css/print_pdf.css") }}">
+      <link rel="shortcut icon" href="{{ asset("assets/icoXFS.ico") }}" type="image/x-icon">
   </head>
 
 <body>
     <div class="header">
-      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
-      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
+      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="{{ asset("assets/images/pdf/header.png") }}" >
+      <img style=" margin-top:-85px; margin-left:487px  height:67px;width:250px;  position:absolute;" src="{{ asset("assets/images/pdf/fecha_invoice.png") }}" >
     </div>
     <div class="panel panel-primary11">
       <div class="panel-body" >
-         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="assets/images/pdf/FUEL RELEASE.png" >
+         <img style="margin-top:-15px; margin-left:-4px; height:20px;width:150px;  position:absolute;" src="{{ asset("assets/images/pdf/FUEL_RELEASE.png") }}" >
       </div>
     </div>
 
@@ -34,7 +35,7 @@
       <span class="texto-d" style="text-align: right;">
         <strong>Estimate Number:</strong> {{$fuel[0]->estimate_id}}
       </span>
-      <img style="position: relative; height:130px;width:100%;" src="assets/images/pdf/cintillo.png" >
+      <img style="position: relative; height:130px;width:100%;" src="{{ asset("assets/images/pdf/cintillo.png") }}" >
 
   </div>
       <div class="otro" style=" margin-left: 25px;   font-size:13px;">
@@ -57,11 +58,11 @@
         <p><strong>Quantity: </strong>{{$fuel[0]->qty}}</p>
       </div>
       <div class="foot">
- <img style="height:100%;width:100%;" src="assets/images/pdf/FUEL RELEASE BASE.png" >
+ <img style="height:100%;width:100%;" src="{{ asset("assets/images/pdf/FUEL_RELEASE_BASE.png") }}" >
       </div>
 </div>
     <div class="pie">
-     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="assets/images/pdf/REDES.png" >
+     <img style="margin-left:40px; height:20px;width:90%;  position:absolute;" src="{{ asset("assets/images/pdf/REDES.png") }}" >
     </div>
   </body>
 </html>

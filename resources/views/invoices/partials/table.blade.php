@@ -6,7 +6,7 @@
             <td>Fecha</td>
             <td>Información</td>
             <td>Monto</td>
-            <td>Aciones</td>
+            <td>Acciones</td>
         </tr>
     </thead>
     <tbody>

@@ -17,6 +17,9 @@ class FuelRelease extends Model
  public function estimate() {
    return $this->belongsTo('XFS\Estimate','estimate_id','id');
  }
+ public function company() {
+   return $this->belongsTo('XFS\Company','company_id','id');
+ }
  public static function validate_dates($datos,$opc) {
    $fecha=date("Y-m-d");
    $error= array();

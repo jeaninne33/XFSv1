@@ -1319,6 +1319,50 @@ app.controller("FuelreleaseCtrl", ['$scope', '$http', '$timeout', function($scop
                 }
             ); //fin then
     }; //fin save
+    $scope.correo = function() {
+      $('#titulo').html('Enviando Fuel Release por Correo');
+      $('.fuelrelease').css('display','none');
+      $('.cliente').css('display','none');
+      $('.correo').css('display','block');
+      $scope.message = false;
+      $scope.show_error = false;
+    }
+    $scope.send = function($event) {
+        //  alert('entre');
+        $event.preventDefault();
+        if($scope.mail.asunto!=null && $scope.mail.contenido!=null){
+          var fuel = $scope.fuel;
+          fuel["_token"] = $("input[name=_token]").val();
+          fuel['tipo']='Fuel';
+          fuel['to'] = $scope.mail.to;
+          fuel['asunto']=$scope.mail.asunto;
+          fuel["contenido"]=$scope.mail.contenido;
+          fuel["adjunto"]=$scope.mail.adjunto;
+          $('#clientes').modal('toggle');
+        //alert(invoice["_token"]);
+        $http.post('/send', fuel)
+            .then(
+                function(response) { // success callback
+                    if (response.data.message == "bien") {
+                        $scope.message = "Su correo ha Sido enviado Exitosamente ";
+                        $scope.show_error = false;
+                    } else { //sin no bien
+                        $scope.show_error = true;
+                        $scope.message = false; //ocultamos el div del mensaje bien
+                        $scope.message_error = response.data.error;
+                    }
+                },
+                function(response) { // failure callback
+                    $scope.message = false; //ocultamos el div del mensaje bien
+                    var errors = response.data;
+                    $scope.show_error = true; //mostramos el div del mensaje error
+                    $scope.message_error = errors; //
+                }
+            ); //fin then
+          }else{
+            alert("Debe Ingresar el asunto y el contenido del correo");
+          }
+    }; //fin save
 }]); //fin controller
 
 app.directive('fileModel', ['$parse', function ($parse) {

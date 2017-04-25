@@ -3,13 +3,12 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Xfligth Support</title>
-    <link rel="stylesheet" href="assets/css/print_pdf.css">
+     <link rel="stylesheet" href="{{ asset("assets/css/print_pdf.css") }}">
   </head>
-
 <body>
     <div class="header">
-      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="assets/images/pdf/header.png" >
-      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="assets/images/pdf/fecha invoice.png" >
+      <img style=" margin-top:-90px; margin-left:-5px;  height:67px;width:200px;  position:absolute;" src="{{ asset("assets/images/pdf/header.png") }}" >
+      <img style=" margin-top:-85px; margin-left:463px  height:67px;width:250px;  position:absolute;" src="{{ asset("assets/images/pdf/fecha_invoice.png") }}" >
     </div>
     <div class="panel panel-primary11">
       <div class="panel-body" >

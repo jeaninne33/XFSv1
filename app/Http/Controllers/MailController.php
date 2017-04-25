@@ -51,25 +51,22 @@ class MailController extends Controller
       $data=$request->all();
       $tipo=$data['tipo'];
       $adjunto=$data['adjunto'];
+      date_default_timezone_set('America/Caracas');
       if($tipo=='Invoice'){
-
        $pdf = $this->getPDFinvoice($data['id']);
-      }else{
+     }else if($tipo=='Estimate'){
        $pdf = $this->getPDFestimate($data['id']);
+     }else{
+        $tipo="Fuel Release";
+        $pdf = $this->getPDFfuel($data['id']);
       }
     //  dd(var_dump($pdf));
-
       $user=array('tipo'=>$tipo, 'to'=>$data['to'], 'contenido'=>$data['contenido'], 'company'=>$data['company'], 'asunto'=>$data['asunto'] );
-
       $error=array();
-      //dd(var_dump($user));
         try {
           Mail::send('Mail.mensaje', $user, function ($m) use ($user , $pdf, $adjunto) {
-
           $m->to($user['to'], $user['company'])->subject($user['asunto']);
           $m->attachData($pdf->output(), $adjunto );
-        // $m->attachData(, "invoice.pdf");addStringAttachment
-
           });
        } catch (Exception $e) {
           DB::rollback();
@@ -80,6 +77,28 @@ class MailController extends Controller
     }
 
 //
+      public function getPDFfuel($id)
+      {
+        $fuel=DB::select(
+         DB::raw("SELECT
+         f.id, f.qty, f.flight_purpose, f.flight_number, f.operator, f.ref, f.cf_card, f.etd, f.eta, f.handling, f.into_plane, f.into_plane_phone, f.date,
+         e.id as estimate_id, e.fbo, e.localidad,
+         c.nombre AS cliente,
+         c.correo,
+         cp.nombre AS prove,
+         c.id as company_id,
+         a.tipo, a.matricula
+         FROM fuelreleases f
+         INNER JOIN estimates e ON f.estimate_id=e.id
+         INNER JOIN companys c ON c.id=e.company_id
+         INNER JOIN companys cp ON cp.id=e.prove_id
+         INNER JOIN aviones a ON a.company_id=c.id
+         WHERE f.id=$id"));
+        $date = date('Y-m-d');
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView('fuelreleases.fuelrelease_pdf',compact('fuel'));
+        return $pdf;
+      }
     public function getPDFinvoice($id)
     {
       $invoice=DB::select(

@@ -165,6 +165,7 @@ class FuelreleaseController  extends Controller
        f.id, f.qty, f.flight_purpose, f.flight_number, f.operator, f.ref, f.cf_card, f.etd, f.eta, f.handling, f.into_plane, f.into_plane_phone, f.date,
        e.id as estimate_id, e.fbo, e.localidad,
        c.nombre AS cliente,
+       c.correo,
        cp.nombre AS prove,
        c.id as company_id,
        a.tipo, a.matricula
