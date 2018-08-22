@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use XFS\User;
 class UserTableSeeder extends Seeder
 {
     /**
@@ -11,7 +11,7 @@ class UserTableSeeder extends Seeder
      */
      public function run(){
            User::create(array(
-               'username'  => 'admin',
+               'type'  => 'admin',
                'email'     => 'admin@admin.com',
                'name'=> 'Administrator',
                'password' => Hash::make('admin') // Hash::make() nos va generar una cadena con nuestra contraseña encriptada
